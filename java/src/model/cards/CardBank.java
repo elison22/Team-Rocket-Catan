@@ -1,5 +1,7 @@
 package model.cards;
 
+import shared.definitions.ResourceType;
+
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -8,20 +10,20 @@ import java.util.TreeMap;
  */
 public class CardBank {
 
-    protected TreeMap<ResCard,Integer> rescards = new TreeMap<ResCard, Integer>();
+    protected TreeMap<ResourceType,Integer> rescards = new TreeMap<ResourceType, Integer>();
     protected ArrayList<DevCard> devcards = new ArrayList<DevCard>();
 
-    public boolean giveCard(ResCard card){
+    public boolean giveCard(ResourceType card){
         //decrement the count for that resource
         return true;
     }
 
-    public boolean takeCard(ResCard card){
+    public boolean takeCard(ResourceType card){
         //increment the count for that resource
         return true;
     }
 
-    public boolean canTakeCard(ResCard card){
+    public boolean canTakeCard(ResourceType card){
         //check if there is a card to take
         return true;
     }

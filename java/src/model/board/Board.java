@@ -17,4 +17,6 @@ public class Board {
     private ArrayList<Edge> edges = new ArrayList<Edge>() {};
 //    private VertexLocation robber = new VertexLocation();
 
+
+
 }
