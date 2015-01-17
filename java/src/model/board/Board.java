@@ -19,8 +19,12 @@ public class Board {
     private ArrayList<Vertex> vertices = new ArrayList<Vertex>() {};
     private ArrayList<Edge> edges = new ArrayList<Edge>() {};
     private HexLocation robber;
-//    private VertexLocation robber = new VertexLocation();
 
+    /**
+     * Creates a new Board object with HexTile objects for the whole board including
+     * diceNums, and actual HexLocations. It also initializes the robbers location to
+     * the Desert, which has a diceNum of 0.
+     */
     public Board() {
 
         Random random = new Random();
