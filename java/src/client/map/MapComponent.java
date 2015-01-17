@@ -1097,7 +1097,7 @@ public class MapComponent extends JComponent
 				return "images/ports/port_wheat.png";
 			case ORE:
 				return "images/ports/port_ore.png";
-			case THREE:
+			case THREE_FOR_ONE:
 				return "images/ports/port_three.png";
 			default:
 				assert false;

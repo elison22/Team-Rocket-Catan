@@ -1,6 +1,7 @@
 package model.board.mapunits;
 
-import shared.definitions.ResourceType;
+import shared.definitions.HexType;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import java.util.TreeMap;
@@ -12,15 +13,22 @@ import java.util.TreeMap;
 public class HexTile {
 
     private int diceNum;
-    private ResourceType type;
+    private HexType type;
+    private HexLocation location;
     private TreeMap<VertexLocation, Vertex> vertices;
 
-    public HexTile(ResourceType type) {
+    public HexTile(HexType type) {
         this.type = type;
+        vertices = new TreeMap<VertexLocation, Vertex>();
     }
 
-    public HexTile(ResourceType type, int diceNum) {
-        this.type = type;
+    public HexTile(HexType type, HexLocation location) {
+        this(type);
+        this.location = location;
+    }
+
+    public HexTile(HexType type, int diceNum, HexLocation location) {
+        this(type,location);
         this.diceNum = diceNum;
     }
 
@@ -34,11 +42,11 @@ public class HexTile {
         return true;
     }
 
-    public ResourceType getType() {
+    public HexType getType() {
         return type;
     }
 
-    public void setType(ResourceType type) {
+    public void setType(HexType type) {
         this.type = type;
     }
 
@@ -46,8 +54,8 @@ public class HexTile {
         return vertices.get(vLoc);
     }
 
-//    public void addSettlement(Vertex newBuilding) {
-//        if(newBuilding)
-//        buildings.add(newBuilding);
-//    }
+    public HexLocation getLocation() { return location; }
+
+    public void setLocation(HexLocation location) { this.location = location; }
+
 }
