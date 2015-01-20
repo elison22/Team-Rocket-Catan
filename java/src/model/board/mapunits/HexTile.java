@@ -8,7 +8,11 @@ import java.util.TreeMap;
 
 /**
  * Created by brandt on 1/17/15.
- * Contains all the information related to a
+ * Contains all the information related to an individual hex tile
+ * on a Catan board. This includes the tile's type, location, dice roll token value,
+ * and a map pairing each of its vertex locations to the actual vertex object they refer to.
+ *
+ * This object is primarily used for storage, so its methods are mostly getters and setters.
  */
 public class HexTile {
 
