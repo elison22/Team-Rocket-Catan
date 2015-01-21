@@ -34,26 +34,8 @@ public class Player {
         this.playerIdx = playerIdx;
     }
 
-    /**
-     * Used by a player to post a trade during their turn
-     * @param playerIdx The player offered the trade
-     * @param offeredRes A list of offerened resource cards
-     * @param desiredRes A list of desired resource cards
-     * @return return whether a trade was accepted or not
-     */
-    public boolean trade(int playerIdx, List<Integer> offeredRes, List<Integer> desiredRes){
-        return true;
+    public update(PlayerBank bank, int victoryPoints){
+        this.bank = bank;
+        this.victoryPoints = victoryPoints;
     }
-
-    /**
-     * Used by a player to build a constructable during their turn. This will also check
-     * if the player can legally build the constructable and whether they have the
-     * required resources for that building.
-     * @param buildingType The type of constructable to be built
-     * @return whether a constructable was placed or not.
-     */
-    public boolean build(String buildingType){
-        return true;
-    }
-
 }

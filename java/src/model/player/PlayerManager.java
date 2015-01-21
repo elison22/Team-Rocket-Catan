@@ -44,4 +44,32 @@ public class PlayerManager {
         return true;
     }
 
+    /**
+     * Called by the Facade to determine if a player has the resources necessary to offer
+     * a certain trade
+     * @param playerIdx The player that offered the trade
+     * @param offeredRes A list of offerened resource cards
+     * @return return whether a trade can be offered or not
+     */
+    public boolean canOfferTrade(int playerIdx, List<Integer> offeredRes){
+        return true;
+    }
+
+    /**
+     * Called by the Facade to determine if a player has the resources necessary to accept
+     * a certain trade
+     * @param playerIdx The player that offered the trade
+     * @param desiredRes A list of resource cards desired by the other player
+     * @return return whether a trade was accepted or not
+     */
+    public boolean canMakeTrade(int playerIdx, , List<Integer> desiredRes){
+        return true;
+    }
+
+    /**
+     * Called by the Facade to update players after polling the server
+     */
+    public void updatePlayers(){
+        return;
+    }
 }
