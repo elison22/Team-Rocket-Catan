@@ -54,27 +54,31 @@ public class Game extends Proxy {
 		return null;
 	}
 	
-	/**
+	/**(GET) Prompts the server for valid commands to be passed 
+	 * to the Game.commandsPOST() method for testing/debugging.
 	 * 
-	 * @return
+	 * @return List of commands.
 	 */
 	public Object commandsGET() {
 		return null;
 	}
 	
-	/**
+	/**(POST) Requests the server to add an AI of the specified
+	 * type to the current game.
 	 * 
-	 * @param addAIParams
-	 * @return
+	 * @param addAIParams Should contain AIType (String). Valid 
+	 * types can be retrieved from Game.listAI().
+	 * @return Server's http response.
 	 */
 	public Object addAI(JsonObject addAIParams) {
 		return null;
 	}
 	
-	/**
+	/**(GET) Requests a list of valid AI types to be used as 
+	 * parameters in Game.addAI().
 	 * 
 	 * @param listAIParams
-	 * @return 
+	 * @return List of AI types.
 	 */
 	public Object listAI(JsonObject listAIParams) {
 		return null;
