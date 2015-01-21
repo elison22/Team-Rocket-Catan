@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class PlayerManager {
 
     /**The List of Player objects in the game. The number of players can range from 0-4*/
-    ArrayList<Player> players;
+    private ArrayList<Player> players;
 
     /**
      * Method called by Facade to determine if a player can be added to the current game
@@ -39,7 +39,7 @@ public class PlayerManager {
      * @return Whether the specified player was removed or not.
      * @throws removePlayerException Thrown if there is a client-side error in removing the player
      */
-    public boolean removePlayer(Player.playerIdx) throws removePlayerException{
+    public boolean removePlayer(int playerIdx) throws removePlayerException{
         //remove a player from the list
         return true;
     }

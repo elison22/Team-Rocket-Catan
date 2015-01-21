@@ -7,24 +7,40 @@ import java.util.TreeMap;
 
 /**
  * Created by brandt on 1/17/15.
+ * This class is the super class of GameBank and PlayerBank and contains methods that both
+ * subclasses will use. This class contains a map of resource cards with the resource type
+ * as the key that is mapped to an integer. This integer will maintain how many cards are
+ * available of each resource type and will be incremented and decremented as resources are
+ * given and taken from players. Since development cards are only given to players and never
+ * taken back by the bank, there is a List that contains all of the development cards that will
+ * be used each game.
  */
 public class CardBank {
 
-    protected TreeMap<ResourceType,Integer> rescards = new TreeMap<ResourceType, Integer>();
-    protected ArrayList<DevCard> devcards = new ArrayList<DevCard>();
+    /** Map of resource cards */
+    protected TreeMap<ResourceType,Integer> resCards = new TreeMap<ResourceType, Integer>();
+    /** List of development cards */
+    protected ArrayList<DevCard> devCards = new ArrayList<DevCard>();
 
+    /**
+     * Used to give a resource card to a player and decrements the total number of available
+     * resource cards of that type.
+     * @param card The type of resource card to be given to the player
+     * @return Whether a card was given to the player or not.
+     */
     public boolean giveCard(ResourceType card){
         //decrement the count for that resource
         return true;
     }
 
+    /**
+     * Used by players to take cards from the game bank and used by the game bank to take
+     * cards back from players when they've used them.
+     * @param card The type of resource taken.
+     * @return Whether a card was taken or not.
+     */
     public boolean takeCard(ResourceType card){
         //increment the count for that resource
-        return true;
-    }
-
-    public boolean canTakeCard(ResourceType card){
-        //check if there is a card to take
         return true;
     }
 

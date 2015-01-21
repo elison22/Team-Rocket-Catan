@@ -14,26 +14,46 @@ import model.cards.PlayerBank;
 public class Player {
 
     /** The player's index in the list of players */
-    private playerIdx;
+    private int playerIdx;
     /** The player's bank of cards */
-    private bank;
+    private PlayerBank bank;
     /** The player's name */
-    private playerName;
+    private String playerName;
     /** The player's victory points */
-    private victoryPoints;
+    private int victoryPoints;
 
     /**
      * Creates a new Player object with an empty PlayerBank object and zero victory points
      * @param playerIdx Initializes the player's index in the list of players
      * @param name The name the user entered upon starting the game.
      */
-    public Player(playerIdx, playerName){
+    public Player(int playerIdx, String playerName){
         this.playerName = playerName;
         this.victoryPoints = 0;
         this.bank = new PlayerBank();
         this.playerIdx = playerIdx;
     }
 
+    /**
+     * Used by a player to post a trade during their turn
+     * @param playerIdx The player offered the trade
+     * @param offeredRes A list of offerened resource cards
+     * @param desiredRes A list of desired resource cards
+     * @return return whether a trade was accepted or not
+     */
+    public boolean trade(int playerIdx, List<Integer> offeredRes, List<Integer> desiredRes){
+        return true;
+    }
 
+    /**
+     * Used by a player to build a constructable during their turn. This will also check
+     * if the player can legally build the constructable and whether they have the
+     * required resources for that building.
+     * @param buildingType The type of constructable to be built
+     * @return whether a constructable was placed or not.
+     */
+    public boolean build(String buildingType){
+        return true;
+    }
 
 }
