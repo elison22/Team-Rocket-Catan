@@ -1,0 +1,82 @@
+package proxy;
+
+import com.google.gson.JsonObject;
+
+/**@author Chad
+ * Jan 1, 2015
+ * 
+ * This class handles all general communications involving the current game. 
+ * This includes updating the current game's state, reseting the command 
+ * history, testing commands, and adding AIs to the current game.
+ */
+public class Game extends Proxy {
+
+	/**Initializes the server's host and port 
+	 * that the proxy will communicate with.
+	 * 
+	 * @param host the name or IP address of the server
+	 * @param port the port that the server will use
+	 * */
+	public Game(String host, String port) {
+		super(host, port);
+	}
+	
+	/**(GET) Asks the server for the current state of the
+	 * game in Json format.
+	 * 
+	 * @return Returns the game's json client model.
+	 */
+	public Object model() {
+		return null;
+	}
+
+	/**(POST) Asks the server to clear the current game's command 
+	 * history. For user-created games this reverts to the game's
+	 * beginning (before the initial placement rounds). For the
+	 * server's default games this reverts to the state immediately
+	 * following the initial placement rounds.
+	 * 
+	 * @return Returns the game's json client model (See Game.model()).
+	 */
+	public Object reset() {
+		return null;
+	}
+	
+	/**(POST) This method is used for testing/debugging purposes.
+	 * It asks the server to execute the specified commands. The
+	 * server will return the state of the game after the commands
+	 * have been applied.
+	 * 
+	 * @param commands List of commands to be executed.
+	 * @return Returns the game's json client model (See Game.model()).
+	 */
+	public Object commandsPOST(Object commands) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Object commandsGET() {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param addAIParams
+	 * @return
+	 */
+	public Object addAI(JsonObject addAIParams) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param listAIParams
+	 * @return 
+	 */
+	public Object listAI(JsonObject listAIParams) {
+		return null;
+	}
+}
