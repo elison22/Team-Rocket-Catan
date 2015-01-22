@@ -8,13 +8,13 @@ package proxy;
  * from this class.
  */
 
-public class Proxy {
+abstract class Proxy {
 	
 	/**The server's name or IP address*/
-	protected final String HOST;
+	protected String host;
 	
 	/**The port that the server uses*/
-	protected final String PORT;
+	protected String port;
 
 	/**Initializes the server's host and port that the proxy
 	 * will communicate with.
@@ -23,8 +23,8 @@ public class Proxy {
 	 * @param port the port that the server will use
 	 * */
 	public Proxy(String host, String port) {
-		this.HOST = host;
-		this.PORT = port;
+		this.host = host;
+		this.port = port;
 	}
 	
 	/**Performs a GET to the specified url and returns the
@@ -41,10 +41,10 @@ public class Proxy {
 	 * data and returns the html result.
 	 * 
 	 * @param url the url of the desired server method
-	 * @param postData the object that contains the data to be posted
-	 * @return
+	 * @param postParams the object that contains the data to be posted
+	 * @return http reponse from server
 	 */
-	public Object doPost(String url, Object postData) {
+	public Object doPost(String url, Object postParams) {
 		return null;
 	}
 }
