@@ -8,7 +8,7 @@ package proxy;
  * from this class.
  */
 
-public class Proxy {
+abstract class Proxy {
 	
 	/**The server's name or IP address*/
 	private String host;
@@ -25,8 +25,8 @@ public class Proxy {
 	 * @param port the port that the server will use
 	 * */
 	public Proxy(String host, String port) {
-		this.host = host;
-		this.port = port;
+		this.setHost(host);
+		this.setPort(port);
 	}
 	
 	/**Performs a GET to the specified url and returns the

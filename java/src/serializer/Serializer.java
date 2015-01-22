@@ -1,6 +1,6 @@
 package serializer;
 
-import proxy.Proxy;
+import proxy.ProxyFacade;
 
 import com.google.gson.*;
 
@@ -21,7 +21,7 @@ public class Serializer {
 	/**
 	 * Proxy through which the serializer contacts the server 
 	 */
-	private Proxy proxy;
+	private ProxyFacade proxy;
 	
 	/**
 	 * Instance of the game that holds the objects the Serializer handles
@@ -32,7 +32,7 @@ public class Serializer {
 	 * Constructor
 	 * @param proxy
 	 */
-	public Serializer(Proxy proxy)
+	public Serializer(ProxyFacade proxy)
 	{
 		
 	}

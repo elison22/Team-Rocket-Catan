@@ -13,7 +13,7 @@ public class ServerPoller {
 	/**
 	 * Proxy through which the poller contacts the server
 	 */
-	private Proxy serverProxy;
+	private ProxyFacade serverProxy;
 	
 	/**
 	 * Serializer that handles the Json received from the server
@@ -24,7 +24,7 @@ public class ServerPoller {
 	 * Constructor
 	 * @param serverProxy
 	 */
-	public ServerPoller(Proxy serverProxy)
+	public ServerPoller(ProxyFacade serverProxy)
 	{
 		
 	}
