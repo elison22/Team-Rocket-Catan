@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
  * unless otherwise specified.
  */
 public class Moves extends Proxy {
-
+	
 	/**Initializes the server's host and port that the proxy
 	 * will communicate with.
 	 * 
@@ -29,6 +29,7 @@ public class Moves extends Proxy {
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
 	public Object sendChat(JsonObject sendChatParams) {
+		
 		return null;
 	}
 	

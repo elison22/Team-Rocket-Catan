@@ -9,6 +9,8 @@ import com.google.gson.JsonObject;
  */
 public class Util extends Proxy {
 
+	public Util() {}
+	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.
 	 * 

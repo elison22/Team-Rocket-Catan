@@ -8,13 +8,15 @@ package proxy;
  * from this class.
  */
 
-abstract class Proxy {
+public class Proxy {
 	
 	/**The server's name or IP address*/
-	protected String host;
+	private String host;
 	
 	/**The port that the server uses*/
-	protected String port;
+	private String port;
+	
+	public Proxy() {}
 
 	/**Initializes the server's host and port that the proxy
 	 * will communicate with.
@@ -46,5 +48,21 @@ abstract class Proxy {
 	 */
 	public Object doPost(String url, Object postParams) {
 		return null;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
 	}
 }

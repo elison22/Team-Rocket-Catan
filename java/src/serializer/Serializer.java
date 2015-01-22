@@ -1,8 +1,9 @@
 package serializer;
 
+import proxy.Proxy;
+
 import com.google.gson.*;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
+
 import model.Game;
 
 /**
