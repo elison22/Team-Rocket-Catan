@@ -3,13 +3,13 @@ package model.player;
 import model.cards.PlayerBank;
 
 /**
- * Created by brandt on 1/17/15.
- * <p>
- * This class is used to hold all of the data for a specific player in the game. That
- * data includes the player's hand of cards called a PlayerBank, their name, the number
- * of victory points they have earned, and their index in the list of players. This index
- * functions as an identifier for each player.
- * </p>
+ * @author Hayden
+ * Player holds all data for a specific player in the game. That data includes
+ * the player's hand of cards called a PlayerBank, their name, the number of
+ * victory points they have earned, and their index in the list of players.
+ * This index also functions as an identifier for each player. This class also
+ * implements the methods the Facade will call to check if a trade can be offered,
+ * accepted, or if a certain constructable can be built.
  */
 public class Player {
 
@@ -34,8 +34,36 @@ public class Player {
         this.playerIdx = playerIdx;
     }
 
+    /**
+     * Called by the Facade to update players after polling
+     * @param bank The player's bank of cards
+     * @param victoryPoints The player's victoryPoints
+     */
     public update(PlayerBank bank, int victoryPoints){
         this.bank = bank;
         this.victoryPoints = victoryPoints;
     }
+
+    /**
+     * Called by the Facade to determine if a player has the resources necessary to offer
+     * a certain trade
+     * @param playerIdx The player that offered the trade
+     * @param offeredRes A list of offerened resource cards
+     * @return return whether a trade can be offered or not
+     */
+    public boolean canOfferTrade(int playerIdx, List<Integer> offeredRes){
+        return true;
+    }
+
+    /**
+     * Called by the Facade to determine if a player has the resources necessary to accept
+     * a certain trade
+     * @param playerIdx The player that offered the trade
+     * @param desiredRes A list of resource cards desired by the other player
+     * @return return whether a trade was accepted or not
+     */
+    public boolean canAcceptTrade(int playerIdx, , List<Integer> desiredRes){
+        return true;
+    }
+
 }

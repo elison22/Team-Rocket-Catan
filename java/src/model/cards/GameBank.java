@@ -1,7 +1,7 @@
 package model.cards;
 
 /**
- * Created by brandt on 1/17/15.
+ * @author Hayden
  * Extension of the CardBank class that holds all of the cards
  * each game will need. Upon creation, the GameBank will hold
  * all resource cards and a list of development cards
@@ -20,12 +20,19 @@ public class GameBank extends CardBank{
     }
 
     /**
+     * Called by the Facade to update the GameBank after polling
+     * the server.
+     */
+    public void updateBank(){
+        return;
+    }
+    /**
      * Used by the Facade to determine if a card can be taken from
      * the GameBank by the Player
      * @param card The type of resource to take
      * @return Whether a card can be taken or not
      */
-    public boolean canTakeCard(ResourceType card){
+    public boolean canGiveResCard(ResourceType card){
         //check if there is a card to take
         return true;
     }
