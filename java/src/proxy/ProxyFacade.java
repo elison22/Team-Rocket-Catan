@@ -2,14 +2,14 @@ package proxy;
 
 import com.google.gson.JsonObject;
 
-/**@author Bobulator
+/**@author Chad
  * Jan 22, 2015
  * 
  * ProxyFacade recieves all requests to be sent to the server and calls the
  * Proxy subclass that handles the particular request. The subclasses can then
  * validate the data and pass it to the server.
  */
-public class ProxyFacade implements IServerProxy {
+public class ProxyFacade implements IServerFacade {
 	
 	final String HOST;
 	final String PORT;

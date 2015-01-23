@@ -1,5 +1,7 @@
 package model.player;
 
+import java.util.List;
+
 import model.cards.PlayerBank;
 
 /**
@@ -39,7 +41,7 @@ public class Player {
      * @param bank The player's bank of cards
      * @param victoryPoints The player's victoryPoints
      */
-    public update(PlayerBank bank, int victoryPoints){
+    public void update(PlayerBank bank, int victoryPoints){
         this.bank = bank;
         this.victoryPoints = victoryPoints;
     }
@@ -62,7 +64,7 @@ public class Player {
      * @param desiredRes A list of resource cards desired by the other player
      * @return return whether a trade was accepted or not
      */
-    public boolean canAcceptTrade(int playerIdx, , List<Integer> desiredRes){
+    public boolean canAcceptTrade(int playerIdx, List<Integer> desiredRes){
         return true;
     }
 

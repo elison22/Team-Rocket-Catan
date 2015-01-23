@@ -4,10 +4,13 @@ import com.google.gson.JsonObject;
 
 
 
-/**@author Bobulator
+/**@author Chad
  * Jan 22, 2015
+ * 
+ * Provides declarations for all of the methods to communicate with the server.
+ * 
  */
-public interface IServerProxy {
+public interface IServerFacade {
 
 	/**POSTs login info to the server, which will then attempt
 	 * to log the user in. 
@@ -15,6 +18,9 @@ public interface IServerProxy {
 	 * @param loginParams should contain a username (String) and
 	 * a password (String).
 	 * @return http response from server
+	 * @throws ServerException is thrown either when the output from the server
+	 * is different than what is expected by the client, or if there was a 
+	 * problem connecting to the server.
 	 */
 	public Object login(JsonObject loginParams) throws ServerException;
 	
@@ -25,6 +31,9 @@ public interface IServerProxy {
 	 * @param registerParams should contain a username (String),
 	 * and a password (String).
 	 * @return http response from server
+	 * @throws ServerException is thrown either when the output from the server
+	 * is different than what is expected by the client, or if there was a 
+	 * problem connecting to the server.
 	 */
 	public Object register(JsonObject registerParams) throws ServerException;
 

@@ -2,13 +2,13 @@ package proxy;
 
 import com.google.gson.JsonObject;
 
-/**@author Bobulator
+/**@author Chad
  * Jan 22, 2015
  * 
  * Used for testing. It does not communicate with the server but instead
  * returns predefined outputs based on the method to be tested.
  */
-public class MockProxy implements IServerProxy {
+public class MockProxy implements IServerFacade {
 
 	public MockProxy() {
 		// TODO Auto-generated constructor stub

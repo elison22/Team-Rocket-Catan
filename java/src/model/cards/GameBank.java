@@ -1,5 +1,7 @@
 package model.cards;
 
+import shared.definitions.ResourceType;
+
 /**
  * @author Hayden
  * Extension of the CardBank class that holds all of the cards

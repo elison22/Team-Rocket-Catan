@@ -2,7 +2,7 @@ package model;
 
 import model.board.BoardManager;
 import model.cards.GameBank;
-import model.player.PlayerManager;
+//import model.player.PlayerManager;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class Game {
     ModeEnum currentMode;
     int currentTurn = 0;
     BoardManager boardMan;
-    PlayerManager playerMan;
+    //PlayerManager playerMan;
     GameBank cardBank;
 
 }
