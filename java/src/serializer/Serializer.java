@@ -4,7 +4,7 @@ import proxy.ProxyFacade;
 
 import com.google.gson.*;
 
-import model.game.Game;
+import model.game.GameModel;
 
 /**
  * This class handles the translation of Java objects to and from Json, which is used for data transfer between server and client
@@ -26,7 +26,7 @@ public class Serializer {
 	/**
 	 * Instance of the game that holds the objects the Serializer handles
 	 */
-	private Game catanInstance;
+	private GameModel catanInstance;
 	
 	/**
 	 * Constructor
