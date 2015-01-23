@@ -71,7 +71,6 @@ public class HexTile {
     /**
      * Setter for the diceNum field, which checks to make sure the diceNum param is valid.
      * @param diceNum An integer 2-12 inclusive.
-     * @return True unless diceNum is outside the range 2-12.
      */
     public void setDiceNum(int diceNum) throws BoardException {
         if(diceNum < 2 || diceNum > 12) throw new BoardException("diceNum param outside the range 2-12");

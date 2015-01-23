@@ -19,7 +19,7 @@ public class PlayerBank extends CardBank{
     /**
      * Used to take a development card from the GameBank and add it
      * to the player's list of development cards
-     * @return
+     * @return True if the player successfully took a DevCard
      */
     public boolean takeDevCard(){
         //take from the bank
@@ -33,8 +33,8 @@ public class PlayerBank extends CardBank{
      */
     public void playDevCard(DevCard card){
         //maybe some inheritance or an interface?
-        card.effect();
-        return true;
+//        card.effect();    only commented out to make it build
+//        return true;      commented it out because it isn't in the documentation above and not sure if we need it
     }
 
 }
