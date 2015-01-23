@@ -2,12 +2,15 @@ package model.board.mapunits;
 
 import model.board.BoardException;
 import model.board.construction.Building;
+import model.board.construction.City;
 import model.board.construction.Road;
+import model.board.construction.Settlement;
 import shared.definitions.HexType;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -30,10 +33,10 @@ public class HexTile {
     /** A map that pairs this HexTile's relative vertex location to the actual Vertex object*/
     @Deprecated
     private TreeMap<VertexDirection, Vertex> vertices;
-    /** A collection of buildings adjacent to this HexTile*/
-    private ArrayList<Building> buildings;
-    /** A collection of roads adjacent to this HexTile*/
-    private  ArrayList<Road> roads;
+    /** A map that pairs this HexTile's relative vertex location to the actual Building object*/
+    private TreeMap<VertexDirection, Building> buildings;
+    /** A map that pairs this HexTile's relative edge location to the actual Road object*/
+    private  TreeMap<EdgeDirection, Road> roads;
 
     /**
      * Constructor to initialize the field type.
@@ -41,7 +44,9 @@ public class HexTile {
      */
     public HexTile(HexType type) {
         this.type = type;
-        //vertices = new TreeMap<VertexDirection, Vertex>();
+        buildings = new TreeMap<VertexDirection, Building>();
+        roads = new TreeMap<EdgeDirection, Road>();
+//        vertices = new TreeMap<VertexDirection, Vertex>();
     }
 
     /**
@@ -67,6 +72,70 @@ public class HexTile {
         if(diceNum < 0 || diceNum > 12) throw new BoardException("Cannot set diceNum less than 0 or greater than 12 in HexTile constructor");
         this.diceNum = diceNum;
     }
+
+    /**
+     * Verifies if it is possible to build a Settlement at the desired vertex. This is
+     * only possible when there is no Building present at that vertex or any of its neighbors.
+     * @param direction The vertex where the player wishes to build.
+     * @return True if the player can build on that vertex.
+     */
+    public boolean canBuildSettlement(VertexDirection direction) {
+        if (buildings.get(direction)!=null) return false;
+        //check all the neighboring vertices to make sure no Buildings are built there.
+        return true;
+    }
+
+    /**
+     * Verifies if it is possible to build a City at the desired vertex. This is only possible
+     * when a Settlement is already present at that vertex.
+     * @param direction The vertex where the player wishes to build.
+     * @return True if the player can build on that vertex.
+     */
+    public boolean canBuildCity(VertexDirection direction) {
+        if (buildings.get(direction)!=null) return false;
+        return buildings.get(direction).isSettlement();
+    }
+
+    /**
+     * Verifies if it is possible to build a Road at the desired edge. This is only possible
+     * when an edge has no Road present and there is another Road at an adjacent edge.
+     * @param direction The edge where the player wishes to build.
+     * @return True if the player can build on that edge.
+     */
+    public boolean canBuildRoad(EdgeDirection direction) { return true; }
+
+    /**
+     * Actually creates a Settlement object and adds it to this HexTile. canBuildSettlement
+     * should be called prior to this to ensure that building is successful.
+     * @param direction The vertex upon which to build.
+     * @param owner The owner of that Settlement, which must be in the range 0-3 inclusive.
+     * @throws BoardException Thrown if the owner param is outside the range 0-3.
+     */
+    public void buildSettlement(VertexDirection direction, int owner) throws BoardException {
+        buildings.put(direction, new Settlement(owner, new VertexLocation(location, direction)));
+    }
+
+    /**
+     * Actually creates a City object and replaces the existing Settlement on this HexTile.
+     * canBuildCity should be called prior to this to ensure that building is successful.
+     * @param direction The vertex upon which to build.
+     * @param owner The owner of that City, which must be in the range 0-3 inclusive.
+     * @throws BoardException Thrown if the owner param is outside the range 0-3.
+     */
+    public void buildCity(VertexDirection direction, int owner) throws BoardException {
+        buildings.put(direction, new City(owner, new VertexLocation(location, direction)));
+    }
+
+    /**
+     * Actually creates a Road object and adds it to this HexTile. canBuildRoad should be
+     * called prior to this to ensure that building is successful.
+     * @param direction The edge upon which to build.
+     * @param owner The owner of that Road, which must be in the range 0-3 inclusive.
+     * @throws BoardException Thrown if the owner param is outside the range 0-3.
+     */
+    public void buildRoad(EdgeDirection direction, int owner) throws BoardException {}
+
+    //public void getPlayerResources(){};
 
     /**
      * Setter for the diceNum field, which checks to make sure the diceNum param is valid.

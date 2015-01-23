@@ -2,6 +2,7 @@ package model.player;
 
 /**
  * Created by brandt on 1/22/15.
+ * Used for all exceptions in the player package. Exception specifics are in the exception message.
  */
 public class PlayerException extends Exception {
 
