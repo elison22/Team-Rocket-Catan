@@ -17,6 +17,16 @@ public class TurnTracker {
     private TurnState currentState;
 
     /**
+     * Index of the player with the longest road
+     */
+    private int longestRoadPlayerIndex;
+
+    /**
+     * Index of the player with the largest army
+     */
+    private int largestArmyPlayerIndex;
+
+    /**
      * Constructor
      */
     public TurnTracker()
@@ -40,6 +50,30 @@ public class TurnTracker {
     public void setCurrentState(TurnState newState)
     {
 
+    }
+
+    /**
+     * Updates the player with the largest army. Checks for valid input
+     * @param largestArmyPlayerIndex index of the player taking the largest army bonus
+     */
+    public void setLargestArmyPlayerIndex(int largestArmyPlayerIndex) {
+
+    }
+
+    /**
+     * Updates the player with the longest road. Checks for valid input
+     * @param longestRoadPlayerIndex index of the player taking the longest road bonus
+     */
+    public void setLongestRoadPlayerIndex(int longestRoadPlayerIndex) {
+
+    }
+
+    public int getLargestArmyPlayerIndex() {
+        return largestArmyPlayerIndex;
+    }
+
+    public int getLongestRoadPlayerIndex() {
+        return longestRoadPlayerIndex;
     }
 
     public int getCurrentPlayerIndex()
