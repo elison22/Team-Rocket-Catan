@@ -12,9 +12,9 @@ import shared.locations.VertexLocation;
 public abstract class Building {
 
     /** The index of the player that owns this building */
-    int owner;
+    protected int owner;
     /** The location of this building */
-    VertexLocation location;
+    protected VertexLocation location;
 
     /**
      * Called by the subclasses to initialize owner and location.
