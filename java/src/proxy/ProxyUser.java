@@ -7,9 +7,9 @@ import com.google.gson.JsonObject;
  * 
  * Handles all login related operations, including creating a new user.
  */
-public class User extends Proxy {
+public class ProxyUser extends ServerProxy {
 
-	public User() {}
+	public ProxyUser() {}
 	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.
@@ -17,7 +17,7 @@ public class User extends Proxy {
 	 * @param host the name or IP address of the server
 	 * @param port the port that the server will use
 	 * */
-	public User(String host, String port) {
+	public ProxyUser(String host, String port) {
 		super(host, port);
 	}
 	

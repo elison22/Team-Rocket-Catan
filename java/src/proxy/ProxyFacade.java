@@ -14,21 +14,21 @@ public class ProxyFacade implements IServerProxy {
 	final String HOST;
 	final String PORT;
 	
-	private User user;
-	private Games games;
-	private Game game;
-	private Moves moves;
-	private Util util;
+	private ProxyUser user;
+	private ProxyGames games;
+	private ProxyGame game;
+	private ProxyMoves moves;
+	private ProxyUtil util;
 
 	public ProxyFacade(String host, String port) {
 		this.HOST = host;
 		this.PORT = port;
 		
-		user = new User(HOST, PORT);
-		games = new Games(HOST, PORT);
-		game = new Game(HOST, PORT);
-		moves = new Moves(HOST, PORT);
-		util = new Util(HOST, PORT);
+		user = new ProxyUser(HOST, PORT);
+		games = new ProxyGames(HOST, PORT);
+		game = new ProxyGame(HOST, PORT);
+		moves = new ProxyMoves(HOST, PORT);
+		util = new ProxyUtil(HOST, PORT);
 	}
 
 	@Override

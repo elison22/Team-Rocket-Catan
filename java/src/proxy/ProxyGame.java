@@ -9,9 +9,9 @@ import com.google.gson.JsonObject;
  * This includes updating the current game's state, reseting the command 
  * history, testing commands, and adding AIs to the current game.
  */
-public class Game extends Proxy {
+public class ProxyGame extends ServerProxy {
 
-	public Game() {}
+	public ProxyGame() {}
 	
 	/**Initializes the server's host and port 
 	 * that the proxy will communicate with.
@@ -19,7 +19,7 @@ public class Game extends Proxy {
 	 * @param host the name or IP address of the server
 	 * @param port the port that the server will use
 	 * */
-	public Game(String host, String port) {
+	public ProxyGame(String host, String port) {
 		super(host, port);
 	}
 	

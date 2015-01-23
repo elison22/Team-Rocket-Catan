@@ -7,9 +7,9 @@ import com.google.gson.JsonObject;
  * 
  * This class handles contacting the server to change the server's Log Level.
  */
-public class Util extends Proxy {
+public class ProxyUtil extends ServerProxy {
 
-	public Util() {}
+	public ProxyUtil() {}
 	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.
@@ -17,7 +17,7 @@ public class Util extends Proxy {
 	 * @param host the name or IP address of the server
 	 * @param port the port that the server will use
 	 * */
-	public Util(String host, String port) {
+	public ProxyUtil(String host, String port) {
 		super(host, port);
 	}
 	

@@ -8,7 +8,7 @@ package proxy;
  * from this class.
  */
 
-abstract class Proxy {
+abstract class ServerProxy {
 	
 	/**The server's name or IP address*/
 	private String host;
@@ -16,7 +16,7 @@ abstract class Proxy {
 	/**The port that the server uses*/
 	private String port;
 	
-	public Proxy() {}
+	public ServerProxy() {}
 
 	/**Initializes the server's host and port that the proxy
 	 * will communicate with.
@@ -24,7 +24,7 @@ abstract class Proxy {
 	 * @param host the name or IP address of the server
 	 * @param port the port that the server will use
 	 * */
-	public Proxy(String host, String port) {
+	public ServerProxy(String host, String port) {
 		this.setHost(host);
 		this.setPort(port);
 	}

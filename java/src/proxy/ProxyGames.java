@@ -8,9 +8,9 @@ import com.google.gson.JsonObject;
  * This class handles all general game related communications with the server, 
  * including joining or creating new games, and saving or loading created games.
  */
-public class Games extends Proxy {
+public class ProxyGames extends ServerProxy {
 
-	public Games() {}
+	public ProxyGames() {}
 	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.
@@ -18,7 +18,7 @@ public class Games extends Proxy {
 	 * @param host the name or IP address of the server
 	 * @param port the port that the server will use
 	 * */
-	public Games(String host, String port) {
+	public ProxyGames(String host, String port) {
 		super(host, port);
 	}
 

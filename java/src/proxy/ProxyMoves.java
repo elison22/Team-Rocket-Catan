@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
  * expected by the server are also specified. All parameters are Json formatted 
  * unless otherwise specified.
  */
-public class Moves extends Proxy {
+public class ProxyMoves extends ServerProxy {
 	
 	/**Initializes the server's host and port that the proxy
 	 * will communicate with.
@@ -18,7 +18,7 @@ public class Moves extends Proxy {
 	 * @param host the name or IP address of the server
 	 * @param port the port that the server will use
 	 * */
-	public Moves(String host, String port) {
+	public ProxyMoves(String host, String port) {
 		super(host, port);
 	}
 
