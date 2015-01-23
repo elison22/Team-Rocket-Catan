@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * this class to determine if a player can be added or not
  * </p>
  */
+@Deprecated
 public class PlayerManager {
 
     /**The List of Player objects in the game. The number of players can range from 0-4*/
@@ -25,21 +26,21 @@ public class PlayerManager {
     /**
      * Creates a new Player object and adds it to the List of current players.
      * @return Whether the Player object was successfully created or not
-     * @throws createPlayerException Thrown if there is insufficient data to create a new Player. Also
+     * @throws PlayerException Thrown if there is insufficient data to create a new Player. Also
      * acts as a second check to make sure no more than four players are in a game at a time.
      */
-    public boolean createPlayer() throws createPlayerException{
+    public boolean createPlayer() throws PlayerException{
         //add a player to the list
         return true;
     }
 
     /**
      * Removes a Player object from the List of current players.
-     * @param The index of the player to be removed
+     * @param playerIdx The index of the player to be removed
      * @return Whether the specified player was removed or not.
-     * @throws removePlayerException Thrown if there is a client-side error in removing the player
+     * @throws PlayerException Thrown if there is a client-side error in removing the player
      */
-    public boolean removePlayer(int playerIdx) throws removePlayerException{
+    public boolean removePlayer(int playerIdx) throws PlayerException{
         //remove a player from the list
         return true;
     }
@@ -51,7 +52,7 @@ public class PlayerManager {
      * @param offeredRes A list of offerened resource cards
      * @return return whether a trade can be offered or not
      */
-    public boolean canOfferTrade(int playerIdx, List<Integer> offeredRes){
+    public boolean canOfferTrade(int playerIdx, ArrayList<Integer> offeredRes){
         return true;
     }
 
@@ -62,7 +63,7 @@ public class PlayerManager {
      * @param desiredRes A list of resource cards desired by the other player
      * @return return whether a trade was accepted or not
      */
-    public boolean canMakeTrade(int playerIdx, , List<Integer> desiredRes){
+    public boolean canMakeTrade(int playerIdx, ArrayList<Integer> desiredRes){
         return true;
     }
 

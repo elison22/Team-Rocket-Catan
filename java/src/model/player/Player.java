@@ -25,7 +25,7 @@ public class Player {
     /**
      * Creates a new Player object with an empty PlayerBank object and zero victory points
      * @param playerIdx Initializes the player's index in the list of players
-     * @param name The name the user entered upon starting the game.
+     * @param playerName The name the user entered upon starting the game.
      */
     public Player(int playerIdx, String playerName){
         this.playerName = playerName;
@@ -34,7 +34,7 @@ public class Player {
         this.playerIdx = playerIdx;
     }
 
-    public update(PlayerBank bank, int victoryPoints){
+    public void update(PlayerBank bank, int victoryPoints){
         this.bank = bank;
         this.victoryPoints = victoryPoints;
     }
