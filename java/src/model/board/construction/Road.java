@@ -7,8 +7,8 @@ import shared.locations.EdgeLocation;
  */
 public class Road {
 
-    int owner;
-    EdgeLocation location;
+    private int owner;
+    private EdgeLocation location;
 
     public Road(int owner, EdgeLocation location) {
         this.owner = owner;
