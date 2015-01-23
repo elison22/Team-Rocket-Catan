@@ -1,7 +1,7 @@
 package model.cards;
 
 /**
- * Created by brandt on 1/17/15.
+ * @author Hayden
  * Extension of the CardBank class that holds all of the cards
  * each player has in their hand. Upon creation, the PlayerBank will
  * be empty.
@@ -28,10 +28,14 @@ public class PlayerBank extends CardBank{
     }
 
     /**
-     * Used by a player to play a development card
+     * Called by the Facade to see if the player can legally play
+     * a development card.
      * @param card The type of development card to be played
+     * @return Returns false if it is not the character's turn, if
+     * they bought the development card this round, or if the player
+     * has already played the card.
      */
-    public void playDevCard(DevCard card){
+    public boolean canPlayDevCard(DevCard card){
         //maybe some inheritance or an interface?
 //        card.effect();    only commented out to make it build
 //        return true;      commented it out because it isn't in the documentation above and not sure if we need it

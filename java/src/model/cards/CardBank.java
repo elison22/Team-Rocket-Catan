@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
- * Created by brandt on 1/17/15.
- * This class is the super class of GameBank and PlayerBank and contains methods that both
+ * @author Hayden
+ * CardBank is the super class of GameBank and PlayerBank and contains methods that both
  * subclasses will use. This class contains a map of resource cards with the resource type
- * as the key that is mapped to an integer. This integer will maintain how many cards are
+ * as the key mapped to an integer. This integer will maintain how many cards are
  * available of each resource type and will be incremented and decremented as resources are
- * given and taken from players. Since development cards are only given to players and never
+ * given to and received from players. Since development cards are only given to players and never
  * taken back by the bank, there is a List that contains all of the development cards that will
  * be used each game.
  */
