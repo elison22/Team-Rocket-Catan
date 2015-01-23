@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import model.board.BoardManager;
 import model.cards.GameBank;

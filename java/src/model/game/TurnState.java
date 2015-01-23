@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 /**
  * Defines the current state of the turn

@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 /**
  * Stores and updates data about the current state of the turn

@@ -4,7 +4,7 @@ import proxy.ProxyFacade;
 
 import com.google.gson.*;
 
-import model.Game;
+import model.game.Game;
 
 /**
  * This class handles the translation of Java objects to and from Json, which is used for data transfer between server and client

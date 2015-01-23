@@ -31,9 +31,6 @@ public class PlayerBank extends CardBank{
      * Called by the Facade to see if the player can legally play
      * a development card.
      * @param card The type of development card to be played
-     * @return Returns false if it is not the character's turn, if
-     * they bought the development card this round, or if the player
-     * has already played the card.
      */
     public void canPlayDevCard(DevCard card){
         //maybe some inheritance or an interface?
