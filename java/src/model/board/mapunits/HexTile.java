@@ -1,10 +1,13 @@
 package model.board.mapunits;
 
 import model.board.BoardException;
+import model.board.construction.Building;
+import model.board.construction.Road;
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -25,7 +28,12 @@ public class HexTile {
     /** The location for this HexTile. */
     private HexLocation location;
     /** A map that pairs this HexTile's relative vertex location to the actual Vertex object*/
+    @Deprecated
     private TreeMap<VertexDirection, Vertex> vertices;
+    /** A collection of buildings adjacent to this HexTile*/
+    private ArrayList<Building> buildings;
+    /** A collection of roads adjacent to this HexTile*/
+    private  ArrayList<Road> roads;
 
     /**
      * Constructor to initialize the field type.
@@ -33,7 +41,7 @@ public class HexTile {
      */
     public HexTile(HexType type) {
         this.type = type;
-        vertices = new TreeMap<VertexDirection, Vertex>();
+        //vertices = new TreeMap<VertexDirection, Vertex>();
     }
 
     /**
@@ -60,27 +68,14 @@ public class HexTile {
         this.diceNum = diceNum;
     }
 
-    public int getDiceNum() {
-        return diceNum;
-    }
-
     /**
      * Setter for the diceNum field, which checks to make sure the diceNum param is valid.
      * @param diceNum An integer 2-12 inclusive.
      * @return True unless diceNum is outside the range 2-12.
      */
-    public boolean setDiceNum(int diceNum) {
-        if(diceNum < 2 || diceNum > 12) return false;
+    public void setDiceNum(int diceNum) throws BoardException {
+        if(diceNum < 2 || diceNum > 12) throw new BoardException("diceNum param outside the range 2-12");
         this.diceNum = diceNum;
-        return true;
-    }
-
-    public HexType getType() {
-        return type;
-    }
-
-    public void setType(HexType type) {
-        this.type = type;
     }
 
     /**
@@ -88,11 +83,24 @@ public class HexTile {
      * @param vLoc The location of a vertex relative to this HexTile.
      * @return The actual Vertex object indicated by the vLoc parameter.
      */
+    @Deprecated
     public Vertex getVertex(VertexDirection vLoc) {
         return vertices.get(vLoc);
     }
 
     public HexLocation getLocation() { return location; }
+
+    public int getDiceNum() {
+        return diceNum;
+    }
+
+    public void setType(HexType type) {
+        this.type = type;
+    }
+
+    public HexType getType() {
+        return type;
+    }
 
     public void setLocation(HexLocation location) { this.location = location; }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by brandt on 1/17/15.
  */
-
+@Deprecated
 public class BoardManager {
 
     private ArrayList<HexTile> tiles = new ArrayList<HexTile>();

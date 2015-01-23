@@ -12,24 +12,13 @@ import java.util.Random;
 /**
  * Created by brandt on 1/17/15.
  * <p>
- * This class holds information about all the elements of a Settlers of Catan board. This
- * includes collections of HexTile objects, Vertex objects, and Edge objects. These are the
- * actual objects, not references to objects based on some relative location. The board
- * objects also remembers the HexLocation for the robber.
- * </p>
- * <p>
- * The HexTile objects are organized by a slightly adjusted x/y coordinate system, which
- * has values in the range -2 to 2.
+ * This class
  * </p>
  */
 public class Board {
 
     /** The HexTile objects that make up this Board */
     private ArrayList<HexTile> tiles = new ArrayList<HexTile>() {};
-    /** The Vertex objects that make up this Board */
-    private ArrayList<Vertex> vertices = new ArrayList<Vertex>() {};
-    /** The Edge objects that make up this Board */
-    private ArrayList<Edge> edges = new ArrayList<Edge>() {};
     /** The HexLocation that represents the robber */
     private HexLocation robber;
 
@@ -80,7 +69,7 @@ public class Board {
      * @return The diceNum for the HexTile to receive the robber.
      * @throws BoardException Thrown when the x or y values are outside the range -2 to 2
      */
-    private int setRobber(int diceNum, int x, int y) throws BoardException{
+    private int setRobber(int diceNum, int x, int y) throws BoardException {
         setRobber(x, y);
         return diceNum;
     }
@@ -91,7 +80,7 @@ public class Board {
      * @param y The robber's new y location
      * @throws BoardException Thrown when the x or y values are outside the range -2 to 2
      */
-    public void setRobber(int x, int y) throws BoardException{
+    public void setRobber(int x, int y) throws BoardException {
         //TODO: implement the check to make sure the robber is actually on the board
         robber = new HexLocation(x, y);
     }
@@ -101,7 +90,7 @@ public class Board {
      * @param newLocation The HexLocation for the robber's new location
      * @throws BoardException Thrown when the x or y values are outside the range -2 to 2
      */
-    public void setRobber(HexLocation newLocation) throws BoardException{
+    public void setRobber(HexLocation newLocation) throws BoardException {
         //TODO: implement the check to make sure the robber is actually on the board
         robber = newLocation;
     }

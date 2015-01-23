@@ -11,6 +11,7 @@ import shared.locations.EdgeLocation;
  * player who owns the road or -1 if no player has built a road on this space.
  * </p>
  */
+@Deprecated
 public class Edge {
 
     /** Keeps track of road ownership. -1 means no road, 0-3 means the index of the road owner. */
