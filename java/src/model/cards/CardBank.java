@@ -18,7 +18,7 @@ import java.util.TreeMap;
 public class CardBank {
 
     /** Map of resource cards */
-    protected TreeMap<ResourceType,Integer> resCards = new TreeMap<ResourceType, Integer>();
+    protected ResourceSet resourceSet;
     /** List of development cards */
     protected ArrayList<DevCard> devCards = new ArrayList<DevCard>();
 

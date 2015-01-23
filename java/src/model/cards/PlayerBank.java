@@ -35,7 +35,7 @@ public class PlayerBank extends CardBank{
      * they bought the development card this round, or if the player
      * has already played the card.
      */
-    public boolean canPlayDevCard(DevCard card){
+    public void canPlayDevCard(DevCard card){
         //maybe some inheritance or an interface?
 //        card.effect();    only commented out to make it build
 //        return true;      commented it out because it isn't in the documentation above and not sure if we need it
