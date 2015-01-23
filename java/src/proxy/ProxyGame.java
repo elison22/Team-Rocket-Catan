@@ -79,10 +79,9 @@ public class ProxyGame extends ServerProxy {
 	/**(GET) Requests a list of valid AI types to be used as 
 	 * parameters in Game.addAI().
 	 * 
-	 * @param listAIParams
 	 * @return List of AI types.
 	 */
-	public Object listAI(JsonObject listAIParams) {
+	public Object listAI() {
 		return null;
 	}
 }

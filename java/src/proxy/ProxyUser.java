@@ -27,6 +27,9 @@ public class ProxyUser extends ServerProxy {
 	 * @param loginParams should contain a username (String) and
 	 * a password (String).
 	 * @return http response from server
+	 * @throws ServerException is thrown either when the output from the server
+	 * is different than what is expected by the client, or if there was a 
+	 * problem connecting to the server.
 	 */
 	public Object login(JsonObject loginParams) throws ServerException {
 		return null;
@@ -39,6 +42,9 @@ public class ProxyUser extends ServerProxy {
 	 * @param registerParams should contain a username (String),
 	 * and a password (String).
 	 * @return http response from server
+	 * @throws ServerException is thrown either when the output from the server
+	 * is different than what is expected by the client, or if there was a 
+	 * problem connecting to the server.
 	 */
 	public Object register(JsonObject registerParams) throws ServerException {
 		return null;

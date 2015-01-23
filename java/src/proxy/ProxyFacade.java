@@ -92,7 +92,7 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object listAI(JsonObject listAIParams) {
+	public Object listAI() {
 		return null;
 	}
 
