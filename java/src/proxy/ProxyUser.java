@@ -1,6 +1,5 @@
 package proxy;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 /**@author Chad
@@ -31,6 +30,12 @@ public class ProxyUser extends ServerProxy {
 	 * problem connecting to the server.
 	 */
 	public Object login(JsonObject loginParams) throws ServerException {
+		//TODO test/verify server result
+		// Get server response
+		String result = doPost("/user/login", loginParams);
+		if (result.equals("Success\n")) {
+			//TODO fill
+		}
 		return null;
 	}
 	
@@ -40,18 +45,26 @@ public class ProxyUser extends ServerProxy {
 	 * 
 	 * @param registerParams should contain a username (String),
 	 * and a password (String).
-	 * @return http response from server
+	 * @return result of register operation
 	 * @throws ServerException is thrown either when the output from the server
 	 * is different than what is expected by the client, or if there was a 
 	 * problem connecting to the server.
 	 */
-	public Object register(JsonObject registerParams) throws ServerException {
-		return null;
+	public boolean register(Object registerParams) throws ServerException {
+		// Get server response
+		String result = doPost("/user/register", registerParams);
+		if (result.equals("Success\n")) {
+			// If register was successful return true
+			return true;
+		} 
+		return false;
 	}
 	
+//	// FOR TESTING:
+//	
 //	public class jsonTest {
-//		String username = "deuce";
-//		String password = "deuce";
+//		String username = "register1";
+//		String password = "test1";
 //	}
 //	
 //	public jsonTest getTest() {
@@ -60,9 +73,8 @@ public class ProxyUser extends ServerProxy {
 //
 //	public static void main(String args[]) {
 //		ProxyUser pu = new ProxyUser("localhost", "8081");
-//		Gson gson = new Gson();
 //		try {
-//			pu.doPost("/user/regist", pu.getTest());
+//			System.out.println(pu.register(pu.getTest()));
 //		} catch (ServerException e) {
 //			e.printStackTrace();
 //		}

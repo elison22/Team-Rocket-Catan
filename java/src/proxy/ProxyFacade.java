@@ -1,7 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
 /**@author Chad
  * Jan 22, 2015
  * 
@@ -9,10 +7,12 @@ import com.google.gson.JsonObject;
  * Proxy subclass that handles the particular request. The subclasses can then
  * validate the data and pass it to the server.
  */
+@SuppressWarnings("unused")
 public class ProxyFacade implements IServerFacade {
 	
 	final String HOST;
 	final String PORT;
+	
 	
 	private ProxyUser user;
 	private ProxyGames games;

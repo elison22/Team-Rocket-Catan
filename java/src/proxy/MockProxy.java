@@ -1,7 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
 /**@author Chad
  * Jan 22, 2015
  * 

@@ -1,8 +1,12 @@
 package proxy;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.Gson;
@@ -12,7 +16,10 @@ import com.google.gson.Gson;
  * 
  * This class stores the server host and port and also contains methods to 
  * perform GET and POST on the Catan server. All other proxy classes inherit 
- * from this class.
+ * from this class. Both Get and PORT operations return a String representation
+ * of the server's response, so the subclass which made the call must return
+ * a class representing the response or return a boolean indicating the call
+ * was successful, depending on the particular method call.
  */
 
 abstract class ServerProxy {
@@ -55,33 +62,45 @@ abstract class ServerProxy {
 	/**Performs a POST to the specified url with the given data. The data, 
 	 * which should be a DTO with the data the correlates with the method 
 	 * to be called, is converted to json and then sent to the server as 
-	 * part of the POST requst body.
+	 * part of the POST requst body. The server's response is returned as a
+	 * String.
 	 * 
 	 * @param methodPath the url of the desired server method
 	 * @param postParams the object that contains the data to be posted
-	 * @return http reponse from server
-	 * @throws ServerException 
+	 * @return String containing the server's response
+	 * @throws ServerException thrown if there was any problem reading the give 
+	 * URL, or writing the parameters to the server connection, or if the 
+	 * server returns a non-OK response code. 
 	 */
-	public Object doPost(String methodPath, Object postParams) throws ServerException {
+	public String doPost(String methodPath, Object postParams) throws ServerException {
+		//TODO add comments, finish implementation
 		try {
+			// Open connection with server
 			URL url = new URL(url_prefix + methodPath);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
+			
+			// Write postParams to the connection as Json
 			OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
 			os.write(gson.toJson(postParams));
 			os.close();
 			
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				//TODO implement successful doPost
+				// Read response from server
+				return responseToString(connection.getInputStream());
+				
 			} else {
-				//TODO implement failed doPost
+				// Throw ServerException with the server's response code
+				throw new ServerException(String.format("doPost failed: Server response code %s,", 
+														connection.getResponseCode()));
 			}
 			
+		} catch (MalformedURLException e) {
+			throw new ServerException(String.format("doPost failed: %s", e.getMessage(), e));
 		} catch (IOException e) {
 			throw new ServerException(String.format("doPost failed: %s", e.getMessage(), e));
 		}
-		return null;
 	}
 
 	public String getHost() {
@@ -94,5 +113,16 @@ abstract class ServerProxy {
 
 	public String getUrl_Prefix() {
 		return url_prefix;
+	}
+	
+	private String responseToString(InputStream is) throws IOException {
+		// Convert server's inputStream to a String
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = br.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		return sb.toString();
 	}
 }
