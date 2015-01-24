@@ -15,10 +15,8 @@ import shared.locations.VertexLocation;
 public class Facade {
 
     private GameModel game;
-    private Board board;
-    private GameBank cardBank;                      // holds all the resource cards and all the dev cards
-    private Player myPlayer;                        // player of this client
-    private int playerIndex;                        // clients player index
+    private int playerIndex; 
+    //private Player myPlayer;                        // player of this client
 
     /**
      * Creates a new Game Object
@@ -156,9 +154,9 @@ public class Facade {
     /**
      * @return the games card bank to see resources/devcards available
      */
-    public GameBank getCardBank() {
+   /* public GameBank getCardBank() {
         return cardBank;
-    }
+    }*/
 
     /**
      * @return the current client model version number
