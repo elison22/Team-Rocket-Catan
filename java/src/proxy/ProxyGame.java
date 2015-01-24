@@ -1,7 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
 /**@author Chad
  * Jan 1, 2015
  * 
@@ -70,7 +68,7 @@ public class ProxyGame extends ServerProxy {
 	 * types can be retrieved from Game.listAI().
 	 * @return Server's http response.
 	 */
-	public Object addAI(JsonObject addAIParams) {
+	public Object addAI(Object addAIParams) {
 		return null;
 	}
 	

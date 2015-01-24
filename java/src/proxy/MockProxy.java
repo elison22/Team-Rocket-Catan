@@ -13,15 +13,15 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
-	public Object login(Object loginParams) throws ServerException {
+	public boolean login(Object loginParams) throws ServerException {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public Object register(Object registerParams) throws ServerException {
+	public boolean register(Object registerParams) throws ServerException {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override

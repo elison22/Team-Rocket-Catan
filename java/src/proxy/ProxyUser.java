@@ -1,7 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
 /**@author Chad
  * Jan 19, 2015
  * 
@@ -29,14 +27,15 @@ public class ProxyUser extends ServerProxy {
 	 * is different than what is expected by the client, or if there was a 
 	 * problem connecting to the server.
 	 */
-	public Object login(JsonObject loginParams) throws ServerException {
-		//TODO test/verify server result
+	public boolean login(Object loginParams) throws ServerException {
+		
 		// Get server response
 		String result = doPost("/user/login", loginParams);
-		if (result.equals("Success\n")) {
-			//TODO fill
-		}
-		return null;
+		
+		if (result.equals("Success\n")) 
+			return true;
+		
+		return false;
 	}
 	
 	/**POSTs new user info to the server which will attempt
@@ -51,12 +50,13 @@ public class ProxyUser extends ServerProxy {
 	 * problem connecting to the server.
 	 */
 	public boolean register(Object registerParams) throws ServerException {
+		
 		// Get server response
 		String result = doPost("/user/register", registerParams);
-		if (result.equals("Success\n")) {
-			// If register was successful return true
+		
+		if (result.equals("Success\n"))
 			return true;
-		} 
+		
 		return false;
 	}
 	
@@ -75,8 +75,9 @@ public class ProxyUser extends ServerProxy {
 //		ProxyUser pu = new ProxyUser("localhost", "8081");
 //		try {
 //			System.out.println(pu.register(pu.getTest()));
+//			System.out.println(pu.login(pu.getTest()));
 //		} catch (ServerException e) {
-//			e.printStackTrace();
+//			System.out.println(e.getMessage());
 //		}
 //	}
 }

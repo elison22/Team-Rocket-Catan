@@ -54,9 +54,30 @@ abstract class ServerProxy {
 	 * 
 	 * @param methodPath the url of the desired object
 	 * @return http response from server
+	 * @throws ServerException thrown if there was any problem reading the 
+	 * given URL or if the server returns a non-OK response code.
 	 */
-	public Object doGet(String methodPath) {
-		return null;
+	public String doGet(String methodPath) throws ServerException {
+		try {
+			// Open connection with server
+			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "GET");
+			
+			// Verify request was successful
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				
+				// Read response from server
+				return responseToString(connection.getInputStream());
+				
+			} else {
+				
+				// Throw ServerException with the server's response code
+				String errorMessage = "doGet failed: Server response code %s,";
+				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
+			}
+			
+		} catch (IOException e) {
+			throw new ServerException(String.format("doGet failed: %s", e.getMessage(), e));
+		}
 	}
 	
 	/**Performs a POST to the specified url with the given data. The data, 
@@ -68,36 +89,33 @@ abstract class ServerProxy {
 	 * @param methodPath the url of the desired server method
 	 * @param postParams the object that contains the data to be posted
 	 * @return String containing the server's response
-	 * @throws ServerException thrown if there was any problem reading the give 
-	 * URL, or writing the parameters to the server connection, or if the 
+	 * @throws ServerException thrown if there was any problem reading the 
+	 * given URL, or writing the parameters to the server connection, or if the 
 	 * server returns a non-OK response code. 
 	 */
 	public String doPost(String methodPath, Object postParams) throws ServerException {
-		//TODO add comments, finish implementation
 		try {
 			// Open connection with server
-			URL url = new URL(url_prefix + methodPath);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setDoOutput(true);
+			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "POST");
 			
 			// Write postParams to the connection as Json
 			OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
 			os.write(gson.toJson(postParams));
 			os.close();
 			
+			// Verify request was successful
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				
 				// Read response from server
 				return responseToString(connection.getInputStream());
 				
 			} else {
+				
 				// Throw ServerException with the server's response code
-				throw new ServerException(String.format("doPost failed: Server response code %s,", 
-														connection.getResponseCode()));
+				String errorMessage = "doPost failed: Server response code %s,";
+				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
 			}
 			
-		} catch (MalformedURLException e) {
-			throw new ServerException(String.format("doPost failed: %s", e.getMessage(), e));
 		} catch (IOException e) {
 			throw new ServerException(String.format("doPost failed: %s", e.getMessage(), e));
 		}
@@ -115,7 +133,14 @@ abstract class ServerProxy {
 		return url_prefix;
 	}
 	
+	/** Writes the response stream from the server as a String.
+	 * 
+	 * @param is the Server's InputStream
+	 * @return The String representation of the InputStream
+	 * @throws IOException thrown if there was any problem reading the stream
+	 */
 	private String responseToString(InputStream is) throws IOException {
+		
 		// Convert server's inputStream to a String
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();
@@ -124,5 +149,34 @@ abstract class ServerProxy {
 			sb.append(line + "\n");
 		}
 		return sb.toString();
+	}
+	
+	/** Opens a HttpURLConnection with the server, sets the given request
+	 * Method. If the method is a POST then it sets up the connection for
+	 * output.
+	 * 
+	 * @param url the server url for the given method
+	 * @param request whether the request is a POST or a GET
+	 * @return the established Connection
+	 * @throws IOException
+	 * @throws ServerException 
+	 */
+	private HttpURLConnection getConnection(URL url, String requestMethod) throws ServerException {
+		try {
+			// Open URL connection with server
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod(requestMethod);
+			
+			// If request it a POST, set connection up for output
+			if (requestMethod == "POST")
+				connection.setDoOutput(true);
+			
+			return connection;
+			
+		} catch (MalformedURLException e) {
+			throw new ServerException(String.format(requestMethod + " failed: %s", e.getMessage(), e));
+		} catch (IOException e) {
+			throw new ServerException(String.format("doPost failed: %s", e.getMessage(), e));
+		}
 	}
 }

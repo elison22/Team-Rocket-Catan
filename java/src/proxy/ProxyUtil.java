@@ -1,7 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
 /**@author Chad
  * Jan 19, 2015
  * 
@@ -26,7 +24,7 @@ public class ProxyUtil extends ServerProxy {
 	 * FINE, FINER, FINEST, OFF.
 	 * @return server's http response
 	 */
-	public Object changeLogLevel(JsonObject changeLogLevelParams) {
+	public Object changeLogLevel(Object changeLogLevelParams) {
 		return null;
 	}
 

@@ -18,7 +18,7 @@ public interface IServerFacade {
 	 * is different than what is expected by the client, or if there was a 
 	 * problem connecting to the server.
 	 */
-	public Object login(Object loginParams) throws ServerException;
+	public boolean login(Object loginParams) throws ServerException;
 	
 	/**POSTs new user info to the server which will attempt
 	 * to create a new user account if the username is not 
@@ -31,7 +31,7 @@ public interface IServerFacade {
 	 * is different than what is expected by the client, or if there was a 
 	 * problem connecting to the server.
 	 */
-	public Object register(Object registerParams) throws ServerException;
+	public boolean register(Object registerParams) throws ServerException;
 
 	/** (GET) Retrieves information about all the currently running 
 	 * games on the server. 

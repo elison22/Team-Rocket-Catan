@@ -1,7 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
 /**@author Chad
  * Jan 1, 2015
  * 
@@ -26,9 +24,11 @@ public class ProxyGames extends ServerProxy {
 	 * @return Json with the format:
 	 * Game { title (String), id (int), players (array[Player]) }
 	 * Player { color (String), name (String), id (int) }.
+	 * @throws ServerException thrown if there was any problem reading the 
+	 * given URL or if the server returns a non-OK response code.
 	 */
-	public Object list() {
-		return null;
+	public Object list() throws ServerException {
+		return doGet("/games/list");
 	}
 	
 	/** (POST) Creates a new game on the server with the specified
@@ -40,7 +40,7 @@ public class ProxyGames extends ServerProxy {
 	 * @return Json with the new game's title (String), id (int), and
 	 * an array[4] with empty Player objects.
 	 */
-	public Object create(JsonObject createParams) {
+	public Object create(Object createParams) {
 		return null;
 	}
 	
@@ -50,7 +50,7 @@ public class ProxyGames extends ServerProxy {
 	 * the player's chosen color (String).
 	 * @return server's http response
 	 */
-	public Object join(JsonObject joinParams) {
+	public Object join(Object joinParams) {
 		return null;
 	}
 	
@@ -60,7 +60,7 @@ public class ProxyGames extends ServerProxy {
 	 * name (String) of the file to save it to.
 	 * @return server's http response
 	 */
-	public Object save(JsonObject saveParams) {
+	public Object save(Object saveParams) {
 		return null;
 	}
 	
@@ -69,7 +69,18 @@ public class ProxyGames extends ServerProxy {
 	 * @param loadParams containts the name (String) of the file.
 	 * @return server's http response
 	 */
-	public Object load(JsonObject loadParams) {
+	public Object load(Object loadParams) {
 		return null;
 	}
+	
+//	 // FOR TESTING:
+//	
+//	public static void main(String args[]) {
+//		ProxyGames pg = new ProxyGames("localhost", "8081");
+//		try {
+//			System.out.println(pg.list());
+//		} catch (ServerException e) {
+//			System.out.println(e.getMessage());
+//		}
+//	}
 }
