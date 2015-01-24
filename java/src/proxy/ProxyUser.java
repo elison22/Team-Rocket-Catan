@@ -1,5 +1,6 @@
 package proxy;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 /**@author Chad
@@ -8,8 +9,6 @@ import com.google.gson.JsonObject;
  * Handles all login related operations, including creating a new user.
  */
 public class ProxyUser extends ServerProxy {
-
-	public ProxyUser() {}
 	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.
@@ -49,5 +48,25 @@ public class ProxyUser extends ServerProxy {
 	public Object register(JsonObject registerParams) throws ServerException {
 		return null;
 	}
-
+	
+//	public class jsonTest {
+//		String username = "deuce";
+//		String password = "deuce";
+//	}
+//	
+//	public jsonTest getTest() {
+//		return new jsonTest();
+//	}
+//
+//	public static void main(String args[]) {
+//		ProxyUser pu = new ProxyUser("localhost", "8081");
+//		Gson gson = new Gson();
+//		try {
+//			pu.doPost("/user/regist", pu.getTest());
+//		} catch (ServerException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
+
+

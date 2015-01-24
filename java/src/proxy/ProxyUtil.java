@@ -8,8 +8,6 @@ import com.google.gson.JsonObject;
  * This class handles contacting the server to change the server's Log Level.
  */
 public class ProxyUtil extends ServerProxy {
-
-	public ProxyUtil() {}
 	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.

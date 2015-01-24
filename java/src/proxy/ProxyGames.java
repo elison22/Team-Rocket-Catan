@@ -9,8 +9,6 @@ import com.google.gson.JsonObject;
  * including joining or creating new games, and saving or loading created games.
  */
 public class ProxyGames extends ServerProxy {
-
-	public ProxyGames() {}
 	
 	/**Initializes the server's host and port that the proxy
 	 * will operate with.

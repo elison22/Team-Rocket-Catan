@@ -32,153 +32,183 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object login(JsonObject loginParams) throws ServerException {
-		return user.login(loginParams);
+	public Object login(Object loginParams) throws ServerException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Object register(JsonObject registerParams) throws ServerException {
-		return user.register(registerParams);
+	public Object register(Object registerParams) throws ServerException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object list() {
-		return games.list();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Object create(JsonObject createParams) {
-		return games.create(createParams);
+	public Object create(Object createParams) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Object join(JsonObject joinParams) {
-		return games.join(joinParams);
+	public Object join(Object joinParams) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Object save(JsonObject saveParams) {
-		return games.save(saveParams);
+	public Object save(Object saveParams) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Object load(JsonObject loadParams) {
-		return games.load(loadParams);
+	public Object load(Object loadParams) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object model() {
-		return game.model();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object reset() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object commandsPOST(Object commands) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object commandsGET() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object addAI(JsonObject addAIParams) {
+	public Object addAI(Object addAIParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object listAI() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object sendChat(JsonObject sendChatParams) {
-		return moves.sendChat(sendChatParams);
-	}
-
-	@Override
-	public Object rollNumber(JsonObject rollNumberParams) {
+	public Object sendChat(Object sendChatParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object robPlayer(JsonObject robPlayerParams) {
+	public Object rollNumber(Object rollNumberParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object finishTurn(JsonObject finishTurnParams) {
+	public Object robPlayer(Object robPlayerParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buyDevCard(JsonObject buyDevCardParams) {
+	public Object finishTurn(Object finishTurnParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Year_of_Plenty(JsonObject yearOfPlentyParams) {
+	public Object buyDevCard(Object buyDevCardParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Road_Building(JsonObject roadBuildingParams) {
+	public Object Year_of_Plenty(Object yearOfPlentyParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Soldier(JsonObject soldierParams) {
+	public Object Road_Building(Object roadBuildingParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Monument(JsonObject monumentParams) {
+	public Object Soldier(Object soldierParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buildRoad(JsonObject buildRoadParams) {
+	public Object Monument(Object monumentParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buildSettlement(JsonObject buildSettlementParams) {
+	public Object buildRoad(Object buildRoadParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buildCity(JsonObject buildCityParams) {
+	public Object buildSettlement(Object buildSettlementParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object offerTrade(JsonObject offerTradeParams) {
+	public Object buildCity(Object buildCityParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object acceptTrade(JsonObject acceptTradeParams) {
+	public Object offerTrade(Object offerTradeParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object maritimeTrade(JsonObject maritimeTradeParams) {
+	public Object acceptTrade(Object acceptTradeParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object discardCards(JsonObject discardCardsParams) {
+	public Object maritimeTrade(Object maritimeTradeParams) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object changeLogLevel(JsonObject changeLogLevelParams) {
-		return util.changeLogLevel(changeLogLevelParams);
+	public Object discardCards(Object discardCardsParams) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object changeLogLevel(Object changeLogLevelParams) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

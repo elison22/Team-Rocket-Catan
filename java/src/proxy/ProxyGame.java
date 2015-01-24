@@ -10,8 +10,6 @@ import com.google.gson.JsonObject;
  * history, testing commands, and adding AIs to the current game.
  */
 public class ProxyGame extends ServerProxy {
-
-	public ProxyGame() {}
 	
 	/**Initializes the server's host and port 
 	 * that the proxy will communicate with.

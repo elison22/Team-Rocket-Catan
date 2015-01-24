@@ -1,9 +1,5 @@
 package proxy;
 
-import com.google.gson.JsonObject;
-
-
-
 /**@author Chad
  * Jan 22, 2015
  * 
@@ -22,7 +18,7 @@ public interface IServerFacade {
 	 * is different than what is expected by the client, or if there was a 
 	 * problem connecting to the server.
 	 */
-	public Object login(JsonObject loginParams) throws ServerException;
+	public Object login(Object loginParams) throws ServerException;
 	
 	/**POSTs new user info to the server which will attempt
 	 * to create a new user account if the username is not 
@@ -35,7 +31,7 @@ public interface IServerFacade {
 	 * is different than what is expected by the client, or if there was a 
 	 * problem connecting to the server.
 	 */
-	public Object register(JsonObject registerParams) throws ServerException;
+	public Object register(Object registerParams) throws ServerException;
 
 	/** (GET) Retrieves information about all the currently running 
 	 * games on the server. 
@@ -55,7 +51,7 @@ public interface IServerFacade {
 	 * @return Json with the new game's title (String), id (int), and
 	 * an array[4] with empty Player objects.
 	 */
-	public Object create(JsonObject createParams);
+	public Object create(Object createParams);
 	
 	/** (POST) Adds the player to a specified game.
 	 * 
@@ -63,7 +59,7 @@ public interface IServerFacade {
 	 * the player's chosen color (String).
 	 * @return server's http response
 	 */
-	public Object join(JsonObject joinParams);
+	public Object join(Object joinParams);
 	
 	/** (POST) Saves the current state of a given game to a file.
 	 * 
@@ -71,14 +67,14 @@ public interface IServerFacade {
 	 * name (String) of the file to save it to.
 	 * @return server's http response
 	 */
-	public Object save(JsonObject saveParams);
+	public Object save(Object saveParams);
 	
 	/** (POST) loads a previously saved game from file.
 	 * 
 	 * @param loadParams containts the name (String) of the file.
 	 * @return server's http response
 	 */
-	public Object load(JsonObject loadParams);
+	public Object load(Object loadParams);
 	
 	/**(GET) Asks the server for the current state of the
 	 * game in Json format.
@@ -121,7 +117,7 @@ public interface IServerFacade {
 	 * types can be retrieved from Game.listAI().
 	 * @return Server's http response.
 	 */
-	public Object addAI(JsonObject addAIParams);
+	public Object addAI(Object addAIParams);
 	
 	/**(GET) Requests a list of valid AI types to be used as 
 	 * parameters in Game.addAI().
@@ -136,7 +132,7 @@ public interface IServerFacade {
 	 * and the message content (String)
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object sendChat(JsonObject sendChatParams);
+	public Object sendChat(Object sendChatParams);
 	
 	/**(POST) Sends the current player's dice roll to the server.
 	 * 
@@ -144,7 +140,7 @@ public interface IServerFacade {
 	 * and the rolled number (int 2-12)
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object rollNumber(JsonObject rollNumberParams);
+	public Object rollNumber(Object rollNumberParams);
 	
 	/**(POST) Sends the new robber location as well as the index of
 	 * the player to be robbed to the server.
@@ -154,14 +150,14 @@ public interface IServerFacade {
 	 * robber's new location (HexLocation).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object robPlayer(JsonObject robPlayerParams);
+	public Object robPlayer(Object robPlayerParams);
 	
 	/**(POST) Tells the server to end the current player's turn.
 	 * 
 	 * @param finishTurnParams Should contain the playerIndex (int).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object finishTurn(JsonObject finishTurnParams);
+	public Object finishTurn(Object finishTurnParams);
 	
 	/**(POST) Tells the server that the current player wants to buy a 
 	 * development card.
@@ -169,7 +165,7 @@ public interface IServerFacade {
 	 * @param buyDevCardParams Should contain the playerIndex(integer).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object buyDevCard(JsonObject buyDevCardParams);
+	public Object buyDevCard(Object buyDevCardParams);
 	
 	/**(POST) Sends the server the current player and their two 
 	 * resources to receive.
@@ -178,7 +174,7 @@ public interface IServerFacade {
 	 * resource1 (Resource), and resource2 (Resource).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object Year_of_Plenty(JsonObject yearOfPlentyParams);
+	public Object Year_of_Plenty(Object yearOfPlentyParams);
 	
 	/**(POST) Sends the server the locations for the two roads to be
 	 * build.
@@ -187,7 +183,7 @@ public interface IServerFacade {
 	 * spot1 (EdgeLocation), and spot2 (EdgeLocation).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object Road_Building(JsonObject roadBuildingParams);
+	public Object Road_Building(Object roadBuildingParams);
 	
 	/**(POST) Tells the server the robber's new location as well as 
 	 * which player will be robbed.
@@ -196,7 +192,7 @@ public interface IServerFacade {
 	 * victimIndex (int 0-3), and the robber's new location (HexLocation).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object Soldier(JsonObject soldierParams);
+	public Object Soldier(Object soldierParams);
 	
 	/**(POST) Tells the server to reward the current player with a 
 	 * victory Point.
@@ -205,7 +201,7 @@ public interface IServerFacade {
 	 * playerIndex (int 0-3).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object Monument(JsonObject monumentParams);
+	public Object Monument(Object monumentParams);
 	
 	/**(POST) Sends the server where the current player is building a
 	 * road. It also tells the server whether or not the road is an 
@@ -217,7 +213,7 @@ public interface IServerFacade {
 	 * free (Boolean).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object buildRoad(JsonObject buildRoadParams);
+	public Object buildRoad(Object buildRoadParams);
 	
 	/**(POST) Tells the server to build a settlement for the current
 	 * player at the specified location. Also tells the server whether
@@ -228,7 +224,7 @@ public interface IServerFacade {
 	 * (VertexLocation), and whether or not it is free (Boolean).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object buildSettlement(JsonObject buildSettlementParams);
+	public Object buildSettlement(Object buildSettlementParams);
 	
 	/**(POST) Tells the server to build a city at the specified
 	 * settlement location.
@@ -238,7 +234,7 @@ public interface IServerFacade {
 	 * (VertexLocation).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object buildCity(JsonObject buildCityParams);
+	public Object buildCity(Object buildCityParams);
 	
 	/**(POST) Tells the server to offer a trade from the current
 	 * player to the receiving player as well as the trade offer.
@@ -251,7 +247,7 @@ public interface IServerFacade {
 	 * receive (int 0-3).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object offerTrade(JsonObject offerTradeParams);
+	public Object offerTrade(Object offerTradeParams);
 	
 	/**(POST) Tells the server to accept or reject and offered
 	 * trade from another player.
@@ -261,7 +257,7 @@ public interface IServerFacade {
 	 * willAccept (boolean).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object acceptTrade(JsonObject acceptTradeParams);
+	public Object acceptTrade(Object acceptTradeParams);
 	
 	/**(POST) Sends the server the current player's desired
 	 * maritime trade. The trade includes the resources to 
@@ -274,7 +270,7 @@ public interface IServerFacade {
 	 * (String), and the bank's outputResource (String).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object maritimeTrade(JsonObject maritimeTradeParams);
+	public Object maritimeTrade(Object maritimeTradeParams);
 	
 	/**(POST) Tells the server to discard the current player's 
 	 * specified resources.
@@ -284,7 +280,7 @@ public interface IServerFacade {
 	 * (ResourceList).
 	 * @return Returns the game's json client model (See model()).
 	 */
-	public Object discardCards(JsonObject discardCardsParams);
+	public Object discardCards(Object discardCardsParams);
 	
 	/**(POST) Changes the server's log level.
 	 * 
@@ -293,5 +289,5 @@ public interface IServerFacade {
 	 * FINE, FINER, FINEST, OFF.
 	 * @return server's http response
 	 */
-	public Object changeLogLevel(JsonObject changeLogLevelParams);
+	public Object changeLogLevel(Object changeLogLevelParams);
 }
