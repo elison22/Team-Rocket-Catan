@@ -7,7 +7,7 @@ package proxy;
  * Proxy subclass that handles the particular request. The subclasses can then
  * validate the data and pass it to the server.
  */
-@SuppressWarnings("unused")
+
 public class ProxyFacade implements IServerFacade {
 	
 	final String HOST;
@@ -42,165 +42,138 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object list() {
-		// TODO Auto-generated method stub
-		return null;
+	public Object list() throws ServerException {
+		return games.list();
 	}
 
 	@Override
 	public Object create(Object createParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return games.create(createParams);
 	}
 
 	@Override
 	public Object join(Object joinParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return games.join(joinParams);
 	}
 
 	@Override
 	public Object save(Object saveParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return games.save(saveParams);
 	}
 
 	@Override
 	public Object load(Object loadParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return games.load(loadParams);
 	}
 
 	@Override
 	public Object model() {
-		// TODO Auto-generated method stub
-		return null;
+		return game.model();
 	}
 
 	@Override
 	public Object reset() {
-		// TODO Auto-generated method stub
-		return null;
+		return game.reset();
 	}
 
 	@Override
 	public Object commandsPOST(Object commands) {
-		// TODO Auto-generated method stub
-		return null;
+		return game.commandsPOST(commands);
 	}
 
 	@Override
 	public Object commandsGET() {
-		// TODO Auto-generated method stub
-		return null;
+		return game.commandsGET();
 	}
 
 	@Override
 	public Object addAI(Object addAIParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return game.addAI(addAIParams);
 	}
 
 	@Override
 	public Object listAI() {
-		// TODO Auto-generated method stub
-		return null;
+		return game.listAI();
 	}
 
 	@Override
 	public Object sendChat(Object sendChatParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.sendChat(sendChatParams);
 	}
 
 	@Override
 	public Object rollNumber(Object rollNumberParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.rollNumber(rollNumberParams);
 	}
 
 	@Override
 	public Object robPlayer(Object robPlayerParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.robPlayer(robPlayerParams);
 	}
 
 	@Override
 	public Object finishTurn(Object finishTurnParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.finishTurn(finishTurnParams);
 	}
 
 	@Override
 	public Object buyDevCard(Object buyDevCardParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.buyDevCard(buyDevCardParams);
 	}
 
 	@Override
 	public Object Year_of_Plenty(Object yearOfPlentyParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.Year_of_Plenty(yearOfPlentyParams);
 	}
 
 	@Override
 	public Object Road_Building(Object roadBuildingParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.Road_Building(roadBuildingParams);
 	}
 
 	@Override
 	public Object Soldier(Object soldierParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.Soldier(soldierParams);
 	}
 
 	@Override
 	public Object Monument(Object monumentParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.Monument(monumentParams);
 	}
 
 	@Override
 	public Object buildRoad(Object buildRoadParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.buildRoad(buildRoadParams);
 	}
 
 	@Override
 	public Object buildSettlement(Object buildSettlementParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.buildSettlement(buildSettlementParams);
 	}
 
 	@Override
 	public Object buildCity(Object buildCityParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.buildCity(buildCityParams);
 	}
 
 	@Override
 	public Object offerTrade(Object offerTradeParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.offerTrade(offerTradeParams);
 	}
 
 	@Override
 	public Object acceptTrade(Object acceptTradeParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.acceptTrade(acceptTradeParams);
 	}
 
 	@Override
 	public Object maritimeTrade(Object maritimeTradeParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.maritimeTrade(maritimeTradeParams);
 	}
 
 	@Override
 	public Object discardCards(Object discardCardsParams) {
-		// TODO Auto-generated method stub
-		return null;
+		return moves.discardCards(discardCardsParams);
 	}
 
 	@Override

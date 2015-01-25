@@ -39,8 +39,9 @@ public interface IServerFacade {
 	 * @return Json with the format:
 	 * Game { title (String), id (int), players (array[Player]) }
 	 * Player { color (String), name (String), id (int) }.
+	 * @throws ServerException 
 	 */
-	public Object list();
+	public Object list() throws ServerException;
 	
 	/** (POST) Creates a new game on the server with the specified
 	 * random options.
