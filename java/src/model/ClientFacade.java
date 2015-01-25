@@ -12,7 +12,7 @@ import model.trade.ITradeOffer;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
-public class Facade {
+public class ClientFacade {
 
     private GameModel game;
     private int playerIndex; 
@@ -21,7 +21,7 @@ public class Facade {
     /**
      * Creates a new Game Object
      */
-    public Facade() {
+    public ClientFacade() {
 
     }
 
