@@ -73,8 +73,8 @@ public class ProxyGames extends ServerProxy {
 		return null;
 	}
 	
-//	 // FOR TESTING:
-//	
+	 // FOR TESTING:
+	
 //	public static void main(String args[]) {
 //		ProxyGames pg = new ProxyGames("localhost", "8081");
 //		try {

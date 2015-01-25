@@ -204,9 +204,8 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object changeLogLevel(Object changeLogLevelParams) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean changeLogLevel(Object changeLogLevelParams) throws ServerException {
+		return util.changeLogLevel(changeLogLevelParams);
 	}
 
 }

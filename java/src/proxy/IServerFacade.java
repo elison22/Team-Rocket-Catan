@@ -288,6 +288,7 @@ public interface IServerFacade {
 	 * Accepted values include: ALL, SEVERE, WARNING, INFO, CONFIG,
 	 * FINE, FINER, FINEST, OFF.
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object changeLogLevel(Object changeLogLevelParams);
+	public boolean changeLogLevel(Object changeLogLevelParams) throws ServerException;
 }

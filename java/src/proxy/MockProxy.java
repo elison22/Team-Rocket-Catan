@@ -187,9 +187,9 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
-	public Object changeLogLevel(Object changeLogLevelParams) {
+	public boolean changeLogLevel(Object changeLogLevelParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 	
 }

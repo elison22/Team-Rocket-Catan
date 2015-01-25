@@ -171,6 +171,10 @@ abstract class ServerProxy {
 			if (requestMethod == "POST")
 				connection.setDoOutput(true);
 			
+			// Give server 10 seconds to respond
+			connection.setReadTimeout(10*1000);
+			connection.connect();
+			
 			return connection;
 			
 		} catch (MalformedURLException e) {
