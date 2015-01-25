@@ -2,10 +2,11 @@ package model.game;
 
 import java.util.ArrayList;
 
-import model.trade.ITradeOffer;
+import model.Chat;
 import model.board.Board;
 import model.cards.GameBank;
 import model.player.Player;
+import model.trade.ITradeOffer;
 
 public class GameModel {
 
@@ -15,9 +16,9 @@ public class GameModel {
     private GameBank cardBank;                      // holds all the resource cards and all the dev cards
     private TurnTracker turnTracker;        // holds whos turn it is, as well as game state
     private Board Map;
-    private ArrayList<String> messageList;
+    private Chat messageList;
     private ITradeOffer tradeOffer;
-    private ArrayList<Integer> players;
+    private ArrayList<Integer> playerIndexs;
 
 
     public ITradeOffer getTradeOffer() {
@@ -80,11 +81,11 @@ public class GameModel {
         Map = map;
     }
 
-    public ArrayList<String> getMessageList() {
+    public Chat getMessageList() {
         return messageList;
     }
 
-    public void setMessageList(ArrayList<String> messageList) {
+    public void setMessageList(Chat messageList) {
         this.messageList = messageList;
     }
 
