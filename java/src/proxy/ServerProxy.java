@@ -148,6 +148,9 @@ abstract class ServerProxy {
 		while ((line = br.readLine()) != null) {
 			sb.append(line + "\n");
 		}
+		
+		br.close();
+		
 		return sb.toString();
 	}
 	
