@@ -1,4 +1,4 @@
-package model;
+package facade;
 
 import java.util.ArrayList;
 import java.util.List;
