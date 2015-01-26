@@ -1,14 +1,11 @@
 package facade;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import model.board.Board;
-import model.cards.GameBank;
 import model.cards.ResourceSet;
 import model.game.GameModel;
-import model.player.Player;
 import model.trade.ITradeOffer;
+import proxy.ProxyFacade;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
@@ -16,6 +13,7 @@ public class ClientFacade implements IClientFacade {
 
     private GameModel game;
     private int playerIndex;
+    private ProxyFacade proxy;
 
     /**
      * Creates a new Game Object
