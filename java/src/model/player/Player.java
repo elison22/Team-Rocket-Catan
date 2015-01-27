@@ -23,6 +23,12 @@ public class Player {
     private String playerName;
     /** The player's victory points */
     private int victoryPoints;
+    /** The number of roads the player can build */
+    private int remainingRoads;
+    /** The number of settlements the player can build */
+    private int remainingSettlements;
+    /** The number of cities the player can build */
+    private int remainingCities;
 
     /**
      * Creates a new Player object with an empty PlayerBank object and zero victory points
@@ -34,14 +40,20 @@ public class Player {
         this.victoryPoints = 0;
         this.bank = new PlayerBank();
         this.playerIdx = playerIdx;
+        this.remainingRoads = 15;
+        this.remainingSettlements = 5;
+        this.remainingCities = 4;
     }
 
     /**
      * Called by the Facade to update players after polling
      * @param bank The player's bank of cards
      * @param victoryPoints The player's victoryPoints
+     * @param remainingRoads The number of roads the player has remaining
+     * @param remainingSettlements The number of settlements the player has remaining
+     * @param remainingCities The number of cities the player has remaining
      */
-    public void update(PlayerBank bank, int victoryPoints){
+    public void update(PlayerBank bank, int victoryPoints, int remainingRoads, int remainingSettlements, int remainingCities){
         this.bank = bank;
         this.victoryPoints = victoryPoints;
     }
