@@ -100,7 +100,7 @@ abstract class ServerProxy {
 			
 			// Write postParams to the connection as Json
 			OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
-			os.write(gson.toJson(postParams));
+			os.write(gson.toJson(postParams));//System.out.println(gson.toJson(postParams));
 			os.close();
 			
 			// Verify request was successful
@@ -112,7 +112,7 @@ abstract class ServerProxy {
 			} else {
 				
 				// Throw ServerException with the server's response code
-				String errorMessage = "doPost failed: Server response code %s,";
+				String errorMessage = "doPost failed: Server response code %s";
 				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
 			}
 			

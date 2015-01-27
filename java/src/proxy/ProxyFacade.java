@@ -47,22 +47,22 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object create(Object createParams) {
+	public Object create(Object createParams) throws ServerException {
 		return games.create(createParams);
 	}
 
 	@Override
-	public Object join(Object joinParams) {
+	public Object join(Object joinParams) throws ServerException {
 		return games.join(joinParams);
 	}
 
 	@Override
-	public Object save(Object saveParams) {
+	public Object save(Object saveParams) throws ServerException {
 		return games.save(saveParams);
 	}
 
 	@Override
-	public Object load(Object loadParams) {
+	public Object load(Object loadParams) throws ServerException {
 		return games.load(loadParams);
 	}
 

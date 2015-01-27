@@ -51,31 +51,35 @@ public interface IServerFacade {
 	 * name (String).
 	 * @return Json with the new game's title (String), id (int), and
 	 * an array[4] with empty Player objects.
+	 * @throws ServerException 
 	 */
-	public Object create(Object createParams);
+	public Object create(Object createParams) throws ServerException;
 	
 	/** (POST) Adds the player to a specified game.
 	 * 
 	 * @param joinParams Should contain the game's id (int) and
 	 * the player's chosen color (String).
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object join(Object joinParams);
+	public Object join(Object joinParams) throws ServerException;
 	
 	/** (POST) Saves the current state of a given game to a file.
 	 * 
 	 * @param saveParams contains the game's id (int) and the
 	 * name (String) of the file to save it to.
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object save(Object saveParams);
+	public Object save(Object saveParams) throws ServerException;
 	
 	/** (POST) loads a previously saved game from file.
 	 * 
 	 * @param loadParams containts the name (String) of the file.
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object load(Object loadParams);
+	public Object load(Object loadParams) throws ServerException;
 	
 	/**(GET) Asks the server for the current state of the
 	 * game in Json format.

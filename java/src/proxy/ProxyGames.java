@@ -35,13 +35,14 @@ public class ProxyGames extends ServerProxy {
 	 * random options.
 	 * 
 	 * @param createParams Should contain randomTiles (boolean),
-	 * randomNumbers (boolean), randomPorts (boolean, and 
+	 * randomNumbers (boolean), randomPorts (boolean), and 
 	 * name (String).
 	 * @return Json with the new game's title (String), id (int), and
 	 * an array[4] with empty Player objects.
+	 * @throws ServerException 
 	 */
-	public Object create(Object createParams) {
-		return null;
+	public Object create(Object createParams) throws ServerException {
+		return doPost("/games/create", createParams);
 	}
 	
 	/** (POST) Adds the player to a specified game.
@@ -49,9 +50,10 @@ public class ProxyGames extends ServerProxy {
 	 * @param joinParams Should contain the game's id (int) and
 	 * the player's chosen color (String).
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object join(Object joinParams) {
-		return null;
+	public Object join(Object joinParams) throws ServerException {
+		return doPost("/games/join", joinParams);
 	}
 	
 	/** (POST) Saves the current state of a given game to a file.
@@ -59,18 +61,20 @@ public class ProxyGames extends ServerProxy {
 	 * @param saveParams contains the game's id (int) and the
 	 * name (String) of the file to save it to.
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object save(Object saveParams) {
-		return null;
+	public Object save(Object saveParams) throws ServerException {
+		return doPost("/games/save", saveParams);
 	}
 	
 	/** (POST) loads a previously saved game from file.
 	 * 
 	 * @param loadParams containts the name (String) of the file.
 	 * @return server's http response
+	 * @throws ServerException 
 	 */
-	public Object load(Object loadParams) {
-		return null;
+	public Object load(Object loadParams) throws ServerException {
+		return doPost("/games/load", loadParams);
 	}
 	
 	 // FOR TESTING:
