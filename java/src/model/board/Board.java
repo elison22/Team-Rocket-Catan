@@ -1,9 +1,7 @@
 package model.board;
 
 import shared.definitions.HexType;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.locations.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,6 +23,8 @@ public class Board {
     private TreeMap<VertexLocation, Constructable> buildings = new TreeMap<VertexLocation, Constructable>();
     /** The ROAD type Constructable objects on this Board */
     private TreeMap<EdgeLocation, Constructable> roads = new TreeMap<EdgeLocation, Constructable>();
+    /** The Port vertices on this Board */
+    private TreeMap<VertexLocation, Port> ports = new TreeMap<VertexLocation, Port>();
     /** The HexLocation that represents the robber */
     private HexLocation robber;
 
@@ -108,59 +108,133 @@ public class Board {
     }
 
     /**
-     * Determines whether or not a player can build a Settlement on this location. The
-     * conditions are that no Building is already present at the location param
-     * or any of its neighbors. Verifies with all 3 adjacent HexTiles.
+     * Determines whether or not a player can build a Settlement-type Constructable on this
+     * location. The conditions are that no Constructable is already present at the location
+     * param or any of its neighbors.
      * @param location Where to check for availability.
      * @return True if the vertex is available for a Settlement.
      */
-    public boolean canBuildSettlement(VertexLocation location) { return true; }
+    public boolean canBuildSettlement(VertexLocation location) {
+        VertexLocation normalized = location.getNormalizedLocation();
+        return buildings.get(normalized) == null && !hasNeighbor(normalized);
+    }
 
     /**
-     * Determines whether or not a player can build a City on this location. The
-     * conditions are that there is a Settlement already on this location.
-     * Verifies with all 3 adjacent HexTiles.
+     * Determines whether or not a player can build a City-type Constructable on this
+     * location. The conditions are that there is already a Settlement-type Constructable
+     * is already present at the location param.
      * @param location Where to check for availability.
      * @return True if the vertex is available for a City.
      */
-    public boolean canBuildCity(VertexLocation location) { return true; }
+    public boolean canBuildCity(VertexLocation location) {
+        VertexLocation normalized = location.getNormalizedLocation();
+        if (buildings.get(normalized) == null) return false;
+        return buildings.get(normalized).isSettlement();
+    }
 
     /**
      * Determines whether or not a player can build a Road on this location. The
      * conditions are that no Road is already present at the location param or any
      * of its neighbors. Verifies with both adjacent HexTiles.
+     * @return True if the edge is available for a road.
      */
-    public boolean canBuildRoad(EdgeLocation location) { return true; }
+    public boolean canBuildRoad(EdgeLocation location) {
+        return roads.get(location.getNormalizedLocation()) == null;
+
+    }
 
     /**
-     * This orchestrates the process of building a Settlement by making sure Settlement
-     * objects get assigned to all the HexTile objects adjacent to the location parameter.
-     * @param location The location where the Settlement should be built.
+     * Inserts a new Settlement-type Constructable object into the buildings map with the
+     * key set to the normalized location param and the owner field set to the owner param.
+     * @param location The location where the settlement should be built.
+     * @param owner The owner of the settlement to be built.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range 0-3
      */
-    public void doBuildSettlement(VertexLocation location) {}
+    public void doBuildSettlement(VertexLocation location, int owner) throws BoardException {
+        Constructable settlement = new Constructable(ConstructableType.SETTLEMENT, owner);
+        buildings.put(location.getNormalizedLocation(), settlement);
+    }
 
     /**
-     * This orchestrates the process of building a City by making sure City
-     * objects get assigned to all the HexTile objects adjacent to the location parameter.
-     * @param location The location where the City should be built.
+     * Inserts a new City-type Constructable object into the buildings map with the
+     * key set to the normalized location param and the owner field set to the owner param.
+     * The canBuildSettlement function should be called prior to using this function.
+     * @param location The location where the city should be built.
+     * @param owner The owner of the city to be built.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range 0-3
      */
-    public void doBuildCity(VertexLocation location) {}
+    public void doBuildCity(VertexLocation location, int owner) throws BoardException {
+        Constructable city = new Constructable(ConstructableType.CITY, owner);
+        buildings.put(location.getNormalizedLocation(), city);
+    }
 
     /**
-     * This orchestrates the process of building a Road by making sure Road
-     * objects get assigned to all the HexTile objects adjacent to the location parameter.
-     * @param location The location where the Road should be built.
+     * Inserts a new Road-type Constructable object into the roads map with the
+     * key set to the normalized location param and the owner field set to the owner param.
+     * The canBuildCity function should be called prior to using this function.
+     * @param location The location where the road should be built.
+     * @param owner The owner of the road to be built.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range 0-3
      */
-    public void doBuildRoad(EdgeLocation location) {}
+    public void doBuildRoad(EdgeLocation location, int owner) throws BoardException {
+        Constructable road = new Constructable(ConstructableType.ROAD, owner);
+        roads.put(location.getNormalizedLocation(), road);
+    }
 
-//    /**
-//     * Finds out what players should get resources, then updates the PlayerBank
-//     * for each player and the GameBank. Resource allocation may eventually be
-//     * move to another class improve single responsibility.
-//     * @param diceNum The dice value was rolled.
-//     */
-//    public void distributeResources(int diceNum) {}
 
+    /**
+     * Check if there are any buildings immediately next to this location.
+     * @param location The location around which to check.
+     * @return True if there are neighbors
+     */
+    private boolean hasNeighbor(VertexLocation location) {
+
+        VertexLocation normalized = location.getNormalizedLocation();
+
+        if (normalized.getDir() == VertexDirection.NorthWest) {
+
+            VertexLocation northwest = new VertexLocation(
+                    normalized.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest),
+                    VertexDirection.NorthEast);
+            VertexLocation southwest = new VertexLocation(
+                    normalized.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest),
+                    VertexDirection.NorthEast);
+            VertexLocation east = new VertexLocation(
+                    normalized.getHexLoc(),
+                    VertexDirection.NorthEast);
+
+            if (
+                    buildings.get(east) == null &&
+                    buildings.get(northwest) == null &&
+                    buildings.get(southwest) == null )
+                return true;
+            else return false;
+        }
+
+        else {
+
+            VertexLocation northeast = new VertexLocation(
+                    normalized.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast),
+                    VertexDirection.NorthWest);
+            VertexLocation southeast = new VertexLocation(
+                    normalized.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast),
+                    VertexDirection.NorthWest);
+            VertexLocation west = new VertexLocation(
+                    normalized.getHexLoc(),
+                    VertexDirection.NorthWest);
+
+            if (
+                    buildings.get(west) == null &&
+                    buildings.get(northeast) == null &&
+                    buildings.get(southeast) == null )
+                return true;
+            else return false;
+        }
+
+    }
 
 
 }

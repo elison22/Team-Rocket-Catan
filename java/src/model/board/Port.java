@@ -4,6 +4,10 @@ import shared.definitions.PortType;
 
 /**
  * Created by brandt on 1/26/15.
+ * <p>
+ *     Represents one of the two vertices that connection to a port. Keeps track
+ *     of the PortType and the port owner if there is one.
+ * </p>
  */
 public class Port {
 
