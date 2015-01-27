@@ -1,6 +1,5 @@
 package model.board;
 
-import model.board.mapunits.HexTile;
 import shared.definitions.HexType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -8,6 +7,7 @@ import shared.locations.VertexLocation;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 /**
  * Created by brandt on 1/17/15.
@@ -20,7 +20,11 @@ import java.util.Random;
 public class Board {
 
     /** The HexTile objects that make up this Board */
-    private ArrayList<HexTile> tiles = new ArrayList<HexTile>() {};
+    private TreeMap<HexLocation, HexTile> tiles = new TreeMap<HexLocation, HexTile>();
+    /** The CITY and SETTLEMENT type Constructable objects on this Board */
+    private TreeMap<VertexLocation, Constructable> buildings = new TreeMap<VertexLocation, Constructable>();
+    /** The ROAD type Constructable objects on this Board */
+    private TreeMap<EdgeLocation, Constructable> roads = new TreeMap<EdgeLocation, Constructable>();
     /** The HexLocation that represents the robber */
     private HexLocation robber;
 
@@ -54,33 +58,33 @@ public class Board {
         int[] y = {2, 1, 0, -1, -2, -2, -2, -1, 0, 1, 2, 2, 1, 0, -1, -1, 0, 1, 0};
 
         //Beginning for random types but set dice numbers
-        for(int i = 0; i < 19; i++) {
-            nextTypeRand = randomTypes.nextInt(typeSetupArray.size());
-            nextType = typeSetupArray.get(nextTypeRand);
-            tiles.add(
-                    new HexTile(
-                            nextType,
-                            nextType != HexType.DESERT ? diceNumSetupArray[i - toSubtract] : setRobber(toSubtract++, x[i], y[i]),
-                            new HexLocation(x[i], y[i])
-                    ));
-            typeSetupArray.remove(nextTypeRand);
-        }
+//        for(int i = 0; i < 19; i++) {
+//            nextTypeRand = randomTypes.nextInt(typeSetupArray.size());
+//            nextType = typeSetupArray.get(nextTypeRand);
+//            tiles.add(
+//                    new HexTile(
+//                            nextType,
+//                            nextType != HexType.DESERT ? diceNumSetupArray[i - toSubtract] : setRobber(toSubtract++, x[i], y[i]),
+//                            new HexLocation(x[i], y[i])
+//                    ));
+//            typeSetupArray.remove(nextTypeRand);
+//        }
         //End for random types but set dice numbers
     }
 
-    /**
-     * This is called in the constructor to simultaneously set the diceNum of a
-     * HexTile and assign the robber to that same HexTile.
-     * @param diceNum The diceNum for the HexTile to receive the robber.
-     * @param x The x location for the robber.
-     * @param y The y location for the robber.
-     * @return The diceNum for the HexTile to receive the robber.
-     * @throws BoardException Thrown when the x or y values are outside the range -2 to 2
-     */
-    private int setRobber(int diceNum, int x, int y) throws BoardException {
-        setRobber(x, y);
-        return diceNum;
-    }
+//    /**
+//     * This is called in the constructor to simultaneously set the diceNum of a
+//     * HexTile and assign the robber to that same HexTile.
+//     * @param diceNum The diceNum for the HexTile to receive the robber.
+//     * @param x The x location for the robber.
+//     * @param y The y location for the robber.
+//     * @return The diceNum for the HexTile to receive the robber.
+//     * @throws BoardException Thrown when the x or y values are outside the range -2 to 2
+//     */
+//    private int setRobber(int diceNum, int x, int y) throws BoardException {
+//        setRobber(x, y);
+//        return diceNum;
+//    }
 
     /**
      * Set the robber's new location using x/y coordinates
@@ -133,29 +137,29 @@ public class Board {
      * objects get assigned to all the HexTile objects adjacent to the location parameter.
      * @param location The location where the Settlement should be built.
      */
-    public void buildSettlement(VertexLocation location) {}
+    public void doBuildSettlement(VertexLocation location) {}
 
     /**
      * This orchestrates the process of building a City by making sure City
      * objects get assigned to all the HexTile objects adjacent to the location parameter.
      * @param location The location where the City should be built.
      */
-    public void buildCity(VertexLocation location) {}
+    public void doBuildCity(VertexLocation location) {}
 
     /**
      * This orchestrates the process of building a Road by making sure Road
      * objects get assigned to all the HexTile objects adjacent to the location parameter.
      * @param location The location where the Road should be built.
      */
-    public void buildRoad(EdgeLocation location) {}
+    public void doBuildRoad(EdgeLocation location) {}
 
-    /**
-     * Finds out what players should get resources, then updates the PlayerBank
-     * for each player and the GameBank. Resource allocation may eventually be
-     * move to another class improve single responsibility.
-     * @param diceNum The dice value was rolled.
-     */
-    public void distributeResources(int diceNum) {}
+//    /**
+//     * Finds out what players should get resources, then updates the PlayerBank
+//     * for each player and the GameBank. Resource allocation may eventually be
+//     * move to another class improve single responsibility.
+//     * @param diceNum The dice value was rolled.
+//     */
+//    public void distributeResources(int diceNum) {}
 
 
 
