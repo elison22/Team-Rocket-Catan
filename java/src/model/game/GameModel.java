@@ -2,7 +2,7 @@ package model.game;
 
 import java.util.ArrayList;
 
-import model.Chat;
+import model.chat;
 import model.board.Board;
 import model.cards.GameBank;
 import model.player.Player;
@@ -15,8 +15,9 @@ public class GameModel {
     private ArrayList<Player> playerList;   // holds all the players
     private GameBank cardBank;                      // holds all the resource cards and all the dev cards
     private TurnTracker turnTracker;        // holds whos turn it is, as well as game state
-    private Board Map;
-    private Chat messageList;
+    private Board map;
+    private Chat chat;
+    private GameHistory gameHistory;
     private ITradeOffer tradeOffer;
     private ArrayList<Integer> playerIndexs;
 
