@@ -1,8 +1,5 @@
 package model.chat;
 
-import model.Game;
-
-import java.util.List;
 
 /**
  * @author Hayden

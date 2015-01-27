@@ -1,8 +1,7 @@
 package model.chat;
 
-import model.Game;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Hayden
@@ -11,14 +10,14 @@ import java.util.List;
 public class Chat {
 
     /**The list of chat messages*/
-    private arrayList<Message> chatMessages;
+    private ArrayList<Message> chatMessages;
 
     /**
      * Creates a chat object with the list of messages that have been
      * previously sent in case a player joins the game late.
      * @param chatMessages The list of messages sent over the chat interface
      */
-    public Chat(arrayList<Message> chatMessages){
+    public Chat(ArrayList<Message> chatMessages){
         this.chatMessages = chatMessages;
     }
 }

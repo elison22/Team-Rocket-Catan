@@ -2,7 +2,8 @@ package model.game;
 
 import java.util.ArrayList;
 
-import model.chat;
+import model.chat.Chat;
+import model.chat.GameHistory;
 import model.board.Board;
 import model.cards.GameBank;
 import model.player.Player;
@@ -75,20 +76,20 @@ public class GameModel {
     }
 
     public Board getMap() {
-        return Map;
+        return map;
     }
 
     public void setMap(Board map) {
-        Map = map;
+        this.map = map;
     }
 
-    public Chat getMessageList() {
-        return messageList;
-    }
-
-    public void setMessageList(Chat messageList) {
-        this.messageList = messageList;
-    }
+//    public Chat getMessageList() {
+//        return messageList;
+//    }
+//
+//    public void setMessageList(Chat messageList) {
+//        this.messageList = messageList;
+//    }
 
 
 

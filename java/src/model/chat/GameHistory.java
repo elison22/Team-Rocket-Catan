@@ -1,8 +1,6 @@
 package model.chat;
 
-import model.Game;
-
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Hayden
@@ -12,13 +10,13 @@ import java.util.List;
 public class GameHistory {
 
     /**The list of turn summaries*/
-    private arrayList<String> turnLog;
+    private ArrayList<String> turnLog;
 
     /**
      * Creates a GameHistory object with the list of turn summaries that have occurred so far.
      * @param turnLog The list of actions players took on their turns
      */
-    public GameHistory(arrayList<String> turnLog){
+    public GameHistory(ArrayList<String> turnLog){
         this.turnLog = turnLog;
     }
 }
