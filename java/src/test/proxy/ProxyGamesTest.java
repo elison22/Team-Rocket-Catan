@@ -13,7 +13,9 @@ import proxy.ServerException;
 import proxy.ServerProxy;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
+import shared.dto.LoadGame_Params;
 import shared.dto.Login_Params;
+import shared.dto.SaveGame_Params;
 
 /**
  * @author Chad
@@ -56,7 +58,7 @@ public class ProxyGamesTest {
 			pu.register(loginParams);
 		} catch (ServerException e) {
 			assertTrue(pu.login(loginParams));
-		}System.out.println(ServerProxy.getInstance().getCookies());
+		}
 		
 		// Create a game to join
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Test");
@@ -71,4 +73,39 @@ public class ProxyGamesTest {
 		JoinGame_Params joinParams = new JoinGame_Params(gameId, "blue");
 		assertTrue(proxyGames.join(joinParams) != null);
 	}
+	
+// TODO figure out how saving/loading is supposed to work
+//	@Test
+//	public void saveAndLoadTest() throws ServerException {
+//		Login_Params loginParams = new Login_Params("Test", "Test");
+//		ProxyUser pu = new ProxyUser();
+//		
+//		// If "Test"/"Test" is already registered, try logging in
+//		try {
+//			pu.register(loginParams);
+//		} catch (ServerException e) {
+//			assertTrue(pu.login(loginParams));
+//		}
+//		
+//		// Create a game to join
+//		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Test");
+//		String result = (String) proxyGames.create(createParams);
+//		assertTrue(result != null);
+//		
+//		// Get created game's id from json String
+//		JsonObject json = new Gson().fromJson(result, JsonObject.class);
+//		int gameId = json.get("id").getAsInt();
+//		
+//		// Attempt to join game
+//		JoinGame_Params joinParams = new JoinGame_Params(gameId, "blue");
+//		assertTrue(proxyGames.join(joinParams) != null);
+//		
+//		// Attempt to save the game
+//		SaveGame_Params saveParams = new SaveGame_Params(gameId, "testsave");
+//		assertTrue(proxyGames.save(saveParams) != null);
+//		
+//		// Attempt to load the saved game
+//		LoadGame_Params loadParams = new LoadGame_Params("testsave");
+//		assertTrue(proxyGames.load(loadParams) != null);
+//	}
 }

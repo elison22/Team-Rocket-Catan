@@ -38,7 +38,7 @@ public class ProxyUserTest {
 		// login and register use same params
 		Login_Params loginParams = new Login_Params(randString, randString);
 		
-		assertTrue(proxyUser.register(loginParams));System.out.println(ServerProxy.getInstance().getCookies());
+		assertTrue(proxyUser.register(loginParams));
 		assertTrue(proxyUser.login(loginParams));
 	}
 	
