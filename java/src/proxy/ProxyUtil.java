@@ -5,17 +5,9 @@ package proxy;
  * 
  * This class handles contacting the server to change the server's Log Level.
  */
-public class ProxyUtil extends ServerProxy {
+public class ProxyUtil {
 	
-	/**Initializes the server's host and port that the proxy
-	 * will operate with.
-	 * 
-	 * @param host the name or IP address of the server
-	 * @param port the port that the server will use
-	 * */
-	public ProxyUtil(String host, String port) {
-		super(host, port);
-	}
+	public ProxyUtil() {}
 	
 	/**(POST) Changes the server's log level.
 	 * 
@@ -30,46 +22,11 @@ public class ProxyUtil extends ServerProxy {
 	public boolean changeLogLevel(Object changeLogLevelParams) throws ServerException {
 		
 		// Get server response
-		String result = doPost("/util/changeLogLevel", changeLogLevelParams);
+		String result = ServerProxy.getInstance().doPost("/util/changeLogLevel", changeLogLevelParams);
 		
 		if (result.equals("Success\n"))
 			return true;
 		
 		return false;
 	}
-	
-//	// FOR TESTING:
-//	
-//	public class ChangeLogLevelTest {
-//		String logLevel;
-//
-//		public String getLogLevel() {
-//			return logLevel;
-//		}
-//
-//		public void setLogLevel(String logLevel) {
-//			this.logLevel = logLevel;
-//		}
-//	}
-//	
-//	public ChangeLogLevelTest getCLLT() {
-//		return new ChangeLogLevelTest();
-//	}
-//
-//	public static void main(String args[]) {
-//		ProxyUtil pu = new ProxyUtil("localhost", "8081");
-//		ChangeLogLevelTest changeLogLevelParams = pu.getCLLT();
-//		changeLogLevelParams.setLogLevel("SEVERE");
-//		try {
-//			System.out.println(pu.changeLogLevel(changeLogLevelParams));
-//			
-//			changeLogLevelParams.setLogLevel("INFO");
-//			System.out.println(pu.changeLogLevel(changeLogLevelParams));
-//			
-//			changeLogLevelParams.setLogLevel("OFF");
-//			System.out.println(pu.changeLogLevel(changeLogLevelParams));
-//		} catch (ServerException e) {
-//			System.out.println(e.getMessage());
-//		}
-//	}
 }

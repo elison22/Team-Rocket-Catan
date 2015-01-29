@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import proxy.ProxyGames;
 import proxy.ProxyUser;
 import proxy.ServerException;
+import proxy.ServerProxy;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
 import shared.dto.Login_Params;
@@ -27,7 +28,12 @@ import shared.dto.Login_Params;
  */
 public class ProxyGamesTest {
 	
-	ProxyGames proxyGames = new ProxyGames("localhost", "8081");
+	ProxyGames proxyGames = new ProxyGames();
+	
+	@Before
+	public void initProxy() {
+		ServerProxy.getInstance().initProxy("localhost","8081");
+	}
 	
 	@Test
 	public void listGamesTest() throws ServerException {
@@ -43,14 +49,14 @@ public class ProxyGamesTest {
 	@Test
 	public void joinGameTest() throws ServerException {
 		Login_Params loginParams = new Login_Params("Test", "Test");
-		ProxyUser pu = new ProxyUser("localhost", "8081");
+		ProxyUser pu = new ProxyUser();
 		
 		// If "Test"/"Test" is already registered, try logging in
 		try {
 			pu.register(loginParams);
 		} catch (ServerException e) {
 			assertTrue(pu.login(loginParams));
-		}
+		}System.out.println(ServerProxy.getInstance().getCookies());
 		
 		// Create a game to join
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Test");

@@ -25,13 +25,13 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
-	public Object list() {
+	public String list() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object createParams) {
+	public String create(Object createParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -55,13 +55,13 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
-	public Object model() {
+	public String model(int modelVersion) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object reset() {
+	public String reset() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -91,97 +91,97 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
-	public Object sendChat(Object sendChatParams) {
+	public String sendChat(Object sendChatParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object rollNumber(Object rollNumberParams) {
+	public String rollNumber(Object rollNumberParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object robPlayer(Object robPlayerParams) {
+	public String robPlayer(Object robPlayerParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object finishTurn(Object finishTurnParams) {
+	public String finishTurn(Object finishTurnParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buyDevCard(Object buyDevCardParams) {
+	public String buyDevCard(Object buyDevCardParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Year_of_Plenty(Object yearOfPlentyParams) {
+	public String Year_of_Plenty(Object yearOfPlentyParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Road_Building(Object roadBuildingParams) {
+	public String Road_Building(Object roadBuildingParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Soldier(Object soldierParams) {
+	public String Soldier(Object soldierParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object Monument(Object monumentParams) {
+	public String Monument(Object monumentParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buildRoad(Object buildRoadParams) {
+	public String buildRoad(Object buildRoadParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buildSettlement(Object buildSettlementParams) {
+	public String buildSettlement(Object buildSettlementParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object buildCity(Object buildCityParams) {
+	public String buildCity(Object buildCityParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object offerTrade(Object offerTradeParams) {
+	public String offerTrade(Object offerTradeParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object acceptTrade(Object acceptTradeParams) {
+	public String acceptTrade(Object acceptTradeParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object maritimeTrade(Object maritimeTradeParams) {
+	public String maritimeTrade(Object maritimeTradeParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object discardCards(Object discardCardsParams) {
+	public String discardCards(Object discardCardsParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}

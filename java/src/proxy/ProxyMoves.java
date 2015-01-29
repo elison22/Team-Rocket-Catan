@@ -8,17 +8,9 @@ package proxy;
  * expected by the server are also specified. All parameters are Json formatted 
  * unless otherwise specified.
  */
-public class ProxyMoves extends ServerProxy {
+public class ProxyMoves {
 	
-	/**Initializes the server's host and port that the proxy
-	 * will communicate with.
-	 * 
-	 * @param host the name or IP address of the server
-	 * @param port the port that the server will use
-	 * */
-	public ProxyMoves(String host, String port) {
-		super(host, port);
-	}
+	public ProxyMoves() {}
 
 	/**(POST) Sends a player's chat message to the server.
 	 * 
@@ -26,7 +18,7 @@ public class ProxyMoves extends ServerProxy {
 	 * and the message content (String)
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object sendChat(Object sendChatParams) {
+	public String sendChat(Object sendChatParams) {
 		
 		return null;
 	}
@@ -37,7 +29,7 @@ public class ProxyMoves extends ServerProxy {
 	 * and the rolled number (int 2-12)
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object rollNumber(Object rollNumberParams) {
+	public String rollNumber(Object rollNumberParams) {
 		return null;
 	}
 	
@@ -49,7 +41,7 @@ public class ProxyMoves extends ServerProxy {
 	 * robber's new location (HexLocation).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object robPlayer(Object robPlayerParams) {
+	public String robPlayer(Object robPlayerParams) {
 		return null;
 	}
 	
@@ -58,7 +50,7 @@ public class ProxyMoves extends ServerProxy {
 	 * @param finishTurnParams Should contain the playerIndex (int).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object finishTurn(Object finishTurnParams) {
+	public String finishTurn(Object finishTurnParams) {
 		return null;
 	}
 	
@@ -68,7 +60,7 @@ public class ProxyMoves extends ServerProxy {
 	 * @param buyDevCardParams Should contain the playerIndex(integer).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object buyDevCard(Object buyDevCardParams) {
+	public String buyDevCard(Object buyDevCardParams) {
 		return null;
 	}
 	
@@ -79,7 +71,7 @@ public class ProxyMoves extends ServerProxy {
 	 * resource1 (Resource), and resource2 (Resource).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object Year_of_Plenty(Object yearOfPlentyParams) {
+	public String Year_of_Plenty(Object yearOfPlentyParams) {
 		return null;
 	}
 	
@@ -90,7 +82,7 @@ public class ProxyMoves extends ServerProxy {
 	 * spot1 (EdgeLocation), and spot2 (EdgeLocation).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object Road_Building(Object roadBuildingParams) {
+	public String Road_Building(Object roadBuildingParams) {
 		return null;
 	}
 	
@@ -101,7 +93,7 @@ public class ProxyMoves extends ServerProxy {
 	 * victimIndex (int 0-3), and the robber's new location (HexLocation).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object Soldier(Object soldierParams) {
+	public String Soldier(Object soldierParams) {
 		return null;
 	}
 	
@@ -112,7 +104,7 @@ public class ProxyMoves extends ServerProxy {
 	 * playerIndex (int 0-3).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object Monument(Object monumentParams) {
+	public String Monument(Object monumentParams) {
 		return null;
 	}
 	
@@ -126,7 +118,7 @@ public class ProxyMoves extends ServerProxy {
 	 * free (Boolean).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object buildRoad(Object buildRoadParams) {
+	public String buildRoad(Object buildRoadParams) {
 		return null;
 	}
 	
@@ -139,7 +131,7 @@ public class ProxyMoves extends ServerProxy {
 	 * (VertexLocation), and whether or not it is free (Boolean).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object buildSettlement(Object buildSettlementParams) {
+	public String buildSettlement(Object buildSettlementParams) {
 		return null;
 	}
 	
@@ -151,7 +143,7 @@ public class ProxyMoves extends ServerProxy {
 	 * (VertexLocation).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object buildCity(Object buildCityParams) {
+	public String buildCity(Object buildCityParams) {
 		return null;
 	}
 	
@@ -166,7 +158,7 @@ public class ProxyMoves extends ServerProxy {
 	 * receive (int 0-3).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object offerTrade(Object offerTradeParams) {
+	public String offerTrade(Object offerTradeParams) {
 		return null;
 	}
 	
@@ -178,7 +170,7 @@ public class ProxyMoves extends ServerProxy {
 	 * willAccept (boolean).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object acceptTrade(Object acceptTradeParams) {
+	public String acceptTrade(Object acceptTradeParams) {
 		return null;
 	}
 	
@@ -193,7 +185,7 @@ public class ProxyMoves extends ServerProxy {
 	 * (String), and the bank's outputResource (String).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object maritimeTrade(Object maritimeTradeParams) { 
+	public String maritimeTrade(Object maritimeTradeParams) { 
 		return null;
 	}
 	
@@ -205,7 +197,7 @@ public class ProxyMoves extends ServerProxy {
 	 * (ResourceList).
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
-	public Object discardCards(Object discardCardsParams) {
+	public String discardCards(Object discardCardsParams) {
 		return null;
 	}
 	

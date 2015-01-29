@@ -9,11 +9,7 @@ package proxy;
  */
 
 public class ProxyFacade implements IServerFacade {
-	
-	final String HOST;
-	final String PORT;
-	
-	
+
 	private ProxyUser user;
 	private ProxyGames games;
 	private ProxyGame game;
@@ -21,14 +17,13 @@ public class ProxyFacade implements IServerFacade {
 	private ProxyUtil util;
 
 	public ProxyFacade(String host, String port) {
-		this.HOST = host;
-		this.PORT = port;
+		ServerProxy.getInstance().initProxy(host, port);
 		
-		user = new ProxyUser(HOST, PORT);
-		games = new ProxyGames(HOST, PORT);
-		game = new ProxyGame(HOST, PORT);
-		moves = new ProxyMoves(HOST, PORT);
-		util = new ProxyUtil(HOST, PORT);
+		user = new ProxyUser();
+		games = new ProxyGames();
+		game = new ProxyGame();
+		moves = new ProxyMoves();
+		util = new ProxyUtil();
 	}
 
 	@Override
@@ -42,12 +37,12 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object list() throws ServerException {
+	public String list() throws ServerException {
 		return games.list();
 	}
 
 	@Override
-	public Object create(Object createParams) throws ServerException {
+	public String create(Object createParams) throws ServerException {
 		return games.create(createParams);
 	}
 
@@ -67,12 +62,12 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object model() {
-		return game.model();
+	public String model(int modelVersion) throws ServerException {
+		return game.model(modelVersion);
 	}
 
 	@Override
-	public Object reset() {
+	public String reset() throws ServerException {
 		return game.reset();
 	}
 
@@ -87,92 +82,92 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object addAI(Object addAIParams) {
+	public Object addAI(Object addAIParams) throws ServerException {
 		return game.addAI(addAIParams);
 	}
 
 	@Override
-	public Object listAI() {
+	public Object listAI() throws ServerException {
 		return game.listAI();
 	}
 
 	@Override
-	public Object sendChat(Object sendChatParams) {
+	public String sendChat(Object sendChatParams) {
 		return moves.sendChat(sendChatParams);
 	}
 
 	@Override
-	public Object rollNumber(Object rollNumberParams) {
+	public String rollNumber(Object rollNumberParams) {
 		return moves.rollNumber(rollNumberParams);
 	}
 
 	@Override
-	public Object robPlayer(Object robPlayerParams) {
+	public String robPlayer(Object robPlayerParams) {
 		return moves.robPlayer(robPlayerParams);
 	}
 
 	@Override
-	public Object finishTurn(Object finishTurnParams) {
+	public String finishTurn(Object finishTurnParams) {
 		return moves.finishTurn(finishTurnParams);
 	}
 
 	@Override
-	public Object buyDevCard(Object buyDevCardParams) {
+	public String buyDevCard(Object buyDevCardParams) {
 		return moves.buyDevCard(buyDevCardParams);
 	}
 
 	@Override
-	public Object Year_of_Plenty(Object yearOfPlentyParams) {
+	public String Year_of_Plenty(Object yearOfPlentyParams) {
 		return moves.Year_of_Plenty(yearOfPlentyParams);
 	}
 
 	@Override
-	public Object Road_Building(Object roadBuildingParams) {
+	public String Road_Building(Object roadBuildingParams) {
 		return moves.Road_Building(roadBuildingParams);
 	}
 
 	@Override
-	public Object Soldier(Object soldierParams) {
+	public String Soldier(Object soldierParams) {
 		return moves.Soldier(soldierParams);
 	}
 
 	@Override
-	public Object Monument(Object monumentParams) {
+	public String Monument(Object monumentParams) {
 		return moves.Monument(monumentParams);
 	}
 
 	@Override
-	public Object buildRoad(Object buildRoadParams) {
+	public String buildRoad(Object buildRoadParams) {
 		return moves.buildRoad(buildRoadParams);
 	}
 
 	@Override
-	public Object buildSettlement(Object buildSettlementParams) {
+	public String buildSettlement(Object buildSettlementParams) {
 		return moves.buildSettlement(buildSettlementParams);
 	}
 
 	@Override
-	public Object buildCity(Object buildCityParams) {
+	public String buildCity(Object buildCityParams) {
 		return moves.buildCity(buildCityParams);
 	}
 
 	@Override
-	public Object offerTrade(Object offerTradeParams) {
+	public String offerTrade(Object offerTradeParams) {
 		return moves.offerTrade(offerTradeParams);
 	}
 
 	@Override
-	public Object acceptTrade(Object acceptTradeParams) {
+	public String acceptTrade(Object acceptTradeParams) {
 		return moves.acceptTrade(acceptTradeParams);
 	}
 
 	@Override
-	public Object maritimeTrade(Object maritimeTradeParams) {
+	public String maritimeTrade(Object maritimeTradeParams) {
 		return moves.maritimeTrade(maritimeTradeParams);
 	}
 
 	@Override
-	public Object discardCards(Object discardCardsParams) {
+	public String discardCards(Object discardCardsParams) {
 		return moves.discardCards(discardCardsParams);
 	}
 
@@ -180,5 +175,4 @@ public class ProxyFacade implements IServerFacade {
 	public boolean changeLogLevel(Object changeLogLevelParams) throws ServerException {
 		return util.changeLogLevel(changeLogLevelParams);
 	}
-
 }

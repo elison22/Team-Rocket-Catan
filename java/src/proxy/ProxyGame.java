@@ -7,25 +7,18 @@ package proxy;
  * This includes updating the current game's state, reseting the command 
  * history, testing commands, and adding AIs to the current game.
  */
-public class ProxyGame extends ServerProxy {
+public class ProxyGame {
 	
-	/**Initializes the server's host and port 
-	 * that the proxy will communicate with.
-	 * 
-	 * @param host the name or IP address of the server
-	 * @param port the port that the server will use
-	 * */
-	public ProxyGame(String host, String port) {
-		super(host, port);
-	}
+	public ProxyGame() {}
 	
 	/**(GET) Asks the server for the current state of the
 	 * game in Json format.
 	 * 
 	 * @return Returns the game's json client model.
+	 * @throws ServerException 
 	 */
-	public Object model() {
-		return null;
+	public String model(int modelVersion) throws ServerException {
+		return ServerProxy.getInstance().doGet("/game/model", modelVersion);
 	}
 
 	/**(POST) Asks the server to clear the current game's command 
@@ -35,9 +28,10 @@ public class ProxyGame extends ServerProxy {
 	 * following the initial placement rounds.
 	 * 
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public Object reset() {
-		return null;
+	public String reset() throws ServerException {
+		return ServerProxy.getInstance().doPost("/game/reset", null);
 	}
 	
 	/**(POST) This method is used for testing/debugging purposes.
@@ -67,17 +61,19 @@ public class ProxyGame extends ServerProxy {
 	 * @param addAIParams Should contain AIType (String). Valid 
 	 * types can be retrieved from Game.listAI().
 	 * @return Server's http response.
+	 * @throws ServerException 
 	 */
-	public Object addAI(Object addAIParams) {
-		return null;
+	public Object addAI(Object addAIParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/game/addAI", addAIParams);
 	}
 	
 	/**(GET) Requests a list of valid AI types to be used as 
 	 * parameters in Game.addAI().
 	 * 
 	 * @return List of AI types.
+	 * @throws ServerException 
 	 */
-	public Object listAI() {
-		return null;
+	public Object listAI() throws ServerException {
+		return ServerProxy.getInstance().doGet("/game/listAI", null);
 	}
 }
