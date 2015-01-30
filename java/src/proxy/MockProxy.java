@@ -1,5 +1,9 @@
 package proxy;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**@author Chad
  * Jan 22, 2015
  * 
@@ -54,9 +58,21 @@ public class MockProxy implements IServerFacade {
 		return null;
 	}
 
+	/** Gives a preset game model.
+	 * 
+	 * @param modelVersion doesn't matter what you put here
+	 * @return json formatted model as a String
+	 */
 	@Override
 	public String model(int modelVersion) {
-		// TODO Auto-generated method stub
+		
+		try {
+			byte[] encoded = Files.readAllBytes(Paths.get("TestModel.json"));
+			return new String(encoded, "UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -191,5 +207,10 @@ public class MockProxy implements IServerFacade {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+//	public static void main(String[] args) {
+//		MockProxy mp = new MockProxy();
+//		System.out.println(mp.model(-1));
+//	}
 	
 }
