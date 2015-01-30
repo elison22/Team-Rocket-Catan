@@ -7,15 +7,11 @@ import org.junit.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import proxy.ProxyGames;
-import proxy.ProxyUser;
+import proxy.ProxyFacade;
 import proxy.ServerException;
-import proxy.ServerProxy;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
-import shared.dto.LoadGame_Params;
 import shared.dto.Login_Params;
-import shared.dto.SaveGame_Params;
 
 /**
  * @author Chad
@@ -30,39 +26,38 @@ import shared.dto.SaveGame_Params;
  */
 public class ProxyGamesTest {
 	
-	ProxyGames proxyGames = new ProxyGames();
+	ProxyFacade facade;
 	
 	@Before
 	public void initProxy() {
-		ServerProxy.getInstance().initProxy("localhost","8081");
+		facade = new ProxyFacade("localhost", "8081");
 	}
 	
 	@Test
 	public void listGamesTest() throws ServerException {
-		assertTrue(proxyGames.list() != null);
+		assertTrue(facade.list() != null);
 	}
 	
 	@Test
 	public void createGameTest() throws ServerException {
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Sam");
-		assertTrue(proxyGames.create(createParams) != null);
+		assertTrue(facade.create(createParams) != null);
 	}
 	
 	@Test
 	public void joinGameTest() throws ServerException {
 		Login_Params loginParams = new Login_Params("Test", "Test");
-		ProxyUser pu = new ProxyUser();
 		
 		// If "Test"/"Test" is already registered, try logging in
 		try {
-			pu.register(loginParams);
+			facade.register(loginParams);
 		} catch (ServerException e) {
-			assertTrue(pu.login(loginParams));
+			assertTrue(facade.login(loginParams));
 		}
 		
 		// Create a game to join
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Test");
-		String result = (String) proxyGames.create(createParams);
+		String result = (String) facade.create(createParams);
 		assertTrue(result != null);
 		
 		// Get created game's id from json String
@@ -71,7 +66,7 @@ public class ProxyGamesTest {
 		
 		// Attempt to join game
 		JoinGame_Params joinParams = new JoinGame_Params(gameId, "blue");
-		assertTrue(proxyGames.join(joinParams) != null);
+		assertTrue(facade.join(joinParams) != null);
 	}
 	
 // TODO figure out how saving/loading is supposed to work

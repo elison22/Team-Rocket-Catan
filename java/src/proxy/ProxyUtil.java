@@ -9,7 +9,7 @@ public class ProxyUtil {
 	
 	public ProxyUtil() {}
 	
-	/**(POST) Changes the server's log level.
+	/**(POST) Changes the server's log level to the given input.
 	 * 
 	 * @param changeLogLevelParams contains the logLevel (String). 
 	 * Accepted values include: ALL, SEVERE, WARNING, INFO, CONFIG,

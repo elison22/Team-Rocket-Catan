@@ -22,7 +22,7 @@ public interface IServerFacade {
 	
 	/**POSTs new user info to the server which will attempt
 	 * to create a new user account if the username is not 
-	 * already in use.
+	 * already in use. 
 	 * 
 	 * @param registerParams should contain a username (String),
 	 * and a password (String).

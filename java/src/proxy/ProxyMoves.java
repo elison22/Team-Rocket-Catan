@@ -19,7 +19,6 @@ public class ProxyMoves {
 	 * @return Returns the game's json client model (See Game.model()).
 	 */
 	public String sendChat(Object sendChatParams) {
-		
 		return null;
 	}
 	

@@ -7,9 +7,8 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import proxy.ProxyUser;
+import proxy.ProxyFacade;
 import proxy.ServerException;
-import proxy.ServerProxy;
 import shared.dto.Login_Params;
 
 /**@author Chad
@@ -22,12 +21,11 @@ import shared.dto.Login_Params;
  * fail everytime after the first.
  */
 public class ProxyUserTest {
-	
-	ProxyUser proxyUser = new ProxyUser();
+	ProxyFacade facade; 
 	
 	@Before
 	public void initProxy() {
-		ServerProxy.getInstance().initProxy("localhost", "8081");
+		facade = new ProxyFacade("localhost", "8081");
 	}
 
 	@Test
@@ -38,8 +36,8 @@ public class ProxyUserTest {
 		// login and register use same params
 		Login_Params loginParams = new Login_Params(randString, randString);
 		
-		assertTrue(proxyUser.register(loginParams));
-		assertTrue(proxyUser.login(loginParams));
+		assertTrue(facade.register(loginParams));
+		assertTrue(facade.login(loginParams));
 	}
 	
 	// Generate random alphanumeric String of given length

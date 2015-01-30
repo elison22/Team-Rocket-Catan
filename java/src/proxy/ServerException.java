@@ -5,7 +5,8 @@ package proxy;
  *
  *This Exception should be thrown if there is any difficulty communicating with 
  *the server. Specifically if the server's output is different than what is 
- *expected, or if the proxy isn't able to connect to the server.
+ *expected, or if the proxy isn't able to connect to the server, or if there
+ *was a problem decoding cookies.
  */
 @SuppressWarnings("serial")
 public class ServerException extends Exception {

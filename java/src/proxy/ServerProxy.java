@@ -18,14 +18,16 @@ import com.google.gson.Gson;
  * Jan 19, 2015
  * 
  * This class stores the server host and port and also contains methods to 
- * perform GET and POST on the Catan server. All other proxy classes inherit 
- * from this class. Both Get and PORT operations return a String representation
- * of the server's response, so the subclass which made the call must return
- * a class representing the response or return a boolean indicating the call
- * was successful, depending on the particular method call.
+ * perform GET and POST on the Catan server. This class is implemented as a
+ * Singleton that only members of the Proxy package has access to. Both Get and 
+ * PORT operations return a String representation of the server's response, so 
+ * the subclass which made the call must return a class representing the 
+ * response or return a boolean indicating the call was successful, depending 
+ * on the particular method call.
  */
 
-public class ServerProxy {
+class ServerProxy {
+	//TODO comment methods
 	
 	private static ServerProxy instance = null;
 	
@@ -60,15 +62,26 @@ public class ServerProxy {
 		gson = new Gson();
 	}
 	
-	public static ServerProxy getInstance() {
+	/**If an instance of the class exists, return the instance, otherwise
+	 * create a new one.
+	 * 
+	 * @return The instance of class.
+	 */
+	protected static ServerProxy getInstance() {
 		if (instance == null) {
 			instance = new ServerProxy();
 		}
-		
 		return instance;
 	}
 	
-	public void initProxy(String host, String port) {
+	/**Initializes the ServerProxy so that it can make requests on the server.
+	 * This method must be called before it can do so. It also resets the 
+	 * cookies so this class can be reinitialized, mostly for testing purposes.
+	 * 
+	 * @param host The host of the Server.
+	 * @param port The port in use by the server.
+	 */
+	protected void initProxy(String host, String port) {
 		this.host = host;
 		this.port = port;
 		this.url_prefix = "http://" + host + ":" + port;
@@ -86,7 +99,7 @@ public class ServerProxy {
 	 * @throws ServerException thrown if there was any problem reading the 
 	 * given URL or if the server returns a non-OK response code.
 	 */
-	public String doGet(String methodPath, Object getParams) throws ServerException {
+	protected String doGet(String methodPath, Object getParams) throws ServerException {
 		try {
 			// Establish connection with server
 			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "GET");
@@ -129,7 +142,7 @@ public class ServerProxy {
 	 * given URL, or writing the parameters to the server connection, or if the 
 	 * server returns a non-OK response code. 
 	 */
-	public String doPost(String methodPath, Object postParams) throws ServerException {
+	protected String doPost(String methodPath, Object postParams) throws ServerException {
 		try {
 			// Establish connection with server
 			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "POST");
@@ -159,15 +172,15 @@ public class ServerProxy {
 		}
 	}
 
-	public String getHost() {
+	protected String getHost() {
 		return host;
 	}
 
-	public String getPort() {
+	protected String getPort() {
 		return port;
 	}
 
-	public String getUrl_Prefix() {
+	protected String getUrl_Prefix() {
 		return url_prefix;
 	}
 	
@@ -193,14 +206,14 @@ public class ServerProxy {
 	}
 	
 	/** Opens a HttpURLConnection with the server, sets the given request
-	 * Method. If the method is a POST then it sets up the connection for
-	 * output.
+	 * Method, and adds cookies to the request header.
 	 * 
 	 * @param url the server url for the given method
 	 * @param request whether the request is a POST or a GET
 	 * @return the established Connection
-	 * @throws IOException
-	 * @throws ServerException 
+	 * @throws ServerException If there was any problem, including decoding
+	 * cookies, bad URLs, or general IO exceptions then a ServerException will
+	 * be thrown specifying the specific offending operation.
 	 */
 	private HttpURLConnection getConnection(URL url, String requestMethod) throws ServerException {
 		try {
@@ -230,6 +243,12 @@ public class ServerProxy {
 		}
 	}
 	
+	/**Decodes the cookie returned by the server and stores the decoded values.
+	 * 
+	 * @param cookieHeader The undecoded cookie from the server.
+	 * @throws UnsupportedEncodingException If the cookie was encoded in an
+	 * unrecognized encoding.
+	 */
 	private void decodeCookie(String cookieHeader) throws UnsupportedEncodingException {
 		if (cookieHeader != null) {
 			
@@ -242,6 +261,7 @@ public class ServerProxy {
 			// Decode cookie value
 			String value = URLDecoder.decode(headerValue, "UTF-8");
 			
+			// Determine whether it is a userCookie or gameCookie
 			if (prefix.equals(userPrefix)) {
 				userCookie = value;
 			} else if (prefix.equals(gamePrefix)) {
@@ -250,6 +270,13 @@ public class ServerProxy {
 		}
 	}
 	
+	/**Sets the cookie values into the required format and encodes the result
+	 * to be passed to the server.
+	 * 
+	 * @return Encoded cookie as a String.
+	 * @throws UnsupportedEncodingException If the specified character encoding
+	 * is not recognized.
+	 */
 	private String encodeCookie() throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		if (userCookie != null) {
@@ -261,6 +288,7 @@ public class ServerProxy {
 		return new String(sb);
 	}
 	
+	// For Testing:
 	public String getCookies() {
 		return userCookie + "\n" + gameCookie;
 	}
