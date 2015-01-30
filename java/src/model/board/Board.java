@@ -1,6 +1,7 @@
 package model.board;
 
 import shared.definitions.HexType;
+import shared.definitions.PieceType;
 import shared.locations.*;
 
 import java.util.ArrayList;
@@ -140,7 +141,6 @@ public class Board {
      */
     public boolean canBuildRoad(EdgeLocation location) {
         return roads.get(location.getNormalizedLocation()) == null;
-
     }
 
     /**
@@ -152,7 +152,7 @@ public class Board {
      * the range 0-3
      */
     public void doBuildSettlement(VertexLocation location, int owner) throws BoardException {
-        Constructable settlement = new Constructable(ConstructableType.SETTLEMENT, owner);
+        Constructable settlement = new Constructable(PieceType.SETTLEMENT, owner);
         buildings.put(location.getNormalizedLocation(), settlement);
     }
 
@@ -166,7 +166,7 @@ public class Board {
      * the range 0-3
      */
     public void doBuildCity(VertexLocation location, int owner) throws BoardException {
-        Constructable city = new Constructable(ConstructableType.CITY, owner);
+        Constructable city = new Constructable(PieceType.CITY, owner);
         buildings.put(location.getNormalizedLocation(), city);
     }
 
@@ -180,7 +180,7 @@ public class Board {
      * the range 0-3
      */
     public void doBuildRoad(EdgeLocation location, int owner) throws BoardException {
-        Constructable road = new Constructable(ConstructableType.ROAD, owner);
+        Constructable road = new Constructable(PieceType.ROAD, owner);
         roads.put(location.getNormalizedLocation(), road);
     }
 

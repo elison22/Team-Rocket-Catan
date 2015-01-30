@@ -1,5 +1,7 @@
 package model.board;
 
+import shared.definitions.PieceType;
+
 /**
  * Created by brandt on 1/22/15.
  * This contains basic information for a Constructable object on the board. There
@@ -10,17 +12,17 @@ public class Constructable {
     /** The index of the player that owns this object */
     private int owner;
     /** The type of this object (settlement, building, or road) */
-    private ConstructableType type;
+    private PieceType type;
 
 
     /**
      * Initializes the owner and type of this object.
-     * @param type The type of constructable, which is 1 of the 3 options in the ConstructableType enum.
+     * @param type The type of constructable, which is 1 of the 3 options in the PieceType enum.
      * @param owner The object owner, which can only be in the range 0-3 inclusive.
      * @throws BoardException Thrown when attempting to set the owner to an int outside
      * the range 0-3
      */
-    public Constructable(ConstructableType type, int owner) throws BoardException {
+    public Constructable(PieceType type, int owner) throws BoardException {
         this.type = type;
         setOwner(owner);
     }
@@ -49,7 +51,7 @@ public class Constructable {
      * @return True if the building is a Settlement.
      */
     public boolean isSettlement() {
-        return type == ConstructableType.SETTLEMENT;
+        return type == PieceType.SETTLEMENT;
     }
 
 }

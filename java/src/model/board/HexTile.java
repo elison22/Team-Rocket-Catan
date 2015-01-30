@@ -12,7 +12,7 @@ import shared.definitions.HexType;
 public class HexTile {
 
     /** The value of the dice roll token for this HexTile. */
-    private int diceNum;
+    private int diceNum = -1;
     /** The resource type for this HexTile. */
     private HexType type;
 
