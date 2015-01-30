@@ -82,7 +82,7 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public Object addAI(Object addAIParams) throws ServerException {
+	public boolean addAI(Object addAIParams) throws ServerException {
 		return game.addAI(addAIParams);
 	}
 

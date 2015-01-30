@@ -79,9 +79,9 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
-	public Object addAI(Object addAIParams) {
+	public boolean addAI(Object addAIParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override

@@ -60,11 +60,17 @@ public class ProxyGame {
 	 * 
 	 * @param addAIParams Should contain AIType (String). Valid 
 	 * types can be retrieved from Game.listAI().
-	 * @return Server's http response.
+	 * @return True if successful, false if otherwise.
 	 * @throws ServerException 
 	 */
-	public Object addAI(Object addAIParams) throws ServerException {
-		return ServerProxy.getInstance().doPost("/game/addAI", addAIParams);
+	public boolean addAI(Object addAIParams) throws ServerException {
+		// Get server response
+		String result = ServerProxy.getInstance().doPost("/game/addAI", addAIParams);
+				
+		if (result.equals("Success\n")) 
+			return true;
+				
+		return false;
 	}
 	
 	/**(GET) Requests a list of valid AI types to be used as 

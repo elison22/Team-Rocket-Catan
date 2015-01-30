@@ -47,7 +47,7 @@ public interface IServerFacade {
 	 * random options.
 	 * 
 	 * @param createParams Should contain randomTiles (boolean),
-	 * randomNumbers (boolean), randomPorts (boolean, and 
+	 * randomNumbers (boolean), randomPorts (boolean), and 
 	 * name (String).
 	 * @return Json String with the new game's title (String), id (int), and
 	 * an array[4] with empty Player objects.
@@ -122,10 +122,10 @@ public interface IServerFacade {
 	 * 
 	 * @param addAIParams Should contain AIType (String). Valid 
 	 * types can be retrieved from Game.listAI().
-	 * @return Server's http response.
+	 * @return True if successful, false if otherwise.
 	 * @throws ServerException 
 	 */
-	public Object addAI(Object addAIParams) throws ServerException;
+	public boolean addAI(Object addAIParams) throws ServerException;
 	
 	/**(GET) Requests a list of valid AI types to be used as 
 	 * parameters in Game.addAI().

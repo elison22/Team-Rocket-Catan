@@ -27,7 +27,6 @@ import com.google.gson.Gson;
  */
 
 class ServerProxy {
-	//TODO comment methods
 	
 	private static ServerProxy instance = null;
 	
