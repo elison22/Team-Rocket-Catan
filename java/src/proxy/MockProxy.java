@@ -7,7 +7,7 @@ package proxy;
  * returns predefined outputs based on the method to be tested.
  */
 public class MockProxy implements IServerFacade {
-
+	
 	public MockProxy() {
 		// TODO Auto-generated constructor stub
 	}
