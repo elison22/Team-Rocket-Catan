@@ -1,5 +1,10 @@
 package model.cards;
 
+import shared.definitions.ResourceType;
+
+import java.util.HashMap;
+import java.util.TreeMap;
+
 /**
  * @author Hayden
  * Extension of the CardBank class that holds all of the cards
@@ -38,4 +43,16 @@ public class PlayerBank extends CardBank{
 //        return true;      commented it out because it isn't in the documentation above and not sure if we need it
     }
 
+    public HashMap<ResourceType, Integer> getResCards(){
+        return this.resCards;
+    }
+
+    public boolean hasResCards(HashMap<ResourceType, Integer> offeredRes){
+        for (ResourceType key : offeredRes.keySet()){
+            if(offeredRes.get(key) > this.resCards.get(key)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

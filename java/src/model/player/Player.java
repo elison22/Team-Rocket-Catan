@@ -1,8 +1,11 @@
 package model.player;
 
+import java.util.HashMap;
 import java.util.List;
 
 import model.cards.PlayerBank;
+import model.cards.ResourceSet;
+import shared.definitions.ResourceType;
 
 /**
  * @author Hayden
@@ -56,17 +59,20 @@ public class Player {
     public void update(PlayerBank bank, int victoryPoints, int remainingRoads, int remainingSettlements, int remainingCities){
         this.bank = bank;
         this.victoryPoints = victoryPoints;
+        this.remainingRoads = remainingRoads;
+        this.remainingSettlements = remainingSettlements;
+        this.remainingCities = remainingCities;
     }
 
     /**
      * Called by the Facade to determine if a player has the resources necessary to offer
      * a certain trade
      * @param playerIdx The player that offered the trade
-     * @param offeredRes A list of offerened resource cards
+     * @param offeredRes A map of offered resource cards
      * @return return whether a trade can be offered or not
      */
-    public boolean canOfferTrade(int playerIdx, List<Integer> offeredRes){
-        return true;
+    public boolean canOfferTrade(int playerIdx, HashMap<ResourceType, Integer> offeredRes){
+        return bank.hasResCards(offeredRes);
     }
 
     /**
@@ -76,7 +82,11 @@ public class Player {
      * @param desiredRes A list of resource cards desired by the other player
      * @return return whether a trade was accepted or not
      */
-    public boolean canAcceptTrade(int playerIdx, List<Integer> desiredRes){
+    public boolean canAcceptTrade(int playerIdx, HashMap<ResourceType, Integer> desiredRes){
+        return bank.hasResCards(desiredRes);
+    }
+
+    public boolean canBuildRoad(){
         return true;
     }
 

@@ -3,6 +3,7 @@ package model.cards;
 import shared.definitions.ResourceType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -18,7 +19,7 @@ import java.util.TreeMap;
 public class CardBank {
 
     /** Map of resource cards */
-    protected ResourceSet resourceSet;
+    protected HashMap<ResourceType,Integer> resCards = new HashMap<ResourceType, Integer>(); //Changed to HashMap because they're more efficient for inserting and removing which we'll be doing a lot
     /** List of development cards */
     protected ArrayList<DevCard> devCards = new ArrayList<DevCard>();
 
