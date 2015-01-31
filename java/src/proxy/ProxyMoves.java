@@ -17,9 +17,10 @@ public class ProxyMoves {
 	 * @param sendChatParams Should contain the playerIndex (int)
 	 * and the message content (String)
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String sendChat(Object sendChatParams) {
-		return null;
+	public String sendChat(Object sendChatParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/sendChat", sendChatParams);
 	}
 	
 	/**(POST) Sends the current player's dice roll to the server.
@@ -27,9 +28,10 @@ public class ProxyMoves {
 	 * @param rollNumberParams Should contain the playerIndex (int 0-3)
 	 * and the rolled number (int 2-12)
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String rollNumber(Object rollNumberParams) {
-		return null;
+	public String rollNumber(Object rollNumberParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/rollNumber", rollNumberParams);
 	}
 	
 	/**(POST) Sends the new robber location as well as the index of
@@ -39,18 +41,20 @@ public class ProxyMoves {
 	 * playerIndex (int 0-3), the victimIndex (int 0-3), and the 
 	 * robber's new location (HexLocation).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String robPlayer(Object robPlayerParams) {
-		return null;
+	public String robPlayer(Object robPlayerParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/robPlayer", robPlayerParams);
 	}
 	
 	/**(POST) Tells the server to end the current player's turn.
 	 * 
 	 * @param finishTurnParams Should contain the playerIndex (int).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String finishTurn(Object finishTurnParams) {
-		return null;
+	public String finishTurn(Object finishTurnParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/finishTurn", finishTurnParams);
 	}
 	
 	/**(POST) Tells the server that the current player wants to buy a 
@@ -58,9 +62,10 @@ public class ProxyMoves {
 	 * 
 	 * @param buyDevCardParams Should contain the playerIndex(integer).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String buyDevCard(Object buyDevCardParams) {
-		return null;
+	public String buyDevCard(Object buyDevCardParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/buyDevCard", buyDevCardParams);
 	}
 	
 	/**(POST) Sends the server the current player and their two 
@@ -69,9 +74,10 @@ public class ProxyMoves {
 	 * @param yearOfPlentyParams Should contain the playerIndex (int 0-3),
 	 * resource1 (Resource), and resource2 (Resource).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String Year_of_Plenty(Object yearOfPlentyParams) {
-		return null;
+	public String Year_of_Plenty(Object yearOfPlentyParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/Year_of_Plenty", yearOfPlentyParams);
 	}
 	
 	/**(POST) Sends the server the locations for the two roads to be
@@ -80,9 +86,10 @@ public class ProxyMoves {
 	 * @param roadBuildingParams Should contain the playerIndex (int 0-3),
 	 * spot1 (EdgeLocation), and spot2 (EdgeLocation).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String Road_Building(Object roadBuildingParams) {
-		return null;
+	public String Road_Building(Object roadBuildingParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/Road_Building", roadBuildingParams);
 	}
 	
 	/**(POST) Tells the server the robber's new location as well as 
@@ -91,9 +98,10 @@ public class ProxyMoves {
 	 * @param soldierParams Should contain the playerIndex (int 0-3),
 	 * victimIndex (int 0-3), and the robber's new location (HexLocation).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String Soldier(Object soldierParams) {
-		return null;
+	public String Soldier(Object soldierParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/Soldier", soldierParams);
 	}
 	
 	/**(POST) Tells the server to reward the current player with a 
@@ -102,9 +110,10 @@ public class ProxyMoves {
 	 * @param monumentParams Should contain the current 
 	 * playerIndex (int 0-3).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String Monument(Object monumentParams) {
-		return null;
+	public String Monument(Object monumentParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/Monument", monumentParams);
 	}
 	
 	/**(POST) Sends the server where the current player is building a
@@ -116,9 +125,10 @@ public class ProxyMoves {
 	 * roadLocation (EdgeLocation) and whether or not the road is
 	 * free (Boolean).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String buildRoad(Object buildRoadParams) {
-		return null;
+	public String buildRoad(Object buildRoadParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/buildRoad", buildRoadParams);
 	}
 	
 	/**(POST) Tells the server to build a settlement for the current
@@ -129,9 +139,10 @@ public class ProxyMoves {
 	 * playerIndex (int 0-3), the settlement's vertexLocation 
 	 * (VertexLocation), and whether or not it is free (Boolean).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String buildSettlement(Object buildSettlementParams) {
-		return null;
+	public String buildSettlement(Object buildSettlementParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/buildSettlement", buildSettlementParams);
 	}
 	
 	/**(POST) Tells the server to build a city at the specified
@@ -141,9 +152,10 @@ public class ProxyMoves {
 	 * playerIndex (int 0-3), and the city's vertexLocation
 	 * (VertexLocation).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String buildCity(Object buildCityParams) {
-		return null;
+	public String buildCity(Object buildCityParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/buildCity", buildCityParams);
 	}
 	
 	/**(POST) Tells the server to offer a trade from the current
@@ -156,9 +168,10 @@ public class ProxyMoves {
 	 * playerIndex (int 0-3), the offer (ResourceList), and the
 	 * receive (int 0-3).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String offerTrade(Object offerTradeParams) {
-		return null;
+	public String offerTrade(Object offerTradeParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/offerTrade", offerTradeParams);
 	}
 	
 	/**(POST) Tells the server to accept or reject and offered
@@ -168,9 +181,10 @@ public class ProxyMoves {
 	 * player's playerIndex (int 0-3) and they're decision
 	 * willAccept (boolean).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String acceptTrade(Object acceptTradeParams) {
-		return null;
+	public String acceptTrade(Object acceptTradeParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/acceptTrade", acceptTradeParams);
 	}
 	
 	/**(POST) Sends the server the current player's desired
@@ -183,9 +197,10 @@ public class ProxyMoves {
 	 * include the ratio (int), the player's inputResource
 	 * (String), and the bank's outputResource (String).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String maritimeTrade(Object maritimeTradeParams) { 
-		return null;
+	public String maritimeTrade(Object maritimeTradeParams) throws ServerException { 
+		return ServerProxy.getInstance().doPost("/moves/maritemTrade", maritimeTradeParams);
 	}
 	
 	/**(POST) Tells the server to discard the current player's 
@@ -195,9 +210,10 @@ public class ProxyMoves {
 	 * player's playerIndex (int) and the discardedCards 
 	 * (ResourceList).
 	 * @return Returns the game's json client model (See Game.model()).
+	 * @throws ServerException 
 	 */
-	public String discardCards(Object discardCardsParams) {
-		return null;
+	public String discardCards(Object discardCardsParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/discardCards", discardCardsParams);
 	}
 	
 }

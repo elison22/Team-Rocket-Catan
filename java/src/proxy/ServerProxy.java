@@ -30,12 +30,6 @@ class ServerProxy {
 	
 	private static ServerProxy instance = null;
 	
-	/**The server's name or IP address*/
-	private String host;
-	
-	/**The port that the server uses*/
-	private String port;
-	
 	/**Contains the server's URL. This is determined by http://host:port*/
 	private String url_prefix;
 	
@@ -46,7 +40,7 @@ class ServerProxy {
 	/**Contains the decoded user cookie in json format*/
 	private String userCookie;
 	
-	/**Contains the decoded user cookie in json format*/
+	/**Contains the decoded game cookie in json format*/
 	private String gameCookie;
 	
 	private Gson gson;
@@ -81,8 +75,6 @@ class ServerProxy {
 	 * @param port The port in use by the server.
 	 */
 	protected void initProxy(String host, String port) {
-		this.host = host;
-		this.port = port;
 		this.url_prefix = "http://" + host + ":" + port;
 		
 		// Seperated from the constructor so the class can be used in testing
@@ -103,7 +95,7 @@ class ServerProxy {
 			// Establish connection with server
 			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "GET");
 			
-			if (getParams != null) {// If there are getParams
+			if (getParams != null) {
 				// Write getParams to the connection as Json
 				OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
 				os.write(gson.toJson(getParams));//System.out.println(gson.toJson(postParams));
@@ -169,18 +161,6 @@ class ServerProxy {
 		} catch (IOException e) {
 			throw new ServerException(String.format("doPost failed: %s", e.getMessage(), e));
 		}
-	}
-
-	protected String getHost() {
-		return host;
-	}
-
-	protected String getPort() {
-		return port;
-	}
-
-	protected String getUrl_Prefix() {
-		return url_prefix;
 	}
 	
 	/** Writes the response stream from the server as a String.

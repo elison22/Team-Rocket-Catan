@@ -92,82 +92,82 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
-	public String sendChat(Object sendChatParams) {
+	public String sendChat(Object sendChatParams) throws ServerException {
 		return moves.sendChat(sendChatParams);
 	}
 
 	@Override
-	public String rollNumber(Object rollNumberParams) {
+	public String rollNumber(Object rollNumberParams) throws ServerException {
 		return moves.rollNumber(rollNumberParams);
 	}
 
 	@Override
-	public String robPlayer(Object robPlayerParams) {
+	public String robPlayer(Object robPlayerParams) throws ServerException {
 		return moves.robPlayer(robPlayerParams);
 	}
 
 	@Override
-	public String finishTurn(Object finishTurnParams) {
+	public String finishTurn(Object finishTurnParams) throws ServerException {
 		return moves.finishTurn(finishTurnParams);
 	}
 
 	@Override
-	public String buyDevCard(Object buyDevCardParams) {
+	public String buyDevCard(Object buyDevCardParams) throws ServerException {
 		return moves.buyDevCard(buyDevCardParams);
 	}
 
 	@Override
-	public String Year_of_Plenty(Object yearOfPlentyParams) {
+	public String Year_of_Plenty(Object yearOfPlentyParams) throws ServerException {
 		return moves.Year_of_Plenty(yearOfPlentyParams);
 	}
 
 	@Override
-	public String Road_Building(Object roadBuildingParams) {
+	public String Road_Building(Object roadBuildingParams) throws ServerException {
 		return moves.Road_Building(roadBuildingParams);
 	}
 
 	@Override
-	public String Soldier(Object soldierParams) {
+	public String Soldier(Object soldierParams) throws ServerException {
 		return moves.Soldier(soldierParams);
 	}
 
 	@Override
-	public String Monument(Object monumentParams) {
+	public String Monument(Object monumentParams) throws ServerException {
 		return moves.Monument(monumentParams);
 	}
 
 	@Override
-	public String buildRoad(Object buildRoadParams) {
+	public String buildRoad(Object buildRoadParams) throws ServerException {
 		return moves.buildRoad(buildRoadParams);
 	}
 
 	@Override
-	public String buildSettlement(Object buildSettlementParams) {
+	public String buildSettlement(Object buildSettlementParams) throws ServerException {
 		return moves.buildSettlement(buildSettlementParams);
 	}
 
 	@Override
-	public String buildCity(Object buildCityParams) {
+	public String buildCity(Object buildCityParams) throws ServerException {
 		return moves.buildCity(buildCityParams);
 	}
 
 	@Override
-	public String offerTrade(Object offerTradeParams) {
+	public String offerTrade(Object offerTradeParams) throws ServerException {
 		return moves.offerTrade(offerTradeParams);
 	}
 
 	@Override
-	public String acceptTrade(Object acceptTradeParams) {
+	public String acceptTrade(Object acceptTradeParams) throws ServerException {
 		return moves.acceptTrade(acceptTradeParams);
 	}
 
 	@Override
-	public String maritimeTrade(Object maritimeTradeParams) {
+	public String maritimeTrade(Object maritimeTradeParams) throws ServerException {
 		return moves.maritimeTrade(maritimeTradeParams);
 	}
 
 	@Override
-	public String discardCards(Object discardCardsParams) {
+	public String discardCards(Object discardCardsParams) throws ServerException {
 		return moves.discardCards(discardCardsParams);
 	}
 
