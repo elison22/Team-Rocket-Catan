@@ -114,8 +114,10 @@ public class Board {
      * param or any of its neighbors.
      * @param location Where to check for availability.
      * @return True if the vertex is available for a Settlement.
+     * @throws BoardException Thrown if the location param is passed in null.
      */
-    public boolean canBuildSettlement(VertexLocation location) {
+    public boolean canBuildSettlement(VertexLocation location) throws BoardException {
+        if (location == null) throw new BoardException("Param location cannot be null.");
         VertexLocation normalized = location.getNormalizedLocation();
         return buildings.get(normalized) == null && !hasNeighborBuilding(normalized);
     }
@@ -123,15 +125,18 @@ public class Board {
     /**
      * Determines whether or not a player can build a City-type Constructable on this
      * location. The conditions are that there is already a Settlement-type Constructable
-     * present at the location param that belongs to the player with index playerIndex.
+     * present at the location param that belongs to the player with index owner.
      * @param location Where to check for availability.
+     * @param owner The owner of the VertexLocation to be tested. Must be in the range 0 to 3.
      * @return True if the vertex is available for a City.
      */
-    public boolean canBuildCity(VertexLocation location, int playerIndex) {
+    public boolean canBuildCity(VertexLocation location, int owner) throws BoardException {
+        if (owner < 0 || owner > 3) throw new BoardException("The param owner must be between 0 and 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         VertexLocation normalized = location.getNormalizedLocation();
         if (buildings.get(normalized) == null) return false;
         if (!buildings.get(normalized).isSettlement()) return false;
-        if (buildings.get(normalized).getOwner()!=playerIndex) return false;
+        if (buildings.get(normalized).getOwner()!=owner) return false;
         return true;
     }
 
@@ -139,12 +144,18 @@ public class Board {
      * Determines whether or not a player can build a Road on this location. The
      * conditions are that no Road is already present at the location param or any
      * of its neighbors. Verifies with both adjacent HexTiles.
+     * @param location Where to verify for availability for a road.
+     * @param owner The index of the player who wants to build a road.
      * @return True if the edge is available for a road.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range -1 to 3. Also thrown if the location param is passed in null.
      */
-    public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
+    public boolean canBuildRoad(EdgeLocation location, int owner) throws BoardException {
+        if (owner < -1 || owner > 3) throw new BoardException("Param owner must be in the range -1 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         EdgeLocation normalized = location.getNormalizedLocation();
         if (roads.get(normalized) != null) return false;
-        if (!hasNeighborRoad(location, playerIndex) && !hasNeighborBuilding(normalized, playerIndex)) return false;
+        if (!hasNeighborRoad(location, owner) && !hasNeighborBuilding(normalized, owner)) return false;
         return true;
     }
 
@@ -154,9 +165,11 @@ public class Board {
      * @param location The location where the settlement should be built.
      * @param owner The owner of the settlement to be built.
      * @throws BoardException Thrown when attempting to set the owner to an int outside
-     * the range 0-3
+     * the range 0 to 3. Also thrown if the location param is passed in null.
      */
     public void doBuildSettlement(VertexLocation location, int owner) throws BoardException {
+        if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         Constructable settlement = new Constructable(PieceType.SETTLEMENT, owner);
         buildings.put(location.getNormalizedLocation(), settlement);
     }
@@ -168,9 +181,11 @@ public class Board {
      * @param location The location where the city should be built.
      * @param owner The owner of the city to be built.
      * @throws BoardException Thrown when attempting to set the owner to an int outside
-     * the range 0-3
+     * the range 0 to 3. Also thrown if the location param is passed in null.
      */
     public void doBuildCity(VertexLocation location, int owner) throws BoardException {
+        if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         Constructable city = new Constructable(PieceType.CITY, owner);
         buildings.put(location.getNormalizedLocation(), city);
     }
@@ -182,21 +197,23 @@ public class Board {
      * @param location The location where the road should be built.
      * @param owner The owner of the road to be built.
      * @throws BoardException Thrown when attempting to set the owner to an int outside
-     * the range 0-3
+     * the range 0 to 3. Also thrown if the location param is passed in null.
      */
     public void doBuildRoad(EdgeLocation location, int owner) throws BoardException {
+        if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         Constructable road = new Constructable(PieceType.ROAD, owner);
         roads.put(location.getNormalizedLocation(), road);
     }
 
-
     /**
-     * Check if there are any buildings immediately next to this location.
+     * Check if there are any buildings immediately next to this VertexLocation.
      * @param location The location around which to check.
-     * @return True if there are neighbors
+     * @return True if there are neighbor buildings.
+     * @throws BoardException Thrown if the location param is passed in null.
      */
-    private boolean hasNeighborBuilding(VertexLocation location) {
-
+    private boolean hasNeighborBuilding(VertexLocation location) throws BoardException {
+        if (location == null) throw new BoardException("Param location cannot be null.");
         VertexLocation normalized = location.getNormalizedLocation();
 
         if (normalized.getDir() == VertexDirection.NorthWest) {
@@ -242,52 +259,64 @@ public class Board {
     }
 
     /**
-     *
-     * @param location
-     * @param playerIndex
-     * @return
+     * Check if there are any buildings immediately next to this EdgeLocation, and if
+     * there are, check if their owner field matches the owner parameter.
+     * @param location The EdgeLocation to check for neighbor buildings.
+     * @param owner The building owner to check for. Must be in the range -1 to 3.
+     *              If -1 is passed in, any building may count a match.
+     * @return True if there is a neighbor building with the field owner matching the param owner.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range -1 to 3. Also thrown if the location param is passed in null.
      */
-    private boolean hasNeighborBuilding(EdgeLocation location, int playerIndex) {
+    private boolean hasNeighborBuilding(EdgeLocation location, int owner) throws BoardException {
+        if (owner < -1 || owner > 3) throw new BoardException("Param owner must be in the range -1 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         VertexLocation clockwise = location.getClockwiseVertex().getNormalizedLocation();
         VertexLocation counterclockwise = location.getCounterClockwiseVertex().getNormalizedLocation();
         if (buildings.get(clockwise)!=null) {
-            if (playerIndex == -1) return true;
-            if (buildings.get(clockwise).getOwner() == playerIndex) return true;
+            if (owner == -1) return true;
+            if (buildings.get(clockwise).getOwner() == owner) return true;
         }
         if (buildings.get(counterclockwise)!=null) {
-            if (playerIndex == -1) return true;
-            if (buildings.get(counterclockwise).getOwner()==playerIndex) return true;
+            if (owner == -1) return true;
+            if (buildings.get(counterclockwise).getOwner() == owner) return true;
         }
         return false;
     }
 
     /**
-     *
-     * @param location
-     * @param playerIndex
-     * @return
+     * Check if there are any roads immediately next to this EdgeLocation, and if there
+     * are, check if their owner field matches the owner parameter.
+     * @param location The EdgeLocation to check for neighbor roads.
+     * @param owner The building owner to check for. Must be in the range -1 to 3.
+     *              If -1 is passed in, any building may count a match.
+     * @return True if there is a neighbor road with the field owner matching the param owner.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range -1 to 3. Also thrown if the location param is passed in null.
      */
-    private boolean hasNeighborRoad(EdgeLocation location, int playerIndex) {
+    private boolean hasNeighborRoad(EdgeLocation location, int owner) throws BoardException {
+        if (owner < -1 || owner > 3) throw new BoardException("Param owner must be in the range -1 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
         EdgeLocation clockwise = location.getClockwiseEdge().getNormalizedLocation();
         EdgeLocation counterclockwise = location.getCounterClockwiseEdge().getNormalizedLocation();
         if (roads.get(clockwise)!=null) {
-            if (playerIndex == -1) return true;
-            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+            if (owner == -1) return true;
+            if (roads.get(clockwise).getOwner() == owner) return true;
         }
         if (roads.get(counterclockwise)!=null) {
-            if (playerIndex == -1) return true;
-            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+            if (owner == -1) return true;
+            if (roads.get(clockwise).getOwner() == owner) return true;
         }
         EdgeLocation opposite = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()),location.getDir().getOppositeDirection());
         clockwise = opposite.getClockwiseEdge().getNormalizedLocation();
         counterclockwise = opposite.getCounterClockwiseEdge().getNormalizedLocation();
         if (roads.get(clockwise)!=null) {
-            if (playerIndex == -1) return true;
-            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+            if (owner == -1) return true;
+            if (roads.get(clockwise).getOwner() == owner) return true;
         }
         if (roads.get(counterclockwise)!=null) {
-            if (playerIndex == -1) return true;
-            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+            if (owner == -1) return true;
+            if (roads.get(clockwise).getOwner() == owner) return true;
         }
         return false;
     }
