@@ -20,8 +20,11 @@ public class GameModel {
     private Chat chat;
     private GameHistory gameHistory;
     private ITradeOffer tradeOffer;
-    private ArrayList<Integer> playerIndexs;
+    private ArrayList<Integer> playerIndexes;
 
+    public GameModel() {
+    	
+    }
 
     public ITradeOffer getTradeOffer() {
         return tradeOffer;
