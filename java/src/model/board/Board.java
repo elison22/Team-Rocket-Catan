@@ -37,7 +37,7 @@ public class Board {
      * @param randomDiceNums Whether or not the diceNums should be randomized.
      * @throws BoardException Thrown only when there's a problem with the code that initializes this object.
      */
-    public Board(boolean randomTileTypes, boolean randomDiceNums) throws BoardException {
+    public Board(boolean randomTileTypes, boolean randomDiceNums, boolean randomPorts) throws BoardException {
 
         Random randomTypes = new Random();
         Random randomNums = new Random();
@@ -117,20 +117,22 @@ public class Board {
      */
     public boolean canBuildSettlement(VertexLocation location) {
         VertexLocation normalized = location.getNormalizedLocation();
-        return buildings.get(normalized) == null && !hasNeighbor(normalized);
+        return buildings.get(normalized) == null && !hasNeighborBuilding(normalized);
     }
 
     /**
      * Determines whether or not a player can build a City-type Constructable on this
      * location. The conditions are that there is already a Settlement-type Constructable
-     * is already present at the location param.
+     * present at the location param that belongs to the player with index playerIndex.
      * @param location Where to check for availability.
      * @return True if the vertex is available for a City.
      */
-    public boolean canBuildCity(VertexLocation location) {
+    public boolean canBuildCity(VertexLocation location, int playerIndex) {
         VertexLocation normalized = location.getNormalizedLocation();
         if (buildings.get(normalized) == null) return false;
-        return buildings.get(normalized).isSettlement();
+        if (!buildings.get(normalized).isSettlement()) return false;
+        if (buildings.get(normalized).getOwner()!=playerIndex) return false;
+        return true;
     }
 
     /**
@@ -139,8 +141,11 @@ public class Board {
      * of its neighbors. Verifies with both adjacent HexTiles.
      * @return True if the edge is available for a road.
      */
-    public boolean canBuildRoad(EdgeLocation location) {
-        return roads.get(location.getNormalizedLocation()) == null;
+    public boolean canBuildRoad(EdgeLocation location, int playerIndex) {
+        EdgeLocation normalized = location.getNormalizedLocation();
+        if (roads.get(normalized) != null) return false;
+        if (!hasNeighborRoad(location, playerIndex) && !hasNeighborBuilding(normalized, playerIndex)) return false;
+        return true;
     }
 
     /**
@@ -190,7 +195,7 @@ public class Board {
      * @param location The location around which to check.
      * @return True if there are neighbors
      */
-    private boolean hasNeighbor(VertexLocation location) {
+    private boolean hasNeighborBuilding(VertexLocation location) {
 
         VertexLocation normalized = location.getNormalizedLocation();
 
@@ -236,5 +241,39 @@ public class Board {
 
     }
 
+    /**
+     *
+     */
+    private boolean hasNeighborBuilding(EdgeLocation location, int playerIndex) {
+        return false;
+    }
+
+    /**
+     *
+     */
+    private boolean hasNeighborRoad(EdgeLocation location, int playerIndex) {
+        EdgeLocation clockwise = location.getClockWise().getNormalizedLocation();
+        EdgeLocation counterclockwise = location.getCounterClockWise().getNormalizedLocation();
+        if (roads.get(clockwise)!=null) {
+            if (playerIndex == -1) return true;
+            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+        }
+        if (roads.get(counterclockwise)!=null) {
+            if (playerIndex == -1) return true;
+            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+        }
+        EdgeLocation opposite = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()),location.getDir().getOppositeDirection());
+        clockwise = opposite.getClockWise().getNormalizedLocation();
+        counterclockwise = opposite.getCounterClockWise().getNormalizedLocation();
+        if (roads.get(clockwise)!=null) {
+            if (playerIndex == -1) return true;
+            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+        }
+        if (roads.get(counterclockwise)!=null) {
+            if (playerIndex == -1) return true;
+            if (roads.get(clockwise).getOwner() == playerIndex) return true;
+        }
+        return false;
+    }
 
 }

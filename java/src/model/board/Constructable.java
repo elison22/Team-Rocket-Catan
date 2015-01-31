@@ -10,7 +10,7 @@ import shared.definitions.PieceType;
 public class Constructable {
 
     /** The index of the player that owns this object */
-    private int owner;
+    private int owner = -1;
     /** The type of this object (settlement, building, or road) */
     private PieceType type;
 

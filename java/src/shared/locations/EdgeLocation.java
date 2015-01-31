@@ -106,5 +106,52 @@ public class EdgeLocation
 				return null;
 		}
 	}
+
+    public EdgeLocation getClockWise() {
+
+        switch (dir)
+        {
+            case NorthWest:
+                return new EdgeLocation(hexLoc, EdgeDirection.North);
+            case North:
+                return new EdgeLocation(hexLoc, EdgeDirection.NorthEast);
+            case NorthEast:
+                return new EdgeLocation(hexLoc, EdgeDirection.SouthEast);
+            case SouthEast:
+                return new EdgeLocation(hexLoc, EdgeDirection.South);
+            case South:
+                return new EdgeLocation(hexLoc, EdgeDirection.SouthWest);
+            case SouthWest:
+                return new EdgeLocation(hexLoc, EdgeDirection.NorthWest);
+            default:
+                assert false;
+                return null;
+        }
+    }
+
+    public EdgeLocation getCounterClockWise() {
+
+        switch (dir)
+        {
+            case NorthEast:
+                return new EdgeLocation(hexLoc, EdgeDirection.North);
+            case SouthEast:
+                return new EdgeLocation(hexLoc, EdgeDirection.NorthEast);
+            case South:
+                return new EdgeLocation(hexLoc, EdgeDirection.SouthEast);
+            case SouthWest:
+                return new EdgeLocation(hexLoc, EdgeDirection.South);
+            case NorthWest:
+                return new EdgeLocation(hexLoc, EdgeDirection.SouthWest);
+            case North:
+                return new EdgeLocation(hexLoc, EdgeDirection.NorthWest);
+            default:
+                assert false;
+                return null;
+        }
+    }
+
+
+
 }
 
