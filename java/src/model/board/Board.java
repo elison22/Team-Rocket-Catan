@@ -243,17 +243,33 @@ public class Board {
 
     /**
      *
+     * @param location
+     * @param playerIndex
+     * @return
      */
     private boolean hasNeighborBuilding(EdgeLocation location, int playerIndex) {
+        VertexLocation clockwise = location.getClockwiseVertex().getNormalizedLocation();
+        VertexLocation counterclockwise = location.getCounterClockwiseVertex().getNormalizedLocation();
+        if (buildings.get(clockwise)!=null) {
+            if (playerIndex == -1) return true;
+            if (buildings.get(clockwise).getOwner() == playerIndex) return true;
+        }
+        if (buildings.get(counterclockwise)!=null) {
+            if (playerIndex == -1) return true;
+            if (buildings.get(counterclockwise).getOwner()==playerIndex) return true;
+        }
         return false;
     }
 
     /**
      *
+     * @param location
+     * @param playerIndex
+     * @return
      */
     private boolean hasNeighborRoad(EdgeLocation location, int playerIndex) {
-        EdgeLocation clockwise = location.getClockWise().getNormalizedLocation();
-        EdgeLocation counterclockwise = location.getCounterClockWise().getNormalizedLocation();
+        EdgeLocation clockwise = location.getClockwiseEdge().getNormalizedLocation();
+        EdgeLocation counterclockwise = location.getCounterClockwiseEdge().getNormalizedLocation();
         if (roads.get(clockwise)!=null) {
             if (playerIndex == -1) return true;
             if (roads.get(clockwise).getOwner() == playerIndex) return true;
@@ -263,8 +279,8 @@ public class Board {
             if (roads.get(clockwise).getOwner() == playerIndex) return true;
         }
         EdgeLocation opposite = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()),location.getDir().getOppositeDirection());
-        clockwise = opposite.getClockWise().getNormalizedLocation();
-        counterclockwise = opposite.getCounterClockWise().getNormalizedLocation();
+        clockwise = opposite.getClockwiseEdge().getNormalizedLocation();
+        counterclockwise = opposite.getCounterClockwiseEdge().getNormalizedLocation();
         if (roads.get(clockwise)!=null) {
             if (playerIndex == -1) return true;
             if (roads.get(clockwise).getOwner() == playerIndex) return true;

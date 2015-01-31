@@ -107,7 +107,7 @@ public class EdgeLocation
 		}
 	}
 
-    public EdgeLocation getClockWise() {
+    public EdgeLocation getClockwiseEdge() {
 
         switch (dir)
         {
@@ -129,7 +129,7 @@ public class EdgeLocation
         }
     }
 
-    public EdgeLocation getCounterClockWise() {
+    public EdgeLocation getCounterClockwiseEdge() {
 
         switch (dir)
         {
@@ -151,7 +151,49 @@ public class EdgeLocation
         }
     }
 
+    public VertexLocation getClockwiseVertex() {
 
+        switch (dir)
+        {
+            case NorthWest:
+                return new VertexLocation(hexLoc, VertexDirection.NorthWest);
+            case North:
+                return new VertexLocation(hexLoc, VertexDirection.NorthEast);
+            case NorthEast:
+                return new VertexLocation(hexLoc, VertexDirection.East);
+            case SouthEast:
+                return new VertexLocation(hexLoc, VertexDirection.SouthEast);
+            case South:
+                return new VertexLocation(hexLoc, VertexDirection.SouthWest);
+            case SouthWest:
+                return new VertexLocation(hexLoc, VertexDirection.West);
+            default:
+                assert false;
+                return null;
+        }
+    }
+
+    public VertexLocation getCounterClockwiseVertex() {
+
+        switch (dir)
+        {
+            case North:
+                return new VertexLocation(hexLoc, VertexDirection.NorthWest);
+            case NorthEast:
+                return new VertexLocation(hexLoc, VertexDirection.NorthEast);
+            case SouthEast:
+                return new VertexLocation(hexLoc, VertexDirection.East);
+            case South:
+                return new VertexLocation(hexLoc, VertexDirection.SouthEast);
+            case SouthWest:
+                return new VertexLocation(hexLoc, VertexDirection.SouthWest);
+            case NorthWest:
+                return new VertexLocation(hexLoc, VertexDirection.West);
+            default:
+                assert false;
+                return null;
+        }
+    }
 
 }
 
