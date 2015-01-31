@@ -22,6 +22,9 @@ public class GameModel {
     private ITradeOffer tradeOffer;
     private ArrayList<Integer> playerIndexs;
 
+    public GameModel() {
+    	
+    }
 
     public ITradeOffer getTradeOffer() {
         return tradeOffer;

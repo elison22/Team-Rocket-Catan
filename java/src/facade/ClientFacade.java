@@ -6,14 +6,21 @@ import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.ITradeOffer;
 import proxy.ProxyFacade;
+import serializer.Serializer;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
 public class ClientFacade implements IClientFacade {
 
+    // create DTO's to pass to the proxy as parameters of the do methods
+    // when calling do methods, will receive a json string
+    // pass this json string to the serializer to deserialize it
+    // serializer will return client model object
+    // use the client model object to make a game model object
     private GameModel game;
     private int playerIndex;
     private ProxyFacade proxy;
+    private Serializer serializer;
 
     /**
      * Creates a new Game Object
