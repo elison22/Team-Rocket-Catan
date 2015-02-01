@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 import model.cards.ResourceSet;
 import model.game.GameModel;
-import model.trade.ITradeOffer;
+import model.trade.DomesticTrade;
+import model.trade.MaritimeTrade;
 import proxy.ProxyFacade;
+import proxy.ServerException;
 import serializer.Serializer;
+import shared.dto.Login_Params;
+import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
@@ -25,8 +29,9 @@ public class ClientFacade implements IClientFacade {
     /**
      * Creates a new Game Object
      */
-    public ClientFacade() {
-
+    public ClientFacade(String host, String port) {
+    	proxy = new ProxyFacade(host, port);
+    	game = new GameModel();
     }
 
 	@Override
@@ -37,8 +42,14 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean doUserLogin(String user, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		Login_Params login = new Login_Params(user, password);
+		try {
+			proxy.login(login);
+		} catch (ServerException e) {
+			return false;
+			//e.printStackTrace();
+		}
+		return true;
 	}
 
 	@Override
@@ -49,8 +60,14 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean doUserRegister(String user, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		Login_Params login = new Login_Params(user, password);
+		try {
+			proxy.login(login);
+		} catch (ServerException e) {
+			// e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -146,8 +163,7 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean canRollDice() {
-		// TODO Auto-generated method stub
-		return false;
+		return game.canRollDice(playerIndex);
 	}
 
 	@Override
@@ -253,21 +269,19 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public boolean canBuildRoad(VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canBuildRoad(EdgeLocation location) {
+		return game.canBuildRoad(playerIndex, location);
 	}
 
 	@Override
-	public void doBuildRoad(VertexLocation location) {
+	public void doBuildRoad(EdgeLocation location) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean canBuildSettlement(VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		return game.canBuildSettlement(playerIndex, location);
 	}
 
 	@Override
@@ -278,8 +292,7 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean canBuildCity(VertexLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		return game.canBuildCity(playerIndex, location);
 	}
 
 	@Override
@@ -289,45 +302,41 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public boolean canOfferTrade(ITradeOffer trade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canOfferTrade(DomesticTrade trade) {
+		return game.canOfferTrade(playerIndex, trade);
 	}
 
 	@Override
-	public void doOfferTrade(ITradeOffer trade) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean canAcceptTrade(ITradeOffer trade) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void doAcceptTrade(ITradeOffer trade) {
+	public void doOfferTrade(DomesticTrade trade) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean canMaritimeTrade(ITradeOffer trade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canAcceptTrade(DomesticTrade trade) {
+		return game.canAcceptTrade(playerIndex, trade);
 	}
 
 	@Override
-	public void doMaritimeTrade(ITradeOffer trade) {
+	public void doAcceptTrade(DomesticTrade trade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean canMaritimeTrade(MaritimeTrade trade) {
+		return game.canMaritimeTrade(playerIndex, trade);
+	}
+
+	@Override
+	public void doMaritimeTrade(MaritimeTrade trade) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean canDiscardCards(ResourceSet cards) {
-		// TODO Auto-generated method stub
-		return false;
+		return game.canDiscardCards(playerIndex, cards);
 	}
 
 	@Override
