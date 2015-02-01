@@ -2,30 +2,48 @@ package model.trade;
 
 import model.cards.ResourceSet;
 
-public class DomesticTrade implements ITradeOffer {
+public class DomesticTrade {
 
-    @Override
+	private int sender;
+	private int receiver;
+	private ResourceSet offer;
+	private String tradeType;
+	
+	public DomesticTrade() {
+		
+	}
+	
     public void setSender(int sender) {
-        // TODO Auto-generated method stub
-
+        this.sender = sender;
     }
 
-    @Override
-    public void setReciever(int reciever) {
-        // TODO Auto-generated method stub
-
+    public void setReceiver(int receiver) {
+        this.receiver = receiver;
     }
 
-    @Override
     public void setOffer(ResourceSet offer) {
-        // TODO Auto-generated method stub
-
+        this.offer = offer;
     }
 
-    @Override
     public void setTradeType(String tradeType) {
-        // TODO Auto-generated method stub
-
+        this.tradeType = tradeType;
     }
+
+	public int getSender() {
+		return sender;
+	}
+
+	public int getReceiver() {
+		return receiver;
+	}
+
+	public ResourceSet getOffer() {
+		return offer;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+    
 
 }
