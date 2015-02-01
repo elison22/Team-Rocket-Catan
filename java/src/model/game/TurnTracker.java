@@ -93,4 +93,28 @@ public class TurnTracker {
     	}
     	return false;
     }
+    
+    public boolean canPlayerRob(int playerIndex) {
+    	if(currentPlayerIndex == playerIndex) {
+    		if(currentState == TurnState.Robbing)
+    			return true;
+    	}
+    	return false;
+    }
+    
+    public boolean canPlayerRoll(int playerIndex) {
+    	if(currentPlayerIndex == playerIndex) {
+    		if(currentState == TurnState.Rolling)
+    			return true;
+    	}
+    	return false;
+    }
+    
+    public boolean canPlayerDiscard(int playerIndex) {
+    	if(currentPlayerIndex == playerIndex) {
+    		if(currentState == TurnState.Discarding)
+    			return true;
+    	}
+    	return false;
+    }
 }
