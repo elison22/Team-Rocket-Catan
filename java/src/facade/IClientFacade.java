@@ -1,6 +1,7 @@
 package facade;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.cards.ResourceSet;
 import model.game.GameModel;
@@ -124,7 +125,7 @@ public interface IClientFacade {
     /**
      * @return list of the supoorted AI player types
      */
-    public ArrayList<String> getAIList();
+    public List<String> getAIList();
 
     /**
      * Adds new message to the list of messages
@@ -148,12 +149,12 @@ public interface IClientFacade {
      * Checks if player can move robber piece
      * @return whether or not the player can move the robber and select a player to rob
      */
-    public boolean canRobPlayer();
+    public boolean canPlaceRobber();
 
     /**
      * Allows player to move robber piece and select a player to rob
      */
-    public void doRobPlayer();
+    public void doPlaceRobber();
 
     /**
      * @return whether or not a player can finish his turn
@@ -181,57 +182,57 @@ public interface IClientFacade {
      * Checks to see if player can play this dev card right now
      * @return
      */
-    public boolean canPlayYearOfPlenty();
+    public boolean canUseYearOfPlenty();
 
 
     /**
      * Plays this dev card
      */
-    public void doPlayYearOfPlenty();
+    public void doUseYearOfPlenty();
 
     /**
      * Checks to see if player can play this dev card right now
      * @return
      */
-    public boolean canPlayRoadBuilding();
+    public boolean canUseRoadBuilder();
 
     /**
      * Plays this dev card
      */
-    public void doPlayRoadBuilding();
+    public void doUseRoadBuilder();
 
     /**
      * Checks to see if player can play this dev card right now
      * @return
      */
-    public boolean canPlaySoldier();
+    public boolean canUseSoldier();
 
     /**
      * Plays this dev card
      */
-    public void doPlaySoldier();
+    public void doUseSoldier();
 
     /**
      * Checks to see if player can play this dev card right now
      * @return
      */
-    public boolean canPlayMonopoly();
+    public boolean canUseMonopoly();
 
     /**
      * Plays this dev card
      */
-    public void doPlayMonopoly();
+    public void doUseMonopoly();
 
     /**
      * Checks to see if player can play this dev card right now
      * @return
      */
-    public boolean canPlayMonument();
+    public boolean canUseMonument();
 
     /**
      * Plays this dev card
      */
-    public void doPlayMonument();
+    public void doUseMonument();
 
     /**
      * Checks to see if player can build a road right now
