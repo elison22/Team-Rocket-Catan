@@ -18,20 +18,13 @@ import shared.definitions.ResourceType;
  */
 public class Player {
 
-    /** The player's index in the list of players */
-    private int playerIdx;
-    /** The player's bank of cards */
-    private PlayerBank bank;
-    /** The player's name */
-    private String playerName;
-    /** The player's victory points */
-    private int victoryPoints;
-    /** The number of roads the player can build */
-    private int remainingRoads;
-    /** The number of settlements the player can build */
-    private int remainingSettlements;
-    /** The number of cities the player can build */
-    private int remainingCities;
+    private int playerIdx;				// The player's index in list of players
+    private PlayerBank bank;			// The player's bank of cards
+    private String playerName;			// The player's name
+    private int victoryPoints;			// The player's victory points
+    private int remainingRoads;			// The number of roads the player has left to build
+    private int remainingSettlements;	// The number of settlements the player has left to build
+    private int remainingCities;		// The number of cities the player can build
 
     /**
      * Creates a new Player object with an empty PlayerBank object and zero victory points
@@ -71,8 +64,8 @@ public class Player {
      * @param offeredRes A map of offered resource cards
      * @return return whether a trade can be offered or not
      */
-    public boolean canOfferTrade(int playerIdx, HashMap<ResourceType, Integer> offeredRes){
-        return bank.hasResCards(offeredRes);
+    public boolean canOfferTrade(int playerIdx, ResourceSet offeredRes){
+        return bank.hasResCards(offeredRes.getResources());
     }
 
     /**
@@ -82,20 +75,78 @@ public class Player {
      * @param desiredRes A list of resource cards desired by the other player
      * @return return whether a trade was accepted or not
      */
-    public boolean canAcceptTrade(int playerIdx, HashMap<ResourceType, Integer> desiredRes){
-        return bank.hasResCards(desiredRes);
+    public boolean canAcceptTrade(int playerIdx, ResourceSet desiredRes){
+        return bank.hasResCards(desiredRes.getResources());
+    }
+    
+    /**
+     * @param devCard type of dev card player wants to play
+     * @return true if player has that dev card and hasn't already played it
+     */
+    public boolean canPlayDevCard(String devCard) {
+    	switch (devCard) {
+    		case "YearOfPlenty":
+    			
+    			break;
+    		
+    		case "Soldier":
+    			
+    			break;
+    		
+    		case "Monopoly":
+    			
+    			break;
+    			
+    		case "Monument":
+    			
+    			break;
+    			
+    		case "RoadBuilder":
+    			
+    			break;
+    	}
+    	return false;
+    }
+    
+    public int getVictoryPoints() {
+    	return victoryPoints;
+    }
+    
+    public String getName() {
+    	return playerName;
+    }
+    
+    public boolean canDiscardCards(ResourceSet cards) {
+    	
+    	return true;
+    }
+    
+    public boolean canBuyDevCard() {
+    	if(bank.canBuyDevCard())
+    		return true;
+    	else
+    		return false;
     }
 
     public boolean canBuildRoad(){
-        return true;
+    	if(remainingRoads > 0)
+    		return true;
+    	else
+    		return false;
     }
     
     public boolean canBuildCity(){
-    	return true;
+    	if(remainingCities > 0)
+    		return true;
+    	else 
+    		return false;
     }
     
     public boolean canBuildSettlement(){
-    	return true;
+    	if(remainingSettlements > 0)
+    		return true;
+    	else
+    		return false;
     }
 
 }
