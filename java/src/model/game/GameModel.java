@@ -2,12 +2,17 @@ package model.game;
 
 import java.util.ArrayList;
 
+import model.board.Board;
+import model.board.BoardException;
+import model.cards.GameBank;
+import model.cards.ResourceSet;
 import model.chat.Chat;
 import model.chat.GameHistory;
-import model.board.Board;
-import model.cards.GameBank;
 import model.player.Player;
-import model.trade.ITradeOffer;
+import model.trade.DomesticTrade;
+import model.trade.MaritimeTrade;
+import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
 
 public class GameModel {
 
@@ -19,19 +24,10 @@ public class GameModel {
     private Board map;
     private Chat chat;
     private GameHistory gameHistory;
-    private ITradeOffer tradeOffer;
-    private ArrayList<Integer> playerIndexes;
+    //private ArrayList<Integer> playerIndexes;
 
     public GameModel() {
     	
-    }
-
-    public ITradeOffer getTradeOffer() {
-        return tradeOffer;
-    }
-
-    public void setTradeOffer(ITradeOffer tradeOffer) {
-        this.tradeOffer = tradeOffer;
     }
 
     public String getGameName() {
@@ -85,6 +81,98 @@ public class GameModel {
     public void setMap(Board map) {
         this.map = map;
     }
+    
+    public boolean canRollDice(int playerId) {
+    	if(playerId == turnTracker.getCurrentPlayerIndex()){
+    		if(turnTracker.getCurrentState() == TurnState.Rolling) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public boolean canBuildRoad(int playerId, EdgeLocation location) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canBuildRoad()){
+    			try {
+					if(map.canBuildRoad(location, playerId))
+						return true;
+				} catch (BoardException e) {
+					// e.printStackTrace();
+					return false;
+				}
+			}
+    	}
+    	return false;
+    }
+    
+    public boolean canBuildCity(int playerId, VertexLocation location) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canBuildCity()){
+    			try {
+					if(map.canBuildCity(location, playerId))
+						return true;
+				} catch (BoardException e) {
+					// e.printStackTrace();
+					return false;
+				}
+			}
+    	}
+    	return false;
+    }
+    
+    public boolean canBuildSettlement(int playerId, VertexLocation location) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canBuildSettlement()){
+    			try {
+					if(map.canBuildSettlement(location, playerId))
+						return true;
+				} catch (BoardException e) {
+					// e.printStackTrace();
+					return false;
+				}
+			}
+    	}
+    	return false;
+    }
+    
+    public boolean canOfferTrade(int playerId, DomesticTrade trade) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
+    			return true;
+			}
+    	}
+    	return false;
+    }
+    
+    public boolean canAcceptTrade(int playerId, DomesticTrade trade) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canAcceptTrade(playerId, trade.getOffer())){
+    			return true;
+			}
+    	}
+    	return false;
+    }
+    
+    public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+//    		if(playerList.get(playerId).canMaritimeTrade(playerId, trade.getOffer())){
+//    			return true;
+//			}
+    	}
+    	return false;
+    }
+    
+    public boolean canDiscardCards(int playerId, ResourceSet cards) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canDiscardCards(cards)){
+    			return true;
+			}
+    	}
+    	return false;
+    }
+    
+    
 
 //    public Chat getMessageList() {
 //        return messageList;
