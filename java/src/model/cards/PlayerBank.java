@@ -42,6 +42,11 @@ public class PlayerBank extends CardBank{
 //        card.effect();    only commented out to make it build
 //        return true;      commented it out because it isn't in the documentation above and not sure if we need it
     }
+    
+    public boolean canBuyDevCard() {
+    	
+    	return false;
+    }
 
     public HashMap<ResourceType, Integer> getResCards(){
         return this.resCards;
