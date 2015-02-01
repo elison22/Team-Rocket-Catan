@@ -44,8 +44,10 @@ public class PlayerBank extends CardBank{
     }
     
     public boolean canBuyDevCard() {
-    	
-    	return false;
+    	if(resCards.get(ResourceType.ORE) >= 1 && resCards.get(ResourceType.SHEEP) >= 1 && resCards.get(ResourceType.WHEAT) >= 1)
+    		return true;
+    	else
+    		return false;
     }
 
     public HashMap<ResourceType, Integer> getResCards(){
