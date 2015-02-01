@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.ITradeOffer;
+import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 public interface IClientFacade {
@@ -236,13 +237,13 @@ public interface IClientFacade {
      * @param location where the user wants to build the road
      * @return true if user is able to build road at location right now
      */
-    public boolean canBuildRoad(VertexLocation location);
+    public boolean canBuildRoad(EdgeLocation location);
 
     /**
      * Builds a road for player at given location
      * @param location where the user wants to build the road
      */
-    public void doBuildRoad(VertexLocation location);
+    public void doBuildRoad(EdgeLocation location);
 
     /**
      * Checks to see if player can build a settlement right now
