@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import model.cards.ResourceSet;
 import model.game.GameModel;
-import model.trade.ITradeOffer;
+import model.trade.DomesticTrade;
+import model.trade.MaritimeTrade;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -276,39 +277,39 @@ public interface IClientFacade {
      * @param trade details of the trade being offered
      * @return true if trade can be made right now
      */
-    public boolean canOfferTrade(ITradeOffer trade);
+    public boolean canOfferTrade(DomesticTrade trade);
 
     /**
      * Sends a trade offer to player that was selected
      * @param trade details of the trade being offered
      */
-    public void doOfferTrade(ITradeOffer trade);
+    public void doOfferTrade(DomesticTrade trade);
 
     /**
      * Checks to see if player is able to accept a given trade offer
      * @param trade details of the trade being offered
      * @return true if player is able to accept trade
      */
-    public boolean canAcceptTrade(ITradeOffer trade);
+    public boolean canAcceptTrade(DomesticTrade trade);
 
     /**
      * Allows player to accept trade that was offered them
      * @param trade details of the trade being made
      */
-    public void doAcceptTrade(ITradeOffer trade);
+    public void doAcceptTrade(DomesticTrade trade);
 
     /**
      * Checks to see if player can offer a maritime trade right now
      * @param trade details of the trade being offered
      * @return true if trade can be made right now
      */
-    public boolean canMaritimeTrade(ITradeOffer trade);
+    public boolean canMaritimeTrade(MaritimeTrade trade);
 
     /**
      * Sends a trade offer to bank
      * @param trade details of the trade being offered
      */
-    public void doMaritimeTrade(ITradeOffer trade);
+    public void doMaritimeTrade(MaritimeTrade trade);
 
     /**
      * Checks to see if player can discard the selected resource cards
