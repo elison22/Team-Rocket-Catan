@@ -85,4 +85,12 @@ public class TurnTracker {
     {
         return currentState;
     }
+    
+    public boolean canPlayerBuild(int playerIndex) {
+    	if(currentPlayerIndex == playerIndex) {
+    		if(currentState == TurnState.Playing)
+    			return true;
+    	}
+    	return false;
+    }
 }
