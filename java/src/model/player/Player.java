@@ -89,5 +89,13 @@ public class Player {
     public boolean canBuildRoad(){
         return true;
     }
+    
+    public boolean canBuildCity(){
+    	return true;
+    }
+    
+    public boolean canBuildSettlement(){
+    	return true;
+    }
 
 }
