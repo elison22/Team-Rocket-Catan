@@ -1,7 +1,6 @@
 package model.player;
 
 import java.util.HashMap;
-import java.util.List;
 
 import model.cards.PlayerBank;
 import model.cards.ResourceSet;
@@ -64,6 +63,10 @@ public class Player {
      * @param offeredRes A map of offered resource cards
      * @return return whether a trade can be offered or not
      */
+    public boolean canOfferTrade(int playerIdx, HashMap<ResourceType,Integer> offeredRes){
+        return bank.hasResCards(offeredRes);
+    }
+    
     public boolean canOfferTrade(int playerIdx, ResourceSet offeredRes){
         return bank.hasResCards(offeredRes.getResources());
     }
