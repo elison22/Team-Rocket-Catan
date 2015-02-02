@@ -1,13 +1,19 @@
 package model.board;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
-import shared.locations.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * Created by brandt on 1/17/15.
@@ -450,7 +456,20 @@ public class Board {
         ports.put(counterclockwise, new Port(type));
     }
 
-
+    /**
+     * @param playerIndex index of player who wants to perform maritime trade
+     * @param type type of resource he wants to maritime trade
+     * @return	true if player has building on the port type that he wants to trade
+     */
+    public boolean canPlayerMaritimeTrade(int playerIndex, PortType type) {
+    	for(Map.Entry<VertexLocation, Port> entry : ports.entrySet()){
+    		if(entry.getValue().getType() == type) {
+    			if(entry.getValue().getOwner() == playerIndex)
+    				return true;
+    		}
+    	}
+    	return false;
+    }
 
 
     public static void main(String[] args) {
