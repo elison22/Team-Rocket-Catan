@@ -53,4 +53,8 @@ public class Port {
     public int getOwner() {
         return owner;
     }
+    
+    public PortType getType() {
+    	return type;
+    }
 }
