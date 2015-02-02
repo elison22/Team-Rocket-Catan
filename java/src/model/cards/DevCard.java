@@ -35,4 +35,8 @@ public class DevCard {
     public void effect(){
         return;
     }
+    
+    public boolean hasBeenPlayed() {
+    	return hasBeenPlayed;
+    }
 }
