@@ -1,6 +1,7 @@
 package facade;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.cards.ResourceSet;
 import model.game.GameModel;
@@ -9,6 +10,7 @@ import model.trade.MaritimeTrade;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
+import shared.definitions.DevCardType;
 import shared.dto.Login_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
@@ -47,7 +49,6 @@ public class ClientFacade implements IClientFacade {
 			proxy.login(login);
 		} catch (ServerException e) {
 			return false;
-			//e.printStackTrace();
 		}
 		return true;
 	}
@@ -64,7 +65,6 @@ public class ClientFacade implements IClientFacade {
 		try {
 			proxy.login(login);
 		} catch (ServerException e) {
-			// e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -133,8 +133,7 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public int getVersionNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		return game.getVersionNumber();
 	}
 
 	@Override
@@ -151,8 +150,7 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public ArrayList<String> getAIList() {
-		// TODO Auto-generated method stub
-		return null;
+		return game.getAiList();
 	}
 
 	@Override
@@ -168,26 +166,28 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public void rollDice() {
-		// TODO Auto-generated method stub
+		int min = 2;
+		int max = 12;
 		
+		Random rand = new Random();
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+
 	}
 
 	@Override
-	public boolean canRobPlayer() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canPlaceRobber() {
+		return game.canPlaceRobber(playerIndex);
 	}
 
 	@Override
-	public void doRobPlayer() {
+	public void doPlaceRobber() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean canFinishTurn() {
-		// TODO Auto-generated method stub
-		return false;
+		return game.canFinishTurn(playerIndex);
 	}
 
 	@Override
@@ -198,8 +198,7 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean canBuyDevCard() {
-		// TODO Auto-generated method stub
-		return false;
+		return game.canBuyDevCard(playerIndex);
 	}
 
 	@Override
@@ -209,61 +208,56 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public boolean canPlayYearOfPlenty() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canUseYearOfPlenty() {
+		return game.canPlayDevCard(playerIndex, DevCardType.YEAR_OF_PLENTY);
 	}
 
 	@Override
-	public void doPlayYearOfPlenty() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean canPlayRoadBuilding() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void doPlayRoadBuilding() {
+	public void doUseYearOfPlenty() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean canPlaySoldier() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canUseRoadBuilder() {
+		return game.canPlayDevCard(playerIndex, DevCardType.ROAD_BUILD);
 	}
 
 	@Override
-	public void doPlaySoldier() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean canPlayMonopoly() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void doPlayMonopoly() {
+	public void doUseRoadBuilder() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean canPlayMonument() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canUseSoldier() {
+		return game.canPlayDevCard(playerIndex, DevCardType.SOLDIER);
 	}
 
 	@Override
-	public void doPlayMonument() {
+	public void doUseSoldier() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean canUseMonopoly() {
+		return game.canPlayDevCard(playerIndex, DevCardType.MONOPOLY);
+	}
+
+	@Override
+	public void doUseMonopoly() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean canUseMonument() {
+		return game.canPlayDevCard(playerIndex, DevCardType.MONUMENT);
+	}
+
+	@Override
+	public void doUseMonument() {
 		// TODO Auto-generated method stub
 		
 	}
