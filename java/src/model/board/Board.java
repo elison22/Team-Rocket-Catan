@@ -26,13 +26,13 @@ import shared.locations.VertexLocation;
 public class Board {
 
     /** The HexTile objects that make up this Board */
-    private HashMap<HexLocation, HexTile> tiles = new HashMap<>();
+    private HashMap<HexLocation, HexTile> tiles = new HashMap<HexLocation, HexTile>();
     /** The CITY and SETTLEMENT type Constructable objects on this Board */
-    private HashMap<VertexLocation, Constructable> buildings = new HashMap<>();
+    private HashMap<VertexLocation, Constructable> buildings = new HashMap<VertexLocation, Constructable>();
     /** The ROAD type Constructable objects on this Board */
-    private HashMap<EdgeLocation, Constructable> roads = new HashMap<>();
+    private HashMap<EdgeLocation, Constructable> roads = new HashMap<EdgeLocation, Constructable>();
     /** The Port vertices on this Board */
-    private HashMap<VertexLocation, Port> ports = new HashMap<>();
+    private HashMap<VertexLocation, Port> ports = new HashMap<VertexLocation, Port>();
     /** The HexLocation that represents the robber */
     private HexLocation robber;
 
@@ -56,10 +56,10 @@ public class Board {
         int yStart = 2;
         int yEnd = 0;
 
-        ArrayList<HexType> hexTypeArray = new ArrayList<>();
-        ArrayList<Integer> numArray = new ArrayList<>();
-        ArrayList<PortType> portTypeArray = new ArrayList<>();
-        ArrayList<EdgeLocation> portLocArray = new ArrayList<>();
+        ArrayList<HexType> hexTypeArray = new ArrayList<HexType>();
+        ArrayList<Integer> numArray = new ArrayList<Integer>();
+        ArrayList<PortType> portTypeArray = new ArrayList<PortType>();
+        ArrayList<EdgeLocation> portLocArray = new ArrayList<EdgeLocation>();
 
         hexTypeArray.add(HexType.WOOD);
         hexTypeArray.add(HexType.WHEAT);

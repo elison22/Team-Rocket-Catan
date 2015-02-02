@@ -186,7 +186,7 @@ public class GameModel {
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
-    		resource.put(trade.getResourceType(), 1);
+    		resource.put(trade.getResourceType(), 1); //Shouldn't the '1' instead be 'trade.getRatio'?
     		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
     			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
     				return true;

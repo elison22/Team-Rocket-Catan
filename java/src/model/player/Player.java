@@ -69,7 +69,7 @@ public class Player {
     public boolean canOfferTrade(int playerIdx, HashMap<ResourceType,Integer> offeredRes){
         return bank.hasResCards(offeredRes);
     }
-    
+
     public boolean canOfferTrade(int playerIdx, ResourceSet offeredRes){
         return bank.hasResCards(offeredRes.getResources());
     }
