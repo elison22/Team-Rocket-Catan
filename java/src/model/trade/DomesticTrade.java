@@ -7,7 +7,6 @@ public class DomesticTrade {
 	private int sender;
 	private int receiver;
 	private ResourceSet offer;
-	private String tradeType;
 	
 	public DomesticTrade() {
 		
@@ -25,10 +24,6 @@ public class DomesticTrade {
         this.offer = offer;
     }
 
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
-
 	public int getSender() {
 		return sender;
 	}
@@ -40,10 +35,5 @@ public class DomesticTrade {
 	public ResourceSet getOffer() {
 		return offer;
 	}
-
-	public String getTradeType() {
-		return tradeType;
-	}
-    
 
 }
