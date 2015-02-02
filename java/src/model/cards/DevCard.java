@@ -39,4 +39,12 @@ public class DevCard {
     public boolean hasBeenPlayed() {
     	return hasBeenPlayed;
     }
+    
+    public void playDevCard() {
+    	hasBeenPlayed = true;
+    }
+    
+    public DevCardType getType() {
+    	return type;
+    }
 }
