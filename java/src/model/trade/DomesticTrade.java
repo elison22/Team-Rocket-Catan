@@ -8,8 +8,10 @@ public class DomesticTrade {
 	private int receiver;
 	private ResourceSet offer;
 	
-	public DomesticTrade() {
-		
+	public DomesticTrade(int sender, int receiver, ResourceSet offer) {
+		this.sender = sender;
+		this. receiver = receiver;
+		this.offer = offer;
 	}
 	
     public void setSender(int sender) {
