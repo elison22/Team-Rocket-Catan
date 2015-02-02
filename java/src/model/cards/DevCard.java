@@ -10,13 +10,15 @@ import shared.definitions.DevCardType;
 public class DevCard {
 
     private DevCardType type;
+    private String name;
     private boolean hasBeenPlayed;
     /**
      * Creates a DevCard object
      * @param type The type of development card to create
      */
-    public DevCard(DevCardType type){
+    public DevCard(DevCardType type, String name){
         this.type = type;
+        this.name = name;
         this.hasBeenPlayed = false;
     }
 
@@ -30,7 +32,7 @@ public class DevCard {
     }
 
     /**
-     * Similates the effect of the card
+     * Simulates the effect of the card
      */
     public void effect(){
         return;

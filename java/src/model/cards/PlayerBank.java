@@ -18,7 +18,11 @@ public class PlayerBank extends CardBank{
      * held resources to zero
      */
     public PlayerBank(){
-        //initialize everything to 0
+        resCards.put(ResourceType.BRICK, 0);
+        resCards.put(ResourceType.WOOD, 0);
+        resCards.put(ResourceType.WHEAT, 0);
+        resCards.put(ResourceType.SHEEP, 0);
+        resCards.put(ResourceType.ORE, 0);
     }
 
     /**
@@ -32,22 +36,20 @@ public class PlayerBank extends CardBank{
         return true;
     }
 
-    /**
-     * Called by the Facade to see if the player can legally play
-     * a development card.
-     * @param card The type of development card to be played
-     */
-    public void canPlayDevCard(DevCard card){
-        //maybe some inheritance or an interface?
-//        card.effect();    only commented out to make it build
-//        return true;      commented it out because it isn't in the documentation above and not sure if we need it
+    public boolean canAffordDevCard() {
+    	return resCards.get(ResourceType.ORE) >= 1 && resCards.get(ResourceType.SHEEP) >= 1 && resCards.get(ResourceType.WHEAT) >= 1;
     }
-    
-    public boolean canBuyDevCard() {
-    	if(resCards.get(ResourceType.ORE) >= 1 && resCards.get(ResourceType.SHEEP) >= 1 && resCards.get(ResourceType.WHEAT) >= 1)
-    		return true;
-    	else
-    		return false;
+
+    public boolean canAffordRoad() {
+        return resCards.get(ResourceType.BRICK) >= 1 && resCards.get(ResourceType.WOOD) >= 1;
+    }
+
+    public boolean canAffordSettlement() {
+        return resCards.get(ResourceType.BRICK) >= 1 && resCards.get(ResourceType.WOOD) >= 1 && resCards.get(ResourceType.SHEEP) >= 1 && resCards.get(ResourceType.WHEAT) >= 1;
+    }
+
+    public boolean canAffordCity() {
+        return resCards.get(ResourceType.ORE) >= 3 && resCards.get(ResourceType.WHEAT) >= 2;
     }
 
     public HashMap<ResourceType, Integer> getResCards(){
@@ -58,9 +60,9 @@ public class PlayerBank extends CardBank{
     	return devCards;
     }
 
-    public boolean hasResCards(HashMap<ResourceType, Integer> offeredRes){
-        for (ResourceType key : offeredRes.keySet()){
-            if(offeredRes.get(key) > this.resCards.get(key)){
+    public boolean hasResCards(HashMap<ResourceType, Integer> resources){
+        for (ResourceType key : resources.keySet()){
+            if(resources.get(key) > this.resCards.get(key)){
                 return false;
             }
         }

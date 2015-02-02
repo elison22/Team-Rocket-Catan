@@ -92,16 +92,20 @@ public class GameModel {
     
     public boolean canPlayDevCard(int playerId, DevCardType devCard) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canPlayDevCard(devCard))
+    		if(playerList.get(playerId).canPlayDevCard(devCard)){
     			return true;
+            }
     	}
     	return false;
     }
     
     public boolean canBuyDevCard(int playerId) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canBuyDevCard())
-    			return true;
+            if(cardBank.canGiveDevCard()){
+                if(playerList.get(playerId).canBuyDevCard()){
+                    return true;
+                }
+            }
     	} 
     	
     	return false;
@@ -136,7 +140,21 @@ public class GameModel {
     	}
     	return false;
     }
-    
+
+    public boolean canBuildSettlement(int playerId, VertexLocation location) {
+        if(turnTracker.canPlayerBuild(playerId)) {
+            if(playerList.get(playerId).canBuildSettlement()){
+                try {
+                    if(map.canBuildSettlement(location, playerId))
+                        return true;
+                } catch (BoardException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean canBuildCity(int playerId, VertexLocation location) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(playerList.get(playerId).canBuildCity()){
@@ -150,21 +168,7 @@ public class GameModel {
     	}
     	return false;
     }
-    
-    public boolean canBuildSettlement(int playerId, VertexLocation location) {
-    	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canBuildSettlement()){
-    			try {
-					if(map.canBuildSettlement(location, playerId))
-						return true;
-				} catch (BoardException e) {
-					return false;
-				}
-			}
-    	}
-    	return false;
-    }
-    
+
     public boolean canOfferTrade(int playerId, DomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
@@ -186,7 +190,7 @@ public class GameModel {
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
-    		resource.put(trade.getResourceType(), 1); //Shouldn't the '1' instead be 'trade.getRatio'?
+    		resource.put(trade.getResourceType(), 1);
     		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
     			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
     				return true;
@@ -205,9 +209,9 @@ public class GameModel {
     }
     
     public boolean canFinishTurn(int playerId) {
-    	if(turnTracker.canPlayerBuild(playerId))
+    	if(turnTracker.canPlayerBuild(playerId)){
     		return true;
-    	
+        }
     	return false;
     }
     

@@ -1,5 +1,6 @@
 package model.cards;
 
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 /**
@@ -10,6 +11,7 @@ import shared.definitions.ResourceType;
  */
 public class GameBank extends CardBank{
 
+
     /**
      * Initializes map of resource cards to hold 19 of each type
      * and creates all DevCard objects such that there are five
@@ -17,8 +19,33 @@ public class GameBank extends CardBank{
      * "monopoly", "victoryPt"] in the development card List
      */
     public GameBank(){
-        //initialize to 19 res cards
-        //create all dev cards
+        resCards.put(ResourceType.BRICK, 19);
+        resCards.put(ResourceType.WOOD, 19);
+        resCards.put(ResourceType.WHEAT, 19);
+        resCards.put(ResourceType.SHEEP, 19);
+        resCards.put(ResourceType.ORE, 19);
+        initDevCards();
+    }
+
+    public void initDevCards(){
+        //initialize monument cards
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Library"));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "University"));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Market"));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Chapel"));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Palace"));
+
+        //initialize soldier cards
+        for(int i = 0; i < 14; i++){
+            devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier"));
+        }
+
+        //initialize progress cards
+        for(int i = 0; i < 2; i++){
+            devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly"));
+            devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building"));
+            devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty"));
+        }
     }
 
     /**
@@ -45,8 +72,8 @@ public class GameBank extends CardBank{
      * @return Whether a development card can be taken or not
      */
     public boolean canGiveDevCard(){
-        //check if there are any
-        return true;
+        //check if there are any dev cards to give
+        return devCards.size() > 0;
     }
 
     /**

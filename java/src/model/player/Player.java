@@ -27,6 +27,7 @@ public class Player {
     private int remainingRoads;			// The number of roads the player has left to build
     private int remainingSettlements;	// The number of settlements the player has left to build
     private int remainingCities;		// The number of cities the player can build
+    private int monumentDevs;           // The number of monument cards a player holds. User to determine when the cards can be played.
 
     /**
      * Creates a new Player object with an empty PlayerBank object and zero victory points
@@ -41,6 +42,7 @@ public class Player {
         this.remainingRoads = 15;
         this.remainingSettlements = 5;
         this.remainingCities = 4;
+        this.monumentDevs = 0;
     }
 
     /**
@@ -57,6 +59,14 @@ public class Player {
         this.remainingRoads = remainingRoads;
         this.remainingSettlements = remainingSettlements;
         this.remainingCities = remainingCities;
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
+
+    public String getName() {
+        return playerName;
     }
 
     /**
@@ -87,59 +97,60 @@ public class Player {
     
     /**
      * @param devCard type of dev card player wants to play
-     * @return true if player has that dev card and hasn't already played it
+     * @return true if player has that dev card, hasn't already played it, and meets the
+     * requirement to play that certain dev card.
      */
     public boolean canPlayDevCard(DevCardType devCard) {
     	ArrayList<DevCard> devCards = bank.getDevCards();
-    	for(int i = 0; i < devCards.size(); i++) {
-    		if(devCards.get(i).getType() == devCard) {
-    			if(!devCards.get(i).hasBeenPlayed())
-    				return true;
-    		}
-    	}
-    	
+        for(DevCard playerDev : devCards){
+            if(playerDev.getType() == devCard){
+                if(!playerDev.hasBeenPlayed()){
+                    switch(devCard){
+                        case ROAD_BUILD:
+                            return remainingRoads >= 2;
+                        case MONUMENT:
+                            return (victoryPoints + monumentDevs) >= 10;
+                    }
+                    return true;
+                }
+            }
+        }
     	return false;
     }
-    
-    public int getVictoryPoints() {
-    	return victoryPoints;
+
+    public boolean canBuyDevCard() {
+        return bank.canAffordDevCard();
     }
-    
-    public String getName() {
-    	return playerName;
-    }
-    
+
     public boolean canDiscardCards(ResourceSet cards) {
-    	
+        bank.hasResCards(cards.getResources());
     	return true;
     }
     
-    public boolean canBuyDevCard() {
-    	if(bank.canBuyDevCard())
-    		return true;
-    	else
-    		return false;
-    }
-
     public boolean canBuildRoad(){
-    	if(remainingRoads > 0)
-    		return true;
-    	else
-    		return false;
-    }
-    
-    public boolean canBuildCity(){
-    	if(remainingCities > 0)
-    		return true;
-    	else 
-    		return false;
-    }
-    
-    public boolean canBuildSettlement(){
-    	if(remainingSettlements > 0)
-    		return true;
-    	else
-    		return false;
+    	if(remainingRoads > 0){
+            if(bank.canAffordRoad()){
+    		    return true;
+            }
+        }
+        return false;
     }
 
+    public boolean canBuildSettlement(){
+        if(remainingSettlements > 0){
+            if(bank.canAffordSettlement()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canBuildCity(){
+    	if(remainingCities > 0){
+            if(bank.canAffordCity()){
+    		    return true;
+            }
+        }
+        return false;
+    }
 }

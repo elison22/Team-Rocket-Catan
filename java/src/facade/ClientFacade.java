@@ -7,6 +7,7 @@ import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
