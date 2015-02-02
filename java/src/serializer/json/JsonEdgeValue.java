@@ -1,23 +1,23 @@
 package serializer.json;
 
-public class EdgeValue
+public class JsonEdgeValue
 {
 
-	public EdgeValue(int owner, EdgeLocation location)
+	public JsonEdgeValue(int owner, JsonEdgeLocation location)
 	{
 		this.owner = owner;
 		this.location = location;
 	}
 
 	private int				owner;
-	private EdgeLocation	location;
+	private JsonEdgeLocation location;
 
 	public int getOwner()
 	{
 		return owner;
 	}
 
-	public EdgeLocation getLocation()
+	public JsonEdgeLocation getLocation()
 	{
 		return location;
 	}

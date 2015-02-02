@@ -1,23 +1,23 @@
 package serializer.json;
 
-public class VertexObject
+public class JsonVertexObject
 {
 
-	public VertexObject(int owner, VertexLocation location)
+	public JsonVertexObject(int owner, JsonVertexLocation location)
 	{
 		this.owner = owner;
 		this.location = location;
 	}
 
 	private int				owner;
-	private VertexLocation	location;
+	private JsonVertexLocation location;
 
 	public int getOwner()
 	{
 		return owner;
 	}
 
-	public VertexLocation getLocation()
+	public JsonVertexLocation getLocation()
 	{
 		return location;
 	}

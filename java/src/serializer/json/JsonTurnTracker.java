@@ -1,21 +1,21 @@
 package serializer.json;
 
-public class TurnTracker
+public class JsonTurnTracker
 {
 
-	public TurnTracker(int currentTurn, String status)
+	public JsonTurnTracker(int currentTurn, String status)
 	{
 		this.currentTurn = currentTurn;
 		this.status = status;
 	}
-	public TurnTracker(int currentTurn, String status, int largestArmy)
+	public JsonTurnTracker(int currentTurn, String status, int largestArmy)
 	{
 		this.currentTurn = currentTurn;
 		this.status = status;
 		this.largestArmy = largestArmy;
 	}
-	public TurnTracker(int currentTurn, String status, int longestRoad,
-			int largestArmy)
+	public JsonTurnTracker(int currentTurn, String status, int longestRoad,
+                           int largestArmy)
 	{
 		this.currentTurn = currentTurn;
 		this.status = status;

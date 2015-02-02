@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class DevCardList
+public class JsonDevCardList
 {
-	public DevCardList(int monopoly, int monument, int roadBuilding,
-			int soldier, int yearOfPlenty)
+	public JsonDevCardList(int monopoly, int monument, int roadBuilding,
+                           int soldier, int yearOfPlenty)
 	{
 		this.monopoly = monopoly;
 		this.monument = monument;

@@ -1,12 +1,12 @@
 package serializer.json;
 
-public class Player
+public class JsonPlayer
 {
-	public Player(int cities, String color, boolean discarded, int monuments,
-			String name, DevCardList newDevCards, DevCardList oldDevCards,
-			int playerIndex, boolean playedDevCard, int playerID,
-			ResourceList resources, int roads, int settlements, int soldiers,
-			int victoryPoints)
+	public JsonPlayer(int cities, String color, boolean discarded, int monuments,
+                      String name, JsonDevCardList newDevCards, JsonDevCardList oldDevCards,
+                      int playerIndex, boolean playedDevCard, int playerID,
+                      JsonResourceList resources, int roads, int settlements, int soldiers,
+                      int victoryPoints)
 	{
 		this.cities = cities;
 		this.color = color;
@@ -30,12 +30,12 @@ public class Player
 	private boolean			discarded;
 	private int				monuments;
 	private String			name;
-	private DevCardList		newDevCards;
-	private DevCardList		oldDevCards;
+	private JsonDevCardList newDevCards;
+	private JsonDevCardList oldDevCards;
 	private int				playerIndex;
 	private boolean			playedDevCard;
 	private int				playerID;
-	private ResourceList	resources;
+	private JsonResourceList resources;
 	private int				roads;
 	private int				settlements;
 	private int				soldiers;
@@ -61,11 +61,11 @@ public class Player
 	{
 		return name;
 	}
-	public DevCardList getNewDevCards()
+	public JsonDevCardList getNewDevCards()
 	{
 		return newDevCards;
 	}
-	public DevCardList getOldDevCards()
+	public JsonDevCardList getOldDevCards()
 	{
 		return oldDevCards;
 	}
@@ -81,7 +81,7 @@ public class Player
 	{
 		return playerID;
 	}
-	public ResourceList getResources()
+	public JsonResourceList getResources()
 	{
 		return resources;
 	}

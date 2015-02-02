@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class HexLocation
+public class JsonHexLocation
 {
 
-	public HexLocation(int x, int y)
+	public JsonHexLocation(int x, int y)
 	{
 		this.x = x;
 		this.y = y;

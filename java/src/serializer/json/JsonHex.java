@@ -1,27 +1,27 @@
 package serializer.json;
 
-public class Hex
+public class JsonHex
 {
 
-	public Hex(HexLocation location)
+	public JsonHex(JsonHexLocation location)
 	{
 		this.location = location;
 		resource = "desert";
-		number = -1;
+		number = 0;
 	}
 
-	public Hex(HexLocation location, String resource, int number)
+	public JsonHex(JsonHexLocation location, String resource, int number)
 	{
 		this.location = location;
 		this.resource = resource;
 		this.number = number;
 	}
 
-	private HexLocation	location;
+	private JsonHexLocation location;
 	private String		resource;
 	private int			number;
 
-	public HexLocation getLocation()
+	public JsonHexLocation getLocation()
 	{
 		return location;
 	}

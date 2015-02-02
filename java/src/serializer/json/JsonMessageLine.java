@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class MessageLine
+public class JsonMessageLine
 {
 
-	public MessageLine(String message, String source)
+	public JsonMessageLine(String message, String source)
 	{
 		this.message = message;
 		this.source = source;

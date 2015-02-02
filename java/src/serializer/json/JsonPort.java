@@ -1,10 +1,10 @@
 package serializer.json;
 
-public class Port
+public class JsonPort
 {
 
-	public Port(String resource, HexLocation location, String direction,
-			int ratio)
+	public JsonPort(String resource, JsonHexLocation location, String direction,
+                    int ratio)
 	{
 		this.resource = resource;
 		this.location = location;
@@ -13,7 +13,7 @@ public class Port
 	}
 
 	private String		resource;
-	private HexLocation	location;
+	private JsonHexLocation location;
 	private String		direction;
 	private int			ratio;
 
@@ -22,7 +22,7 @@ public class Port
 		return resource;
 	}
 
-	public HexLocation getLocation()
+	public JsonHexLocation getLocation()
 	{
 		return location;
 	}

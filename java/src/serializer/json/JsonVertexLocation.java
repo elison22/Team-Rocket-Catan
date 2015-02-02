@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class VertexLocation
+public class JsonVertexLocation
 {
 
-	public VertexLocation(int x, int y, String direction)
+	public JsonVertexLocation(int x, int y, String direction)
 	{
 		this.x = x;
 		this.y = y;

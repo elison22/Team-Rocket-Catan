@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class EdgeLocation
+public class JsonEdgeLocation
 {
 
-	public EdgeLocation(int x, int y, String direction)
+	public JsonEdgeLocation(int x, int y, String direction)
 	{
 		this.x = x;
 		this.y = y;

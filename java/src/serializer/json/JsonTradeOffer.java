@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class TradeOffer
+public class JsonTradeOffer
 {
 
-	public TradeOffer(int sender, int receiver, ResourceList offer)
+	public JsonTradeOffer(int sender, int receiver, JsonResourceList offer)
 	{
 		this.sender = sender;
 		this.receiver = receiver;
@@ -12,7 +12,7 @@ public class TradeOffer
 
 	private int				sender;
 	private int				receiver;
-	private ResourceList	offer;
+	private JsonResourceList offer;
 
 	public int getSender()
 	{
@@ -22,7 +22,7 @@ public class TradeOffer
 	{
 		return receiver;
 	}
-	public ResourceList getOffer()
+	public JsonResourceList getOffer()
 	{
 		return offer;
 	}

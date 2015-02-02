@@ -1,9 +1,9 @@
 package serializer.json;
 
-public class ResourceList
+public class JsonResourceList
 {
 
-	public ResourceList(int brick, int ore, int sheep, int wheat, int wood)
+	public JsonResourceList(int brick, int ore, int sheep, int wheat, int wood)
 	{
 		this.brick = brick;
 		this.ore = ore;
