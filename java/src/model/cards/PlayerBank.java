@@ -1,9 +1,9 @@
 package model.cards;
 
-import shared.definitions.ResourceType;
-
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
+
+import shared.definitions.ResourceType;
 
 /**
  * @author Hayden
@@ -52,6 +52,10 @@ public class PlayerBank extends CardBank{
 
     public HashMap<ResourceType, Integer> getResCards(){
         return this.resCards;
+    }
+    
+    public ArrayList<DevCard> getDevCards() {
+    	return devCards;
     }
 
     public boolean hasResCards(HashMap<ResourceType, Integer> offeredRes){
