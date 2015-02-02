@@ -1,9 +1,12 @@
 package model.player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.cards.DevCard;
 import model.cards.PlayerBank;
 import model.cards.ResourceSet;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 /**
@@ -86,28 +89,15 @@ public class Player {
      * @param devCard type of dev card player wants to play
      * @return true if player has that dev card and hasn't already played it
      */
-    public boolean canPlayDevCard(String devCard) {
-    	switch (devCard) {
-    		case "YearOfPlenty":
-    			
-    			break;
-    		
-    		case "Soldier":
-    			
-    			break;
-    		
-    		case "Monopoly":
-    			
-    			break;
-    			
-    		case "Monument":
-    			
-    			break;
-    			
-    		case "RoadBuilder":
-    			
-    			break;
+    public boolean canPlayDevCard(DevCardType devCard) {
+    	ArrayList<DevCard> devCards = bank.getDevCards();
+    	for(int i = 0; i < devCards.size(); i++) {
+    		if(devCards.get(i).getType() == devCard) {
+    			if(!devCards.get(i).hasBeenPlayed())
+    				return true;
+    		}
     	}
+    	
     	return false;
     }
     
