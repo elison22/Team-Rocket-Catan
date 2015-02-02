@@ -1,39 +1,45 @@
 package model.trade;
 
-import model.cards.ResourceSet;
+import shared.definitions.ResourceType;
 
+/**
+ * This class is meant to only hold 1 card to trade at a time 
+ * (i.e. if you want to trade 4 cards to receive 2 on 2:1 port, 2 of these objects would need to be made)
+ */
 public class MaritimeTrade {
 	
 	private int sender;
-	private int receiver;
-	private ResourceSet offer;
-	private String tradeType;
+	private int ratio;	// (ie. put 3 for a 3:1 trade)
+	private ResourceType resourceType;
+	
+	public MaritimeTrade(int sender, int ratio, ResourceType resType) {
+		this.sender = sender;
+		this.ratio = ratio;
+		this.resourceType = resType;
+	}
 
     public void setSender(int sender) {
-        // TODO Auto-generated method stub
-
+        this.sender = sender;
     }
 
-    public void setOffer(ResourceSet offer) {
-        // TODO Auto-generated method stub
-
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
     }
-
-    public void setTradeType(String tradeType) {
-        // TODO Auto-generated method stub
-
+    
+    public void setTradeType(ResourceType resourceType) {
+    	this.resourceType = resourceType;
     }
     
     public int getSender() {
 		return sender;
 	}
 
-	public ResourceSet getOffer() {
-		return offer;
+	public int getRatio() {
+		return ratio;
 	}
-
-	public String getTradeType() {
-		return tradeType;
+	
+	public ResourceType getResourceType() {
+		return resourceType;
 	}
 
 }
