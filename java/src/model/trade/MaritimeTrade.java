@@ -1,5 +1,10 @@
 package model.trade;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import model.cards.ResourceSet;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 
 /**
@@ -10,12 +15,21 @@ public class MaritimeTrade {
 	
 	private int sender;
 	private int ratio;	// (ie. put 3 for a 3:1 trade)
-	private ResourceType resourceType;
+	private PortType portType;
+	private ResourceSet resources;
+	private ResourceType resType;
 	
-	public MaritimeTrade(int sender, int ratio, ResourceType resType) {
+	public MaritimeTrade(int sender, int ratio, PortType portType, ResourceSet resources) {
 		this.sender = sender;
 		this.ratio = ratio;
-		this.resourceType = resType;
+		this.portType = portType;
+		this.resources = resources;
+		
+		HashMap<ResourceType, Integer> res = resources.getResources();
+		for(Map.Entry<ResourceType, Integer> entry : res.entrySet()){
+    		if(entry.getValue() == -1)
+    			resType = entry.getKey();
+    	}
 	}
 
     public void setSender(int sender) {
@@ -26,8 +40,8 @@ public class MaritimeTrade {
         this.ratio = ratio;
     }
     
-    public void setTradeType(ResourceType resourceType) {
-    	this.resourceType = resourceType;
+    public void setTradeType(PortType resourceType) {
+    	this.portType = resourceType;
     }
     
     public int getSender() {
@@ -38,8 +52,16 @@ public class MaritimeTrade {
 		return ratio;
 	}
 	
+	public PortType getPortType() {
+		return portType;
+	}
+	
+	public ResourceSet getResources() {
+		return resources;
+	}
+	
 	public ResourceType getResourceType() {
-		return resourceType;
+		return resType;
 	}
 
 }
