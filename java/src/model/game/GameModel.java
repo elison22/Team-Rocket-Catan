@@ -1,6 +1,7 @@
 package model.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.board.Board;
 import model.board.BoardException;
@@ -11,6 +12,8 @@ import model.chat.GameHistory;
 import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -24,10 +27,11 @@ public class GameModel {
     private Board map;
     private Chat chat;
     private GameHistory gameHistory;
-    //private ArrayList<Integer> playerIndexes;
+    private ArrayList<String> aiList;
 
     public GameModel() {
-    	
+    	aiList = new ArrayList<String>();
+    	aiList.add("LARGEST_ARMY");
     }
 
     public String getGameName() {
@@ -82,6 +86,34 @@ public class GameModel {
         this.map = map;
     }
     
+    public ArrayList<String> getAiList() {
+    	return aiList;
+    }
+    
+    public boolean canPlayDevCard(int playerId, DevCardType devCard) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canPlayDevCard(devCard))
+    			return true;
+    	}
+    	return false;
+    }
+    
+    public boolean canBuyDevCard(int playerId) {
+    	if(turnTracker.canPlayerBuild(playerId)) {
+    		if(playerList.get(playerId).canBuyDevCard())
+    			return true;
+    	} 
+    	
+    	return false;
+    }
+    
+    public boolean canPlaceRobber(int playerId) {
+		if(turnTracker.canPlayerRoll(playerId)) {
+			return true;
+		}
+		return false;
+	}
+    
     public boolean canRollDice(int playerId) {
     	if(playerId == turnTracker.getCurrentPlayerIndex()){
     		if(turnTracker.getCurrentState() == TurnState.Rolling) {
@@ -98,7 +130,6 @@ public class GameModel {
 					if(map.canBuildRoad(location, playerId))
 						return true;
 				} catch (BoardException e) {
-					// e.printStackTrace();
 					return false;
 				}
 			}
@@ -113,7 +144,6 @@ public class GameModel {
 					if(map.canBuildCity(location, playerId))
 						return true;
 				} catch (BoardException e) {
-					// e.printStackTrace();
 					return false;
 				}
 			}
@@ -128,7 +158,6 @@ public class GameModel {
 					if(map.canBuildSettlement(location, playerId))
 						return true;
 				} catch (BoardException e) {
-					// e.printStackTrace();
 					return false;
 				}
 			}
@@ -156,15 +185,18 @@ public class GameModel {
     
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-//    		if(playerList.get(playerId).canMaritimeTrade(playerId, trade.getOffer())){
-//    			return true;
-//			}
+    		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
+    		resource.put(trade.getResourceType(), 1);
+    		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
+    			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
+    				return true;
+    		}
     	}
     	return false;
     }
     
     public boolean canDiscardCards(int playerId, ResourceSet cards) {
-    	if(turnTracker.canPlayerBuild(playerId)) {
+    	if(turnTracker.canPlayerDiscard(playerId)) {
     		if(playerList.get(playerId).canDiscardCards(cards)){
     			return true;
 			}
@@ -172,6 +204,12 @@ public class GameModel {
     	return false;
     }
     
+    public boolean canFinishTurn(int playerId) {
+    	if(turnTracker.canPlayerBuild(playerId))
+    		return true;
+    	
+    	return false;
+    }
     
 
 //    public Chat getMessageList() {
