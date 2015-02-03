@@ -152,12 +152,15 @@ public class Board {
      * is outside the range 0 to 12.
      */
     public Board(JsonMap newMap) throws BoardException {
+
         if (newMap == null) throw new BoardException("Param newMap cannot be null.");
         HexLocation hexloc;
         VertexLocation vertloc;
         Constructable piece;
         EdgeLocation edge;
         HexTile tile;
+
+        // Update the hexes
         int originalCount = tiles.size();
         for (JsonHex hex : newMap.getHexes()) {
             hexloc = new HexLocation(hex.getLocation().getX(), hex.getLocation().getY());
@@ -165,6 +168,8 @@ public class Board {
             tiles.put(hexloc, tile);
         }
         if (originalCount != tiles.size()) throw new BoardException("The tiles map had new elements added.");
+
+        // Update the ports
         originalCount = ports.size();
         for (JsonPort doublePort : newMap.getPorts()) {
             hexloc = new HexLocation(doublePort.getLocation().getX(), doublePort.getLocation().getY());
@@ -172,24 +177,32 @@ public class Board {
             buildPortPair(edge, PortType.convert(doublePort.getResource()));
         }
         if (originalCount != ports.size()) throw new BoardException("The ports map had new elements added.");
+
+        // Update the settlements
         for (JsonVertexObject settlement : newMap.getSettlements()) {
             hexloc = new HexLocation(settlement.getLocation().getX(), settlement.getLocation().getY());
             vertloc = new VertexLocation(hexloc, VertexDirection.convert(settlement.getLocation().getDirection()));
             piece = new Constructable(PieceType.SETTLEMENT, settlement.getOwner());
             buildings.put(vertloc.getNormalizedLocation(), piece);
         }
+
+        // Update the cities
         for (JsonVertexObject city : newMap.getCities()) {
             hexloc = new HexLocation(city.getLocation().getX(), city.getLocation().getY());
             vertloc = new VertexLocation(hexloc, VertexDirection.convert(city.getLocation().getDirection()));
             piece = new Constructable(PieceType.CITY, city.getOwner());
             buildings.put(vertloc.getNormalizedLocation(), piece);
         }
+
+        // Update the roads
         for (JsonRoad road : newMap.getRoads()) {
             hexloc = new HexLocation(road.getLocation().getX(), road.getLocation().getY());
             edge = new EdgeLocation(hexloc, EdgeDirection.convert(road.getLocation().getDirection()));
             piece = new Constructable(PieceType.ROAD, road.getOwner());
             roads.put(edge.getNormalizedLocation(), piece);
         }
+
+        // Update the robber
         robber = new HexLocation(newMap.getRobber().getX(), newMap.getRobber().getY());
     }
 
@@ -342,7 +355,7 @@ public class Board {
                     normalized.getHexLoc(),
                     VertexDirection.NorthEast);
 
-            return (
+            return !(
                     buildings.get(east) == null &&
                     buildings.get(northwest) == null &&
                     buildings.get(southwest) == null );
@@ -360,7 +373,7 @@ public class Board {
                     normalized.getHexLoc(),
                     VertexDirection.NorthWest);
 
-            return (
+            return !(
                     buildings.get(west) == null &&
                     buildings.get(northeast) == null &&
                     buildings.get(southeast) == null );
@@ -475,7 +488,7 @@ public class Board {
         }
         if (roads.get(counterclockwise)!=null) {
             if (owner == -1) return true;
-            if (roads.get(clockwise).getOwner() == owner) return true;
+            if (roads.get(counterclockwise).getOwner() == owner) return true;
         }
         return false;
     }
@@ -494,8 +507,9 @@ public class Board {
         if (type == null) throw new BoardException("Param type cannot be null.");
         HexLocation opposite = location.getHexLoc().getNeighborLoc(location.getDir());
         EdgeLocation toUse = location;
-        if (tiles.containsKey(location.getHexLoc()))
+        if (tiles.containsKey(location.getHexLoc())) {
             if (tiles.containsKey(opposite)) throw new BoardException("Param location must on the coast.");
+        }
         else {
             if (!tiles.containsKey(opposite)) throw new BoardException("Param location must on the coast.");
             toUse = new EdgeLocation(opposite, location.getDir().getOppositeDirection());
@@ -521,17 +535,6 @@ public class Board {
     	return false;
     }
 
-
-    public static void main(String[] args) {
-        Board testBoard = null;
-        try {
-            testBoard = new Board(false, false, false);
-        } catch (BoardException e) {
-            e.printStackTrace();
-        }
-        if (testBoard != null) System.out.println("Not null.");
-        else System.out.println("Null.");
-    }
 
 }
 
