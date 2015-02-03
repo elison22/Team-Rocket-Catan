@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import serializer.json.*;
+import shared.locations.*;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
 
 /**
  * Created by brandt on 1/17/15.
@@ -146,6 +143,54 @@ public class Board {
             portTypeArray.remove(portIndex);
         }
 
+    }
+
+    /**
+     * Creates a new Board object from the de-serialized json to replace the old Board object.
+     * @param newMap A de-serialized json object.
+     * @throws BoardException Thrown if newMap is null or if a HexTile's diceNum
+     * is outside the range 0 to 12.
+     */
+    public Board(JsonMap newMap) throws BoardException {
+        if (newMap == null) throw new BoardException("Param newMap cannot be null.");
+        HexLocation hexloc;
+        VertexLocation vertloc;
+        Constructable piece;
+        EdgeLocation edge;
+        HexTile tile;
+        int originalCount = tiles.size();
+        for (JsonHex hex : newMap.getHexes()) {
+            hexloc = new HexLocation(hex.getLocation().getX(), hex.getLocation().getY());
+            tile = new HexTile(HexType.convert(hex.getResource()),hex.getNumber());
+            tiles.put(hexloc, tile);
+        }
+        if (originalCount != tiles.size()) throw new BoardException("The tiles map had new elements added.");
+        originalCount = ports.size();
+        for (JsonPort doublePort : newMap.getPorts()) {
+            hexloc = new HexLocation(doublePort.getLocation().getX(), doublePort.getLocation().getY());
+            edge = new EdgeLocation(hexloc, EdgeDirection.convert(doublePort.getDirection()));
+            buildPortPair(edge, PortType.convert(doublePort.getResource()));
+        }
+        if (originalCount != ports.size()) throw new BoardException("The ports map had new elements added.");
+        for (JsonVertexObject settlement : newMap.getSettlements()) {
+            hexloc = new HexLocation(settlement.getLocation().getX(), settlement.getLocation().getY());
+            vertloc = new VertexLocation(hexloc, VertexDirection.convert(settlement.getLocation().getDirection()));
+            piece = new Constructable(PieceType.SETTLEMENT, settlement.getOwner());
+            buildings.put(vertloc.getNormalizedLocation(), piece);
+        }
+        for (JsonVertexObject city : newMap.getCities()) {
+            hexloc = new HexLocation(city.getLocation().getX(), city.getLocation().getY());
+            vertloc = new VertexLocation(hexloc, VertexDirection.convert(city.getLocation().getDirection()));
+            piece = new Constructable(PieceType.CITY, city.getOwner());
+            buildings.put(vertloc.getNormalizedLocation(), piece);
+        }
+        for (JsonRoad road : newMap.getRoads()) {
+            hexloc = new HexLocation(road.getLocation().getX(), road.getLocation().getY());
+            edge = new EdgeLocation(hexloc, EdgeDirection.convert(road.getLocation().getDirection()));
+            piece = new Constructable(PieceType.ROAD, road.getOwner());
+            roads.put(edge.getNormalizedLocation(), piece);
+        }
+        robber = new HexLocation(newMap.getRobber().getX(), newMap.getRobber().getY());
     }
 
     /**
@@ -448,9 +493,15 @@ public class Board {
         if (location == null) throw new BoardException("Param location cannot be null.");
         if (type == null) throw new BoardException("Param type cannot be null.");
         HexLocation opposite = location.getHexLoc().getNeighborLoc(location.getDir());
-        if (tiles.containsKey(opposite)) throw new BoardException("Param location must border the water.");
-        VertexLocation clockwise = location.getClockwiseVertex().getNormalizedLocation();
-        VertexLocation counterclockwise = location.getCounterClockwiseVertex().getNormalizedLocation();
+        EdgeLocation toUse = location;
+        if (tiles.containsKey(location.getHexLoc()))
+            if (tiles.containsKey(opposite)) throw new BoardException("Param location must on the coast.");
+        else {
+            if (!tiles.containsKey(opposite)) throw new BoardException("Param location must on the coast.");
+            toUse = new EdgeLocation(opposite, location.getDir().getOppositeDirection());
+        }
+        VertexLocation clockwise = toUse.getClockwiseVertex().getNormalizedLocation();
+        VertexLocation counterclockwise = toUse.getCounterClockwiseVertex().getNormalizedLocation();
         ports.put(clockwise, new Port(type));
         ports.put(counterclockwise, new Port(type));
     }

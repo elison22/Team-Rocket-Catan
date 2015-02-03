@@ -3,7 +3,7 @@ package serializer.json;
 public class JsonMap
 {
 
-	public JsonMap(JsonHex[] hexes, JsonPort[] ports, JsonEdgeLocation[] roads,
+	public JsonMap(JsonHex[] hexes, JsonPort[] ports, JsonRoad[] roads,
                    JsonVertexObject[] settlements, JsonVertexObject[] cities, int radius,
                    JsonHexLocation robber)
 	{
@@ -18,7 +18,7 @@ public class JsonMap
 
 	private JsonHex[]			hexes;
 	private JsonPort[]			ports;
-	private JsonEdgeLocation[]	roads;
+	private JsonRoad[]	        roads;
 	private JsonVertexObject[]	settlements;
 	private JsonVertexObject[]	cities;
 	private int				radius;
@@ -34,7 +34,7 @@ public class JsonMap
 		return ports;
 	}
 
-	public JsonEdgeLocation[] getRoads()
+	public JsonRoad[] getRoads()
 	{
 		return roads;
 	}

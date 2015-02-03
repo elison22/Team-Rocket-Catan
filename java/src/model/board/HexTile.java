@@ -33,10 +33,9 @@ public class HexTile {
      * @throws BoardException Thrown when diceNum is outside the range 0-12.
      */
     public HexTile(HexType type, int diceNum) throws BoardException {
-        this(type);
+        this.type = type;
         setDiceNum(diceNum);
     }
-
 
     /**
      * Setter for the diceNum field, which checks to make sure the diceNum param is valid.

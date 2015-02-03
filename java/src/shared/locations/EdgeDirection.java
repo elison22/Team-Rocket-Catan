@@ -21,5 +21,30 @@ public enum EdgeDirection
 	{
 		return opposite;
 	}
+
+    public static EdgeDirection convert(String type) {
+
+        switch (type.toLowerCase()) {
+            case "northwest":
+            case "north west":
+                return NorthWest;
+            case "north":
+                return North;
+            case "northeast":
+            case "north east":
+                return NorthEast;
+            case "southeast":
+            case "south east":
+                return SouthEast;
+            case "south":
+                return South;
+            case "southwest":
+            case "south west":
+                return SouthWest;
+            default:
+                return null;
+        }
+    }
+
 }
 

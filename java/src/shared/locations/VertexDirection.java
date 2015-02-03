@@ -20,5 +20,30 @@ public enum VertexDirection
 	{
 		return opposite;
 	}
+
+    public static VertexDirection convert(String type) {
+
+        switch (type.toLowerCase()) {
+            case "west":
+                return West;
+            case "northwest":
+            case "north west":
+                return NorthWest;
+            case "northeast":
+            case "north east":
+                return NorthEast;
+            case "east":
+                return East;
+            case "southeast":
+            case "south east":
+                return SouthEast;
+            case "southwest":
+            case "south west":
+                return SouthWest;
+            default:
+                return null;
+        }
+    }
+
 }
 
