@@ -22,16 +22,18 @@ public class GameModel {
     private String gameName;
     private int versionNumber;
     private ArrayList<Player> playerList;   // holds all the players
-    private GameBank cardBank;                      // holds all the resource cards and all the dev cards
+    private GameBank cardBank;              // holds all the resource cards and all the dev cards
     private TurnTracker turnTracker;        // holds whos turn it is, as well as game state
     private Board map;
     private Chat chat;
     private GameHistory gameHistory;
     private ArrayList<String> aiList;
+    private int winner;
 
     public GameModel() {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
+    	winner = -1;
     }
 
     public String getGameName() {
@@ -90,7 +92,23 @@ public class GameModel {
     	return aiList;
     }
     
-    public boolean canPlayDevCard(int playerId, DevCardType devCard) {
+    public void setChat(Chat chat) {
+		this.chat = chat;
+	}
+
+	public void setGameHistory(GameHistory gameHistory) {
+		this.gameHistory = gameHistory;
+	}
+
+	public int getWinner() {
+		return winner;
+	}
+
+	public void setWinner(int winner) {
+		this.winner = winner;
+	}
+
+	public boolean canPlayDevCard(int playerId, DevCardType devCard) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(playerList.get(playerId).canPlayDevCard(devCard)){
     			return true;
