@@ -104,6 +104,10 @@ public class ProxyMoves {
 		return ServerProxy.getInstance().doPost("/moves/Soldier", soldierParams);
 	}
 	
+	public String Monopoly(Object monopolyParams) throws ServerException {
+		return ServerProxy.getInstance().doPost("/moves/Monopoly", monopolyParams);
+	}
+	
 	/**(POST) Tells the server to reward the current player with a 
 	 * victory Point.
 	 * 

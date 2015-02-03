@@ -211,6 +211,16 @@ public interface IServerFacade {
 	 */
 	public String Soldier(Object soldierParams) throws ServerException;
 	
+	/**(POST) Tells the server to play the monopoly card as well as the 
+	 * type of resource to be collected from each player.
+	 * 
+	 * @param monopolyParams Should contain the resource (String) to be
+	 * collected and the playerIndex (int)
+	 * @return Returns the game's json client model (See model()).
+	 * @throws ServerException
+	 */
+	public String Monopoly(Object monopolyParams) throws ServerException;
+	
 	/**(POST) Tells the server to reward the current player with a 
 	 * victory Point.
 	 * 

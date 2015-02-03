@@ -45,8 +45,13 @@ public class ProxyGameTest {
 	}
 	
 	@Test
-	public void testResetGame() throws ServerException {
+	public void testReset() throws ServerException {
 		assertTrue(facade.reset() != null);
+	}
+	
+	@Test
+	public void testGetCommands() throws ServerException {
+		assertTrue(facade.commandsGET() == null);
 	}
 	
 	@Test
@@ -58,5 +63,8 @@ public class ProxyGameTest {
 	public void testListAI() throws ServerException {
 		assertTrue(facade.listAI() != null);
 	}
-
 }
+
+
+
+

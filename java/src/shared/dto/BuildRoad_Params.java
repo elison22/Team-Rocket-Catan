@@ -28,10 +28,9 @@ public class BuildRoad_Params {
 
 	public BuildRoad_Params() {}
 
-	public BuildRoad_Params(String type, int playerindex,
+	public BuildRoad_Params(int playerindex,
 			EdgeLocation roadLocation, boolean free) {
 		super();
-		setType(type);
 		setPlayerIndex(playerindex);
 		initLocation(roadLocation);
 		setFree(free);
@@ -80,7 +79,7 @@ public class BuildRoad_Params {
 		
 		switch (dir) {
         	case NorthWest:
-        		return "NE";
+        		return "NW";
         	case North:
         		return "N";
         	case NorthEast:

@@ -66,7 +66,7 @@ public class RoadBuilding_Params {
 		
 		switch (dir) {
         	case NorthWest:
-        		return "NE";
+        		return "NW";
         	case North:
         		return "N";
         	case NorthEast:

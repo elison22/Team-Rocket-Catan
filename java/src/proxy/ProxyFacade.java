@@ -132,6 +132,11 @@ public class ProxyFacade implements IServerFacade {
 	}
 
 	@Override
+	public String Monopoly(Object monopolyParams) throws ServerException {
+		return moves.Monopoly(monopolyParams);
+	}
+
+	@Override
 	public String Monument(Object monumentParams) throws ServerException {
 		return moves.Monument(monumentParams);
 	}

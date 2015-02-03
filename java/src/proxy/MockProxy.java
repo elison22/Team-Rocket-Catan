@@ -155,6 +155,12 @@ public class MockProxy implements IServerFacade {
 	}
 
 	@Override
+	public String Monopoly(Object monopolyParams) throws ServerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public String Monument(Object monumentParams) {
 		// TODO Auto-generated method stub
 		return null;
