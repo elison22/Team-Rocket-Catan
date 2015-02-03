@@ -13,8 +13,8 @@ public class JoinGame_Params {
 
 	public JoinGame_Params(int id, String color) {
 		super();
-		this.id = id;
-		this.color = color;
+		setId(id);
+		setColor(color);
 	}
 
 	public int getId() {

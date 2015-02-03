@@ -8,7 +8,7 @@ public class AddAI_Params {
 
 	public AddAI_Params(String aIType) {
 		super();
-		AIType = aIType;
+		setAIType(aIType);
 	}
 
 	public String getAIType() {

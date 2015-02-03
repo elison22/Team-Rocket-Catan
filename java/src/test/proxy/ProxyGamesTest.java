@@ -34,18 +34,18 @@ public class ProxyGamesTest {
 	}
 	
 	@Test
-	public void listGamesTest() throws ServerException {
+	public void testListGames() throws ServerException {
 		assertTrue(facade.list() != null);
 	}
 	
 	@Test
-	public void createGameTest() throws ServerException {
+	public void testCreateGame() throws ServerException {
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Sam");
 		assertTrue(facade.create(createParams) != null);
 	}
 	
 	@Test
-	public void joinGameTest() throws ServerException {
+	public void testJoinGame() throws ServerException {
 		Login_Params loginParams = new Login_Params("Test", "Test");
 		
 		// If "Test"/"Test" is already registered, try logging in

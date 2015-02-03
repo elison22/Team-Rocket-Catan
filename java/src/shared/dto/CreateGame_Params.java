@@ -20,10 +20,10 @@ public class CreateGame_Params {
 	
 	public CreateGame_Params(Boolean randomTiles, Boolean randomNumbers,
 			Boolean randomPorts, String name) {
-		this.randomTiles = randomTiles;
-		this.randomNumbers = randomNumbers;
-		this.randomPorts = randomPorts;
-		this.name = name;
+		setRandomTiles(randomTiles);
+		setRandomNumbers(randomNumbers);
+		setRandomPorts(randomPorts);
+		setName(name);
 	}
 	
 	public Boolean getRandomTiles() {

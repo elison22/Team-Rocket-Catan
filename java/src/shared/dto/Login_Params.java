@@ -9,8 +9,8 @@ public class Login_Params {
 
 	public Login_Params(String user, String password) {
 		super();
-		this.username = user;
-		this.password = password;
+		setUser(user);
+		setPassword(password);
 	}
 
 	public String getUser() {

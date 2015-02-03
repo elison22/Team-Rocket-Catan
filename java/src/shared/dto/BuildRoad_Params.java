@@ -1,21 +1,24 @@
 package shared.dto;
 
-import com.google.gson.Gson;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 
 public class BuildRoad_Params {
 	
 	private String type = "buildRoad";
-	private int playerindex;
-	private Location roadLocation;
+	private int playerIndex;
+	private RoadLocation roadLocation;
+	
+	/**Whether or not the road is free (i.e. during initial placement phase)*/
 	private boolean free;
 	
-	private class Location {
-		int x;
-		int y;
-		String direction;
+	@SuppressWarnings("unused")
+	private class RoadLocation {
+		private int x;
+		private int y;
+		private String direction;
 		
-		public Location(int x, int y, String direction) {
+		public RoadLocation(int x, int y, String direction) {
 			super();
 			this.x = x;
 			this.y = y;
@@ -28,10 +31,10 @@ public class BuildRoad_Params {
 	public BuildRoad_Params(String type, int playerindex,
 			EdgeLocation roadLocation, boolean free) {
 		super();
-		this.setType(type);
-		this.playerindex = playerindex;
+		setType(type);
+		setPlayerIndex(playerindex);
 		initLocation(roadLocation);
-		this.setFree(free);
+		setFree(free);
 	}
 	
 	public String getType() {
@@ -42,20 +45,20 @@ public class BuildRoad_Params {
 		this.type = type;
 	}
 
-	public int getPlayerindex() {
-		return playerindex;
+	public int getPlayerIndex() {
+		return playerIndex;
 	}
 
-	public void setPlayerindex(int playerindex) {
-		this.playerindex = playerindex;
+	public void setPlayerIndex(int playerindex) {
+		this.playerIndex = playerindex;
 	}
 
-	public Location getRoadLocation() {
+	public RoadLocation getRoadLocation() {
 		return roadLocation;
 	}
 
 	public void setRoadLocation(int x, int y, String direction) {
-		roadLocation = new Location(x, y, direction);
+		roadLocation = new RoadLocation(x, y, direction);
 	}
 
 	public boolean isFree() {
@@ -69,17 +72,27 @@ public class BuildRoad_Params {
 	private void initLocation(EdgeLocation edge) {
 		int x = edge.getHexLoc().getX();
 		int y = edge.getHexLoc().getY();
-		String direction = edge.getDir().toString();
-		roadLocation = new Location(x, y, direction);
+		String dir = setDirection(edge.getDir());
+		roadLocation = new RoadLocation(x, y, dir);
 	}
-
-	public static void main(String[] args) {
-		BuildRoad_Params p = new BuildRoad_Params();
-		p.setPlayerindex(0);
-		p.setRoadLocation(0,0,"NORTH");
-		p.setFree(true);
+	
+	private String setDirection(EdgeDirection dir) {
 		
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(p));
+		switch (dir) {
+        	case NorthWest:
+        		return "NE";
+        	case North:
+        		return "N";
+        	case NorthEast:
+        		return "NE";
+        	case SouthEast:
+        		return "SE";
+        	case South:
+        		return "S";
+        	case SouthWest:
+        		return "SW";
+        	default:
+        		return null;
+		}
 	}
 }

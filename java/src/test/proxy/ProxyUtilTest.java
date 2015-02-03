@@ -17,7 +17,7 @@ public class ProxyUtilTest {
 	}
 
 	@Test
-	public void changeLogLevelTest() throws ServerException {
+	public void testChangeLogLevel() throws ServerException {
 		assertTrue(facade.changeLogLevel(new ChangeLogLevel_Params("FINEST")));
 		
 	}

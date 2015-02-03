@@ -40,22 +40,22 @@ public class ProxyGameTest {
 	}
 
 	@Test
-	public void getModelTest() throws ServerException {
+	public void testGetModel() throws ServerException {
 		assertTrue(facade.model(-1) != null);
 	}
 	
 	@Test
-	public void resetGameTest() throws ServerException {
+	public void testResetGame() throws ServerException {
 		assertTrue(facade.reset() != null);
 	}
 	
 	@Test
-	public void addAITest() throws ServerException {
+	public void testAddAI() throws ServerException {
 		assertTrue(facade.addAI(new AddAI_Params("LARGEST_ARMY")));
 	}
 	
 	@Test
-	public void listAITest() throws ServerException {
+	public void testListAI() throws ServerException {
 		assertTrue(facade.listAI() != null);
 	}
 

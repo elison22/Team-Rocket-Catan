@@ -111,8 +111,7 @@ class ServerProxy {
 			} else {
 				
 				// Throw ServerException with the server's response code
-				String errorMessage = "doGet failed: Server response code %s,\n" +
-									  responseToString(connection.getInputStream());
+				String errorMessage = "doGet failed: " + connection.getResponseMessage() + "(%s)";
 				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
 			}
 			
@@ -155,7 +154,7 @@ class ServerProxy {
 				
 			} else {
 				// Throw ServerException with the server's response code
-				String errorMessage = "doPost failed: Server response code %s";
+				String errorMessage = "doPost failed: " + connection.getResponseMessage() + " (%s)";
 				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
 			}
 			
