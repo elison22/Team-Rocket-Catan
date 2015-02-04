@@ -204,7 +204,7 @@ public class ProxyMoves {
 	 * @throws ServerException 
 	 */
 	public String maritimeTrade(Object maritimeTradeParams) throws ServerException { 
-		return ServerProxy.getInstance().doPost("/moves/maritemTrade", maritimeTradeParams);
+		return ServerProxy.getInstance().doPost("/moves/maritimeTrade", maritimeTradeParams);
 	}
 	
 	/**(POST) Tells the server to discard the current player's 

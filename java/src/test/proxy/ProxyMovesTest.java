@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,6 +35,11 @@ public class ProxyMovesTest {
 		
 		// Reset game
 		facade.reset();
+	}
+	
+	@After
+	public void reInit() throws ServerException {
+		
 	}
 
 	@Test
@@ -123,32 +129,28 @@ public class ProxyMovesTest {
 		VertexLocation vertex = new VertexLocation(new HexLocation(-1, -1), VertexDirection.NorthEast);
 		
 		// Try building a settlement
-		assertTrue(facade.buildSettlement(new BuildSettlement_Params(2, vertex)) != null);
+		assertTrue(facade.buildSettlement(new BuildSettlement_Params(2, vertex, true)) != null);
 		
 		// Try building a city in the same spot
 		assertTrue(facade.buildCity(new BuildCity_Params(2, vertex)) != null);
 	}
 	
 	@Test
-	public void testOfferTrade() throws ServerException {
+	public void testOfferAndAcceptTrade() throws ServerException {
 		// Set resources to offer (1 brick for 2 wood)
 		int[] resources = new int[] {1,0,0,0,2};
 		
 		// Offer trade
 		assertTrue(facade.offerTrade(new OfferTrade_Params(3, resources, 2)) != null);
-	}
-	
-	@Test
-	public void testAcceptTrade() throws ServerException {
-		// Test accept trade
-		assertTrue(facade.acceptTrade(new AcceptTrade_Params(1, true)) != null);
+		
+		// Accept trade
+		assertTrue(facade.acceptTrade(new AcceptTrade_Params(2, true)) != null);
 	}
 	
 	@Test
 	public void testMaritimeTrade() throws ServerException {
 		// Prepare params for maritime trade (optional params omitted)
-		MaritimeTrade_Params params = new MaritimeTrade_Params();
-		params.setPlayerIndex(1);
+		MaritimeTrade_Params params = new MaritimeTrade_Params(0, 2, "WOOD", "ORE");
 		
 		// Test maritime trade
 		assertTrue(facade.maritimeTrade(params) != null);

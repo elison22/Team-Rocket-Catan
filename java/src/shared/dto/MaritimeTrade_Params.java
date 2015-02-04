@@ -1,5 +1,7 @@
 package shared.dto;
 
+import com.google.gson.Gson;
+
 public class MaritimeTrade_Params {
 	
 	private String type = "maritimeTrade";
@@ -75,5 +77,11 @@ public class MaritimeTrade_Params {
             default:
                 return null;
         }
+	}
+	
+	public static void main(String[] args) {
+		MaritimeTrade_Params p = new MaritimeTrade_Params(0, 4, "ORE", "BRICK");
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(p));
 	}
 }

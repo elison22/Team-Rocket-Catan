@@ -23,10 +23,10 @@ public class CanBuildRoadTest {
     public void initGameModel(){
         game = new GameModel();
         ArrayList<Player> playerList = new ArrayList<Player>();
-        playerList.add(new Player(0, "player1"));
-        playerList.add(new Player(1, "player2"));
-        playerList.add(new Player(2, "player3"));
-        playerList.add(new Player(3, "player4"));
+//        playerList.add(new Player(0, "player1"));
+//        playerList.add(new Player(1, "player2"));
+//        playerList.add(new Player(2, "player3"));
+//        playerList.add(new Player(3, "player4"));
     }
     //JUnit tests are going to be much easier once we have the serializer finished.
     //We need to be able to pass it a json blob and get back a fully-initialized GameModel

@@ -8,7 +8,7 @@ public class BuildCity_Params {
 	private String type = "buildCity";
 	private int playerIndex;
 	@SuppressWarnings("unused")
-	private Vertex vertex;
+	private Vertex vertexLocation;
 	
 	@SuppressWarnings("unused")
 	private class Vertex {
@@ -51,7 +51,7 @@ public class BuildCity_Params {
 		int x = loc.getHexLoc().getX();
 		int y = loc.getHexLoc().getY();
 		String dir = setDirection(loc.getDir());
-		vertex = new Vertex(x, y, dir);
+		vertexLocation = new Vertex(x, y, dir);
 	}
 	
 	private String setDirection(VertexDirection vertexDirection) {

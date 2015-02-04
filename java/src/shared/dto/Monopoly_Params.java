@@ -1,5 +1,7 @@
 package shared.dto;
 
+import com.google.gson.Gson;
+
 public class Monopoly_Params {
 	
 	private String type = "Monopoly";
@@ -53,6 +55,12 @@ public class Monopoly_Params {
             default:
                 return null;
         }
+	}
+	
+	public static void main(String[] args) {
+		Monopoly_Params p = new Monopoly_Params("Brick", 0);
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(p));
 	}
 
 }

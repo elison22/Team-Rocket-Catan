@@ -1,5 +1,8 @@
 package shared.dto;
 
+import com.google.gson.Gson;
+
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
@@ -8,7 +11,8 @@ public class BuildSettlement_Params {
 	private String type = "buildSettlement";
 	private int playerIndex;
 	@SuppressWarnings("unused")
-	private Vertex vertex;
+	private Vertex vertexLocation;
+	boolean free;
 	
 	@SuppressWarnings("unused")
 	private class Vertex {
@@ -25,10 +29,11 @@ public class BuildSettlement_Params {
 
 	public BuildSettlement_Params() {}
 
-	public BuildSettlement_Params(int playerIndex, VertexLocation loc) {
+	public BuildSettlement_Params(int playerIndex, VertexLocation loc, boolean free) {
 		super();
 		setPlayerIndex(playerIndex);
 		initVertex(loc);
+		setFree(free);
 	}
 
 	public String getType() {
@@ -47,11 +52,19 @@ public class BuildSettlement_Params {
 		this.playerIndex = playerIndex;
 	}
 	
+	public boolean isFree() {
+		return free;
+	}
+
+	public void setFree(boolean free) {
+		this.free = free;
+	}
+
 	private void initVertex(VertexLocation loc) {
 		int x = loc.getHexLoc().getX();
 		int y = loc.getHexLoc().getY();
 		String dir = setDirection(loc.getDir());
-		vertex = new Vertex(x, y, dir);
+		vertexLocation = new Vertex(x, y, dir);
 	}
 	
 	private String setDirection(VertexDirection vertexDirection) {
@@ -74,4 +87,12 @@ public class BuildSettlement_Params {
 		}
 	}
 
+	public static void main(String[] args) {
+		VertexLocation vertex = new VertexLocation(new HexLocation(-1, -1), VertexDirection.NorthEast);
+		BuildSettlement_Params p = new BuildSettlement_Params(2, vertex, true);
+		
+		Gson gson = new Gson();
+		
+		System.out.println(gson.toJson(p));
+	}
 }
