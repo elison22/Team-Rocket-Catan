@@ -3,6 +3,7 @@ package facade;
 import java.util.ArrayList;
 import java.util.Random;
 
+import model.board.BoardException;
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
@@ -28,6 +29,18 @@ public class ClientFacade implements IClientFacade {
     private int playerIndex;
     private ProxyFacade proxy;
     private Serializer serializer;
+    
+    public void updateGameModel(String json)
+    {
+    	try 
+    	{
+			game = serializer.deSerializeFromServer(game, json);
+		} 
+    	catch (BoardException e) 
+    	{
+			e.printStackTrace();
+		}
+    }
 
     /**
      * Creates a new Game Object

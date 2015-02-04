@@ -26,7 +26,8 @@ public class GameModel {
     private TurnTracker turnTracker;        // holds whos turn it is, as well as game state
     private Board map;
     private Chat chat;
-    private GameHistory gameHistory;
+    private Chat gameHistory;
+    //private GameHistory gameHistory;
     private ArrayList<String> aiList;
     private int winner;
 
@@ -96,7 +97,7 @@ public class GameModel {
 		this.chat = chat;
 	}
 
-	public void setGameHistory(GameHistory gameHistory) {
+	public void setGameHistory(Chat gameHistory) {
 		this.gameHistory = gameHistory;
 	}
 

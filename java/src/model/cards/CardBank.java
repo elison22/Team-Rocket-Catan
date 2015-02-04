@@ -22,7 +22,7 @@ public class CardBank {
     protected HashMap<ResourceType,Integer> resCards = new HashMap<ResourceType, Integer>(); //Changed to HashMap because they're more efficient for inserting and removing which we'll be doing a lot
     /** List of development cards */
     protected ArrayList<DevCard> devCards = new ArrayList<DevCard>();
-
+    
     /**
      * Used to give a resource card to a player and decrements the total number of available
      * resource cards of that type.
