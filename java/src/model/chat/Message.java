@@ -9,7 +9,7 @@ package model.chat;
 public class Message {
 
     /**The playerIdx of the user who sent the message*/
-    private int owner;
+    private String owner;
     /**The words of the message*/
     private String message;
 
@@ -18,7 +18,7 @@ public class Message {
      * @param owner The integer index value (0-3) of the player who sent the message
      * @param message The words of the message
      */
-    public Message(int owner, String message){
+    public Message(String owner, String message){
         this.owner = owner;
         this.message = message;
     }

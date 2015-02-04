@@ -18,16 +18,16 @@ public class JsonClientModel {
 		this.devCards = devCards;
 	}
 
-	private JsonResourceList bank;
-	private JsonMessageList chat;
-	private JsonMessageList log;
-	private JsonDevCardList devCards;
-	private JsonMap map;
+	private JsonResourceList 	bank;
+	private JsonMessageList 	chat;
+	private JsonMessageList 	log;
+	private JsonDevCardList 	devCards;
+	private JsonMap 			map;
 	private JsonPlayer[]		players;
-	private JsonTradeOffer tradeOffer;
-	private JsonTurnTracker turnTracker;
-	private int				version;
-	private int				winner;
+	private JsonTradeOffer 		tradeOffer;
+	private JsonTurnTracker 	turnTracker;
+	private int					version;
+	private int					winner;
 
 	public JsonResourceList getBank()
 	{

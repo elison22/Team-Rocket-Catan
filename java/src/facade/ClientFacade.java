@@ -3,6 +3,7 @@ package facade;
 import java.util.ArrayList;
 import java.util.Random;
 
+import model.board.BoardException;
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
@@ -33,6 +34,18 @@ public class ClientFacade implements IClientFacade {
     private int playerIndex;
     private ProxyFacade proxy;
     private Serializer serializer;
+    
+    public void updateGameModel(String json)
+    {
+    	try 
+    	{
+			game = serializer.deSerializeFromServer(game, json);
+		} 
+    	catch (BoardException e) 
+    	{
+			e.printStackTrace();
+		}
+    }
 
     /**
      * Creates a new Game Object
@@ -163,8 +176,8 @@ public class ClientFacade implements IClientFacade {
 	@Override
 	public boolean doSendChat(String message) {
 		try {
-			serializer.deSerializeFromServer(proxy.sendChat(new SendChat_Params(playerIndex, message)));
-		} catch (ServerException e) {
+			serializer.deSerializeFromServer(game, proxy.sendChat(new SendChat_Params(playerIndex, message)));
+		} catch (ServerException | BoardException e) {
 			// e.printStackTrace();
 			return false;
 		}
@@ -200,8 +213,8 @@ public class ClientFacade implements IClientFacade {
 	@Override
 	public boolean doPlaceRobber(int victimIndex, HexLocation loc) {
 		try {
-			serializer.deSerializeFromServer(proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
-		} catch (ServerException e) {
+			serializer.deSerializeFromServer(game, proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
+		} catch (ServerException | BoardException e) {
 			// e.printStackTrace();
 			return false;
 		}
@@ -216,8 +229,8 @@ public class ClientFacade implements IClientFacade {
 	@Override
 	public boolean finishTurn() {
 		try {
-			serializer.deSerializeFromServer(proxy.finishTurn(new FinishTurn_Params(playerIndex)));
-		} catch (ServerException e) {
+			serializer.deSerializeFromServer(game, proxy.finishTurn(new FinishTurn_Params(playerIndex)));
+		} catch (ServerException | BoardException e) {
 			// e.printStackTrace();
 			return false;
 		}
@@ -232,8 +245,8 @@ public class ClientFacade implements IClientFacade {
 	@Override
 	public boolean buyDevCard() {
 		try {
-			serializer.deSerializeFromServer(proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
-		} catch (ServerException e) {
+			serializer.deSerializeFromServer(game, proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
+		} catch (ServerException | BoardException e) {
 			// e.printStackTrace();
 			return false;
 		}

@@ -1,5 +1,7 @@
 package model.cards;
 
+import serializer.json.JsonDevCardList;
+import serializer.json.JsonResourceList;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
@@ -25,6 +27,26 @@ public class GameBank extends CardBank{
         resCards.put(ResourceType.SHEEP, 19);
         resCards.put(ResourceType.ORE, 19);
         initDevCards();
+    }
+    
+    public GameBank(JsonResourceList resources, JsonDevCardList jsonDevCards)
+    {
+    	resCards.put(ResourceType.BRICK, resources.getBrick());
+        resCards.put(ResourceType.WOOD, resources.getWood());
+        resCards.put(ResourceType.WHEAT, resources.getWheat());
+        resCards.put(ResourceType.SHEEP, resources.getSheep());
+        resCards.put(ResourceType.ORE, resources.getOre());
+        devCards.clear();
+        for(int i = 0; i < jsonDevCards.getMonopoly(); i++)
+        	devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly", false));
+        for(int i = 0; i < jsonDevCards.getMonument(); i++)
+        	devCards.add(new DevCard(DevCardType.MONUMENT, "Palace", false));
+        for(int i = 0; i < jsonDevCards.getRoadBuilding(); i++)
+        	devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building", false));
+        for(int i = 0; i < jsonDevCards.getSoldier(); i++)
+        	devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier", false));
+        for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++)
+        	devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty", false));
     }
 
     public void initDevCards(){

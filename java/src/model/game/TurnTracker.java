@@ -1,5 +1,7 @@
 package model.game;
 
+import serializer.json.JsonTurnTracker;
+
 /**
  * Stores and updates data about the current state of the turn
  * Created by brandt on 1/23/15.
@@ -32,6 +34,24 @@ public class TurnTracker {
     public TurnTracker()
     {
 
+    }
+    
+    public TurnTracker(JsonTurnTracker tracker)
+    {
+    	currentPlayerIndex = tracker.getCurrentTurn();
+    	if(tracker.getStatus() == "Rolling")
+    		currentState = TurnState.Rolling;
+    	else if(tracker.getStatus() == "Robbing")
+    		currentState = TurnState.Robbing;
+    	else if(tracker.getStatus() == "Playing")
+    		currentState = TurnState.Playing;
+    	else if(tracker.getStatus() == "Discarding")
+    		currentState = TurnState.Discarding;
+    	else if(tracker.getStatus() == "FirstRound")
+    		currentState = TurnState.FirstRound;
+    	else currentState = TurnState.SecondRound;
+    	largestArmyPlayerIndex = tracker.getLargestArmy();
+    	longestRoadPlayerIndex = tracker.getLongestRoad();
     }
 
     /**
