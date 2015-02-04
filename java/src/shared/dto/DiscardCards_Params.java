@@ -1,5 +1,7 @@
 package shared.dto;
 
+import model.cards.ResourceSet;
+
 public class DiscardCards_Params {
 	
 	private String type = "discardCards";
@@ -26,7 +28,7 @@ public class DiscardCards_Params {
 
 	public DiscardCards_Params() {}
 
-	public DiscardCards_Params(int playerIndex, int[] resources) {
+	public DiscardCards_Params(int playerIndex, ResourceSet resources) {
 		super();
 		setPlayerIndex(playerIndex);
 		discardedCards = new Resources(resources);
