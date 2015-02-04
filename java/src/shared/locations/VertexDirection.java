@@ -25,18 +25,24 @@ public enum VertexDirection
 
         switch (type.toLowerCase()) {
             case "west":
+            case "w":
                 return West;
+            case "nw":
             case "northwest":
             case "north west":
                 return NorthWest;
+            case "ne":
             case "northeast":
             case "north east":
                 return NorthEast;
+            case "e":
             case "east":
                 return East;
+            case "se":
             case "southeast":
             case "south east":
                 return SouthEast;
+            case "sw":
             case "southwest":
             case "south west":
                 return SouthWest;

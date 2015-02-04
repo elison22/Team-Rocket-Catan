@@ -7,6 +7,8 @@ public enum HexType
 
     public static HexType convert(String type) {
 
+    	if(type == null)
+    		return DESERT;
         switch (type.toLowerCase())
         {
             case "wood":

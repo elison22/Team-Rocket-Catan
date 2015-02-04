@@ -43,7 +43,7 @@ public class HexTile {
      * @throws BoardException Thrown when diceNum is outside the range 0-12.
      */
     public void setDiceNum(int diceNum) throws BoardException {
-        if(diceNum < 2 || diceNum > 12) throw new BoardException("diceNum param outside the range 2-12");
+        if(diceNum < 0 || diceNum > 12) throw new BoardException("diceNum param outside the range 0-12");
         this.diceNum = diceNum;
     }
 

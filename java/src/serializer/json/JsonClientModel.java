@@ -3,7 +3,7 @@ package serializer.json;
 public class JsonClientModel {
 
 	public JsonClientModel(JsonResourceList bank, JsonMessageList chat, JsonMessageList log,
-                           JsonMap map, JsonPlayer[] players, JsonTradeOffer tradeOffer, JsonDevCardList devCards,
+                           JsonMap map, JsonPlayer[] players, JsonTradeOffer tradeOffer, JsonDevCardList deck,
                            JsonTurnTracker turnTracker, int version, int winner)
 	{
 		this.bank = bank;
@@ -15,13 +15,13 @@ public class JsonClientModel {
 		this.turnTracker = turnTracker;
 		this.version = version;
 		this.winner = winner;
-		this.devCards = devCards;
+		this.deck = deck;
 	}
 
 	private JsonResourceList 	bank;
 	private JsonMessageList 	chat;
 	private JsonMessageList 	log;
-	private JsonDevCardList 	devCards;
+	private JsonDevCardList 	deck;
 	private JsonMap 			map;
 	private JsonPlayer[]		players;
 	private JsonTradeOffer 		tradeOffer;
@@ -76,7 +76,7 @@ public class JsonClientModel {
 
 	public JsonDevCardList getDevCards()
 	{
-		return devCards;
+		return deck;
 	}
 
 }
