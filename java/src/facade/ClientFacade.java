@@ -7,13 +7,18 @@ import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
-import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
 import shared.definitions.DevCardType;
+import shared.dto.BuyDevCard_Params;
+import shared.dto.FinishTurn_Params;
 import shared.dto.Login_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
@@ -35,6 +40,7 @@ public class ClientFacade implements IClientFacade {
     public ClientFacade(String host, String port) {
     	proxy = new ProxyFacade(host, port);
     	game = new GameModel();
+    	serializer = new Serializer();
     }
 
 	@Override
@@ -156,8 +162,13 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean doSendChat(String message) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			serializer.deSerializeFromServer(proxy.sendChat(new SendChat_Params(playerIndex, message)));
+		} catch (ServerException e) {
+			// e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -166,13 +177,19 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void rollDice() {
+	public boolean rollDice() {
 		int min = 2;
 		int max = 12;
 		
 		Random rand = new Random();
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
-
+	    try {
+			proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum));	
+		} catch (ServerException e) {
+			// e.printStackTrace();
+			return false;
+		}
+	    return true;
 	}
 
 	@Override
@@ -181,9 +198,14 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doPlaceRobber() {
-		// TODO Auto-generated method stub
-		
+	public boolean doPlaceRobber(int victimIndex, HexLocation loc) {
+		try {
+			serializer.deSerializeFromServer(proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
+		} catch (ServerException e) {
+			// e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -192,9 +214,14 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void finishTurn() {
-		// TODO Auto-generated method stub
-		
+	public boolean finishTurn() {
+		try {
+			serializer.deSerializeFromServer(proxy.finishTurn(new FinishTurn_Params(playerIndex)));
+		} catch (ServerException e) {
+			// e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -203,9 +230,14 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void buyDevCard() {
-		// TODO Auto-generated method stub
-		
+	public boolean buyDevCard() {
+		try {
+			serializer.deSerializeFromServer(proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
+		} catch (ServerException e) {
+			// e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -214,9 +246,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseYearOfPlenty() {
+	public boolean doUseYearOfPlenty() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -225,9 +257,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseRoadBuilder() {
+	public boolean doUseRoadBuilder() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -236,9 +268,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseSoldier() {
+	public boolean doUseSoldier() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -247,9 +279,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseMonopoly() {
+	public boolean doUseMonopoly() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -258,9 +290,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseMonument() {
+	public boolean doUseMonument() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -269,9 +301,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doBuildRoad(EdgeLocation location) {
+	public boolean doBuildRoad(EdgeLocation location) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -280,9 +312,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doBuildSettlement(VertexLocation location) {
+	public boolean doBuildSettlement(VertexLocation location) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -291,9 +323,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doBuildCity(VertexLocation location) {
+	public boolean doBuildCity(VertexLocation location) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -302,9 +334,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doOfferTrade(DomesticTrade trade) {
+	public boolean doOfferTrade(DomesticTrade trade) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -313,9 +345,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doAcceptTrade(DomesticTrade trade) {
+	public boolean doAcceptTrade(DomesticTrade trade) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -324,9 +356,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doMaritimeTrade(MaritimeTrade trade) {
+	public boolean doMaritimeTrade(MaritimeTrade trade) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -335,9 +367,9 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doDiscardCards(ResourceSet cards) {
+	public boolean doDiscardCards(ResourceSet cards) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 }
