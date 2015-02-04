@@ -1,5 +1,7 @@
 package shared.dto;
 
+import model.cards.ResourceSet;
+
 public class OfferTrade_Params {
 	
 	private String type = "offerTrade";
@@ -27,7 +29,7 @@ public class OfferTrade_Params {
 
 	public OfferTrade_Params() {}
 
-	public OfferTrade_Params(int playerIndex, int[] resources, int receiver) {
+	public OfferTrade_Params(int playerIndex, ResourceSet resources, int receiver) {
 		super();
 		setPlayerIndex(playerIndex);
 		offer = new ResourceTrade(resources);
