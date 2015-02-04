@@ -189,7 +189,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public boolean doUseYearOfPlenty();
+    public boolean doUseYearOfPlenty(String resource1, String resource2);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -200,7 +200,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public boolean doUseRoadBuilder();
+    public boolean doUseRoadBuilder(EdgeLocation location1, EdgeLocation location2);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -211,7 +211,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public boolean doUseSoldier();
+    public boolean doUseSoldier(int vicIndex, HexLocation loc);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -222,7 +222,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public boolean doUseMonopoly();
+    public boolean doUseMonopoly(String resource);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -246,7 +246,7 @@ public interface IClientFacade {
      * Builds a road for player at given location
      * @param location where the user wants to build the road
      */
-    public boolean doBuildRoad(EdgeLocation location);
+    public boolean doBuildRoad(EdgeLocation location, boolean freebie);
 
     /**
      * Checks to see if player can build a settlement right now
@@ -259,7 +259,7 @@ public interface IClientFacade {
      * Builds a settlement for player at given location
      * @param location where the user wants to build the road
      */
-    public boolean doBuildSettlement(VertexLocation location);
+    public boolean doBuildSettlement(VertexLocation location, boolean freebie);
 
     /**
      * Checks to see if player can build a city right now
@@ -298,7 +298,7 @@ public interface IClientFacade {
      * Allows player to accept trade that was offered them
      * @param trade details of the trade being made
      */
-    public boolean doAcceptTrade(DomesticTrade trade);
+    public boolean doAcceptTrade(DomesticTrade trade, boolean accept);
 
     /**
      * Checks to see if player can offer a maritime trade right now
