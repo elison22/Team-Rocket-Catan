@@ -38,7 +38,7 @@ public class YearOfPlenty_Params {
 	}
 
 	public void setResource1(String resource1) {
-		this.resource1 = capitalizeResource(resource1);
+		this.resource1 = resource1.toLowerCase();
 	}
 
 	public String getResource2() {
@@ -46,24 +46,6 @@ public class YearOfPlenty_Params {
 	}
 
 	public void setResource2(String resource2) {
-		this.resource2 = capitalizeResource(resource2);
-	}
-	
-	private String capitalizeResource(String resource) {
-		switch (resource.toLowerCase())
-        {
-            case "wood":
-                return "Wood";
-            case "brick":
-                return "Brick";
-            case "sheep":
-                return "Sheep";
-            case "wheat":
-                return "Wheat";
-            case "ore":
-                return "Ore";
-            default:
-                return null;
-        }
+		this.resource2 = resource2.toLowerCase();
 	}
 }

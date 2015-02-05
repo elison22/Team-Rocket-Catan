@@ -28,7 +28,7 @@ public class Monopoly_Params {
 	}
 
 	public void setResource(String resource) {
-		this.resource = capitalizeResource(resource);
+		this.resource = resource.toLowerCase();
 	}
 
 	public int getPlayerIndex() {
@@ -37,24 +37,6 @@ public class Monopoly_Params {
 
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
-	}
-
-	private String capitalizeResource(String resource) {
-		switch (resource.toLowerCase())
-        {
-            case "wood":
-                return "Wood";
-            case "brick":
-                return "Brick";
-            case "sheep":
-                return "Sheep";
-            case "wheat":
-                return "Wheat";
-            case "ore":
-                return "Ore";
-            default:
-                return null;
-        }
 	}
 	
 	public static void main(String[] args) {

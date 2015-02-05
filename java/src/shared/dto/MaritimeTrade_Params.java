@@ -50,7 +50,7 @@ public class MaritimeTrade_Params {
 	}
 
 	public void setInputResource(String inputResource) {
-		this.inputResource = capitalizeResource(inputResource);
+		this.inputResource = inputResource.toLowerCase();
 	}
 
 	public String getOutputResource() {
@@ -58,25 +58,7 @@ public class MaritimeTrade_Params {
 	}
 
 	public void setOutputResource(String outputResource) {
-		this.outputResource = capitalizeResource(outputResource);
-	}
-
-	private String capitalizeResource(String resource) {
-		switch (resource.toLowerCase())
-        {
-            case "wood":
-                return "Wood";
-            case "brick":
-                return "Brick";
-            case "sheep":
-                return "Sheep";
-            case "wheat":
-                return "Wheat";
-            case "ore":
-                return "Ore";
-            default:
-                return null;
-        }
+		this.outputResource = outputResource.toLowerCase();
 	}
 	
 	public static void main(String[] args) {
