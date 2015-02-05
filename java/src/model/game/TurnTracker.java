@@ -39,15 +39,15 @@ public class TurnTracker {
     public TurnTracker(JsonTurnTracker tracker)
     {
     	currentPlayerIndex = tracker.getCurrentTurn();
-    	if(tracker.getStatus() == "Rolling")
+    	if(tracker.getStatus().equals("Rolling"))
     		currentState = TurnState.Rolling;
-    	else if(tracker.getStatus() == "Robbing")
+    	else if(tracker.getStatus().equals("Robbing"))
     		currentState = TurnState.Robbing;
-    	else if(tracker.getStatus() == "Playing")
+    	else if(tracker.getStatus().equals("Playing"))
     		currentState = TurnState.Playing;
-    	else if(tracker.getStatus() == "Discarding")
+    	else if(tracker.getStatus().equals("Discarding"))
     		currentState = TurnState.Discarding;
-    	else if(tracker.getStatus() == "FirstRound")
+    	else if(tracker.getStatus().equals("FirstRound"))
     		currentState = TurnState.FirstRound;
     	else currentState = TurnState.SecondRound;
     	largestArmyPlayerIndex = tracker.getLargestArmy();

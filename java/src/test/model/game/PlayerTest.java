@@ -2,6 +2,7 @@ package test.model.game;
 
 import model.board.BoardException;
 import model.game.GameModel;
+import model.game.TurnState;
 import model.player.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,6 +82,9 @@ public class PlayerTest {
     @Test
     public void testBuildDuringCorrectState() throws BoardException, FileNotFoundException{
         initializeModel("Json1.json");
-
+        System.out.println(testGameModel.getTurnState());
+        assertTrue(testGameModel.getTurnState() == TurnState.Playing);
+        initializeModel("Json2.json");
+        assertFalse(testGameModel.getTurnState() == TurnState.Playing);
     }
 }
