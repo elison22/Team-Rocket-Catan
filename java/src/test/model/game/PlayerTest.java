@@ -51,25 +51,7 @@ public class PlayerTest {
         stream.close();
     }
 
-    //***CanBuildRoadTests***//
-    @Test
-    public void testRoadsRemaining() throws BoardException, FileNotFoundException{
-        initializeModel("Json1.json");
-        Player player1 = testGameModel.getPlayerList().get(0);
-        Player player2 = testGameModel.getPlayerList().get(1);
-        assertFalse(player1.getRemainingRoads() > 2);
-        assertTrue(player2.getRemainingRoads() > 2);
-    }
-
-    @Test
-    public void testCanAffordRoad() throws BoardException, FileNotFoundException{
-        initializeModel("Json1.json");
-        Player player1 = testGameModel.getPlayerList().get(1);
-        Player player2 = testGameModel.getPlayerList().get(2);
-        assertTrue(player1.getBank().canAffordRoad());
-        assertFalse(player2.getBank().canAffordRoad());
-    }
-
+    //***General Building Tests***//
     @Test
     public void testBuildDuringTurn() throws BoardException, FileNotFoundException{
         initializeModel("Json1.json");
@@ -82,9 +64,83 @@ public class PlayerTest {
     @Test
     public void testBuildDuringCorrectState() throws BoardException, FileNotFoundException{
         initializeModel("Json1.json");
-        System.out.println(testGameModel.getTurnState());
         assertTrue(testGameModel.getTurnState() == TurnState.Playing);
         initializeModel("Json2.json");
         assertFalse(testGameModel.getTurnState() == TurnState.Playing);
+    }
+
+    //***CanBuildRoad Tests***//
+    @Test
+    public void testRoadsRemaining() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(1);
+        assertFalse(player1.getRemainingRoads() > 1);
+        assertTrue(player2.getRemainingRoads() > 1);
+    }
+
+    @Test
+    public void testCanAffordRoad() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(1);
+        Player player2 = testGameModel.getPlayerList().get(2);
+        assertTrue(player1.getBank().canAffordRoad());
+        assertFalse(player2.getBank().canAffordRoad());
+    }
+
+    //***CanBuildSettlement Tests***//
+    @Test
+    public void testSettlementsRemaining() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(1);
+        assertFalse(player1.getRemainingSettlements() > 1);
+        assertTrue(player2.getRemainingSettlements() > 1);
+    }
+
+    @Test
+    public void testCanAffordSettlement() throws BoardException, FileNotFoundException{
+        initializeModel("Json2.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(2);
+        assertTrue(player1.getBank().canAffordSettlement());
+        assertFalse(player2.getBank().canAffordSettlement());
+    }
+
+    //***CanBuildCity Tests***//
+    @Test
+    public void testCitiesRemaining() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(1);
+        assertFalse(player1.getRemainingCities() > 1);
+        assertTrue(player2.getRemainingCities() > 1);
+    }
+
+    @Test
+    public void testCanAffordCity() throws BoardException, FileNotFoundException{
+        initializeModel("Json4.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(1);
+        assertTrue(player1.getBank().canAffordSettlement());
+        assertFalse(player2.getBank().canAffordSettlement());
+    }
+
+    //***CanRollDice Tests***//
+    @Test
+    public void testAttemptRollDuringTurn() throws BoardException, FileNotFoundException{
+        initializeModel("Json2.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(3);
+        assertTrue(testGameModel.getPlayerTurn() == player1.getPlayerIdx());
+        assertFalse(testGameModel.getPlayerTurn() == player2.getPlayerIdx());
+    }
+
+    @Test
+    public void testRollTurnState() throws BoardException, FileNotFoundException{
+        initializeModel("Json2.json");
+        assertTrue(testGameModel.getTurnState() == TurnState.Rolling);
+        initializeModel("Json3.json");
+        assertFalse(testGameModel.getTurnState() == TurnState.Rolling);
     }
 }
