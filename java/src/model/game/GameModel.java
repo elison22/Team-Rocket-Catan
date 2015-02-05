@@ -34,7 +34,7 @@ public class GameModel {
     public GameModel() {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
-    	winner = -1;
+    	//winner = -1;
     }
 
     public String getGameName() {
@@ -209,7 +209,7 @@ public class GameModel {
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
-    		resource.put(trade.getResourceType(), trade.getRatio());
+    		resource.put(trade.getResourceToGive(), trade.getRatio());
     		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
     			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
     				return true;
