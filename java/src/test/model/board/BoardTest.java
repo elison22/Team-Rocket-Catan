@@ -14,13 +14,13 @@ public class BoardTest {
 
     boolean exception;
     boolean result;
-    HexLocation hexloc1 = new HexLocation(0, 0);
-    HexLocation hexloc2 = new HexLocation(-1, 1);
-    VertexLocation vertloc1 = new VertexLocation(hexloc1, VertexDirection.NorthWest);
-    VertexLocation vertloc2 = new VertexLocation(hexloc1, VertexDirection.West);
-    VertexLocation vertloc3 = new VertexLocation(hexloc2, VertexDirection.NorthWest);
-    EdgeLocation edgeloc1 = new EdgeLocation(hexloc1, EdgeDirection.NorthWest);
-    EdgeLocation edgeloc2 = new EdgeLocation(hexloc2, EdgeDirection.North);
+    HexLocation hexmid = new HexLocation(0, 0);
+    HexLocation hexleft = new HexLocation(-1, 1);
+    VertexLocation vertmidNW = new VertexLocation(hexmid, VertexDirection.NorthWest);
+    VertexLocation vertmidW = new VertexLocation(hexmid, VertexDirection.West);
+    VertexLocation vertleftNW = new VertexLocation(hexleft, VertexDirection.NorthWest);
+    EdgeLocation edgemidNW = new EdgeLocation(hexmid, EdgeDirection.NorthWest);
+    EdgeLocation edgeleftN = new EdgeLocation(hexleft, EdgeDirection.North);
 
     @Before
     public void init() throws BoardException {
@@ -60,10 +60,10 @@ public class BoardTest {
 
         exception = false;
         try {
-            result = testBoard.canBuildSettlement(vertloc1, 0);
+            result = testBoard.canBuildSettlement(vertmidNW, 0);
             assertFalse(result);
 
-            result = testBoard.canBuildCity(vertloc1, 0);
+            result = testBoard.canBuildCity(vertmidNW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -78,9 +78,9 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
 
-            result = testBoard.canBuildSettlement(vertloc1, 0);
+            result = testBoard.canBuildSettlement(vertmidNW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class BoardTest {
 
         exception = false;
         try {
-            result = testBoard.canBuildRoad(edgeloc1, 0);
+            result = testBoard.canBuildRoad(edgemidNW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -111,9 +111,9 @@ public class BoardTest {
         exception = false;
 
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
 
-            result = testBoard.canBuildRoad(edgeloc1, 0);
+            result = testBoard.canBuildRoad(edgemidNW, 0);
             assertTrue(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -128,10 +128,10 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
 
-            result = testBoard.canBuildRoad(edgeloc1, 0);
+            result = testBoard.canBuildRoad(edgemidNW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -146,10 +146,10 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
 
-            result = testBoard.canBuildSettlement(vertloc2, 0);
+            result = testBoard.canBuildSettlement(vertmidW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -164,10 +164,10 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
 
-            result = testBoard.canBuildRoad(edgeloc2, 1);
+            result = testBoard.canBuildRoad(edgeleftN, 1);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -182,10 +182,10 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
 
-            result = testBoard.canBuildRoad(edgeloc2, 0);
+            result = testBoard.canBuildRoad(edgeleftN, 0);
             assertTrue(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -198,11 +198,11 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
-            testBoard.doBuildRoad(edgeloc2, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+            testBoard.doBuildRoad(edgeleftN, 0);
 
-            result = testBoard.canBuildSettlement(vertloc3, 1);
+            result = testBoard.canBuildSettlement(vertleftNW, 1);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -216,11 +216,11 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
-            testBoard.doBuildRoad(edgeloc2, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+            testBoard.doBuildRoad(edgeleftN, 0);
 
-            result = testBoard.canBuildCity(vertloc3, 0);
+            result = testBoard.canBuildCity(vertleftNW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -234,11 +234,11 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
-            testBoard.doBuildRoad(edgeloc2, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+            testBoard.doBuildRoad(edgeleftN, 0);
 
-            result = testBoard.canBuildSettlement(vertloc3, 0);
+            result = testBoard.canBuildSettlement(vertleftNW, 0);
             assertTrue(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -251,12 +251,12 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
-            testBoard.doBuildRoad(edgeloc2, 0);
-            testBoard.doBuildSettlement(vertloc3, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+            testBoard.doBuildRoad(edgeleftN, 0);
+            testBoard.doBuildSettlement(vertleftNW, 0);
 
-            result = testBoard.canBuildCity(vertloc3, 1);
+            result = testBoard.canBuildCity(vertleftNW, 1);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
@@ -269,15 +269,15 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
-            testBoard.doBuildRoad(edgeloc2, 0);
-            testBoard.doBuildSettlement(vertloc3, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+            testBoard.doBuildRoad(edgeleftN, 0);
+            testBoard.doBuildSettlement(vertleftNW, 0);
 
-            result = testBoard.canBuildCity(vertloc3, 0);
+            result = testBoard.canBuildCity(vertleftNW, 0);
             assertTrue(result);
 
-            testBoard.doBuildCity(vertloc3, 0);
+            testBoard.doBuildCity(vertleftNW, 0);
         } catch (BoardException e) {
             e.printStackTrace();
         }
@@ -289,13 +289,13 @@ public class BoardTest {
 
         exception = false;
         try {
-            testBoard.doBuildSettlement(vertloc1, 0);
-            testBoard.doBuildRoad(edgeloc1, 0);
-            testBoard.doBuildRoad(edgeloc2, 0);
-            testBoard.doBuildSettlement(vertloc3, 0);
-            testBoard.doBuildCity(vertloc3, 0);
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+            testBoard.doBuildRoad(edgeleftN, 0);
+            testBoard.doBuildSettlement(vertleftNW, 0);
+            testBoard.doBuildCity(vertleftNW, 0);
 
-            result = testBoard.canBuildCity(vertloc3, 0);
+            result = testBoard.canBuildCity(vertleftNW, 0);
             assertFalse(result);
 
         } catch (BoardException e) {
