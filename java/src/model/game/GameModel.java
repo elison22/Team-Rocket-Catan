@@ -2,13 +2,10 @@ package model.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import model.board.Board;
 import model.board.BoardException;
 import model.cards.GameBank;
-import model.cards.ResourceSet;
 import model.chat.Chat;
-import model.chat.GameHistory;
 import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;

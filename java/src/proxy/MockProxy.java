@@ -67,7 +67,7 @@ public class MockProxy implements IServerFacade {
 	public String model(int modelVersion) {
 		
 		try {
-			byte[] encoded = Files.readAllBytes(Paths.get("TestModel.json"));
+			byte[] encoded = Files.readAllBytes(Paths.get("TestModel2.json"));
 			return new String(encoded, "UTF-8");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

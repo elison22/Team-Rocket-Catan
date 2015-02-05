@@ -73,8 +73,7 @@ public class Serializer {
 		GameModel gm = new GameModel();
 		try {
 			gm = s.deSerializeFromServer(gm, mp.model(-1));
-			Gson gson = new Gson();
-			System.out.println(gson.toJson(gm));
+			System.out.println("OK");
 		} catch (BoardException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
