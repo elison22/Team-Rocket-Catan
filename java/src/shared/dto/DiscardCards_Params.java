@@ -1,5 +1,8 @@
 package shared.dto;
 
+import java.util.HashMap;
+
+import shared.definitions.ResourceType;
 import model.cards.ResourceSet;
 
 public class DiscardCards_Params {
@@ -28,7 +31,7 @@ public class DiscardCards_Params {
 
 	public DiscardCards_Params() {}
 
-	public DiscardCards_Params(int playerIndex, ResourceSet resources) {
+	public DiscardCards_Params(int playerIndex, HashMap<ResourceType, Integer> resources) {
 		super();
 		setPlayerIndex(playerIndex);
 		discardedCards = new Resources(resources);

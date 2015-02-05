@@ -218,7 +218,7 @@ public class GameModel {
     	return false;
     }
     
-    public boolean canDiscardCards(int playerId, ResourceSet cards) {
+    public boolean canDiscardCards(int playerId, HashMap<ResourceType, Integer> cards) {
     	if(turnTracker.canPlayerDiscard(playerId)) {
     		if(playerList.get(playerId).canDiscardCards(cards)){
     			return true;

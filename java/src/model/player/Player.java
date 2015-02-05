@@ -145,8 +145,8 @@ public class Player {
         return bank.canAffordDevCard();
     }
 
-    public boolean canDiscardCards(ResourceSet cards) {
-        bank.hasResCards(cards.getResources());
+    public boolean canDiscardCards(HashMap<ResourceType, Integer> cards) {
+        bank.hasResCards(cards);
     	return true;
     }
     

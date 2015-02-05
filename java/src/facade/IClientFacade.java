@@ -1,12 +1,14 @@
 package facade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -318,13 +320,13 @@ public interface IClientFacade {
      * @param cards the resource cards the player is discarding
      * @return true if cards can be discarded
      */
-    public boolean canDiscardCards(ResourceSet cards);
+    public boolean canDiscardCards(HashMap<ResourceType, Integer> cards);
 
     /**
      * Discards the selected cards from a players resource list
      * @param cards the resource cards the player is discarding
      */
-    public boolean doDiscardCards(ResourceSet cards);
+    public boolean doDiscardCards(HashMap<ResourceType, Integer> cards);
 	
 	
 }
