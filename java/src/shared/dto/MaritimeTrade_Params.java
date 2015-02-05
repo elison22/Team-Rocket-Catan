@@ -7,8 +7,8 @@ public class MaritimeTrade_Params {
 	private String type = "maritimeTrade";
 	private int playerIndex;
 	private int ratio;
-	private String inputResource;
-	private String outputResource;
+	private String inputResource;	// resource player is giving
+	private String outputResource;	// resource player is receiving
 
 	public MaritimeTrade_Params() {}
 
