@@ -21,6 +21,7 @@ public class ServerPoller implements Runnable{
 	private ClientFacade facade;
 	
 	private long lastPollTime;
+	
 	/**
 	 * Constructor
 	 * @param serverProxy
@@ -41,7 +42,7 @@ public class ServerPoller implements Runnable{
 		try 
 		{
 			String result = proxyFacade.model(currentVersion);
-			if(result != "true")
+			if(!result.equals("true"))
 				facade.updateGameModel(result);
 		} 
 		catch (ServerException e)
