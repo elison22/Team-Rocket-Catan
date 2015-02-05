@@ -12,53 +12,65 @@ public class BoardTest {
 
     private Board testBoard;
 
-    boolean exception;
     boolean result;
-    HexLocation hexmid = new HexLocation(0, 0);
-    HexLocation hexleft = new HexLocation(-1, 1);
-    VertexLocation vertmidNW = new VertexLocation(hexmid, VertexDirection.NorthWest);
-    VertexLocation vertmidW = new VertexLocation(hexmid, VertexDirection.West);
-    VertexLocation vertleftNW = new VertexLocation(hexleft, VertexDirection.NorthWest);
-    EdgeLocation edgemidNW = new EdgeLocation(hexmid, EdgeDirection.NorthWest);
-    EdgeLocation edgeleftN = new EdgeLocation(hexleft, EdgeDirection.North);
+    HexLocation hexMID = new HexLocation(0, 0);
+    HexLocation hexSW = new HexLocation(-1, 1);
+    HexLocation hexBottom = new HexLocation(0, 2);
+    HexLocation hexTop = new HexLocation(0, -2);
+    VertexLocation vertmidNW = new VertexLocation(hexMID, VertexDirection.NorthWest);
+    VertexLocation vertmidW = new VertexLocation(hexMID, VertexDirection.West);
+    VertexLocation vertmidE = new VertexLocation(hexMID, VertexDirection.East);
+    VertexLocation vertleftNW = new VertexLocation(hexSW, VertexDirection.NorthWest);
+    EdgeLocation edgemidN = new EdgeLocation(hexMID, EdgeDirection.North);
+    EdgeLocation edgemidNW = new EdgeLocation(hexMID, EdgeDirection.NorthWest);
+    EdgeLocation edgemidS = new EdgeLocation(hexMID, EdgeDirection.South);
+    EdgeLocation edgeleftN = new EdgeLocation(hexSW, EdgeDirection.North);
+
+    public void bypassInitialSetup() throws BoardException{
+        testBoard.doBuildRoad(new EdgeLocation(hexBottom, EdgeDirection.NorthWest), 0);
+        testBoard.doBuildRoad(new EdgeLocation(hexBottom, EdgeDirection.SouthWest), 0);
+        testBoard.doBuildRoad(new EdgeLocation(hexBottom, EdgeDirection.South), 0);
+        testBoard.doBuildRoad(new EdgeLocation(hexBottom, EdgeDirection.SouthEast), 1);
+        testBoard.doBuildRoad(new EdgeLocation(hexBottom, EdgeDirection.NorthEast), 1);
+        testBoard.doBuildRoad(new EdgeLocation(hexTop, EdgeDirection.SouthEast), 2);
+        testBoard.doBuildRoad(new EdgeLocation(hexTop, EdgeDirection.NorthEast), 2);
+        testBoard.doBuildRoad(new EdgeLocation(hexTop, EdgeDirection.North), 3);
+        testBoard.doBuildRoad(new EdgeLocation(hexTop, EdgeDirection.NorthWest), 3);
+        testBoard.doBuildRoad(new EdgeLocation(hexTop, EdgeDirection.SouthWest), 3);
+    }
 
     @Before
-    public void init() throws BoardException {
+    public void setup() throws BoardException {
         testBoard = new Board(true, true, true);
     }
 
     @Test
-    public void testPresetBoard() {
+    public void presetBoard() {
 
-        exception = false;
         try {
             testBoard = new Board(false, false, false);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testRandomBoard() {
+    public void randomBoard() {
 
-        exception = false;
         try {
             testBoard = new Board(true, true, true);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCannotBuildIsolateBuilding() {
+    public void cannotBuildIsolatedBuilding() {
 
-        exception = false;
         try {
             result = testBoard.canBuildSettlement(vertmidNW, 0);
             assertFalse(result);
@@ -67,16 +79,14 @@ public class BoardTest {
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCannotBuiltSettlementOnSettlement() {
+    public void cannotBuiltSettlementOnSettlement() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
 
@@ -84,67 +94,118 @@ public class BoardTest {
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCannotBuildIsolateRoad() {
+    public void canBuildIsolatedRoadDuringInit() {
 
-        exception = false;
         try {
+            result = testBoard.canBuildRoad(edgemidNW, 0);
+            assertTrue(result);
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void cannotBuildIsolatedRoadDuringMain() {
+
+        try {
+            bypassInitialSetup();
+
             result = testBoard.canBuildRoad(edgemidNW, 0);
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
-
     }
 
     @Test
-    public void testCanBuildRoadBySettlement() {
-
-        exception = false;
+    public void cannotBuildRoadBySettlementDuringInit() {
 
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
 
             result = testBoard.canBuildRoad(edgemidNW, 0);
-            assertTrue(result);
+            assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
+    }
+
+    @Test
+    public void cannotBuildRoadBySecondNeighborSettlementDuringInit() {
+        try {
+            testBoard.doBuildSettlement(vertmidE, 0);
+            testBoard.doBuildSettlement(vertmidW, 0);
+
+            result = testBoard.canBuildRoad(edgemidN, 0);
+            assertFalse(result);
+            result = testBoard.canBuildRoad(edgemidS, 1);
+            assertFalse(result);
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void cannotBuildRoadByOnlySettlementDuringMain() {
+
+        try {
+            bypassInitialSetup();
+            testBoard.doBuildSettlement(vertmidNW, 0);
+
+            result = testBoard.canBuildRoad(edgemidNW, 0);
+            assertFalse(result);
+
+            testBoard.doBuildRoad(edgemidN, 0);
+
+            result = testBoard.canBuildRoad(edgemidNW, 0);
+            assertTrue(result);
+
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
 
     }
 
     @Test
-    public void testCannotBuildDuplicateRoad() {
+    public void cannotBuildDuplicateRoad() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
 
             result = testBoard.canBuildRoad(edgemidNW, 0);
             assertFalse(result);
+            result = testBoard.canBuildRoad(edgemidNW, 1);
+            assertFalse(result);
+
+            bypassInitialSetup();
+
+            result = testBoard.canBuildRoad(edgemidNW, 0);
+            assertFalse(result);
+            result = testBoard.canBuildRoad(edgemidNW, 1);
+            assertFalse(result);
+
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCannotBuildNeighborSettlement() {
+    public void cannotBuildNeighborSettlement() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
@@ -153,17 +214,32 @@ public class BoardTest {
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCannotBuildRoadOnlyByOpponentRoad() {
+    public void canBuildRoadByOnlyOpponentRoadDuringInit() {
 
-        exception = false;
         try {
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidNW, 0);
+
+            result = testBoard.canBuildRoad(edgeleftN, 1);
+            assertTrue(result);
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+
+    }
+
+    @Test
+    public void cannotBuildRoadByOnlyOpponentRoadDuringMain() {
+
+        try {
+            bypassInitialSetup();
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
 
@@ -171,32 +247,35 @@ public class BoardTest {
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
-            exception = true;
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCanBuildRoadByRoad() {
+    public void canBuildRoadByRoad() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
 
             result = testBoard.canBuildRoad(edgeleftN, 0);
             assertTrue(result);
+
+            bypassInitialSetup();
+
+            result = testBoard.canBuildRoad(edgeleftN, 0);
+            assertTrue(result);
+
         } catch (BoardException e) {
             e.printStackTrace();
+            assertFalse(true);
         }
-        assertFalse(exception);
     }
 
     @Test
-    public void testCannotBuildSettlementOnlyByOpponentRoad () {
+    public void cannotBuildSettlementByOnlyOpponentRoad () {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
@@ -204,17 +283,22 @@ public class BoardTest {
 
             result = testBoard.canBuildSettlement(vertleftNW, 1);
             assertFalse(result);
+
+            bypassInitialSetup();
+
+            result = testBoard.canBuildSettlement(vertleftNW, 1);
+            assertFalse(result);
+
         } catch (BoardException e) {
             e.printStackTrace();
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCannotBuildCityWithoutSettlement() {
+    public void cannotBuildCityWithoutSettlement() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
@@ -224,15 +308,14 @@ public class BoardTest {
             assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 
     @Test
-    public void testCanBuildSettlementConnectedByRoads() {
+    public void canBuildSettlementConnectedByRoads() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
@@ -240,34 +323,21 @@ public class BoardTest {
 
             result = testBoard.canBuildSettlement(vertleftNW, 0);
             assertTrue(result);
+
+            bypassInitialSetup();
+
+            result = testBoard.canBuildSettlement(vertleftNW, 0);
+            assertTrue(result);
+
         } catch (BoardException e) {
             e.printStackTrace();
+            assertFalse(true);
         }
-        assertFalse(exception);
     }
 
     @Test
-    public void testCannotBuildCityOnOpponentSettlement() {
+    public void canBuildCityOnlyOnOwnedSettlement() {
 
-        exception = false;
-        try {
-            testBoard.doBuildSettlement(vertmidNW, 0);
-            testBoard.doBuildRoad(edgemidNW, 0);
-            testBoard.doBuildRoad(edgeleftN, 0);
-            testBoard.doBuildSettlement(vertleftNW, 0);
-
-            result = testBoard.canBuildCity(vertleftNW, 1);
-            assertFalse(result);
-        } catch (BoardException e) {
-            e.printStackTrace();
-        }
-        assertFalse(exception);
-    }
-
-    @Test
-    public void testCanBuildCityOnlyOnOwnedSettlement() {
-
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
@@ -276,18 +346,17 @@ public class BoardTest {
 
             result = testBoard.canBuildCity(vertleftNW, 0);
             assertTrue(result);
-
-            testBoard.doBuildCity(vertleftNW, 0);
+            result = testBoard.canBuildCity(vertmidNW, 1);
+            assertFalse(result);
         } catch (BoardException e) {
             e.printStackTrace();
+            assertFalse(true);
         }
-        assertFalse(exception);
     }
 
     @Test
-    public void testCannotBuildCityOnACity() {
+    public void cannotBuildCityOnACity() {
 
-        exception = false;
         try {
             testBoard.doBuildSettlement(vertmidNW, 0);
             testBoard.doBuildRoad(edgemidNW, 0);
@@ -299,9 +368,9 @@ public class BoardTest {
             assertFalse(result);
 
         } catch (BoardException e) {
-            exception = true;
+            e.printStackTrace();
+            assertFalse(true);
         }
-        assertFalse(exception);
 
     }
 

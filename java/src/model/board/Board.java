@@ -281,11 +281,46 @@ public class Board {
      * the range 0 to 3. Also thrown if the location param is passed in null.
      */
     public boolean canBuildRoad(EdgeLocation location, int owner) throws BoardException {
+        if (roads.size() > 8) return canBuildNormalRoad(location, owner);
+        else return canBuildInitRoad(location, owner);
+    }
+
+    /**
+     *
+     * @param location
+     * @param owner
+     * @return
+     * @throws BoardException
+     */
+    private boolean canBuildInitRoad(EdgeLocation location, int owner) throws BoardException {
+        if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
+        if (location == null) throw new BoardException("Param location cannot be null.");
+        if (roads.get(location.getNormalizedLocation()) != null) return false;
+        VertexLocation clockwise = location.getClockwiseVertex();
+        if (buildings.get(clockwise) != null) return false;
+        if (!hasNeighborBuilding(clockwise)) return true;
+        VertexLocation counterclockwise = location.getCounterClockwiseVertex();
+        if (buildings.get(counterclockwise) != null) return false;
+        if (!hasNeighborBuilding(counterclockwise)) return true;
+        return false;
+    }
+
+    /**
+     * Determines whether or not a player can build a Road on this location. The
+     * conditions are that no Road is already present at the location param and that there
+     * is a building or road belonging to owner adjacent to the location param.
+     * @param location Where to verify for availability for a road.
+     * @param owner The index of the player who wants to build a road.
+     * @return True if the edge is available for a road.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range 0 to 3. Also thrown if the location param is passed in null.
+     */
+    private boolean canBuildNormalRoad(EdgeLocation location, int owner) throws BoardException {
         if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
         if (location == null) throw new BoardException("Param location cannot be null.");
         EdgeLocation normalized = location.getNormalizedLocation();
         if (roads.get(normalized) != null) return false;
-        if (!hasNeighborRoad(location, owner) && !hasNeighborBuilding(normalized, owner)) return false;
+        if (!hasNeighborRoad(location, owner)) return false;
         return true;
     }
 
