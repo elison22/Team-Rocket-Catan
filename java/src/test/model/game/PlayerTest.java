@@ -8,10 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert.*;
 import serializer.Serializer;
+import shared.definitions.ResourceType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertFalse;
@@ -142,5 +144,42 @@ public class PlayerTest {
         assertTrue(testGameModel.getTurnState() == TurnState.Rolling);
         initializeModel("Json3.json");
         assertFalse(testGameModel.getTurnState() == TurnState.Rolling);
+    }
+
+    //***OfferTrade Tests***//
+    @Test
+    public void testOfferTradeDuringTurn() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        Player player2 = testGameModel.getPlayerList().get(1);
+        assertTrue(testGameModel.getPlayerTurn() == player1.getPlayerIdx());
+        assertFalse(testGameModel.getPlayerTurn() == player2.getPlayerIdx());
+    }
+
+    @Test
+    public void testTradeTurnState() throws BoardException, FileNotFoundException{
+        initializeModel("Json3.json");
+        assertTrue(testGameModel.getTurnState() == TurnState.Playing);
+        initializeModel("Json2.json");
+        assertFalse(testGameModel.getTurnState() == TurnState.Playing);
+    }
+
+    @Test
+    public void testOfferOwnedResources() throws BoardException, FileNotFoundException{
+        initializeModel("Json3.json");
+        Player player = testGameModel.getPlayerList().get(3);
+        HashMap<ResourceType, Integer> offeredResources1 = new HashMap<ResourceType, Integer>();
+        HashMap<ResourceType, Integer> offeredResources2 = new HashMap<ResourceType, Integer>();
+        HashMap<ResourceType, Integer> offeredResources3 = new HashMap<ResourceType, Integer>();
+        offeredResources1.put(ResourceType.BRICK, 1);
+        offeredResources1.put(ResourceType.WHEAT, 1);
+        offeredResources2.put(ResourceType.WOOD, 2);
+        offeredResources2.put(ResourceType.ORE, 1);
+        offeredResources3.put(ResourceType.BRICK, 3);
+        offeredResources3.put(ResourceType.ORE, 2);
+
+        assertTrue(player.canOfferTrade(player.getPlayerIdx(), offeredResources1));
+        assertFalse(player.canOfferTrade(player.getPlayerIdx(), offeredResources2));
+        assertFalse(player.canOfferTrade(player.getPlayerIdx(), offeredResources3));
     }
 }
