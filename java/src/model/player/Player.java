@@ -88,8 +88,28 @@ public class Player {
         this.remainingCities = remainingCities;
     }
 
+    public int getRemainingRoads() {
+        return remainingRoads;
+    }
+
+    public int getRemainingCities() {
+        return remainingCities;
+    }
+
+    public int getRemainingSettlements() {
+        return remainingSettlements;
+    }
+
+    public PlayerBank getBank(){
+        return bank;
+    }
+
     public int getVictoryPoints() {
         return victoryPoints;
+    }
+
+    public int getPlayerIdx() {
+        return playerIdx;
     }
 
     public String getName() {

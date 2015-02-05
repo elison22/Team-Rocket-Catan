@@ -70,6 +70,10 @@ public class GameModel {
         return turnTracker.getCurrentPlayerIndex();
     }
 
+    public TurnState getTurnState() {
+        return turnTracker.getCurrentState();
+    }
+
     public int getLongestRoad() {
         return turnTracker.getLongestRoadPlayerIndex();
     }
