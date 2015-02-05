@@ -1,6 +1,8 @@
 package shared.dto;
 
-import model.cards.ResourceSet;
+import java.util.Map;
+
+import shared.definitions.ResourceType;
 
 public class OfferTrade_Params {
 	
@@ -18,18 +20,18 @@ public class OfferTrade_Params {
 		int wheat;
 		int wood;
 		
-		public ResourceTrade(int[] resources) {
-			brick = resources[0];
-			ore = resources[1];
-			sheep = resources[2];
-			wheat = resources[3];
-			wood = resources[4];
+		public ResourceTrade(Map<ResourceType, Integer> resources) {
+			brick = resources.get(ResourceType.BRICK);
+			ore = resources.get(ResourceType.ORE);
+			sheep = resources.get(ResourceType.SHEEP);
+			wheat = resources.get(ResourceType.WHEAT);
+			wood = resources.get(ResourceType.WOOD);
 		}
 	}
 
 	public OfferTrade_Params() {}
 
-	public OfferTrade_Params(int playerIndex, ResourceSet resources, int receiver) {
+	public OfferTrade_Params(int playerIndex, Map<ResourceType, Integer> resources, int receiver) {
 		super();
 		setPlayerIndex(playerIndex);
 		offer = new ResourceTrade(resources);

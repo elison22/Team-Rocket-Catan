@@ -2,6 +2,7 @@ package test.proxy;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.junit.After;
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import proxy.ProxyFacade;
 import proxy.ServerException;
+import shared.definitions.ResourceType;
 import shared.dto.*;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -138,7 +140,12 @@ public class ProxyMovesTest {
 	@Test
 	public void testOfferAndAcceptTrade() throws ServerException {
 		// Set resources to offer (1 brick for 2 wood)
-		int[] resources = new int[] {1,0,0,0,2};
+		HashMap<ResourceType, Integer> resources = new HashMap<ResourceType, Integer>();
+		resources.put(ResourceType.BRICK, 1);
+		resources.put(ResourceType.ORE, 0);
+		resources.put(ResourceType.SHEEP, 0);
+		resources.put(ResourceType.WHEAT, 0);
+		resources.put(ResourceType.WOOD, 2);
 		
 		// Offer trade
 		assertTrue(facade.offerTrade(new OfferTrade_Params(3, resources, 2)) != null);
@@ -159,7 +166,12 @@ public class ProxyMovesTest {
 	@Test
 	public void testDiscardCards() throws ServerException {
 		// Set resources to be discarded
-		int[] resources = new int[] {0,1,1,3,0};
+		HashMap<ResourceType, Integer> resources = new HashMap<ResourceType, Integer>();
+		resources.put(ResourceType.BRICK, 0);
+		resources.put(ResourceType.ORE, 1);
+		resources.put(ResourceType.SHEEP, 1);
+		resources.put(ResourceType.WHEAT, 3);
+		resources.put(ResourceType.WOOD, 0);
 		
 		// Discard resources
 		assertTrue(facade.discardCards(new DiscardCards_Params(0, resources)) != null);

@@ -1,9 +1,7 @@
 package shared.dto;
 
-import java.util.HashMap;
-
+import java.util.Map;
 import shared.definitions.ResourceType;
-import model.cards.ResourceSet;
 
 public class DiscardCards_Params {
 	
@@ -20,18 +18,18 @@ public class DiscardCards_Params {
 		int wheat;
 		int wood;
 		
-		public Resources(int[] resources) {
-			brick = resources[0];
-			ore = resources[1];
-			sheep = resources[2];
-			wheat = resources[3];
-			wood = resources[4];
+		public Resources(Map<ResourceType, Integer> resources) {
+			brick = resources.get(ResourceType.BRICK);
+			ore = resources.get(ResourceType.ORE);
+			sheep = resources.get(ResourceType.SHEEP);
+			wheat = resources.get(ResourceType.WHEAT);
+			wood = resources.get(ResourceType.WOOD);
 		}
 	}
 
 	public DiscardCards_Params() {}
 
-	public DiscardCards_Params(int playerIndex, HashMap<ResourceType, Integer> resources) {
+	public DiscardCards_Params(int playerIndex, Map<ResourceType, Integer> resources) {
 		super();
 		setPlayerIndex(playerIndex);
 		discardedCards = new Resources(resources);

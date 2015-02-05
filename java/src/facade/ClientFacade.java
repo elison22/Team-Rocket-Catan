@@ -14,26 +14,7 @@ import proxy.ServerException;
 import serializer.Serializer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-import shared.dto.AcceptTrade_Params;
-import shared.dto.BuildCity_Params;
-import shared.dto.BuildRoad_Params;
-import shared.dto.BuildSettlement_Params;
-import shared.dto.BuyDevCard_Params;
-import shared.dto.CreateGame_Params;
-import shared.dto.DiscardCards_Params;
-import shared.dto.FinishTurn_Params;
-import shared.dto.JoinGame_Params;
-import shared.dto.Login_Params;
-import shared.dto.MaritimeTrade_Params;
-import shared.dto.Monopoly_Params;
-import shared.dto.Monument_Params;
-import shared.dto.OfferTrade_Params;
-import shared.dto.RoadBuilding_Params;
-import shared.dto.RobPlayer_Params;
-import shared.dto.RollNumber_Params;
-import shared.dto.SendChat_Params;
-import shared.dto.Soldier_Params;
-import shared.dto.YearOfPlenty_Params;
+import shared.dto.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -396,7 +377,7 @@ public class ClientFacade implements IClientFacade {
 	@Override
 	public boolean doOfferTrade(DomesticTrade trade) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer(), trade.getReceiver())));
+			game = serializer.deSerializeFromServer(game, proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer().getResources(), trade.getReceiver())));
 		} catch (BoardException | ServerException e) {
 			return false;
 		} 
