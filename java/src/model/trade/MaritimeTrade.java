@@ -17,7 +17,8 @@ public class MaritimeTrade {
 	private int ratio;	// (ie. put 3 for a 3:1 trade)
 	private PortType portType;
 	private ResourceSet resources;
-	private ResourceType resType;
+	private ResourceType resourceToReceive;
+	private ResourceType resourceToGive;
 	
 	public MaritimeTrade(int sender, int ratio, PortType portType, ResourceSet resources) {
 		this.sender = sender;
@@ -28,7 +29,9 @@ public class MaritimeTrade {
 		HashMap<ResourceType, Integer> res = resources.getResources();
 		for(Map.Entry<ResourceType, Integer> entry : res.entrySet()){
     		if(entry.getValue() == -1)
-    			resType = entry.getKey();
+    			resourceToGive = entry.getKey();
+    		else if(entry.getValue() == 1)
+    			resourceToReceive = entry.getKey(); 
     	}
 	}
 
@@ -60,8 +63,12 @@ public class MaritimeTrade {
 		return resources;
 	}
 	
-	public ResourceType getResourceType() {
-		return resType;
+	public ResourceType getResourceToGive() {
+		return resourceToGive;
+	}
+	
+	public ResourceType getResourceToReceive() {
+		return resourceToReceive;
 	}
 
 }

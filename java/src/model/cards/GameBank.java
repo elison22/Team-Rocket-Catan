@@ -1,5 +1,7 @@
 package model.cards;
 
+import serializer.json.JsonDevCardList;
+import serializer.json.JsonResourceList;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
@@ -26,25 +28,45 @@ public class GameBank extends CardBank{
         resCards.put(ResourceType.ORE, 19);
         initDevCards();
     }
+    
+    public GameBank(JsonResourceList resources, JsonDevCardList jsonDevCards)
+    {
+    	resCards.put(ResourceType.BRICK, resources.getBrick());
+        resCards.put(ResourceType.WOOD, resources.getWood());
+        resCards.put(ResourceType.WHEAT, resources.getWheat());
+        resCards.put(ResourceType.SHEEP, resources.getSheep());
+        resCards.put(ResourceType.ORE, resources.getOre());
+        devCards.clear();
+        for(int i = 0; i < jsonDevCards.getMonopoly(); i++)
+        	devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly", false));
+        for(int i = 0; i < jsonDevCards.getMonument(); i++)
+        	devCards.add(new DevCard(DevCardType.MONUMENT, "Palace", false));
+        for(int i = 0; i < jsonDevCards.getRoadBuilding(); i++)
+        	devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building", false));
+        for(int i = 0; i < jsonDevCards.getSoldier(); i++)
+        	devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier", false));
+        for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++)
+        	devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty", false));
+    }
 
     public void initDevCards(){
         //initialize monument cards
-        devCards.add(new DevCard(DevCardType.MONUMENT, "Library"));
-        devCards.add(new DevCard(DevCardType.MONUMENT, "University"));
-        devCards.add(new DevCard(DevCardType.MONUMENT, "Market"));
-        devCards.add(new DevCard(DevCardType.MONUMENT, "Chapel"));
-        devCards.add(new DevCard(DevCardType.MONUMENT, "Palace"));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Library", false));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "University", false));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Market", false));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Chapel", false));
+        devCards.add(new DevCard(DevCardType.MONUMENT, "Palace", false));
 
         //initialize soldier cards
         for(int i = 0; i < 14; i++){
-            devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier"));
+            devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier", false));
         }
 
         //initialize progress cards
         for(int i = 0; i < 2; i++){
-            devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly"));
-            devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building"));
-            devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty"));
+            devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly", false));
+            devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building", false));
+            devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty", false));
         }
     }
 

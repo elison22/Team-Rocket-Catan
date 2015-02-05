@@ -12,8 +12,8 @@ public class SaveGame_Params {
 
 	public SaveGame_Params(int id, String name) {
 		super();
-		this.id = id;
-		this.name = name;
+		setId(id);
+		setName(name);
 	}
 
 	public int getId() {

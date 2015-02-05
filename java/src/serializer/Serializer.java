@@ -1,8 +1,19 @@
 package serializer;
 
-import serializer.json.JsonClientModel;
+import java.util.ArrayList;
+
+import proxy.MockProxy;
+import model.board.Board;
+import model.board.BoardException;
+import model.cards.*;
+import model.chat.Chat;
+import model.game.GameModel;
+import model.game.TurnTracker;
+import model.player.*;
+import serializer.json.*;
 
 import com.google.gson.*;
+
 
 /**
  * This class handles the translation of Java objects to and from Json, which is used for data transfer between server and client
@@ -15,10 +26,6 @@ public class Serializer {
 	 * Automates translation of Json
 	 */
 	private Gson gson;	
-	/**
-	 * Instance of the game that holds the objects the Serializer handles
-	 */
-	private JsonClientModel catanInstance;
 	
 	/**
 	 * Constructor
@@ -31,19 +38,46 @@ public class Serializer {
 	/**
 	 * Converts Json string into java object(s)
 	 * @param json String received from the server that needs to be made into Java object(s)
+	 * @throws BoardException 
 	 */
-	public JsonClientModel deSerializeFromServer(String json)
+	public GameModel deSerializeFromServer(GameModel game, String json) throws BoardException
 	{
-		return gson.fromJson(json, JsonClientModel.class);
+		JsonClientModel newModel = gson.fromJson(json, JsonClientModel.class);
+		ArrayList<Player> newPlayers = new ArrayList<Player>();
+		for(JsonPlayer player : newModel.getPlayers())
+		{
+			newPlayers.add(new Player(player));
+		}
+		GameBank newBank = new GameBank(newModel.getBank(), newModel.getDevCards());
+		TurnTracker newTracker = new TurnTracker(newModel.getTurnTracker());
+		Board newBoard = new Board(newModel.getMap());
+		Chat newChat = new Chat(newModel.getChat());
+		Chat newGameHistory = new Chat(newModel.getLog());
+		
+		
+		game.setChat(newChat);
+		game.setGameHistory(newGameHistory);
+		game.setMap(newBoard);
+		game.setTurnTracker(newTracker);
+		game.setWinner(newModel.getWinner());
+		game.setVersionNumber(newModel.getVersion());
+		game.setCardBank(newBank);
+		game.setPlayerList(newPlayers);
+				
+		return game;
 	}
 	
-	/**
-	 * Serializes object to send to server
-	 * @param object
-	 */
-	public void sendToServer(Object object)
-	{
-		
+	public static void main(String[] args) {
+		Serializer s = new Serializer();
+		MockProxy mp = new MockProxy();
+		GameModel gm = new GameModel();
+		try {
+			gm = s.deSerializeFromServer(gm, mp.model(-1));
+			Gson gson = new Gson();
+			System.out.println(gson.toJson(gm));
+		} catch (BoardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
 }

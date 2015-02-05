@@ -15,7 +15,7 @@ public class LoadGame_Params {
 
 	public LoadGame_Params(String name) {
 		super();
-		this.name = name;
+		setName(name);
 	}
 
 	public String getName() {

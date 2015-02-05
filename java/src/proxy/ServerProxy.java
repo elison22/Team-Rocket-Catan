@@ -98,7 +98,7 @@ class ServerProxy {
 			if (getParams != null) {
 				// Write getParams to the connection as Json
 				OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
-				os.write(gson.toJson(getParams));//System.out.println(gson.toJson(postParams));
+				os.write(gson.toJson(getParams));
 				os.close();
 			}
 			
@@ -111,7 +111,7 @@ class ServerProxy {
 			} else {
 				
 				// Throw ServerException with the server's response code
-				String errorMessage = "doGet failed: Server response code %s,";
+				String errorMessage = "doGet failed: " + connection.getResponseMessage() + "(%s)";
 				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
 			}
 			
@@ -154,7 +154,7 @@ class ServerProxy {
 				
 			} else {
 				// Throw ServerException with the server's response code
-				String errorMessage = "doPost failed: Server response code %s";
+				String errorMessage = "doPost failed: " + connection.getResponseMessage() + " (%s)";
 				throw new ServerException(String.format(errorMessage, connection.getResponseCode()));
 			}
 			

@@ -167,16 +167,19 @@ public class Board {
             tile = new HexTile(HexType.convert(hex.getResource()),hex.getNumber());
             tiles.put(hexloc, tile);
         }
-        if (originalCount != tiles.size()) throw new BoardException("The tiles map had new elements added.");
+        //if (originalCount != tiles.size()) throw new BoardException("The tiles map had new elements added.");
 
         // Update the ports
         originalCount = ports.size();
         for (JsonPort doublePort : newMap.getPorts()) {
             hexloc = new HexLocation(doublePort.getLocation().getX(), doublePort.getLocation().getY());
             edge = new EdgeLocation(hexloc, EdgeDirection.convert(doublePort.getDirection()));
-            buildPortPair(edge, PortType.convert(doublePort.getResource()));
+            if(doublePort.getRatio() == 3)
+            	buildPortPair(edge, PortType.THREE_FOR_ONE);
+            else
+            	buildPortPair(edge, PortType.convert(doublePort.getResource()));
         }
-        if (originalCount != ports.size()) throw new BoardException("The ports map had new elements added.");
+        //if (originalCount != ports.size()) throw new BoardException("The ports map had new elements added.");
 
         // Update the settlements
         for (JsonVertexObject settlement : newMap.getSettlements()) {

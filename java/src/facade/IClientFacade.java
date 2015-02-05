@@ -1,13 +1,16 @@
 package facade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 public interface IClientFacade {
@@ -143,7 +146,7 @@ public interface IClientFacade {
     /**
      * Allows the user to roll the dice to start his turn
      */
-    public void rollDice();
+    public boolean rollDice();
 
     /**
      * Checks if player can move robber piece
@@ -154,7 +157,7 @@ public interface IClientFacade {
     /**
      * Allows player to move robber piece and select a player to rob
      */
-    public void doPlaceRobber();
+    public boolean doPlaceRobber(int victimIndex, HexLocation loc);
 
     /**
      * @return whether or not a player can finish his turn
@@ -164,7 +167,7 @@ public interface IClientFacade {
     /**
      * Allows a player to send to the server that he has finished his turn
      */
-    public void finishTurn();
+    public boolean finishTurn();
 
     /**
      * Checks to see if player has adequate resources and if there are remaining devCards to be bought
@@ -176,7 +179,7 @@ public interface IClientFacade {
      * Allows a player to purchase a devCard
      * by updating his / the banks resource cards and devCards
      */
-    public void buyDevCard();
+    public boolean buyDevCard();
 
     /**
      * Checks to see if player can play this dev card right now
@@ -188,7 +191,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public void doUseYearOfPlenty();
+    public boolean doUseYearOfPlenty(String resource1, String resource2);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -199,7 +202,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public void doUseRoadBuilder();
+    public boolean doUseRoadBuilder(EdgeLocation location1, EdgeLocation location2);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -210,7 +213,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public void doUseSoldier();
+    public boolean doUseSoldier(int vicIndex, HexLocation loc);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -221,7 +224,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public void doUseMonopoly();
+    public boolean doUseMonopoly(String resource);
 
     /**
      * Checks to see if player can play this dev card right now
@@ -232,7 +235,7 @@ public interface IClientFacade {
     /**
      * Plays this dev card
      */
-    public void doUseMonument();
+    public boolean doUseMonument();
 
     /**
      * Checks to see if player can build a road right now
@@ -245,7 +248,7 @@ public interface IClientFacade {
      * Builds a road for player at given location
      * @param location where the user wants to build the road
      */
-    public void doBuildRoad(EdgeLocation location);
+    public boolean doBuildRoad(EdgeLocation location, boolean freebie);
 
     /**
      * Checks to see if player can build a settlement right now
@@ -258,7 +261,7 @@ public interface IClientFacade {
      * Builds a settlement for player at given location
      * @param location where the user wants to build the road
      */
-    public void doBuildSettlement(VertexLocation location);
+    public boolean doBuildSettlement(VertexLocation location, boolean freebie);
 
     /**
      * Checks to see if player can build a city right now
@@ -271,7 +274,7 @@ public interface IClientFacade {
      * Builds a city for player at given location
      * @param location where the user wants to build the road
      */
-    public void doBuildCity(VertexLocation location);
+    public boolean doBuildCity(VertexLocation location);
 
     /**
      * Checks to see if player can offer a given trade right now
@@ -284,7 +287,7 @@ public interface IClientFacade {
      * Sends a trade offer to player that was selected
      * @param trade details of the trade being offered
      */
-    public void doOfferTrade(DomesticTrade trade);
+    public boolean doOfferTrade(DomesticTrade trade);
 
     /**
      * Checks to see if player is able to accept a given trade offer
@@ -297,7 +300,7 @@ public interface IClientFacade {
      * Allows player to accept trade that was offered them
      * @param trade details of the trade being made
      */
-    public void doAcceptTrade(DomesticTrade trade);
+    public boolean doAcceptTrade(DomesticTrade trade, boolean accept);
 
     /**
      * Checks to see if player can offer a maritime trade right now
@@ -310,20 +313,20 @@ public interface IClientFacade {
      * Sends a trade offer to bank
      * @param trade details of the trade being offered
      */
-    public void doMaritimeTrade(MaritimeTrade trade);
+    public boolean doMaritimeTrade(MaritimeTrade trade);
 
     /**
      * Checks to see if player can discard the selected resource cards
      * @param cards the resource cards the player is discarding
      * @return true if cards can be discarded
      */
-    public boolean canDiscardCards(ResourceSet cards);
+    public boolean canDiscardCards(HashMap<ResourceType, Integer> cards);
 
     /**
      * Discards the selected cards from a players resource list
      * @param cards the resource cards the player is discarding
      */
-    public void doDiscardCards(ResourceSet cards);
+    public boolean doDiscardCards(HashMap<ResourceType, Integer> cards);
 	
 	
 }

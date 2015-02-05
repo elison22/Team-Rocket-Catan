@@ -34,18 +34,18 @@ public class ProxyGamesTest {
 	}
 	
 	@Test
-	public void listGamesTest() throws ServerException {
+	public void testListGames() throws ServerException {
 		assertTrue(facade.list() != null);
 	}
 	
 	@Test
-	public void createGameTest() throws ServerException {
+	public void testCreateGame() throws ServerException {
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Sam");
 		assertTrue(facade.create(createParams) != null);
 	}
 	
 	@Test
-	public void joinGameTest() throws ServerException {
+	public void testJoinGame() throws ServerException {
 		Login_Params loginParams = new Login_Params("Test", "Test");
 		
 		// If "Test"/"Test" is already registered, try logging in
@@ -72,7 +72,7 @@ public class ProxyGamesTest {
 // TODO figure out how saving/loading is supposed to work
 //	@Test
 //	public void saveAndLoadTest() throws ServerException {
-//		Login_Params loginParams = new Login_Params("Test", "Test");
+//		Login_Params loginParams = new Login_Params("Sam", "sam");
 //		ProxyUser pu = new ProxyUser();
 //		
 //		// If "Test"/"Test" is already registered, try logging in
@@ -82,25 +82,16 @@ public class ProxyGamesTest {
 //			assertTrue(pu.login(loginParams));
 //		}
 //		
-//		// Create a game to join
-//		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Test");
-//		String result = (String) proxyGames.create(createParams);
-//		assertTrue(result != null);
-//		
-//		// Get created game's id from json String
-//		JsonObject json = new Gson().fromJson(result, JsonObject.class);
-//		int gameId = json.get("id").getAsInt();
-//		
 //		// Attempt to join game
-//		JoinGame_Params joinParams = new JoinGame_Params(gameId, "blue");
-//		assertTrue(proxyGames.join(joinParams) != null);
+//		JoinGame_Params joinParams = new JoinGame_Params(0, "orange");
+//		assertTrue(facade.join(joinParams) != null);
 //		
 //		// Attempt to save the game
-//		SaveGame_Params saveParams = new SaveGame_Params(gameId, "testsave");
-//		assertTrue(proxyGames.save(saveParams) != null);
+//		SaveGame_Params saveParams = new SaveGame_Params(0, "testsave");
+//		assertTrue(facade.save(saveParams) != null);
 //		
 //		// Attempt to load the saved game
 //		LoadGame_Params loadParams = new LoadGame_Params("testsave");
-//		assertTrue(proxyGames.load(loadParams) != null);
+//		assertTrue(facade.load(loadParams) != null);
 //	}
 }

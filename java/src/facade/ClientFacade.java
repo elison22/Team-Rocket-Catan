@@ -3,17 +3,35 @@ package facade;
 import java.util.ArrayList;
 import java.util.Random;
 
+import model.board.BoardException;
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
-import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
 import shared.definitions.DevCardType;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.BuildCity_Params;
+import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
+import shared.dto.BuyDevCard_Params;
+import shared.dto.DiscardCards_Params;
+import shared.dto.FinishTurn_Params;
 import shared.dto.Login_Params;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.Monument_Params;
+import shared.dto.OfferTrade_Params;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
@@ -28,6 +46,18 @@ public class ClientFacade implements IClientFacade {
     private int playerIndex;
     private ProxyFacade proxy;
     private Serializer serializer;
+    
+    public void updateGameModel(String json)
+    {
+    	try 
+    	{
+			game = serializer.deSerializeFromServer(game, json);
+		} 
+    	catch (BoardException e) 
+    	{
+			e.printStackTrace();
+		}
+    }
 
     /**
      * Creates a new Game Object
@@ -35,6 +65,7 @@ public class ClientFacade implements IClientFacade {
     public ClientFacade(String host, String port) {
     	proxy = new ProxyFacade(host, port);
     	game = new GameModel();
+    	serializer = new Serializer();
     }
 
 	@Override
@@ -156,8 +187,12 @@ public class ClientFacade implements IClientFacade {
 
 	@Override
 	public boolean doSendChat(String message) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.sendChat(new SendChat_Params(playerIndex, message)));
+		} catch (ServerException | BoardException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -166,13 +201,18 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void rollDice() {
+	public boolean rollDice() {
 		int min = 2;
 		int max = 12;
 		
 		Random rand = new Random();
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
-
+	    try {
+			game = serializer.deSerializeFromServer(game, proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum)));	
+		} catch (ServerException | BoardException e) {
+			return false;
+		}
+	    return true;
 	}
 
 	@Override
@@ -181,9 +221,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doPlaceRobber() {
-		// TODO Auto-generated method stub
-		
+	public boolean doPlaceRobber(int victimIndex, HexLocation loc) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
+		} catch (ServerException | BoardException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -192,9 +236,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void finishTurn() {
-		// TODO Auto-generated method stub
-		
+	public boolean finishTurn() {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.finishTurn(new FinishTurn_Params(playerIndex)));
+		} catch (ServerException | BoardException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -203,9 +251,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void buyDevCard() {
-		// TODO Auto-generated method stub
-		
+	public boolean buyDevCard() {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
+		} catch (ServerException | BoardException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -214,9 +266,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseYearOfPlenty() {
-		// TODO Auto-generated method stub
-		
+	public boolean doUseYearOfPlenty(String resource1, String resource2) {		
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.Year_of_Plenty(new YearOfPlenty_Params(playerIndex, resource1, resource2)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -225,9 +281,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseRoadBuilder() {
-		// TODO Auto-generated method stub
-		
+	public boolean doUseRoadBuilder(EdgeLocation location1, EdgeLocation location2) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.Road_Building(new RoadBuilding_Params(playerIndex, location1, location2)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -236,9 +296,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseSoldier() {
-		// TODO Auto-generated method stub
-		
+	public boolean doUseSoldier(int vicIndex, HexLocation loc) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.Soldier(new Soldier_Params(playerIndex, vicIndex, loc)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -247,9 +311,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseMonopoly() {
-		// TODO Auto-generated method stub
-		
+	public boolean doUseMonopoly(String resource) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.Monopoly(new Monopoly_Params(resource, playerIndex)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -258,9 +326,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doUseMonument() {
-		// TODO Auto-generated method stub
-		
+	public boolean doUseMonument() {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.Monument(new Monument_Params(playerIndex)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -269,9 +341,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doBuildRoad(EdgeLocation location) {
-		// TODO Auto-generated method stub
-		
+	public boolean doBuildRoad(EdgeLocation location, boolean freebie) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -280,9 +356,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doBuildSettlement(VertexLocation location) {
-		// TODO Auto-generated method stub
-		
+	public boolean doBuildSettlement(VertexLocation location, boolean freebie) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -291,9 +371,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doBuildCity(VertexLocation location) {
-		// TODO Auto-generated method stub
-		
+	public boolean doBuildCity(VertexLocation location) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.buildCity(new BuildCity_Params(playerIndex, location)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -302,9 +386,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doOfferTrade(DomesticTrade trade) {
-		// TODO Auto-generated method stub
-		
+	public boolean doOfferTrade(DomesticTrade trade) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer(), trade.getReceiver())));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -313,9 +401,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doAcceptTrade(DomesticTrade trade) {
-		// TODO Auto-generated method stub
-		
+	public boolean doAcceptTrade(DomesticTrade trade, boolean accept) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.acceptTrade(new AcceptTrade_Params(playerIndex, accept)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -324,9 +416,14 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doMaritimeTrade(MaritimeTrade trade) {
-		// TODO Auto-generated method stub
-		
+	public boolean doMaritimeTrade(MaritimeTrade trade) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.maritimeTrade(new MaritimeTrade_Params(playerIndex, 
+					trade.getRatio(), trade.getResourceToGive().toString(), trade.getResourceToReceive().toString())));
+		} catch (BoardException | ServerException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -335,9 +432,13 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void doDiscardCards(ResourceSet cards) {
-		// TODO Auto-generated method stub
-		
+	public boolean doDiscardCards(ResourceSet cards) {
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.discardCards(new DiscardCards_Params(playerIndex, cards)));
+		} catch (BoardException | ServerException e) {
+			return false;
+		}
+		return true;
 	}
 
 }

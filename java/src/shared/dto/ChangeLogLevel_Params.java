@@ -12,7 +12,7 @@ public class ChangeLogLevel_Params {
 
 	public ChangeLogLevel_Params(String logLevel) {
 		super();
-		this.logLevel = LogLevels.valueOf(logLevel);
+		setLogLevel(logLevel);
 	}
 
 	public String getLogLevel() {

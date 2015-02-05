@@ -6,6 +6,7 @@ import java.util.HashMap;
 import model.cards.DevCard;
 import model.cards.PlayerBank;
 import model.cards.ResourceSet;
+import serializer.json.JsonPlayer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
@@ -20,29 +21,55 @@ import shared.definitions.ResourceType;
  */
 public class Player {
 
-    private int playerIdx;				// The player's index in list of players
-    private PlayerBank bank;			// The player's bank of cards
-    private String playerName;			// The player's name
-    private int victoryPoints;			// The player's victory points
-    private int remainingRoads;			// The number of roads the player has left to build
-    private int remainingSettlements;	// The number of settlements the player has left to build
-    private int remainingCities;		// The number of cities the player can build
-    private int monumentDevs;           // The number of monument cards a player holds. User to determine when the cards can be played.
+    private PlayerBank  bank;			        // The player's bank of cards
+    private String      color;                  // The player's color
+    private boolean     discarded;              // True if the player has discarded this turn.
+    private int         monumentDevs;           // The number of monument cards a player holds. Used to determine when the cards can be played.
+    private boolean     playedDevCard;          // True if the player has used a dev card this turn.
+    private int         playerID;               // The player's unique ID
+    private int         playerIdx;				// The player's index in list of players
+    private String      playerName;			    // The player's name
+    private int         remainingCities;		// The number of cities the player can build
+    private int         remainingRoads;			// The number of roads the player has left to build
+    private int         remainingSettlements;	// The number of settlements the player has left to build
+    private int         soldierDevs;            // The number of played soldier cards. Used to determine largest army
+    private int         victoryPoints;			// The player's victory points
 
     /**
      * Creates a new Player object with an empty PlayerBank object and zero victory points
      * @param playerIdx Initializes the player's index in the list of players
      * @param playerName The name the user entered upon starting the game.
      */
-    public Player(int playerIdx, String playerName){
-        this.playerName = playerName;
-        this.victoryPoints = 0;
+    public Player(int playerIdx, int playerID, String playerName, String color){
         this.bank = new PlayerBank();
-        this.playerIdx = playerIdx;
+        this.color = color;
+        this.discarded = false;
+        this.monumentDevs = 0;
+        this.remainingCities = 4;
         this.remainingRoads = 15;
         this.remainingSettlements = 5;
-        this.remainingCities = 4;
-        this.monumentDevs = 0;
+        this.playedDevCard = false;
+        this.playerID = playerID;
+        this.playerIdx = playerIdx;
+        this.playerName = playerName;
+        this.soldierDevs = 0;
+        this.victoryPoints = 0;
+    }
+
+    public Player(JsonPlayer jsonPlayer){
+        this.bank = new PlayerBank(jsonPlayer.getResources(), jsonPlayer.getOldDevCards(), jsonPlayer.getNewDevCards());
+        this.color = jsonPlayer.getColor();
+        this.discarded = jsonPlayer.isDiscarded();
+        this.monumentDevs = jsonPlayer.getMonuments();
+        this.remainingCities = jsonPlayer.getCities();
+        this.remainingRoads = jsonPlayer.getRoads();
+        this.remainingSettlements = jsonPlayer.getSettlements();
+        this.playedDevCard = jsonPlayer.isPlayedDevCard();
+        this.playerID = jsonPlayer.getPlayerID();
+        this.playerIdx = jsonPlayer.getPlayerIndex();
+        this.playerName = jsonPlayer.getName();
+        this.soldierDevs = jsonPlayer.getSoldiers();
+        this.victoryPoints = jsonPlayer.getVictoryPoints();
     }
 
     /**
@@ -78,10 +105,6 @@ public class Player {
      */
     public boolean canOfferTrade(int playerIdx, HashMap<ResourceType,Integer> offeredRes){
         return bank.hasResCards(offeredRes);
-    }
-
-    public boolean canOfferTrade(int playerIdx, ResourceSet offeredRes){
-        return bank.hasResCards(offeredRes.getResources());
     }
 
     /**
@@ -122,8 +145,8 @@ public class Player {
         return bank.canAffordDevCard();
     }
 
-    public boolean canDiscardCards(ResourceSet cards) {
-        bank.hasResCards(cards.getResources());
+    public boolean canDiscardCards(HashMap<ResourceType, Integer> cards) {
+        bank.hasResCards(cards);
     	return true;
     }
     

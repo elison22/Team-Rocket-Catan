@@ -3,7 +3,9 @@ package test.model.board;
 import model.board.Board;
 import model.board.BoardException;
 import static org.junit.Assert.*;
+
 import org.junit.*;
+
 import shared.locations.*;
 
 public class BoardTest {

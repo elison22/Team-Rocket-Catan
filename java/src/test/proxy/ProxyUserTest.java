@@ -29,7 +29,7 @@ public class ProxyUserTest {
 	}
 
 	@Test
-	public void registerAndLoginTest() throws ServerException {
+	public void testRegisterAndLogin() throws ServerException {
 		// generate random string to use as username and password
 		String randString = randomString(7);
 		

@@ -25,19 +25,25 @@ public enum EdgeDirection
     public static EdgeDirection convert(String type) {
 
         switch (type.toLowerCase()) {
+        	case "nw":
             case "northwest":
             case "north west":
                 return NorthWest;
+            case "n":
             case "north":
                 return North;
+            case "ne":
             case "northeast":
             case "north east":
                 return NorthEast;
+            case "se":
             case "southeast":
             case "south east":
                 return SouthEast;
+            case "s":
             case "south":
                 return South;
+            case "sw":
             case "southwest":
             case "south west":
                 return SouthWest;

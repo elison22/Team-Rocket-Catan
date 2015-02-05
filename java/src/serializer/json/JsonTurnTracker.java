@@ -8,12 +8,6 @@ public class JsonTurnTracker
 		this.currentTurn = currentTurn;
 		this.status = status;
 	}
-	public JsonTurnTracker(int currentTurn, String status, int largestArmy)
-	{
-		this.currentTurn = currentTurn;
-		this.status = status;
-		this.largestArmy = largestArmy;
-	}
 	public JsonTurnTracker(int currentTurn, String status, int longestRoad,
                            int largestArmy)
 	{
@@ -45,4 +39,12 @@ public class JsonTurnTracker
 		return largestArmy;
 	}
 
+	protected void setLargestArmy(int largestArmy)
+	{
+		this.largestArmy = largestArmy;
+	}
+	protected void setLongestRoad(int longestRoad)
+	{
+		this.longestRoad = longestRoad;
+	}
 }

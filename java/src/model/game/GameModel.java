@@ -26,14 +26,15 @@ public class GameModel {
     private TurnTracker turnTracker;        // holds whos turn it is, as well as game state
     private Board map;
     private Chat chat;
-    private GameHistory gameHistory;
+    private Chat gameHistory;
+    //private GameHistory gameHistory;
     private ArrayList<String> aiList;
     private int winner;
 
     public GameModel() {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
-    	winner = -1;
+    	//winner = -1;
     }
 
     public String getGameName() {
@@ -96,7 +97,7 @@ public class GameModel {
 		this.chat = chat;
 	}
 
-	public void setGameHistory(GameHistory gameHistory) {
+	public void setGameHistory(Chat gameHistory) {
 		this.gameHistory = gameHistory;
 	}
 
@@ -189,7 +190,7 @@ public class GameModel {
 
     public boolean canOfferTrade(int playerId, DomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
+    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer().getResources())){
     			return true;
 			}
     	}
@@ -208,7 +209,7 @@ public class GameModel {
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
-    		resource.put(trade.getResourceType(), trade.getRatio());
+    		resource.put(trade.getResourceToGive(), trade.getRatio());
     		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
     			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
     				return true;
@@ -217,7 +218,7 @@ public class GameModel {
     	return false;
     }
     
-    public boolean canDiscardCards(int playerId, ResourceSet cards) {
+    public boolean canDiscardCards(int playerId, HashMap<ResourceType, Integer> cards) {
     	if(turnTracker.canPlayerDiscard(playerId)) {
     		if(playerList.get(playerId).canDiscardCards(cards)){
     			return true;
