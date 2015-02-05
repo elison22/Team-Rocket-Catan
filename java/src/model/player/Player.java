@@ -107,10 +107,6 @@ public class Player {
         return bank.hasResCards(offeredRes);
     }
 
-    public boolean canOfferTrade(int playerIdx, ResourceSet offeredRes){
-        return bank.hasResCards(offeredRes.getResources());
-    }
-
     /**
      * Called by the Facade to determine if a player has the resources necessary to accept
      * a certain trade
