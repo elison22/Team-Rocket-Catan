@@ -53,8 +53,9 @@ public interface IClientFacade {
      * @param randTiles whether or not user wants tiles to be randomly placed
      * @param randPorts whether or not user wants ports to be randomly placed
      * @param randNums whether or not user wants numbers to be randomly placed
+     * @return true if game was successfully created
      */
-    public void CreateGame(String gameName, boolean randTiles, boolean randPorts, boolean randNums);
+    public boolean CreateGame(String gameName, boolean randTiles, boolean randPorts, boolean randNums);
 
     /**
      * @return true if user state is in join mode
@@ -66,7 +67,7 @@ public interface IClientFacade {
      * @param playerId id of the player who is joining game
      * @param color the color the player chose to be
      */
-    public void joinGame(int playerId, String color);
+    public void joinGame(int gameId, String color);
 
     /**
      * @return true if game is in state that can be saved

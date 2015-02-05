@@ -1,6 +1,7 @@
 package facade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import model.board.BoardException;
@@ -12,13 +13,16 @@ import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
 import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 import shared.dto.AcceptTrade_Params;
 import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
 import shared.dto.BuildSettlement_Params;
 import shared.dto.BuyDevCard_Params;
+import shared.dto.CreateGame_Params;
 import shared.dto.DiscardCards_Params;
 import shared.dto.FinishTurn_Params;
+import shared.dto.JoinGame_Params;
 import shared.dto.Login_Params;
 import shared.dto.MaritimeTrade_Params;
 import shared.dto.Monopoly_Params;
@@ -109,10 +113,15 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void CreateGame(String gameName, boolean randTiles,
+	public boolean CreateGame(String gameName, boolean randTiles,
 			boolean randPorts, boolean randNums) {
-		// TODO Auto-generated method stub
-		
+		try {
+			game = serializer.deSerializeFromServer(game, proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName)));
+		} catch (ServerException | BoardException e) {
+			// e.printStackTrace();
+			return false;
+		} 
+		return true;
 	}
 
 	@Override
@@ -122,9 +131,8 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public void joinGame(int playerId, String color) {
-		// TODO Auto-generated method stub
-		
+	public void joinGame(int gameId, String color) {
+		//game = serializer.deSerializeFromServer(game, proxy.join(new JoinGame_Params(gameId, color)));
 	}
 
 	@Override
@@ -427,12 +435,12 @@ public class ClientFacade implements IClientFacade {
 	}
 
 	@Override
-	public boolean canDiscardCards(ResourceSet cards) {
+	public boolean canDiscardCards(HashMap<ResourceType, Integer> cards) {
 		return game.canDiscardCards(playerIndex, cards);
 	}
 
 	@Override
-	public boolean doDiscardCards(ResourceSet cards) {
+	public boolean doDiscardCards(HashMap<ResourceType, Integer> cards) {
 		try {
 			game = serializer.deSerializeFromServer(game, proxy.discardCards(new DiscardCards_Params(playerIndex, cards)));
 		} catch (BoardException | ServerException e) {
