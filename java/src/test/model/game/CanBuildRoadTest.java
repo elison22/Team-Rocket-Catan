@@ -21,6 +21,7 @@ public class CanBuildRoadTest {
 
     @Before
     public void initGameModel(){
+
         game = new GameModel();
         ArrayList<Player> playerList = new ArrayList<Player>();
 //        playerList.add(new Player(0, "player1"));
