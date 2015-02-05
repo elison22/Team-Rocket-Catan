@@ -59,8 +59,6 @@ public class PlayerBank extends CardBank{
         for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++){
             this.devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty", hasBeenPlayed));
         }
-
-
     }
 
     /**
@@ -97,7 +95,7 @@ public class PlayerBank extends CardBank{
     public ArrayList<DevCard> getDevCards() {
     	return devCards;
     }
-
+    
     public boolean hasResCards(HashMap<ResourceType, Integer> resources){
         for (ResourceType key : resources.keySet()){
             if(resources.get(key) > this.resCards.get(key)){
@@ -106,4 +104,5 @@ public class PlayerBank extends CardBank{
         }
         return true;
     }
+
 }
