@@ -34,7 +34,7 @@ public class SerializerTest
 	public void initSerializer()
 	{
 		try{
-			jsonFile = new File("bin/test/JunitJsonFiles/Json4.json");
+			jsonFile = new File(System.getProperty("user.dir") + "/java/src/test/JunitJsonFiles/Json4.json");
 			jsonScanner = new Scanner(jsonFile).useDelimiter("\\Z");
 			json = jsonScanner.next();
 			jsonScanner.close();
@@ -124,7 +124,7 @@ public class SerializerTest
 	@Test
 	public void testMap() throws BoardException, FileNotFoundException
 	{
-		jsonFile = new File("bin/test/JunitJsonFiles/Json7.json");
+		jsonFile = new File(System.getProperty("user.dir") + "/java/src/test/JunitJsonFiles/Json7.json");//"bin/test/JunitJsonFiles/Json7.json");
 		jsonScanner = new Scanner(jsonFile).useDelimiter("\\Z");
 		json = jsonScanner.next();
 		jsonScanner.close();
@@ -165,7 +165,7 @@ public class SerializerTest
 	@Test
 	public void testChat() throws FileNotFoundException, BoardException
 	{
-		jsonFile = new File("bin/test/JunitJsonFiles/Json7.json");
+		jsonFile = new File(System.getProperty("user.dir") + "/java/src/test/JunitJsonFiles/Json7.json");
 		jsonScanner = new Scanner(jsonFile).useDelimiter("\\Z");
 		json = jsonScanner.next();
 		jsonScanner.close();
