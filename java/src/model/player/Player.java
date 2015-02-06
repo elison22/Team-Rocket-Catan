@@ -171,6 +171,9 @@ public class Player {
     }
     
     public boolean canBuildRoad(){
+        if(remainingRoads > 13){
+            return true;
+        }
     	if(remainingRoads > 0){
             if(bank.canAffordRoad()){
     		    return true;

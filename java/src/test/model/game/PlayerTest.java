@@ -182,4 +182,46 @@ public class PlayerTest {
         assertFalse(player.canOfferTrade(player.getPlayerIdx(), offeredResources2));
         assertFalse(player.canOfferTrade(player.getPlayerIdx(), offeredResources3));
     }
+
+    //***MaritimeTrade Tests***//
+
+    //***CanFinishTurn Test***//
+
+    //***CanBuyDevCard Tests***//
+    @Test
+    public void testBuyDevCardWhenBankHasNone() throws BoardException, FileNotFoundException{
+        initializeModel("Json4.json");
+        assertTrue(testGameModel.canBuyDevCard(0));
+        initializeModel("Json1.json");
+        assertFalse(testGameModel.canBuyDevCard(0));
+    }
+
+    @Test
+    public void testPlayerHasResourcesToBuyDev() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(1);
+        Player player2 = testGameModel.getPlayerList().get(2);
+        assertTrue(player1.canBuyDevCard());
+        assertFalse(player2.canBuyDevCard());
+    }
+
+    @Test
+    public void testCorrectStateToBuyDev() throws BoardException, FileNotFoundException{
+        initializeModel("Json2.json");
+        assertFalse(testGameModel.canBuyDevCard(0));
+        initializeModel("Json4.json");
+        assertTrue(testGameModel.canBuyDevCard(0));
+    }
+
+    //***CanUseYearOfPlenty Tests***//
+
+    //***CanUseRoadBuilder Tests***//
+
+    //***CanUseSoldier Tests***//
+
+    //***CanUseMonopoly Tests***//
+
+    //***CanUseMonument Tests***//
+
+    //***CanPlaceRobber Test***//
 }
