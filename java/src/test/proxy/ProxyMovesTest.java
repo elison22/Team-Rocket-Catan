@@ -33,17 +33,21 @@ public class ProxyMovesTest {
 		// Join default game
 		facade.join(new JoinGame_Params(0, "orange"));
 	}
+	
+	// All of the following tests asserts that the object returned by the 
+	// server (which should be a game model json, although this isn't 
+	// explicitly checked) is not null.
 
 	@Test
 	public void testSendChat() throws ServerException {
 		// Send chat to server
-		assertTrue(facade.sendChat(new SendChat_Params(0, "Testing Chat!")) != null);
+		assertNotNull(facade.sendChat(new SendChat_Params(0, "Testing Chat!")));
 	}
 	
 	@Test
 	public void testRollNumber() throws ServerException {
 		// Send the rolled number to the server
-		assertTrue(facade.rollNumber(new RollNumber_Params(1, 8)) != null);
+		assertNotNull(facade.rollNumber(new RollNumber_Params(1, 8)));
 	}
 	
 	@Test 
@@ -55,25 +59,25 @@ public class ProxyMovesTest {
 		HexLocation hex = new HexLocation(0,0);
 		
 		// Rob player
-		assertTrue(facade.robPlayer(new RobPlayer_Params(0, victim, hex)) != null);
+		assertNotNull(facade.robPlayer(new RobPlayer_Params(0, victim, hex)));
 	}
 	
 	@Test
 	public void testFinishTurn() throws ServerException {
 		// End turn
-		assertTrue(facade.finishTurn(new FinishTurn_Params(2)) != null);
+		assertNotNull(facade.finishTurn(new FinishTurn_Params(2)));
 	}
 	
 	@Test
 	public void testBuyDevCard() throws ServerException {
 		// Buy a dev card
-		assertTrue(facade.buyDevCard(new BuyDevCard_Params(2)) != null);
+		assertNotNull(facade.buyDevCard(new BuyDevCard_Params(2)));
 	}
 	
 	@Test
 	public void testYearOfPlenty() throws ServerException {
 		// Use Year of Plenty card
-		assertTrue(facade.Year_of_Plenty(new YearOfPlenty_Params(3, "Ore", "Sheep")) != null);
+		assertNotNull(facade.Year_of_Plenty(new YearOfPlenty_Params(3, "Ore", "Sheep")));
 	}
 
 	@Test
@@ -85,25 +89,25 @@ public class ProxyMovesTest {
 		EdgeLocation spot2 = new EdgeLocation(new HexLocation(1, -1), EdgeDirection.South);
 		
 		// Play Road Building card
-		assertTrue(facade.Road_Building(new RoadBuilding_Params(0, spot1, spot2)) != null);
+		assertNotNull(facade.Road_Building(new RoadBuilding_Params(0, spot1, spot2)));
 	}
 	
 	@Test
 	public void testSoldier() throws ServerException {
 		// Play soldier; move robber and rob victim
-		assertTrue(facade.Soldier(new Soldier_Params(1, 2, new HexLocation(-2,0))) != null);
+		assertNotNull(facade.Soldier(new Soldier_Params(1, 2, new HexLocation(-2,0))));
 	}
 	
 	@Test
 	public void testMonopoly() throws ServerException {
 		// Play monopoly card
-		assertTrue(facade.Monopoly(new Monopoly_Params("Brick", 0)) != null);
+		assertNotNull(facade.Monopoly(new Monopoly_Params("Brick", 0)));
 	}
 	
 	@Test
 	public void testMonument() throws ServerException {
 		// Play Monument card
-		assertTrue(facade.Monument(new Monument_Params(1)) != null);
+		assertNotNull(facade.Monument(new Monument_Params(1)));
 	}
 	
 	@Test
@@ -112,7 +116,7 @@ public class ProxyMovesTest {
 		EdgeLocation spot = new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.NorthEast);
 		
 		// Try building a road
-		assertTrue(facade.buildRoad(new BuildRoad_Params(2, spot, false)) != null);
+		assertNotNull(facade.buildRoad(new BuildRoad_Params(2, spot, false)));
 	}
 	
 	@Test
@@ -121,10 +125,10 @@ public class ProxyMovesTest {
 		VertexLocation vertex = new VertexLocation(new HexLocation(-1, -1), VertexDirection.NorthEast);
 		
 		// Try building a settlement
-		assertTrue(facade.buildSettlement(new BuildSettlement_Params(2, vertex, true)) != null);
+		assertNotNull(facade.buildSettlement(new BuildSettlement_Params(2, vertex, true)));
 		
 		// Try building a city in the same spot
-		assertTrue(facade.buildCity(new BuildCity_Params(2, vertex)) != null);
+		assertNotNull(facade.buildCity(new BuildCity_Params(2, vertex)));
 	}
 	
 	@Test
@@ -138,10 +142,10 @@ public class ProxyMovesTest {
 		resources.put(ResourceType.WOOD, 2);
 		
 		// Offer trade
-		assertTrue(facade.offerTrade(new OfferTrade_Params(3, resources, 2)) != null);
+		assertNotNull(facade.offerTrade(new OfferTrade_Params(3, resources, 2)));
 		
 		// Accept trade
-		assertTrue(facade.acceptTrade(new AcceptTrade_Params(2, true)) != null);
+		assertNotNull(facade.acceptTrade(new AcceptTrade_Params(2, true)));
 	}
 	
 	@Test
@@ -150,7 +154,7 @@ public class ProxyMovesTest {
 		MaritimeTrade_Params params = new MaritimeTrade_Params(0, 2, "WOOD", "ORE");
 		
 		// Test maritime trade
-		assertTrue(facade.maritimeTrade(params) != null);
+		assertNotNull(facade.maritimeTrade(params));
 	}
 	
 	@Test
@@ -164,6 +168,6 @@ public class ProxyMovesTest {
 		resources.put(ResourceType.WOOD, 0);
 		
 		// Discard resources
-		assertTrue(facade.discardCards(new DiscardCards_Params(0, resources)) != null);
+		assertNotNull(facade.discardCards(new DiscardCards_Params(0, resources)));
 	}
 }

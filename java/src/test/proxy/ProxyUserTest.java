@@ -27,6 +27,10 @@ public class ProxyUserTest {
 	public void initProxy() {
 		facade = new ProxyFacade("localhost", "8081");
 	}
+	
+	// If the operation succeeded (server returns 200 response code) then the
+	// Proxy will return true, so these tests assert that the result from the
+	// proxy is true.
 
 	@Test
 	public void testRegisterAndLogin() throws ServerException {
@@ -36,19 +40,21 @@ public class ProxyUserTest {
 		// login and register use same params
 		Login_Params loginParams = new Login_Params(randString, randString);
 		
+		// Register a user, then log them in
 		assertTrue(facade.register(loginParams));
 		assertTrue(facade.login(loginParams));
 	}
 	
-	// Generate random alphanumeric String of given length
+	// Used by helper method
 	final String alphanum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZX";
 	Random rnd = new Random();
 	
+	// Helper method: Generate random alphanumeric String of given length
 	private String randomString(int length) {
 		StringBuilder sb = new StringBuilder(length);
-		   for(int i = 0; i < length; i++) 
-		      sb.append(alphanum.charAt(rnd.nextInt(alphanum.length())));
-		   return sb.toString();
+		for(int i = 0; i < length; i++) 
+			sb.append(alphanum.charAt(rnd.nextInt(alphanum.length())));
+		return sb.toString();
 	}
 
 }

@@ -68,8 +68,6 @@
 			</packageset>
 		</javadoc>
    </target>
-
-    
     
     <!--
     <target name="make-js-doc" description="Generate the JavaScript docs">
