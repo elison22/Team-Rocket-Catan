@@ -68,6 +68,11 @@
 			</packageset>
 		</javadoc>
    </target>
+
+    <target name="test" depends="clean, init, server" description="Runs JUnit tests">
+        <echo> Running Test Cases </echo>
+        <mkdir dir="${java.test}"/>
+    </target>
     
     <!--
     <target name="make-js-doc" description="Generate the JavaScript docs">
@@ -82,6 +87,7 @@
 
   	<property name="java.dir" location="java"/>
 	<property name="java.src" location="${java.dir}/src"/>
+    <property name="java.test" location="${java.dir}/src/model/test"/>
 	<property name="java.images" location="${java.dir}/images"/>
 	<property name="java.build" location="${java.dir}/build"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
