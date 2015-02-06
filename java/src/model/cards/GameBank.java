@@ -1,5 +1,7 @@
 package model.cards;
 
+import java.util.Map;
+
 import serializer.json.JsonDevCardList;
 import serializer.json.JsonResourceList;
 import shared.definitions.DevCardType;
@@ -82,8 +84,14 @@ public class GameBank extends CardBank{
      * @return Whether a card can be taken or not
      */
     public boolean canGiveResCard(ResourceType card){
-        //check if there is a card to take
-        return true;
+        
+    	for(Map.Entry<ResourceType, Integer> entry : resCards.entrySet()){
+    		if(entry.getKey() == card){
+    			if(entry.getValue() > 0)
+    				return true;
+    		}
+    	}
+        return false;
     }
 
     /**
@@ -92,7 +100,6 @@ public class GameBank extends CardBank{
      * @return Whether a development card can be taken or not
      */
     public boolean canGiveDevCard(){
-        //check if there are any dev cards to give
         return devCards.size() > 0;
     }
 
