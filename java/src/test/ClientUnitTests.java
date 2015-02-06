@@ -29,9 +29,9 @@ public class ClientUnitTests {
 				"test.proxy.ProxyUtilTest",
 				"test.poller.PollerTest" ,
 				"test.serializer.SerializerTest" ,
-                "test.model.PlayerTest" ,
-                "test.model.GameModelTest" ,
-                "test.model.BoardTest"
+                "test.model.player.PlayerTest" ,
+                "test.model.board.GameModelTest" ,
+                "test.model.game.BoardTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);
