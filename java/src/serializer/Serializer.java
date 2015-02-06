@@ -66,17 +66,16 @@ public class Serializer {
 				
 		return game;
 	}
-	
-	public static void main(String[] args) {
-		Serializer s = new Serializer();
-		MockProxy mp = new MockProxy();
-		GameModel gm = new GameModel();
-		try {
-			gm = s.deSerializeFromServer(gm, mp.model(-1));
-			System.out.println("OK");
-		} catch (BoardException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//
+//	public static void main(String[] args) {
+//		Serializer s = new Serializer();
+//		MockProxy mp = new MockProxy();
+//		GameModel gm = new GameModel();
+//		try {
+//			gm = s.deSerializeFromServer(gm, mp.model(-1));
+//			System.out.println("OK");
+//		} catch (BoardException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
