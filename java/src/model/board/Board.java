@@ -584,6 +584,31 @@ public class Board {
     	return false;
     }
 
+	public HashMap<HexLocation, HexTile> getTiles()
+	{
+		return tiles;
+	}
+
+	public HashMap<VertexLocation, Constructable> getBuildings()
+	{
+		return buildings;
+	}
+
+	public HashMap<EdgeLocation, Constructable> getRoads()
+	{
+		return roads;
+	}
+
+	public HashMap<VertexLocation, Port> getPorts()
+	{
+		return ports;
+	}
+
+	public HexLocation getRobber()
+	{
+		return robber;
+	}
+
 
 }
 

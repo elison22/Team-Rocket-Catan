@@ -199,4 +199,14 @@ public class Player {
         }
         return false;
     }
+
+	public String getColor()
+	{
+		return color;
+	}
+
+	public int getPlayerID()
+	{
+		return playerID;
+	}
 }

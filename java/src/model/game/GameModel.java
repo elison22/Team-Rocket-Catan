@@ -234,6 +234,21 @@ public class GameModel {
         }
     	return false;
     }
+
+	public TurnTracker getTurnTracker()
+	{
+		return turnTracker;
+	}
+
+	public Chat getChat()
+	{
+		return chat;
+	}
+
+	public Chat getGameHistory()
+	{
+		return gameHistory;
+	}
     
 
 //    public Chat getMessageList() {

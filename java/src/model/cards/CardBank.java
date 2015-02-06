@@ -45,4 +45,14 @@ public class CardBank {
         return true;
     }
 
+	public HashMap<ResourceType, Integer> getResCards()
+	{
+		return resCards;
+	}
+
+	public ArrayList<DevCard> getDevCards()
+	{
+		return devCards;
+	}
+
 }
