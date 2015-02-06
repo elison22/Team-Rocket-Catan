@@ -8,7 +8,7 @@ package proxy;
  * validate the data and pass it to the server.
  */
 
-public class ProxyFacade implements IServerFacade {
+public class ProxyFacade implements IProxyFacade {
 
 	private ProxyUser user;
 	private ProxyGames games;

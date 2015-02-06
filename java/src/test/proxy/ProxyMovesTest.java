@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.Random;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,17 +30,8 @@ public class ProxyMovesTest {
 		// Attempt to login
 		facade.login(new Login_Params("Sam", "sam"));
 		
-		
 		// Join default game
 		facade.join(new JoinGame_Params(0, "orange"));
-		
-		// Reset game
-		facade.reset();
-	}
-	
-	@After
-	public void reInit() throws ServerException {
-		
 	}
 
 	@Test

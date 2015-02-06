@@ -16,10 +16,9 @@ public class DevCard {
      * Creates a DevCard object
      * @param type The type of development card to create
      */
-    public DevCard(DevCardType type, String name, boolean hasBeenPlayed){
+    public DevCard(DevCardType type, String name){
         this.type = type;
         this.name = name;
-        this.hasBeenPlayed = hasBeenPlayed;
     }
 
     /**

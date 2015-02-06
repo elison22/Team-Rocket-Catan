@@ -16,6 +16,7 @@ import shared.definitions.ResourceType;
  */
 public class PlayerBank extends CardBank{
 
+
     /**
      * Creates a PlayerBank object and initializes the player's
      * held resources to zero
@@ -36,28 +37,28 @@ public class PlayerBank extends CardBank{
         this.resCards.put(ResourceType.SHEEP, resources.getSheep());
         this.resCards.put(ResourceType.ORE, resources.getOre());
 
-        setDevCards(oldDevs, true);
-        setDevCards(newDevs, true);
+        this.newDevs.clear();
+        this.oldDevs.clear();
+        setDevCards(oldDevs, this.oldDevs);
+        setDevCards(newDevs, this.newDevs);
     }
 
-    public void setDevCards(JsonDevCardList jsonDevCards, boolean hasBeenPlayed){
-        this.devCards.clear();
-
+    public void setDevCards(JsonDevCardList jsonDevCards, ArrayList<DevCard> devCardList){
         for(int i = 0; i < jsonDevCards.getMonopoly(); i++){
-            this.devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly", hasBeenPlayed));
+            devCardList.add(new DevCard(DevCardType.MONOPOLY, "Monopoly"));
         }
         for(int i = 0; i< jsonDevCards.getMonument(); i++){
-            this.devCards.add(new DevCard(DevCardType.MONUMENT, "Monument", hasBeenPlayed));
+            devCardList.add(new DevCard(DevCardType.MONUMENT, "Monument"));
             // TODO We need some way to know which monument card the player has (ie. Library, University, etc.)
         }
         for(int i = 0; i < jsonDevCards.getRoadBuilding(); i++){
-            this.devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building", hasBeenPlayed));
+            devCardList.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building"));
         }
         for(int i = 0; i < jsonDevCards.getSoldier(); i++){
-            this.devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier", hasBeenPlayed));
+            devCardList.add(new DevCard(DevCardType.SOLDIER, "Soldier"));
         }
         for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++){
-            this.devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty", hasBeenPlayed));
+            devCardList.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty"));
         }
     }
 

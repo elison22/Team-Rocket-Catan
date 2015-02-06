@@ -6,7 +6,7 @@ package proxy;
  * Provides declarations for all of the methods to communicate with the server.
  * 
  */
-public interface IServerFacade {
+public interface IProxyFacade {
 
 	/**POSTs login info to the server, which will then attempt
 	 * to log the user in. 
