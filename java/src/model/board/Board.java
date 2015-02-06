@@ -241,6 +241,14 @@ public class Board {
     }
 
     /**
+     * Get the robbers hex. For testing.
+     * @return The HexTile that the robber is on.
+     */
+    public HexTile getRobberTile() {
+        return tiles.get(robber);
+    }
+
+    /**
      * Determines whether or not a player can build a Settlement-type Constructable on this
      * location. The conditions are that no Constructable is already present at the location
      * param or any of its neighbors. Also, the prospective builder must have a road adjacent
@@ -584,6 +592,27 @@ public class Board {
     	return false;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(getClass() != obj.getClass())
+            return false;
+        Board other = (Board)obj;
+        if(!robber.equals(other.robber))
+            return false;
+        if(!tiles.equals(other.tiles))
+            return false;
+        if(!buildings.equals(other.buildings))
+            return false;
+        if(!roads.equals(other.roads))
+            return false;
+        if(!ports.equals(other.ports))
+            return false;
+        return true;
+    }
 
 }
 
