@@ -68,11 +68,6 @@
 			</packageset>
 		</javadoc>
    </target>
-
-    <target name="test" depends="clean, init, server" description="Runs JUnit tests">
-        <echo> Running Test Cases </echo>
-        <mkdir dir="${java.test}"/>
-    </target>
     
     <!--
     <target name="make-js-doc" description="Generate the JavaScript docs">
@@ -160,6 +155,19 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
+	
+	<target name="test" depends="clean, compile" description="Runs JUnit tests">
+	    <echo> Running Test Cases </echo>
+	    <java classname="test.ClientUnitTests" fork="yes">
+	    	<classpath>
+	    		<path refid="java.lib.classpath"/>
+	    		<pathelement location="${java.dir}/build"/>
+	    	</classpath>
+	    	<assertions>
+	    		<enable/>
+	    	</assertions>
+	    </java>
+	</target>
   
 </project>
 

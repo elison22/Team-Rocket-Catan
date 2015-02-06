@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import shared.definitions.HexType;
+import shared.definitions.ResourceType;
 import shared.locations.*;
 
 public class BoardTest {
@@ -50,7 +52,8 @@ public class BoardTest {
     public void presetBoard() {
 
         try {
-            testBoard = new Board(false, false, false);
+            Board presetBoard = new Board(false, false, false);
+            assertTrue(testBoard.equals(presetBoard));
         } catch (BoardException e) {
             e.printStackTrace();
             assertFalse(true);
@@ -62,7 +65,8 @@ public class BoardTest {
     public void randomBoard() {
 
         try {
-            testBoard = new Board(true, true, true);
+            Board presetBoard = new Board(true, true, true);
+            assertFalse(testBoard.equals(presetBoard));
         } catch (BoardException e) {
             e.printStackTrace();
             assertFalse(true);
@@ -70,7 +74,25 @@ public class BoardTest {
 
     }
 
+    @Ignore
+    @Test
+    public void testBoardEqualsMethod() throws BoardException {
+        Board test1 = new Board(false, false, false);
+        Board test2 = new Board(false, false, false);
+        assertTrue(test1.equals(test2));
+        test2 = new Board(true, true, true);
+        assertFalse(test1.equals(test2));
+    }
+
 //== ROBBER PLACEMENT ==//
+
+    @Test
+    public void robberStartsOnDesert() throws BoardException {
+
+        assertTrue(testBoard.getRobberTile().getType() == HexType.DESERT);
+        testBoard = new Board(true, true, true);
+        assertTrue(testBoard.getRobberTile().getType() == HexType.DESERT);
+    }
 
     @Test
     public void canOnlyPlaceRobberOnEmptyHex(){
@@ -95,6 +117,13 @@ public class BoardTest {
             assertFalse(true);
         }
 
+    }
+
+//== MARITIME TRADE ==//
+
+    @Test
+    public void canTrade() {
+        //???? I haven't done any of the tests for canPlayerMaritimeTrade
     }
 
 //== BUILDING PLACEMENT ==//

@@ -33,15 +33,24 @@ public class ProxyGamesTest {
 		facade = new ProxyFacade("localhost", "8081");
 	}
 	
+	// For each of the following tests, an assertion is made to determine
+	// if the returned object from the server is NOT null. Due to the way
+	// the proxy is set up, the only way that the returned object isn't
+	// null is if the server returned a 200 response code. 
+	//
+	// The one exception to this is if the server doesn't return anything for a 
+	// given operation (like login). In this case the proxy returns true 
+	// (for 200) or false.
+	
 	@Test
 	public void testListGames() throws ServerException {
-		assertTrue(facade.list() != null);
+		assertNotNull(facade.list());
 	}
 	
 	@Test
 	public void testCreateGame() throws ServerException {
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Sam");
-		assertTrue(facade.create(createParams) != null);
+		assertNotNull(facade.create(createParams));
 	}
 	
 	@Test
@@ -58,7 +67,7 @@ public class ProxyGamesTest {
 		// Create a game to join
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Test");
 		String result = (String) facade.create(createParams);
-		assertTrue(result != null);
+		assertNotNull(result);
 		
 		// Get created game's id from json String
 		JsonObject json = new Gson().fromJson(result, JsonObject.class);
@@ -66,7 +75,7 @@ public class ProxyGamesTest {
 		
 		// Attempt to join game
 		JoinGame_Params joinParams = new JoinGame_Params(gameId, "blue");
-		assertTrue(facade.join(joinParams) != null);
+		assertNotNull(facade.join(joinParams));
 	}
 	
 // TODO figure out how saving/loading is supposed to work

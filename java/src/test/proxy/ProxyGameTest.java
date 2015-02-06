@@ -38,20 +38,29 @@ public class ProxyGameTest {
 		// Join created game
 		facade.join(new JoinGame_Params(gameId, "blue"));
 	}
+	
+	// For each of the following tests, an assertion is made to determine
+	// if the returned object from the server is NOT null. Due to the way
+	// the proxy is set up, the only way that the returned object isn't
+	// null is if the server returned a 200 response code. 
+	//
+	// The one exception to this is if the server doesn't return anything for a 
+	// given operation (like login). In this case the proxy returns true 
+	// (for 200) or false.
 
 	@Test
 	public void testGetModel() throws ServerException {
-		assertTrue(facade.model(-1) != null);
+		assertNotNull(facade.model(-1));
 	}
 	
 	@Test
 	public void testReset() throws ServerException {
-		assertTrue(facade.reset() != null);
+		assertNotNull(facade.reset());
 	}
 	
 	@Test
 	public void testGetCommands() throws ServerException {
-		assertTrue(facade.commandsGET() == null);
+		assertNull(facade.commandsGET());
 	}
 	
 	@Test
@@ -61,7 +70,7 @@ public class ProxyGameTest {
 	
 	@Test
 	public void testListAI() throws ServerException {
-		assertTrue(facade.listAI() != null);
+		assertNotNull(facade.listAI());
 	}
 }
 
