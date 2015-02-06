@@ -249,16 +249,5 @@ public class GameModel {
 	{
 		return gameHistory;
 	}
-    
-
-//    public Chat getMessageList() {
-//        return messageList;
-//    }
-//
-//    public void setMessageList(Chat messageList) {
-//        this.messageList = messageList;
-//    }
-
-
 
 }
