@@ -22,4 +22,14 @@ public class Message {
         this.owner = owner;
         this.message = message;
     }
+
+	public String getOwner()
+	{
+		return owner;
+	}
+
+	public String getMessage()
+	{
+		return message;
+	}
 }

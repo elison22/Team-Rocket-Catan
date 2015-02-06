@@ -33,4 +33,9 @@ public class Chat {
     		chatMessages.add(new Message(newChat.getLines()[i].getSource(), newChat.getLines()[i].getMessage()));
     	}
     }
+
+	public ArrayList<Message> getChatMessages()
+	{
+		return chatMessages;
+	}
 }

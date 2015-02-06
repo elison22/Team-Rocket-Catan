@@ -8,6 +8,12 @@ import java.util.Scanner;
 
 import serializer.*;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import model.board.Board;
 import model.board.BoardException;
 import model.game.GameModel;
 import model.game.TurnState;
@@ -25,10 +31,10 @@ public class SerializerTest
 	private GameModel newModel;
 
 	@Before
-	public void initSerializer() //throws FileNotFoundException, BoardException
+	public void initSerializer()
 	{
 		try{
-			jsonFile = new File("test/JunitJsonFiles/Json4.json");
+			jsonFile = new File("bin/test/JunitJsonFiles/Json4.json");
 			jsonScanner = new Scanner(jsonFile).useDelimiter("\\Z");
 			json = jsonScanner.next();
 			jsonScanner.close();
@@ -42,6 +48,10 @@ public class SerializerTest
 		}
 	}
 	
+	/**
+	 * Ensures the GameBank's resources and development cards
+	 * 	are properly updated by the serializer
+	 */
 	@Test
 	public void testGameBank()
 	{
@@ -53,7 +63,9 @@ public class SerializerTest
 		assertTrue(newModel.getCardBank().getResCards().get(ResourceType.WHEAT) == 20);
 		assertTrue(newModel.getCardBank().getResCards().get(ResourceType.ORE) == 19);
 	}
-
+	/**
+	 * Ensures the TurnTracker's state is properly set by the serializer
+	 */
 	@Test
 	public void testTurnTracker()
 	{
@@ -63,16 +75,24 @@ public class SerializerTest
 		assertTrue(newModel.getTurnTracker().getCurrentPlayerIndex() == 0);
 	}
 
+	/**
+	 * Tests the construction of the player list and players
+	 */
 	@Test
 	public void testPlayerList()
 	{
+		//Ensures the correct number of players exist
 		assertTrue(newModel.getPlayerList().size() == 4);
+		//Checks the resources of Player 1
 		assertTrue(newModel.getPlayerList().get(0).getBank().getResCards().get(ResourceType.BRICK) == 6);
 		assertTrue(newModel.getPlayerList().get(0).getBank().getResCards().get(ResourceType.WOOD) == 6);
 		assertTrue(newModel.getPlayerList().get(0).getBank().getResCards().get(ResourceType.SHEEP) == 6);
 		assertTrue(newModel.getPlayerList().get(0).getBank().getResCards().get(ResourceType.WHEAT) == 6);
 		assertTrue(newModel.getPlayerList().get(0).getBank().getResCards().get(ResourceType.ORE) == 6);
-		//assertTrue(newModel.getPlayerList().get(0).getBank().getDevCards().size() == 6);
+		//Checks the old and new development cards of Player 1
+		assertTrue(newModel.getPlayerList().get(0).getBank().getNewDevCards().size() == 1);
+		assertTrue(newModel.getPlayerList().get(0).getBank().getOldDevCards().size() == 5);
+		//Checks the name, remaining constructables, victory points, color, and ID of Player 1
 		assertTrue(newModel.getPlayerList().get(0).getName().equals("Test"));
 		assertTrue(newModel.getPlayerList().get(0).getRemainingCities() == 4);
 		assertTrue(newModel.getPlayerList().get(0).getRemainingSettlements() == 3);
@@ -80,6 +100,7 @@ public class SerializerTest
 		assertTrue(newModel.getPlayerList().get(0).getVictoryPoints() == 9);
 		assertTrue(newModel.getPlayerList().get(0).getColor().equals("blue"));
 		assertTrue(newModel.getPlayerList().get(0).getPlayerID() == 13);
+		//Repeats tests for Player 2
 		assertTrue(newModel.getPlayerList().get(1).getBank().getResCards().get(ResourceType.BRICK) == 1);
 		assertTrue(newModel.getPlayerList().get(1).getBank().getResCards().get(ResourceType.WOOD) == 3);
 		assertTrue(newModel.getPlayerList().get(1).getBank().getResCards().get(ResourceType.SHEEP) == 0);
@@ -95,11 +116,67 @@ public class SerializerTest
 		assertTrue(newModel.getPlayerList().get(1).getPlayerID() == -2);
 	}
 	
+	/**
+	 * Ensures the Board object is built accurately by the serializer
+	 * @throws BoardException
+	 * @throws FileNotFoundException
+	 */
 	@Test
-	public void testMap()
+	public void testMap() throws BoardException, FileNotFoundException
 	{
-		assertTrue(newModel.getMap().getRobber().getX() == 0);
-		assertTrue(newModel.getMap().getRobber().getY() == -2);
-		//assertTrue(newModel.getMap().getTiles().get(key));
+		jsonFile = new File("bin/test/JunitJsonFiles/Json7.json");
+		jsonScanner = new Scanner(jsonFile).useDelimiter("\\Z");
+		json = jsonScanner.next();
+		jsonScanner.close();
+		newModel = new GameModel();
+		newModel = serializer.deSerializeFromServer(newModel, json);
+		//Manually builds test board
+		Board testBoard = new Board(false, false, false);
+		testBoard.doBuildRoad(new EdgeLocation(new HexLocation(0, 1), EdgeDirection.South), 0);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(1, 1), EdgeDirection.NorthEast), 0);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South), 1);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(1,-1), EdgeDirection.South), 1);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(1,-1), EdgeDirection.NorthEast), 2);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(-1,1), EdgeDirection.SouthWest), 2);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(-1,0), EdgeDirection.North), 3);
+        testBoard.doBuildRoad(new EdgeLocation(new HexLocation(-2,1), EdgeDirection.SouthWest), 3);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast), 0);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(1, 1), VertexDirection.SouthWest), 0);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest), 1);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(1,-1), VertexDirection.SouthWest), 1);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthEast), 2);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(-1,1), VertexDirection.SouthWest), 2);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), 3);
+        testBoard.doBuildSettlement(new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthWest), 3);
+        //Compares test board to automatically generated board
+        assertTrue(newModel.getMap().equals(testBoard));
+        testBoard = new Board(false, false, false);
+        //Compares empty board to automatically generated board
+        assertFalse(newModel.getMap().equals(testBoard));
+	}
+	
+
+	/**
+	 * Ensures the Chat is initialized properly by the serializer by making
+	 *  sure enough messages are created and the source and message are accurate
+	 */
+	@Test
+	public void testChat()
+	{
+		assertTrue(newModel.getChat().getChatMessages().size() == 1);
+		System.out.println("\"" + newModel.getChat().getChatMessages().get(0).getMessage() + "\"");
+		System.out.println(" - " + newModel.getChat().getChatMessages().get(0).getOwner());
+		assertTrue(newModel.getChat().getChatMessages().get(0).getMessage().equals("Hayden and Brandt are dummies."));
+		assertTrue(newModel.getChat().getChatMessages().get(0).getOwner().equals("Chad"));
+	}
+	
+	/**
+	 * Ensures the GameHistory is initialized properly by the serializer
+	 * 	by making sure enough objects are created
+	 */
+	@Test
+	public void testLog()
+	{
+		assertTrue(newModel.getGameHistory().getChatMessages().size() == 30);
 	}
 }

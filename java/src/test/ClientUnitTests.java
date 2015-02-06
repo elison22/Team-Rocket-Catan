@@ -27,7 +27,8 @@ public class ClientUnitTests {
 				"test.proxy.ProxyMovesTest",
 				"test.proxy.ProxyUserTest",
 				"test.proxy.ProxyUtilTest",
-				"test.poller.PollerTest"
+				"test.poller.PollerTest" ,
+				"test.serializer.SerializerTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);
