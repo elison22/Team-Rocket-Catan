@@ -210,21 +210,32 @@ public class Board {
     }
 
     /**
-     * Set the robber's new location using x/y coordinates
-     * @param x The robber's new x location
-     * @param y The robber's new y location
-     * @throws BoardException Thrown when the x or y values represent a location that isn't on the board.
+     * Determines whether or not the robber can be moved to the location
+     * represented by newLocation.
+     * @param newLocation The desired new location of the robber.
+     * @return True if the robber can be placed on newLocation.
      */
-    public void setRobber(int x, int y) throws BoardException {
-        setRobber(new HexLocation(x, y));
+    public boolean canPlayRobber(HexLocation newLocation) throws BoardException {
+        if (newLocation == null) throw new BoardException("Param newLocation cannot be null.");
+        return !robber.equals(newLocation);
     }
+
+//    /**
+//     * Set the robber's new location using x/y coordinates
+//     * @param x The robber's new x location
+//     * @param y The robber's new y location
+//     * @throws BoardException Thrown when the x or y values represent a location that isn't on the board.
+//     */
+//    public void doPlayRobber(int x, int y) throws BoardException {
+//        doPlayRobber(new HexLocation(x, y));
+//    }
 
     /**
      * Set the robber's new location using a HexLocation object
      * @param newLocation The HexLocation for the robber's new location
      * @throws BoardException Thrown when the newLocation param represent a location that isn't on the board.
      */
-    public void setRobber(HexLocation newLocation) throws BoardException {
+    public void doPlayRobber(HexLocation newLocation) throws BoardException {
         if (!tiles.containsKey(newLocation)) throw new BoardException("Attempted to place the robber off the board.");
         robber = newLocation;
     }
