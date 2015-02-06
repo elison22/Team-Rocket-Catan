@@ -1,4 +1,4 @@
-package test.model.game;
+package test.model.player;
 
 import model.board.BoardException;
 import model.game.GameModel;
@@ -52,24 +52,6 @@ public class PlayerTest {
         json = builder.toString();
         testGameModel = testSerializer.deSerializeFromServer(testGameModel, json);
         stream.close();
-    }
-
-    //***General Building Tests***//
-    @Test
-    public void testBuildDuringTurn() throws BoardException, FileNotFoundException{
-        initializeModel("Json1.json");
-        Player player1 = testGameModel.getPlayerList().get(0);
-        Player player2 = testGameModel.getPlayerList().get(1);
-        assertTrue(testGameModel.getPlayerTurn() == player1.getPlayerIdx());
-        assertFalse(testGameModel.getPlayerTurn() == player2.getPlayerIdx());
-    }
-
-    @Test
-    public void testBuildDuringCorrectState() throws BoardException, FileNotFoundException{
-        initializeModel("Json1.json");
-        assertTrue(testGameModel.getTurnState() == TurnState.Playing);
-        initializeModel("Json2.json");
-        assertFalse(testGameModel.getTurnState() == TurnState.Playing);
     }
 
     //***CanBuildRoad Tests***//
@@ -129,24 +111,6 @@ public class PlayerTest {
         assertFalse(player2.getBank().canAffordSettlement());
     }
 
-    //***CanRollDice Tests***//
-    @Test
-    public void testAttemptRollDuringTurn() throws BoardException, FileNotFoundException{
-        initializeModel("Json2.json");
-        Player player1 = testGameModel.getPlayerList().get(0);
-        Player player2 = testGameModel.getPlayerList().get(3);
-        assertTrue(testGameModel.getPlayerTurn() == player1.getPlayerIdx());
-        assertFalse(testGameModel.getPlayerTurn() == player2.getPlayerIdx());
-    }
-
-    @Test
-    public void testRollTurnState() throws BoardException, FileNotFoundException{
-        initializeModel("Json2.json");
-        assertTrue(testGameModel.getTurnState() == TurnState.Rolling);
-        initializeModel("Json3.json");
-        assertFalse(testGameModel.getTurnState() == TurnState.Rolling);
-    }
-
     //***OfferTrade Tests***//
     @Test
     public void testOfferTradeDuringTurn() throws BoardException, FileNotFoundException{
@@ -184,10 +148,6 @@ public class PlayerTest {
         assertFalse(player.canOfferTrade(player.getPlayerIdx(), offeredResources3));
     }
 
-    //***MaritimeTrade Tests***//
-
-    //***CanFinishTurn Test***//
-
     //***CanBuyDevCard Tests***//
     @Test
     public void testBuyDevCardWhenBankHasNone() throws BoardException, FileNotFoundException{
@@ -217,6 +177,7 @@ public class PlayerTest {
     //***Generic Development Card Tests***//
     @Test
     public void testCannotPlayDevBoughtSameTurn() throws BoardException, FileNotFoundException{
+        //Player has a new year of plenty card so they shouldn't be able to play it
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         assertFalse(player1.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
@@ -230,16 +191,88 @@ public class PlayerTest {
         initializeModel("Json6.json");
         Player player3 = testGameModel.getPlayerList().get(0);
         assertTrue(player3.canPlayDevCard(DevCardType.MONUMENT));
+
+        //Tests a player using a dev card before rolling
+        initializeModel("Json2.json");
+        Player player4 = testGameModel.getPlayerList().get(0);
+        assertTrue(testGameModel.canPlayDevCard(player4.getPlayerIdx(), DevCardType.SOLDIER));
     }
+
     //***CanUseYearOfPlenty Tests***//
+    @Test
+    public void testCanUseYearOfPlenty() throws BoardException, FileNotFoundException{
+        //Tests a player who has the card and should be able to play it
+        initializeModel("Json4.json");
+        Player player = testGameModel.getPlayerList().get(0);
+        assertTrue(player.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
+
+        //Tests a player who doesn't have the card
+        initializeModel("Json3.json");
+        player = testGameModel.getPlayerList().get(0);
+        assertFalse(player.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
+    }
 
     //***CanUseRoadBuilder Tests***//
+    @Test
+    public void testCanUseRoadBuilding() throws BoardException, FileNotFoundException{
+        //Tests if a player has the card to be played or not
+        initializeModel("Json4.json");
+        Player player = testGameModel.getPlayerList().get(0);
+        assertTrue(player.canPlayDevCard(DevCardType.ROAD_BUILD));
+
+        //Tests a player who doesn't have the card
+        initializeModel("Json3.json");
+        player = testGameModel.getPlayerList().get(0);
+        assertFalse(player.canPlayDevCard(DevCardType.ROAD_BUILD));
+
+        //Tests if player has two roads left to be built as a result of using the dev card
+        initializeModel("Json4.json");
+        player = testGameModel.getPlayerList().get(0);
+        assertTrue(player.canPlayDevCard(DevCardType.ROAD_BUILD));
+
+        player = testGameModel.getPlayerList().get(1);
+        assertFalse(player.canPlayDevCard(DevCardType.ROAD_BUILD));
+    }
 
     //***CanUseSoldier Tests***//
+    @Test
+    public void testCanUseSoldier() throws BoardException, FileNotFoundException{
+        //Tests a player who has the card and should be able to play it
+        initializeModel("Json4.json");
+        Player player = testGameModel.getPlayerList().get(0);
+        assertTrue(player.canPlayDevCard(DevCardType.SOLDIER));
+
+        //Tests a player who doesn't have the card
+        initializeModel("Json3.json");
+        player = testGameModel.getPlayerList().get(0);
+        assertFalse(player.canPlayDevCard(DevCardType.SOLDIER));
+    }
 
     //***CanUseMonopoly Tests***//
+    @Test
+    public void testCanUseMonopoly() throws BoardException, FileNotFoundException{
+        //Tests a player who has the card and should be able to play it
+        initializeModel("Json4.json");
+        Player player = testGameModel.getPlayerList().get(0);
+        assertTrue(player.canPlayDevCard(DevCardType.MONOPOLY));
+
+        //Tests a player who doesn't have the card
+        initializeModel("Json3.json");
+        player = testGameModel.getPlayerList().get(0);
+        assertFalse(player.canPlayDevCard(DevCardType.MONOPOLY));
+    }
 
     //***CanUseMonument Tests***//
+    @Test
+    public void testCanUseMonument() throws BoardException, FileNotFoundException{
+        //Tests a player who has the card and should be able to play it
+        initializeModel("Json4.json");
+        Player player = testGameModel.getPlayerList().get(0);
+        assertTrue(player.canPlayDevCard(DevCardType.MONUMENT));
 
-    //***CanPlaceRobber Test***//
+        //Tests a player who doesn't have the card
+        initializeModel("Json3.json");
+        player = testGameModel.getPlayerList().get(0);
+        assertFalse(player.canPlayDevCard(DevCardType.MONUMENT));
+    }
 }

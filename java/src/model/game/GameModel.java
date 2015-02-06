@@ -111,7 +111,7 @@ public class GameModel {
 	}
 
 	public boolean canPlayDevCard(int playerId, DevCardType devCard) {
-    	if(turnTracker.canPlayerBuild(playerId)) {
+    	if(turnTracker.canPlayerPlayDev(playerId)) {
     		if(playerList.get(playerId).canPlayDevCard(devCard)){
     			return true;
             }
