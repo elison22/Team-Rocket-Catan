@@ -57,6 +57,7 @@ public class PlayerTest {
     //***CanBuildRoad Tests***//
     @Test
     public void testRoadsRemaining() throws BoardException, FileNotFoundException{
+        //Test if the player has roads remaining
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         Player player2 = testGameModel.getPlayerList().get(1);
@@ -66,6 +67,7 @@ public class PlayerTest {
 
     @Test
     public void testCanAffordRoad() throws BoardException, FileNotFoundException{
+        //Test if the player has the necessary resources to buy a road
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(1);
         Player player2 = testGameModel.getPlayerList().get(2);
@@ -76,6 +78,7 @@ public class PlayerTest {
     //***CanBuildSettlement Tests***//
     @Test
     public void testSettlementsRemaining() throws BoardException, FileNotFoundException{
+        //Test if the player has a settlement left to build
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         Player player2 = testGameModel.getPlayerList().get(1);
@@ -85,6 +88,7 @@ public class PlayerTest {
 
     @Test
     public void testCanAffordSettlement() throws BoardException, FileNotFoundException{
+        //Test if the player has the necessary resources to build a settlement
         initializeModel("Json2.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         Player player2 = testGameModel.getPlayerList().get(2);
@@ -95,6 +99,7 @@ public class PlayerTest {
     //***CanBuildCity Tests***//
     @Test
     public void testCitiesRemaining() throws BoardException, FileNotFoundException{
+        //Test if the player has cities left to build
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         Player player2 = testGameModel.getPlayerList().get(1);
@@ -104,6 +109,7 @@ public class PlayerTest {
 
     @Test
     public void testCanAffordCity() throws BoardException, FileNotFoundException{
+        //Test if the player has the necessary resources to build a city
         initializeModel("Json4.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         Player player2 = testGameModel.getPlayerList().get(1);
@@ -114,6 +120,7 @@ public class PlayerTest {
     //***OfferTrade Tests***//
     @Test
     public void testOfferTradeDuringTurn() throws BoardException, FileNotFoundException{
+        //Tests if the player offering the trade is doing so on his turn
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(0);
         Player player2 = testGameModel.getPlayerList().get(1);
@@ -123,6 +130,7 @@ public class PlayerTest {
 
     @Test
     public void testTradeTurnState() throws BoardException, FileNotFoundException{
+        //Tests if it is the correct turn state to offer a trade
         initializeModel("Json3.json");
         assertTrue(testGameModel.getTurnState() == TurnState.Playing);
         initializeModel("Json2.json");
@@ -131,6 +139,7 @@ public class PlayerTest {
 
     @Test
     public void testOfferOwnedResources() throws BoardException, FileNotFoundException{
+        //Tests if the offered resources in a trade are actually owned by the player
         initializeModel("Json3.json");
         Player player = testGameModel.getPlayerList().get(3);
         HashMap<ResourceType, Integer> offeredResources1 = new HashMap<ResourceType, Integer>();
@@ -151,6 +160,7 @@ public class PlayerTest {
     //***CanBuyDevCard Tests***//
     @Test
     public void testBuyDevCardWhenBankHasNone() throws BoardException, FileNotFoundException{
+        //Tests if the player can buy a dev card when the bank doesn't have any left
         initializeModel("Json4.json");
         assertTrue(testGameModel.canBuyDevCard(0));
         initializeModel("Json1.json");
@@ -159,6 +169,7 @@ public class PlayerTest {
 
     @Test
     public void testPlayerHasResourcesToBuyDev() throws BoardException, FileNotFoundException{
+        //Tests if the player has the resources to buy a dev card
         initializeModel("Json1.json");
         Player player1 = testGameModel.getPlayerList().get(1);
         Player player2 = testGameModel.getPlayerList().get(2);
@@ -168,6 +179,7 @@ public class PlayerTest {
 
     @Test
     public void testCorrectStateToBuyDev() throws BoardException, FileNotFoundException{
+        //Tests if it is the correct turn state to buy a dev card
         initializeModel("Json2.json");
         assertFalse(testGameModel.canBuyDevCard(0));
         initializeModel("Json4.json");
