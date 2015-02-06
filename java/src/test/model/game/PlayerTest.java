@@ -214,6 +214,10 @@ public class PlayerTest {
     }
 
     //***CanUseYearOfPlenty Tests***//
+    @Test
+    public void test() throws BoardException, FileNotFoundException{
+
+    }
 
     //***CanUseRoadBuilder Tests***//
 
