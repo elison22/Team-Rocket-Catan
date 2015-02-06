@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert.*;
 import serializer.Serializer;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class PlayerTest {
     }
 
     public void initializeModel(String filename) throws BoardException, FileNotFoundException {
-        file = new File(System.getProperty("user.dir") + "/JunitJsonFiles/" + filename);
+        file = new File(System.getProperty("user.dir") + "/java/src/test/JunitJsonFiles/" + filename);
         stream = new Scanner(file);
         builder = new StringBuilder();
         while(stream.hasNext()) builder.append(stream.next());
@@ -213,11 +214,24 @@ public class PlayerTest {
         assertTrue(testGameModel.canBuyDevCard(0));
     }
 
-    //***CanUseYearOfPlenty Tests***//
+    //***Generic Development Card Tests***//
     @Test
-    public void test() throws BoardException, FileNotFoundException{
+    public void testCannotPlayDevBoughtSameTurn() throws BoardException, FileNotFoundException{
+        initializeModel("Json1.json");
+        Player player1 = testGameModel.getPlayerList().get(0);
+        assertFalse(player1.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
 
+        //Player has a year of plenty card
+        initializeModel("Json4.json");
+        Player player2 = testGameModel.getPlayerList().get(0);
+        assertTrue(player2.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
+
+        //Tests a player who has a new Monument dev card who should be able to play it since he has 9 points currently
+        initializeModel("Json6.json");
+        Player player3 = testGameModel.getPlayerList().get(0);
+        assertTrue(player3.canPlayDevCard(DevCardType.MONUMENT));
     }
+    //***CanUseYearOfPlenty Tests***//
 
     //***CanUseRoadBuilder Tests***//
 

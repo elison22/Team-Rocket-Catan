@@ -144,6 +144,9 @@ public class Player {
      * requirement to play that certain dev card.
      */
     public boolean canPlayDevCard(DevCardType devCard) {
+        if (playedDevCard == true){
+            return false;
+        }
     	ArrayList<DevCard> oldDevCards = bank.getOldDevCards();
         ArrayList<DevCard> newDevCards = bank.getNewDevCards();
         for(DevCard playerDev : oldDevCards){
