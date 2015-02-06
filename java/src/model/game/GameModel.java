@@ -209,11 +209,13 @@ public class GameModel {
     
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
-    		resource.put(trade.getResourceToGive(), trade.getRatio());
-    		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
-    			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
-    				return true;
+    		if(cardBank.canGiveResCard(trade.getResourceToReceive())) {
+	    		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
+	    		resource.put(trade.getResourceToGive(), trade.getRatio());
+	    		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
+	    			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
+	    				return true;
+	    		}
     		}
     	}
     	return false;
