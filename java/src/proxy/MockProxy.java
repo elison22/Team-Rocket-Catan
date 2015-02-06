@@ -10,7 +10,7 @@ import java.nio.file.Paths;
  * Used for testing. It does not communicate with the server but instead
  * returns predefined outputs based on the method to be tested.
  */
-public class MockProxy implements IServerFacade {
+public class MockProxy implements IProxyFacade {
 	
 	public MockProxy() {
 		// TODO Auto-generated constructor stub
@@ -60,21 +60,33 @@ public class MockProxy implements IServerFacade {
 
 	/** Gives a preset game model.
 	 * 
-	 * @param modelVersion doesn't matter what you put here
+	 * @param modelVersion custom modelVersion; return value changes depending
+	 * on what this value is.
 	 * @return json formatted model as a String
 	 */
 	@Override
 	public String model(int modelVersion) {
 		
-		try {
-			byte[] encoded = Files.readAllBytes(Paths.get("TestModel2.json"));
-			return new String(encoded, "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (modelVersion == 0) {
+			try {
+				byte[] encoded = Files.readAllBytes(Paths.get("TestModel.json"));
+				return new String(encoded, "UTF-8");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (modelVersion == 33) {
+			try {
+				byte[] encoded = Files.readAllBytes(Paths.get("TestModel2.json"));
+				return new String(encoded, "UTF-8");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (modelVersion == 233) {
+			return "true";
 		}
+		
 		return null;
-	}
+}
 
 	@Override
 	public String reset() {

@@ -9,7 +9,7 @@ import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
-import proxy.IServerFacade;
+import proxy.IProxyFacade;
 import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
@@ -31,7 +31,7 @@ public class ClientFacade implements IClientFacade {
     // use the client model object to make a game model object
     private GameModel game;
     private int playerIndex;
-    private IServerFacade proxy;
+    private IProxyFacade proxy;
     private Serializer serializer;
     
     public void updateGameModel(String json)
