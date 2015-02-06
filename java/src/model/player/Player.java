@@ -144,18 +144,22 @@ public class Player {
      * requirement to play that certain dev card.
      */
     public boolean canPlayDevCard(DevCardType devCard) {
-    	ArrayList<DevCard> devCards = bank.getDevCards();
-        for(DevCard playerDev : devCards){
+    	ArrayList<DevCard> oldDevCards = bank.getOldDevCards();
+        ArrayList<DevCard> newDevCards = bank.getNewDevCards();
+        for(DevCard playerDev : oldDevCards){
             if(playerDev.getType() == devCard){
-                if(!playerDev.hasBeenPlayed()){
-                    switch(devCard){
-                        case ROAD_BUILD:
-                            return remainingRoads >= 2;
-                        case MONUMENT:
-                            return (victoryPoints + monumentDevs) >= 10;
-                    }
-                    return true;
+                switch(devCard){
+                    case ROAD_BUILD:
+                        return remainingRoads >= 2;
+                    case MONUMENT:
+                        return (victoryPoints + monumentDevs) >= 10;
                 }
+                return true;
+            }
+        }
+        for(DevCard playerDev : newDevCards){
+            if(playerDev.getType() == DevCardType.MONUMENT){
+                return (victoryPoints + monumentDevs) >= 10;
             }
         }
     	return false;

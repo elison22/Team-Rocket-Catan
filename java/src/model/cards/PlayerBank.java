@@ -93,8 +93,12 @@ public class PlayerBank extends CardBank{
         return this.resCards;
     }
     
-    public ArrayList<DevCard> getDevCards() {
-    	return devCards;
+    public ArrayList<DevCard> getOldDevCards() {
+    	return oldDevs;
+    }
+
+    public ArrayList<DevCard> getNewDevCards() {
+        return newDevs;
     }
     
     public boolean hasResCards(HashMap<ResourceType, Integer> resources){
