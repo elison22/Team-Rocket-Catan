@@ -446,7 +446,7 @@
          {  
             "yearOfPlenty":0,
             "monopoly":0,
-            "soldier":0,
+            "soldier":1,
             "roadBuilding":0,
             "monument":0
          },
