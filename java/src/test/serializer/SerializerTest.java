@@ -159,10 +159,18 @@ public class SerializerTest
 	/**
 	 * Ensures the Chat is initialized properly by the serializer by making
 	 *  sure enough messages are created and the source and message are accurate
+	 * @throws FileNotFoundException 
+	 * @throws BoardException 
 	 */
 	@Test
-	public void testChat()
+	public void testChat() throws FileNotFoundException, BoardException
 	{
+		jsonFile = new File("bin/test/JunitJsonFiles/Json7.json");
+		jsonScanner = new Scanner(jsonFile).useDelimiter("\\Z");
+		json = jsonScanner.next();
+		jsonScanner.close();
+		newModel = new GameModel();
+		newModel = serializer.deSerializeFromServer(newModel, json);
 		assertTrue(newModel.getChat().getChatMessages().size() == 1);
 		System.out.println("\"" + newModel.getChat().getChatMessages().get(0).getMessage() + "\"");
 		System.out.println(" - " + newModel.getChat().getChatMessages().get(0).getOwner());

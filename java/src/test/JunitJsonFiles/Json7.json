@@ -716,8 +716,10 @@
    {  
       "lines":
       [  
-		"source":"Chad",
-        "message":"Hayden and Brandt are dummies."
+		{
+			"source":"Chad",
+    	    "message":"Hayden and Brandt are dummies."
+    	}
       ]
    },
    "bank":
