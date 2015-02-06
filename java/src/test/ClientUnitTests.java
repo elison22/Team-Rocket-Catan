@@ -19,6 +19,8 @@ public class ClientUnitTests {
 	 */
 	public static void main(String[] args) {
 		
+		// Holds all of the JUnit classes to be run. Note that the String 
+		// must include the package names that the class is located in.
 		String[] testClasses = new String[] {
 				"test.proxy.ProxyGamesTest",
 				"test.proxy.ProxyGameTest",
