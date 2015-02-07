@@ -27,8 +27,8 @@ public class Board {
     private HashMap<VertexLocation, Constructable> buildings = new HashMap<VertexLocation, Constructable>();
     /** The ROAD type Constructable objects on this Board */
     private HashMap<EdgeLocation, Constructable> roads = new HashMap<EdgeLocation, Constructable>();
-    /** The Port vertices on this Board */
-    private HashMap<VertexLocation, Port> ports = new HashMap<VertexLocation, Port>();
+    /** The port vertices on this Board */
+    private HashMap<VertexLocation, PortType> ports = new HashMap<VertexLocation, PortType>();
     /** The HexLocation that represents the robber */
     private HexLocation robber;
 
@@ -357,7 +357,6 @@ public class Board {
         Constructable settlement = new Constructable(PieceType.SETTLEMENT, owner);
         VertexLocation normalized = location.getNormalizedLocation();
         buildings.put(normalized, settlement);
-        if (ports.containsKey(normalized)) ports.get(normalized).setOwner(owner);
     }
 
     /**
@@ -553,7 +552,7 @@ public class Board {
     }
 
     /**
-     * Given an EdgeLocation and a PortType, this method creates 2 Port objects of matching type and adds
+     * Given an EdgeLocation and a PortType, this method creates 2 ports of matching type and adds
      * them to the ports map. The keys are the VertexLocations on either side of the location param.
      * @param location The location that connects the 2 new port vertices. The location must
      *                 represent an edge that actually borders the water.
@@ -575,8 +574,8 @@ public class Board {
         }
         VertexLocation clockwise = toUse.getClockwiseVertex().getNormalizedLocation();
         VertexLocation counterclockwise = toUse.getCounterClockwiseVertex().getNormalizedLocation();
-        ports.put(clockwise, new Port(type));
-        ports.put(counterclockwise, new Port(type));
+        ports.put(clockwise, type);
+        ports.put(counterclockwise, type);
     }
 
     /**
@@ -585,10 +584,10 @@ public class Board {
      * @return	true if player has building on the port type that he wants to trade
      */
     public boolean canPlayMaritimeTrade(int playerIndex, PortType type) {
-    	for(Map.Entry<VertexLocation, Port> entry : ports.entrySet()){
-    		if(entry.getValue().getType() == type) {
-    			if(entry.getValue().getOwner() == playerIndex)
-    				return true;
+    	for(Map.Entry<VertexLocation, PortType> entry : ports.entrySet()){
+    		if(entry.getValue() == type) {
+                if(buildings.get(entry.getKey()) == null) continue;
+    			if(buildings.get(entry.getKey()).getOwner() == playerIndex) return true;
     		}
     	}
     	return false;
