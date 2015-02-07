@@ -110,6 +110,12 @@ public class GameModel {
 		this.winner = winner;
 	}
 
+	/**
+	 * Validates that game is in the correct game state, and the player owns and has not yet played the dev card 
+	 * @param playerId	index of the player who wants to play Dev Card
+	 * @param devCard	the specific development card wanting to be played
+	 * @return	true if this card can be played by the player at this time
+	 */
 	public boolean canPlayDevCard(int playerId, DevCardType devCard) {
     	if(turnTracker.canPlayerPlayDev(playerId)) {
     		if(playerList.get(playerId).canPlayDevCard(devCard)){
@@ -119,6 +125,11 @@ public class GameModel {
     	return false;
     }
     
+    /**
+     * Checks if game is in correct state, if there are any dev cards remaining, and if player has adequate resources to buy a dev card
+     * @param	playerId index of the player wanting to buy a dev card
+     * @return	true if player can buy a dev card now
+     */
     public boolean canBuyDevCard(int playerId) {
     	if(turnTracker.canPlayerBuild(playerId)) {
             if(cardBank.canGiveDevCard()){
@@ -131,24 +142,38 @@ public class GameModel {
     	return false;
     }
     
+    /**
+     * Checks if game state is in valid state for this operation
+     * @param playerId	index of player wanting to place robber
+     * @return	true if player can perform this action
+     */
     public boolean canPlaceRobber(int playerId) {
-		if(turnTracker.canPlayerRoll(playerId)) {
+		if(turnTracker.canPlayerRob(playerId)) {
 			return true;
 		}
 		return false;
 	}
     
+    /**
+     * Checks the game state and index of who's turn it is to see if player can roll
+     * @param playerId	index of player wanting to roll
+     * @return	true if player can roll dice at this time
+     */
     public boolean canRollDice(int playerId) {
-    	if(playerId == turnTracker.getCurrentPlayerIndex()){
-    		if(turnTracker.getCurrentState() == TurnState.Rolling) {
-    			return true;
-    		}
-    	}
+    	if(turnTracker.canPlayerRoll(playerId))
+    		return true;
+
     	return false;
     }
     
+    /**
+     * Checks with turn state, player, and board to see if road can be built in certain location 
+     * @param playerId	index of player wanting to build road
+     * @param location	where the player wants to place road
+     * @return	true if player can place road at location
+     */
     public boolean canBuildRoad(int playerId, EdgeLocation location) {
-    	if(turnTracker.canPlayerBuild(playerId)) {
+    	if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
     		if(playerList.get(playerId).canBuildRoad()){
     			try {
 					if(map.canBuildRoad(location, playerId))
@@ -161,8 +186,14 @@ public class GameModel {
     	return false;
     }
 
+    /**
+     * Checks with game state, player, and board if player can build settlement at location
+     * @param playerId	index of player wanting to build settlement
+     * @param location	where player wants to build settlement
+     * @return	true if player can build settlement at location
+     */
     public boolean canBuildSettlement(int playerId, VertexLocation location) {
-        if(turnTracker.canPlayerBuild(playerId)) {
+        if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
             if(playerList.get(playerId).canBuildSettlement()){
                 try {
                     if(map.canBuildSettlement(location, playerId))
@@ -175,6 +206,12 @@ public class GameModel {
         return false;
     }
 
+    /**
+     * Checks game state, player, and board to see if player can build city
+     * @param playerId	index of player who wants to build city
+     * @param location	where player wants to build city
+     * @return	true if player can build city at location
+     */
     public boolean canBuildCity(int playerId, VertexLocation location) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(playerList.get(playerId).canBuildCity()){
@@ -189,6 +226,12 @@ public class GameModel {
     	return false;
     }
 
+    /**
+     * Checks if player has available resources to give in trade
+     * @param playerId	index of player wanting to trade
+     * @param trade	list of resources player wants to give and receive
+     * @return	true if player has adequate resources to give in trade
+     */
     public boolean canOfferTrade(int playerId, DomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer().getResources())){
@@ -198,6 +241,12 @@ public class GameModel {
     	return false;
     }
     
+    /**
+     * Checks if player has appropriate resources to give in trade offer
+     * @param playerId	index of player to accept trade
+     * @param trade	list of resources to give and receive
+     * @return	true if player is able to accept trade
+     */
     public boolean canAcceptTrade(int playerId, DomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(playerList.get(playerId).canAcceptTrade(playerId, trade.getOffer())){
@@ -207,6 +256,12 @@ public class GameModel {
     	return false;
     }
     
+    /**
+     * Checks if player can perform this maritime trade
+     * @param playerId	index of player wanting to trade
+     * @param trade	object containing port type, what they want, etc.
+     * @return	true if player can perform this maritimeTrade
+     */
     public boolean canMaritimeTrade(int playerId, MaritimeTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
     		if(cardBank.canGiveResCard(trade.getResourceToReceive())) {
@@ -221,6 +276,12 @@ public class GameModel {
     	return false;
     }
     
+    /**
+     * Checks to see if player is able to discard selected cards
+     * @param playerId	index of player wanting to discard cards
+     * @param cards	cards player is wanting to discard
+     * @return	true if player can discard cards
+     */
     public boolean canDiscardCards(int playerId, HashMap<ResourceType, Integer> cards) {
     	if(turnTracker.canPlayerDiscard(playerId)) {
     		if(playerList.get(playerId).canDiscardCards(cards)){
@@ -230,6 +291,11 @@ public class GameModel {
     	return false;
     }
     
+    /**
+     * Checks to see if turn state is in playing mode 
+     * @param playerId	index of player who wants to end their turn
+     * @return	true if player can end their turn
+     */
     public boolean canFinishTurn(int playerId) {
     	if(turnTracker.canPlayerBuild(playerId)){
     		return true;
