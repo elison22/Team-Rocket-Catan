@@ -355,7 +355,9 @@ public class Board {
         if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
         if (location == null) throw new BoardException("Param location cannot be null.");
         Constructable settlement = new Constructable(PieceType.SETTLEMENT, owner);
-        buildings.put(location.getNormalizedLocation(), settlement);
+        VertexLocation normalized = location.getNormalizedLocation();
+        buildings.put(normalized, settlement);
+        if (ports.containsKey(normalized)) ports.get(normalized).setOwner(owner);
     }
 
     /**
@@ -582,7 +584,7 @@ public class Board {
      * @param type type of resource he wants to maritime trade
      * @return	true if player has building on the port type that he wants to trade
      */
-    public boolean canPlayerMaritimeTrade(int playerIndex, PortType type) {
+    public boolean canPlayMaritimeTrade(int playerIndex, PortType type) {
     	for(Map.Entry<VertexLocation, Port> entry : ports.entrySet()){
     		if(entry.getValue().getType() == type) {
     			if(entry.getValue().getOwner() == playerIndex)
@@ -591,32 +593,6 @@ public class Board {
     	}
     	return false;
     }
-
-    
-	public HashMap<HexLocation, HexTile> getTiles()
-	{
-		return tiles;
-	}
-
-	public HashMap<VertexLocation, Constructable> getBuildings()
-	{
-		return buildings;
-	}
-
-	public HashMap<EdgeLocation, Constructable> getRoads()
-	{
-		return roads;
-	}
-
-	public HashMap<VertexLocation, Port> getPorts()
-	{
-		return ports;
-	}
-
-	public HexLocation getRobber()
-	{
-		return robber;
-	}
 
     @Override
     public boolean equals(Object obj) {

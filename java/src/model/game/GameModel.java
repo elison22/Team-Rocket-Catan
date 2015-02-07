@@ -212,7 +212,7 @@ public class GameModel {
     		HashMap<ResourceType, Integer> resource = new HashMap<ResourceType, Integer>();
     		resource.put(trade.getResourceToGive(), trade.getRatio());
     		if(playerList.get(playerId).canOfferTrade(playerId, resource)) {
-    			if(map.canPlayerMaritimeTrade(playerId, trade.getPortType()))
+    			if(map.canPlayMaritimeTrade(playerId, trade.getPortType()))
     				return true;
     		}
     	}
