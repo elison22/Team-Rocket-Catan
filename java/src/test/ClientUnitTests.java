@@ -30,12 +30,11 @@ public class ClientUnitTests {
 				"test.poller.PollerTest" ,
 				"test.serializer.SerializerTest" ,
                 "test.model.player.PlayerTest" ,
-                "test.model.board.GameModelTest" ,
+                "test.model.board.TurnTrackerTest" ,
                 "test.model.game.BoardTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);
 	}
-	
 }
 
