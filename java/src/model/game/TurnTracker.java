@@ -113,6 +113,15 @@ public class TurnTracker {
     	}
     	return false;
     }
+    
+    public boolean canPlayerBuildRoadSettlement(int playerIndex) {
+    	if(currentPlayerIndex == playerIndex) {
+    		if(currentState == TurnState.Playing || currentState == TurnState.FirstRound || 
+    				currentState == TurnState.SecondRound)
+    			return true;
+    	}
+    	return false;
+    }
 
     public boolean canPlayerPlayDev(int playerIndex){
         if(currentPlayerIndex == playerIndex){
