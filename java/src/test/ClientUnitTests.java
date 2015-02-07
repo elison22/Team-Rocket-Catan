@@ -28,11 +28,13 @@ public class ClientUnitTests {
 				"test.proxy.ProxyUserTest",
 				"test.proxy.ProxyUtilTest",
 				"test.poller.PollerTest" ,
-				"test.serializer.SerializerTest"
+				"test.serializer.SerializerTest" ,
+                "test.model.player.PlayerTest" ,
+                "test.model.board.TurnTrackerTest" ,
+                "test.model.game.BoardTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);
 	}
-	
 }
 
