@@ -2,6 +2,8 @@ package facade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import model.board.BoardException;
@@ -16,13 +18,31 @@ import proxy.ServerException;
 import serializer.Serializer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-import shared.dto.*;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.BuildCity_Params;
+import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
+import shared.dto.BuyDevCard_Params;
+import shared.dto.CreateGame_Params;
+import shared.dto.DiscardCards_Params;
+import shared.dto.FinishTurn_Params;
+import shared.dto.Login_Params;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.Monument_Params;
+import shared.dto.OfferTrade_Params;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
-public class ClientFacade implements IClientFacade {
+public class ClientFacade extends Observable implements IClientFacade {
 
     // create DTO's to pass to the proxy as parameters of the do methods
     // when calling do methods, will receive a json string
@@ -33,6 +53,7 @@ public class ClientFacade implements IClientFacade {
     private int playerIndex;
     private IProxyFacade proxy;
     private Serializer serializer;
+    private ArrayList<Observer> observers;
     
     public void updateGameModel(String json)
     {
@@ -51,6 +72,7 @@ public class ClientFacade implements IClientFacade {
     	proxy = new MockProxy();
     	game = new GameModel();
     	serializer = new Serializer();
+    	observers = new ArrayList<Observer>();
     }
 
     /**
@@ -437,6 +459,17 @@ public class ClientFacade implements IClientFacade {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+	
+	public void updated() {
+		setChanged();
+		notifyObservers();
+		clearChanged();
 	}
 
 }
