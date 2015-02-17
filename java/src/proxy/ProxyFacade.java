@@ -15,10 +15,20 @@ public class ProxyFacade implements IProxyFacade {
 	private ProxyGame game;
 	private ProxyMoves moves;
 	private ProxyUtil util;
+	
+	public ProxyFacade() {
+		ServerProxy.getInstance().initProxy("localhost", "8081");
+		
+		init();
+	}
 
 	public ProxyFacade(String host, String port) {
 		ServerProxy.getInstance().initProxy(host, port);
 		
+		init();
+	}
+	
+	private void init() {
 		user = new ProxyUser();
 		games = new ProxyGames();
 		game = new ProxyGame();

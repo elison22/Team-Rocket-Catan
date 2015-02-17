@@ -7,6 +7,7 @@ import client.login.*;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
+import facade.ClientFacade;
 
 /**
  * Main entry point for the Catan program
@@ -56,6 +57,7 @@ public class Catan extends JFrame
 			public void run()
 			{
 				new Catan();
+				ClientFacade modelFacade = new ClientFacade("localhost", "8081");
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
@@ -87,7 +89,8 @@ public class Catan extends JFrame
 				MessageView loginMessageView = new MessageView();
 				LoginController loginController = new LoginController(
 																	  loginView,
-																	  loginMessageView);
+																	  loginMessageView,
+																	  modelFacade);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()

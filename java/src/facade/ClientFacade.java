@@ -82,6 +82,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     	proxy = new ProxyFacade(host, port);
     	game = new GameModel();
     	serializer = new Serializer();
+    	observers = new ArrayList<Observer>();
     }
 
 	@Override
@@ -111,7 +112,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean doUserRegister(String user, String password) {
 		Login_Params login = new Login_Params(user, password);
 		try {
-			proxy.login(login);
+			proxy.register(login);
 		} catch (ServerException e) {
 			return false;
 		}
