@@ -7,7 +7,6 @@ import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
 
-
 /**
  * Domestic trade controller implementation
  */

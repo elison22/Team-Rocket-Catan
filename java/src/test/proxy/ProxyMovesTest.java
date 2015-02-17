@@ -23,15 +23,21 @@ public class ProxyMovesTest {
 	ProxyFacade facade;
 	Random rand = new Random();
 	
+	boolean setup = false;
+	
 	@Before
 	public void init() throws ServerException {
-		facade = new ProxyFacade("localhost", "8081");
-		
-		// Attempt to login
-		facade.login(new Login_Params("Sam", "sam"));
-		
-		// Join default game
-		facade.join(new JoinGame_Params(0, "orange"));
+		if (!setup) {
+			facade = new ProxyFacade("localhost", "8081");
+			
+			// Attempt to login
+			facade.login(new Login_Params("Sam", "sam"));
+			
+			// Join default game
+			facade.join(new JoinGame_Params(0, "orange"));
+			
+			setup = true;
+		}
 	}
 	
 	// All of the following tests asserts that the object returned by the 
@@ -40,6 +46,7 @@ public class ProxyMovesTest {
 
 	@Test
 	public void testSendChat() throws ServerException {
+		
 		// Send chat to server
 		assertNotNull(facade.sendChat(new SendChat_Params(0, "Testing Chat!")));
 	}
@@ -51,15 +58,15 @@ public class ProxyMovesTest {
 	}
 	
 	@Test 
-	public void testRobPlayer() throws ServerException {
-		// Choose random player to rob
-		int victim = rand.nextInt(3-1)+1;
-		
+	public void testRobPlayerAndSoldier() throws ServerException {
 		// Arbitrary Hex to put robber
 		HexLocation hex = new HexLocation(0,0);
 		
 		// Rob player
-		assertNotNull(facade.robPlayer(new RobPlayer_Params(0, victim, hex)));
+		assertNotNull(facade.robPlayer(new RobPlayer_Params(0, 2, hex)));
+		
+		// Play soldier; move robber and rob victim
+		assertNotNull(facade.Soldier(new Soldier_Params(1, 2, new HexLocation(-2,0))));
 	}
 	
 	@Test
@@ -92,11 +99,11 @@ public class ProxyMovesTest {
 		assertNotNull(facade.Road_Building(new RoadBuilding_Params(0, spot1, spot2)));
 	}
 	
-	@Test
-	public void testSoldier() throws ServerException {
-		// Play soldier; move robber and rob victim
-		assertNotNull(facade.Soldier(new Soldier_Params(1, 2, new HexLocation(-2,0))));
-	}
+//	@Test
+//	public void testSoldier() throws ServerException {
+//		// Play soldier; move robber and rob victim
+//		assertNotNull(facade.Soldier(new Soldier_Params(1, 2, new HexLocation(-2,0))));
+//	}
 	
 	@Test
 	public void testMonopoly() throws ServerException {

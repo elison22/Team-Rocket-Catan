@@ -6,7 +6,6 @@ import java.util.Observer;
 import shared.definitions.ResourceType;
 import client.base.*;
 
-
 /**
  * "Dev card" controller implementation
  */
@@ -101,8 +100,6 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
