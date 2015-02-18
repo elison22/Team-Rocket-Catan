@@ -21,9 +21,44 @@ public enum CatanColor
 		BROWN.color = new Color(161, 143, 112);
 	}
 	
+	private static String name;
+	
+	public static CatanColor convert(String type){
+    	name = type;
+
+        switch (type.toLowerCase())
+        {
+            case "red":
+                return RED;
+            case "orange":
+                return ORANGE;
+            case "yellow":
+                return YELLOW;
+            case "blue":
+                return BLUE;
+            case "green":
+                return GREEN;
+            case "purple":
+            	return PURPLE;
+            case "puce":
+            	return PUCE;
+            case "white":
+            	return WHITE;
+            case "brown":
+            	return BROWN;
+            default:
+                return null;
+        }
+    }
+	
 	public Color getJavaColor()
 	{
 		return color;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }
 

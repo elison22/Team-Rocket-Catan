@@ -1,12 +1,16 @@
 package client.join;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
+import shared.dto.GameList;
+import shared.dto.GameList.Player;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import facade.IClientFacade;
 
 
 /**
@@ -18,6 +22,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private IClientFacade modelFacade;
 	
 	/**
 	 * JoinGameController constructor
@@ -28,13 +33,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * @param messageView Message view (used to display error messages that occur while the user is joining a game)
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
-								ISelectColorView selectColorView, IMessageView messageView) {
+								ISelectColorView selectColorView, IMessageView messageView, 
+								IClientFacade modelFacade) {
 
 		super(view);
 
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		
+		this.modelFacade = modelFacade;
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -89,11 +97,46 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		this.messageView = messageView;
 	}
+	
+	// Take game list from facade and turn it into GameInfo list that the
+	// JoinGameView can parse
+	private void setGameList() {
+		ArrayList<GameInfo> gameInfo = new ArrayList<GameInfo>();
+		
+		for (GameList gL : modelFacade.getGames()) {
+			GameInfo gI = new GameInfo();
+			gI.setId(gL.getId());
+			gI.setTitle(gL.getTitle());
+			
+			int index = 0;
+			for (Player p : gL.getPlayers()) {
+				if (p.getName() == null)
+					continue;
+				
+				PlayerInfo pI = new PlayerInfo();
+				pI.setId(p.getId());
+				pI.setPlayerIndex(index);
+				pI.setName(p.getName());
+				if (p.getColor() != null)
+					pI.setColor(CatanColor.convert(p.getColor()));
+				
+				gI.addPlayer(pI);
+				++index;
+			}
+			gameInfo.add(gI);
+		}
+		
+		GameInfo[] gameInfoArray = new GameInfo[gameInfo.size()];
+		gameInfoArray = gameInfo.toArray(gameInfoArray);
+		getJoinGameView().setGames(gameInfoArray, new PlayerInfo());
+	}
 
 	@Override
 	public void start() {
 		
+		setGameList();
 		getJoinGameView().showModal();
+
 	}
 
 	@Override

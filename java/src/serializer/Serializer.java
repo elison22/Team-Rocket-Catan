@@ -2,7 +2,6 @@ package serializer;
 
 import java.util.ArrayList;
 
-import proxy.MockProxy;
 import model.board.Board;
 import model.board.BoardException;
 import model.cards.*;
@@ -11,6 +10,7 @@ import model.game.GameModel;
 import model.game.TurnTracker;
 import model.player.*;
 import serializer.json.*;
+import shared.dto.GameList;
 
 import com.google.gson.*;
 
@@ -66,16 +66,8 @@ public class Serializer {
 				
 		return game;
 	}
-//
-//	public static void main(String[] args) {
-//		Serializer s = new Serializer();
-//		MockProxy mp = new MockProxy();
-//		GameModel gm = new GameModel();
-//		try {
-//			gm = s.deSerializeFromServer(gm, mp.model(-1));
-//			System.out.println("OK");
-//		} catch (BoardException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	
+	public GameList[] deSerializeGameList(String json) {
+		return gson.fromJson(json, GameList[].class);
+	}
 }

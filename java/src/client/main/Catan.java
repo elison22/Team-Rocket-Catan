@@ -72,7 +72,8 @@ public class Catan extends JFrame
 																				 joinView,
 																				 newGameView,
 																				 selectColorView,
-																				 joinMessageView);
+																				 joinMessageView,
+																				 modelFacade);
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()

@@ -55,5 +55,14 @@ public class GameInfo
 	{
 		return Collections.unmodifiableList(players);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(id + "\n" + title + "\n" + "[");
+		for (PlayerInfo p : players) {
+			sb.append(p.toString());
+		}
+		return new String(sb + "]");
+	}
 }
 

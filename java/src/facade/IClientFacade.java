@@ -1,14 +1,13 @@
 package facade;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import model.cards.ResourceSet;
-import model.game.GameModel;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
 import shared.definitions.ResourceType;
+import shared.dto.GameList;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -46,7 +45,7 @@ public interface IClientFacade {
     /**
      * @return list of all the games in progress
      */
-    public ArrayList<GameModel> getGames();
+    public GameList[] getGames();
 
     /**
      * @param gameName name of the game user is trying to create

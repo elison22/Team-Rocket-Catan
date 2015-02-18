@@ -26,6 +26,7 @@ import shared.dto.BuyDevCard_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.DiscardCards_Params;
 import shared.dto.FinishTurn_Params;
+import shared.dto.GameList;
 import shared.dto.Login_Params;
 import shared.dto.MaritimeTrade_Params;
 import shared.dto.Monopoly_Params;
@@ -120,8 +121,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public ArrayList<GameModel> getGames() {
-		// TODO Auto-generated method stub
+	public GameList[] getGames() {
+		try {
+			return serializer.deSerializeGameList(proxy.list());
+		} catch (ServerException e) {
+			//e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -145,7 +150,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 
 	@Override
 	public void joinGame(int gameId, String color) {
-		//game = serializer.deSerializeFromServer(game, proxy.join(new JoinGame_Params(gameId, color)));
+		
 	}
 
 	@Override

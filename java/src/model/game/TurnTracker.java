@@ -131,6 +131,7 @@ public class TurnTracker {
         }
         return false;
     }
+    
     public boolean canPlayerRob(int playerIndex) {
     	if(currentPlayerIndex == playerIndex) {
     		if(currentState == TurnState.Robbing)
