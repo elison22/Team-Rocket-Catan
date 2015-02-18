@@ -27,6 +27,7 @@ import shared.dto.CreateGame_Params;
 import shared.dto.DiscardCards_Params;
 import shared.dto.FinishTurn_Params;
 import shared.dto.GameList;
+import shared.dto.JoinGame_Params;
 import shared.dto.Login_Params;
 import shared.dto.MaritimeTrade_Params;
 import shared.dto.Monopoly_Params;
@@ -134,9 +135,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean CreateGame(String gameName, boolean randTiles,
 			boolean randPorts, boolean randNums) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName)));
-		} catch (ServerException | BoardException e) {
-			// e.printStackTrace();
+			proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -149,8 +149,14 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public void joinGame(int gameId, String color) {
-		
+	public boolean joinGame(int gameId, String color) {
+		try {
+			proxy.join(new JoinGame_Params(gameId, color));
+		} catch (ServerException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override

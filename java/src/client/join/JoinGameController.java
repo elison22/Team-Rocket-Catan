@@ -23,6 +23,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMessageView messageView;
 	private IAction joinAction;
 	private IClientFacade modelFacade;
+	private GameInfo joinGameInfo;
 	
 	/**
 	 * JoinGameController constructor
@@ -133,10 +134,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		
 		setGameList();
 		getJoinGameView().showModal();
-
 	}
 
 	@Override
@@ -153,13 +152,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-		
 		getNewGameView().closeModal();
+		
+		// Create new game
+		modelFacade.CreateGame(getNewGameView().getTitle(), 
+							   getNewGameView().getRandomlyPlaceHexes(), 
+							   getNewGameView().getUseRandomPorts(), 
+							   getNewGameView().getRandomlyPlaceNumbers());
+		
+		// Update game list
+		setGameList();
 	}
 
 	@Override
 	public void startJoinGame(GameInfo game) {
 
+		joinGameInfo = game;
 		getSelectColorView().showModal();
 	}
 
@@ -172,10 +180,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color) {
 		
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		if (modelFacade.joinGame(joinGameInfo.getId(), getSelectColorView().getSelectedColor().toString())) {
+			// If join succeeded
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			joinAction.execute();
+		}
 	}
 
 	@Override

@@ -65,8 +65,9 @@ public interface IClientFacade {
      * Adds a player to the game
      * @param playerId id of the player who is joining game
      * @param color the color the player chose to be
+     * @return 
      */
-    public void joinGame(int gameId, String color);
+    public boolean joinGame(int gameId, String color);
 
     /**
      * @return true if game is in state that can be saved
