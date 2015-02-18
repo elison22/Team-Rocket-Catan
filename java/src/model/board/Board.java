@@ -220,16 +220,6 @@ public class Board {
         return !robber.equals(newLocation);
     }
 
-//    /**
-//     * Set the robber's new location using x/y coordinates
-//     * @param x The robber's new x location
-//     * @param y The robber's new y location
-//     * @throws BoardException Thrown when the x or y values represent a location that isn't on the board.
-//     */
-//    public void doPlayRobber(int x, int y) throws BoardException {
-//        doPlayRobber(new HexLocation(x, y));
-//    }
-
     /**
      * Set the robber's new location using a HexLocation object
      * @param newLocation The HexLocation for the robber's new location
@@ -302,6 +292,29 @@ public class Board {
     public boolean canBuildRoad(EdgeLocation location, int owner) throws BoardException {
         if (roads.size() > 8) return canBuildNormalRoad(location, owner);
         else return canBuildInitRoad(location, owner);
+    }
+
+    /**
+     * A canDo function purely to check validity of a potential second road placement
+     * after the first has been designated while playing the Road Building dev card.
+     * @param firstloc An EdgeLocation representing the first road already decided upon.
+     * @param secondloc An EdgeLocation representing the second road to be considered.
+     * @param owner The owner of both roads.
+     * @return True if this is a valid position for the second road to be placed.
+     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * the range 0 to 3. Also thrown if the firstloc or secondloc param is passed in null.
+     */
+    public boolean canBuildRoad(EdgeLocation firstloc, EdgeLocation secondloc, int owner) throws BoardException {
+        if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
+        if (firstloc == null) throw new BoardException("Param location cannot be null.");
+        if (secondloc == null) throw new BoardException("Param location cannot be null.");
+
+        Constructable road = new Constructable(PieceType.ROAD, owner);
+        roads.put(firstloc.getNormalizedLocation(), road);
+        boolean toReturn = canBuildNormalRoad(secondloc, owner);
+        roads.remove(firstloc.getNormalizedLocation());
+
+        return toReturn;
     }
 
     /**
@@ -535,7 +548,7 @@ public class Board {
         }
         if (roads.get(counterclockwise)!=null) {
             if (owner == -1) return true;
-            if (roads.get(clockwise).getOwner() == owner) return true;
+            if (roads.get(counterclockwise).getOwner() == owner) return true;
         }
         EdgeLocation opposite = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()),location.getDir().getOppositeDirection());
         clockwise = opposite.getClockwiseEdge().getNormalizedLocation();

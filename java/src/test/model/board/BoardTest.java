@@ -25,7 +25,9 @@ public class BoardTest {
     VertexLocation vertleftNW = new VertexLocation(hexSW, VertexDirection.NorthWest);
     EdgeLocation edgemidN = new EdgeLocation(hexMID, EdgeDirection.North);
     EdgeLocation edgemidNW = new EdgeLocation(hexMID, EdgeDirection.NorthWest);
+    EdgeLocation edgemidNE = new EdgeLocation(hexMID, EdgeDirection.NorthEast);
     EdgeLocation edgemidS = new EdgeLocation(hexMID, EdgeDirection.South);
+    EdgeLocation edgemidSW = new EdgeLocation(hexMID, EdgeDirection.SouthWest);
     EdgeLocation edgeleftN = new EdgeLocation(hexSW, EdgeDirection.North);
 
     /** Automatically puts 10 roads on the board. This allows canDo's to run as if initial placement is finished. */
@@ -489,6 +491,122 @@ public class BoardTest {
             e.printStackTrace();
             assertFalse(true);
         }
+    }
+
+//== ROAD BUILD CARD ==//
+
+    @Test
+    public void cannotBuildSecondRoadOnRoad() {
+
+        try {
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidN, 0);
+            testBoard.doBuildRoad(edgeleftN, 1);
+
+            bypassInitialSetup();
+
+            result = testBoard.canBuildRoad(edgemidNW, edgemidN, 0);
+            assertFalse(result);                            // cannot build a road on another owned road
+            result = testBoard.canBuildRoad(edgemidNW, edgeleftN, 0);
+            assertFalse(result);                            // cannot build a road on an opponent road
+            result = testBoard.canBuildRoad(edgemidNW, edgemidN, 1);
+            assertFalse(result);                            // cannot build a road on an opponent road
+
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+
+    }
+
+    @Test
+    public void cannotBuildIsolatedSecondRoad() {
+
+        try {
+            bypassInitialSetup();
+            testBoard.doBuildRoad(edgemidN, 0);
+
+            result = testBoard.canBuildRoad(edgemidNE, edgemidSW, 0);
+            assertFalse(result);                            // trying to build a road away from other pieces
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void cannotBuildSecondRoadByOnlyOpponentRoad() {
+
+        try {
+            bypassInitialSetup();
+            testBoard.doBuildSettlement(vertmidNW, 0);
+            testBoard.doBuildRoad(edgemidN, 0);
+            testBoard.doBuildRoad(edgeleftN, 1);
+
+            result = testBoard.canBuildRoad(edgemidNE, edgemidSW, 0);
+            assertFalse(result);                            // trying to build a road by only an opponent road
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+
+    }
+
+    @Test
+    public void canBuildSecondRoadByAnyOwnedRoad() {
+
+        try {
+            testBoard.doBuildSettlement(vertleftNW, 1);
+            testBoard.doBuildRoad(edgeleftN, 1);
+            testBoard.doBuildRoad(edgemidN, 0);
+
+            bypassInitialSetup();
+
+            result = testBoard.canBuildRoad(edgemidNW, edgemidNE, 0);
+            assertTrue(result);                             // trying to build a road by an owned road
+            result = testBoard.canBuildRoad(edgemidNE, edgemidNW, 0);
+            assertTrue(result);                             // trying to build a road by an owned road
+            result = testBoard.canBuildRoad(edgemidNW, edgemidSW, 1);
+            assertTrue(result);                             // trying to build a road by an owned road
+
+        } catch (BoardException e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void cannotBuildSecondRoadOnFirstRoad() {
+
+        try{
+            bypassInitialSetup();
+            testBoard.doBuildRoad(edgemidN, 0);
+
+            result = testBoard.canBuildRoad(edgemidNW, edgemidNW, 0);
+            assertFalse(result);
+
+        } catch (BoardException e) {
+            assertFalse(true);
+        }
+
+    }
+
+    @Test
+    public void canBuildSecondRoadByOnlyFirstRoad() {
+
+        try {
+            bypassInitialSetup();
+            testBoard.doBuildRoad(edgeleftN, 0);
+            testBoard.doBuildRoad(edgemidNE, 1);
+
+            result = testBoard.canBuildRoad(edgemidNW, edgemidN, 0);
+            assertTrue(result);
+            result = testBoard.canBuildRoad(edgemidSW, edgemidS, 0);
+            assertTrue(result);
+        } catch (BoardException e) {
+            assertFalse(true);
+        }
+
     }
 
 }
