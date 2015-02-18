@@ -47,6 +47,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start() {
 
 		getView().setAIChoices(modelFacade.getAIList());
+		getView().setPlayers(getPlayers(new Player[] {modelFacade.getPlayerInfo()}));
 		getView().showModal();
 	}
 

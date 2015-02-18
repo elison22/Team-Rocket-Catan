@@ -199,13 +199,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return null;
 		}
 		
-		System.out.println(game.getPlayerList().size());
-		for (int i = 0; i < game.getPlayerList().size(); ++i) {
-			System.out.println(game.getPlayerList().get(i).getColor());
-			System.out.println(game.getPlayerList().get(i).getName());
-			System.out.println(game.getPlayerList().get(i).getPlayerID());
-		}
-		
 		Player[] players = new Player[game.getPlayerList().size()];
 		for (int i = 0; i < players.length; ++i) {
 			String color = game.getPlayerList().get(i).getColor();
@@ -214,6 +207,14 @@ public class ClientFacade extends Observable implements IClientFacade {
 			players[i] = new Player(color, name, id);
 		}
 		return players;
+	}
+	
+	public Player getPlayerInfo() {
+		Player player = new Player();
+		player.setColor(game.getPlayerList().get(playerIndex).getColor());
+		player.setName(game.getPlayerList().get(playerIndex).getName());
+		player.setId(game.getPlayerList().get(playerIndex).getPlayerID());
+		return player;
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import java.util.Observer;
 import shared.definitions.CatanColor;
 import client.base.*;
 
-
 /**
  * Implementation for the turn tracker controller
  */
@@ -27,7 +26,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-
+		
 	}
 	
 	private void initFromModel() {

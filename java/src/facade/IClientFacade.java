@@ -329,6 +329,8 @@ public interface IClientFacade {
      * @param cards the resource cards the player is discarding
      */
     public boolean doDiscardCards(HashMap<ResourceType, Integer> cards);
+
+	public Player getPlayerInfo();
 	
 	
 }
