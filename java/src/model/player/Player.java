@@ -57,19 +57,19 @@ public class Player {
     }
 
     public Player(JsonPlayer jsonPlayer){
-        this.bank = new PlayerBank(jsonPlayer.getResources(), jsonPlayer.getOldDevCards(), jsonPlayer.getNewDevCards());
-        this.color = jsonPlayer.getColor();
-        this.discarded = jsonPlayer.isDiscarded();
-        this.monumentDevs = jsonPlayer.getMonuments();
-        this.remainingCities = jsonPlayer.getCities();
-        this.remainingRoads = jsonPlayer.getRoads();
-        this.remainingSettlements = jsonPlayer.getSettlements();
-        this.playedDevCard = jsonPlayer.isPlayedDevCard();
-        this.playerID = jsonPlayer.getPlayerID();
-        this.playerIdx = jsonPlayer.getPlayerIndex();
-        this.playerName = jsonPlayer.getName();
-        this.soldierDevs = jsonPlayer.getSoldiers();
-        this.victoryPoints = jsonPlayer.getVictoryPoints();
+    		this.bank = new PlayerBank(jsonPlayer.getResources(), jsonPlayer.getOldDevCards(), jsonPlayer.getNewDevCards());
+            this.color = jsonPlayer.getColor();
+            this.discarded = jsonPlayer.isDiscarded();
+            this.monumentDevs = jsonPlayer.getMonuments();
+            this.remainingCities = jsonPlayer.getCities();
+            this.remainingRoads = jsonPlayer.getRoads();
+            this.remainingSettlements = jsonPlayer.getSettlements();
+            this.playedDevCard = jsonPlayer.isPlayedDevCard();
+            this.playerID = jsonPlayer.getPlayerID();
+            this.playerIdx = jsonPlayer.getPlayerIndex();
+            this.playerName = jsonPlayer.getName();
+            this.soldierDevs = jsonPlayer.getSoldiers();
+            this.victoryPoints = jsonPlayer.getVictoryPoints();
     }
 
     /**

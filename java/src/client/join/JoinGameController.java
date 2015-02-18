@@ -6,7 +6,7 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.dto.GameList;
-import shared.dto.GameList.Player;
+import shared.dto.Player;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
@@ -155,13 +155,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getNewGameView().closeModal();
 		
 		// Create new game
-		modelFacade.CreateGame(getNewGameView().getTitle(), 
-							   getNewGameView().getRandomlyPlaceHexes(), 
-							   getNewGameView().getUseRandomPorts(), 
-							   getNewGameView().getRandomlyPlaceNumbers());
-		
-		// Update game list
-		setGameList();
+		if (modelFacade.CreateGame(getNewGameView().getTitle(), 
+							       getNewGameView().getRandomlyPlaceHexes(), 
+							       getNewGameView().getUseRandomPorts(), 
+							       getNewGameView().getRandomlyPlaceNumbers())) {
+			// If successful, update game list
+			setGameList();
+		}
 	}
 
 	@Override

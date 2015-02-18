@@ -1,13 +1,13 @@
 package facade;
 
 import java.util.HashMap;
-import java.util.List;
 
 import model.cards.ResourceSet;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
 import shared.definitions.ResourceType;
 import shared.dto.GameList;
+import shared.dto.Player;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -123,13 +123,14 @@ public interface IClientFacade {
 
     /**
      * @param AIType type of AI to add to the game
+     * @return 
      */
-    public void doAddAI(String AIType);
+    public Player[] doAddAI(String AIType);
 
     /**
      * @return list of the supoorted AI player types
      */
-    public List<String> getAIList();
+    public String[] getAIList();
 
     /**
      * Adds new message to the list of messages

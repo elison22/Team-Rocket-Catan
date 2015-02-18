@@ -16,32 +16,10 @@ import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
-import shared.definitions.DevCardType;
-import shared.definitions.ResourceType;
-import shared.dto.AcceptTrade_Params;
-import shared.dto.BuildCity_Params;
-import shared.dto.BuildRoad_Params;
-import shared.dto.BuildSettlement_Params;
-import shared.dto.BuyDevCard_Params;
-import shared.dto.CreateGame_Params;
-import shared.dto.DiscardCards_Params;
-import shared.dto.FinishTurn_Params;
-import shared.dto.GameList;
-import shared.dto.JoinGame_Params;
-import shared.dto.Login_Params;
-import shared.dto.MaritimeTrade_Params;
-import shared.dto.Monopoly_Params;
-import shared.dto.Monument_Params;
-import shared.dto.OfferTrade_Params;
-import shared.dto.RoadBuilding_Params;
-import shared.dto.RobPlayer_Params;
-import shared.dto.RollNumber_Params;
-import shared.dto.SendChat_Params;
-import shared.dto.Soldier_Params;
-import shared.dto.YearOfPlenty_Params;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.definitions.*;
+import shared.dto.*;
+import shared.dto.Player;
+import shared.locations.*;
 
 // this class needs to have canDo methods as well Do methods for any player actions
 public class ClientFacade extends Observable implements IClientFacade {
@@ -135,7 +113,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean CreateGame(String gameName, boolean randTiles,
 			boolean randPorts, boolean randNums) {
 		try {
-			proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName));
+			// Create a game
+			GameList test = serializer.deSerializeGame(proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName)));
+			
+			// Join created game with default color
+			proxy.join(new JoinGame_Params(test.getId(), CatanColor.WHITE.toString()));
+			
 		} catch (ServerException e) {
 			return false;
 		} 
@@ -152,6 +135,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean joinGame(int gameId, String color) {
 		try {
 			proxy.join(new JoinGame_Params(gameId, color));
+			updateGameModel(proxy.model(game.getVersionNumber()));
 		} catch (ServerException e) {
 			e.printStackTrace();
 			return false;
@@ -207,14 +191,36 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public void doAddAI(String AIType) {
-		// TODO Auto-generated method stub
+	public Player[] doAddAI(String AIType) {
+		try {
+			proxy.addAI(new AddAI_Params(AIType));
+			updateGameModel(proxy.model(game.getVersionNumber()));
+		} catch (ServerException e) {
+			return null;
+		}
 		
+		System.out.println(game.getPlayerList().size());
+		for (int i = 0; i < game.getPlayerList().size(); ++i) {
+			System.out.println(game.getPlayerList().get(i).getColor());
+			System.out.println(game.getPlayerList().get(i).getName());
+			System.out.println(game.getPlayerList().get(i).getPlayerID());
+		}
+		
+		Player[] players = new Player[game.getPlayerList().size()];
+		for (int i = 0; i < players.length; ++i) {
+			String color = game.getPlayerList().get(i).getColor();
+			String name = game.getPlayerList().get(i).getName();
+			int id = game.getPlayerList().get(i).getPlayerID();
+			players[i] = new Player(color, name, id);
+		}
+		return players;
 	}
 
 	@Override
-	public ArrayList<String> getAIList() {
-		return game.getAiList();
+	public String[] getAIList() {
+		String[] aiList = new String[game.getAiList().size()];
+		aiList = game.getAiList().toArray(aiList);
+		return aiList;
 	}
 
 	@Override

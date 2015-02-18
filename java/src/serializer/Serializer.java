@@ -46,7 +46,8 @@ public class Serializer {
 		ArrayList<Player> newPlayers = new ArrayList<Player>();
 		for(JsonPlayer player : newModel.getPlayers())
 		{
-			newPlayers.add(new Player(player));
+			if (player != null)
+				newPlayers.add(new Player(player));
 		}
 		GameBank newBank = new GameBank(newModel.getBank(), newModel.getDevCards());
 		TurnTracker newTracker = new TurnTracker(newModel.getTurnTracker());
@@ -69,5 +70,9 @@ public class Serializer {
 	
 	public GameList[] deSerializeGameList(String json) {
 		return gson.fromJson(json, GameList[].class);
+	}
+
+	public GameList deSerializeGame(String json) {
+		return gson.fromJson(json, GameList.class);
 	}
 }

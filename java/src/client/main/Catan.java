@@ -61,7 +61,8 @@ public class Catan extends JFrame
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
-																									playerWaitingView);
+																									playerWaitingView,
+																									modelFacade);
 				playerWaitingView.setController(playerWaitingController);
 				
 				JoinGameView joinView = new JoinGameView();
