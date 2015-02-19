@@ -10,7 +10,8 @@ import model.game.GameModel;
 import model.game.TurnTracker;
 import model.player.*;
 import serializer.json.*;
-import shared.dto.GameList;
+import shared.dto.Game_DTO;
+import shared.dto.Player_DTO;
 
 import com.google.gson.*;
 
@@ -68,11 +69,16 @@ public class Serializer {
 		return game;
 	}
 	
-	public GameList[] deSerializeGameList(String json) {
-		return gson.fromJson(json, GameList[].class);
+	public Game_DTO[] deSerializeGameList(String gameListJson) {
+		return gson.fromJson(gameListJson, Game_DTO[].class);
 	}
 
-	public GameList deSerializeGame(String json) {
-		return gson.fromJson(json, GameList.class);
+	public Game_DTO deSerializeGame(String newGameJson) {
+		return gson.fromJson(newGameJson, Game_DTO.class);
+	}
+	
+	public Player_DTO deSerializeUserCookie(String userCookieJson) {
+		JsonPlayer jPlayer = gson.fromJson(userCookieJson, JsonPlayer.class);
+		return new Player_DTO(null, jPlayer.getName(), jPlayer.getPlayerID());
 	}
 }

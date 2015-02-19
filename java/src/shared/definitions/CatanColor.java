@@ -21,10 +21,24 @@ public enum CatanColor
 		BROWN.color = new Color(161, 143, 112);
 	}
 	
-	private static String name;
+	private String name;
+	
+	static
+	{
+		RED.name = "red";
+		ORANGE.name = "orange";
+		YELLOW.name = "yellow";
+		BLUE.name = "blue";
+		GREEN.name = "green";
+		PURPLE.name = "purple";
+		PUCE.name = "puce";
+		WHITE.name = "white";
+		BROWN.name = "brown";
+	}
 	
 	public static CatanColor convert(String type){
-    	name = type;
+		if (type == null)
+			return null;
 
         switch (type.toLowerCase())
         {

@@ -18,7 +18,7 @@ import proxy.ServerException;
 import serializer.Serializer;
 import shared.definitions.*;
 import shared.dto.*;
-import shared.dto.Player;
+import shared.dto.Player_DTO;
 import shared.locations.*;
 
 // this class needs to have canDo methods as well Do methods for any player actions
@@ -30,6 +30,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     // serializer will return client model object
     // use the client model object to make a game model object
     private GameModel game;
+    private Player_DTO localPlayer;
     private int playerIndex;
     private IProxyFacade proxy;
     private Serializer serializer;
@@ -63,6 +64,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     	game = new GameModel();
     	serializer = new Serializer();
     	observers = new ArrayList<Observer>();
+    	localPlayer = new Player_DTO();
     }
 
 	@Override
@@ -79,6 +81,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 		} catch (ServerException e) {
 			return false;
 		}
+		
+		localPlayer = serializer.deSerializeUserCookie(proxy.getUserCookie());
 		return true;
 	}
 
@@ -96,11 +100,13 @@ public class ClientFacade extends Observable implements IClientFacade {
 		} catch (ServerException e) {
 			return false;
 		}
+		
+		localPlayer = serializer.deSerializeUserCookie(proxy.getUserCookie());
 		return true;
 	}
 
 	@Override
-	public GameList[] getGames() {
+	public Game_DTO[] getGames() {
 		try {
 			return serializer.deSerializeGameList(proxy.list());
 		} catch (ServerException e) {
@@ -114,7 +120,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 			boolean randPorts, boolean randNums) {
 		try {
 			// Create a game
-			GameList test = serializer.deSerializeGame(proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName)));
+			Game_DTO test = serializer.deSerializeGame(proxy.create(new CreateGame_Params(randTiles, randNums, randPorts, gameName)));
 			
 			// Join created game with default color
 			proxy.join(new JoinGame_Params(test.getId(), CatanColor.WHITE.toString()));
@@ -191,7 +197,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public Player[] doAddAI(String AIType) {
+	public Player_DTO[] doAddAI(String AIType) {
 		try {
 			proxy.addAI(new AddAI_Params(AIType));
 			updateGameModel(proxy.model(game.getVersionNumber()));
@@ -199,22 +205,25 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return null;
 		}
 		
-		Player[] players = new Player[game.getPlayerList().size()];
+		return getPlayerList();
+	}
+	
+	public Player_DTO getLocalPlayerInfo() {
+		if (game.getPlayerList() != null && !game.getPlayerList().isEmpty()) {
+			localPlayer.setColor(game.getPlayerList().get(playerIndex).getColor());
+		}
+		return localPlayer;
+	}
+	
+	public Player_DTO[] getPlayerList() {
+		Player_DTO[] players = new Player_DTO[game.getPlayerList().size()];
 		for (int i = 0; i < players.length; ++i) {
 			String color = game.getPlayerList().get(i).getColor();
 			String name = game.getPlayerList().get(i).getName();
 			int id = game.getPlayerList().get(i).getPlayerID();
-			players[i] = new Player(color, name, id);
+			players[i] = new Player_DTO(color, name, id);
 		}
 		return players;
-	}
-	
-	public Player getPlayerInfo() {
-		Player player = new Player();
-		player.setColor(game.getPlayerList().get(playerIndex).getColor());
-		player.setName(game.getPlayerList().get(playerIndex).getName());
-		player.setId(game.getPlayerList().get(playerIndex).getPlayerID());
-		return player;
 	}
 
 	@Override

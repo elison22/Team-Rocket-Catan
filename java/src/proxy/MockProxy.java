@@ -225,6 +225,12 @@ public class MockProxy implements IProxyFacade {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String getUserCookie() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 //	public static void main(String[] args) {
 //		MockProxy mp = new MockProxy();

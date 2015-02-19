@@ -1,14 +1,14 @@
 package shared.dto;
 
-public class GameList {
+public class Game_DTO {
 	
 	private String title;
 	private int id;
-	private Player[] players;
+	private Player_DTO[] players;
 
-	public GameList() {}
+	public Game_DTO() {}
 	
-	public GameList(String title, int id, Player[] players) {
+	public Game_DTO(String title, int id, Player_DTO[] players) {
 		setTitle(title);
 		setId(id);
 		setPlayers(players);
@@ -30,11 +30,11 @@ public class GameList {
 		this.id = id;
 	}
 
-	public Player[] getPlayers() {
+	public Player_DTO[] getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(Player[] players) {
+	public void setPlayers(Player_DTO[] players) {
 		this.players = players;
 	}
 

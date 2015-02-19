@@ -163,6 +163,10 @@ class ServerProxy {
 		}
 	}
 	
+	protected String getUserInfo() {
+		return userCookie;
+	}
+	
 	/** Writes the response stream from the server as a String.
 	 * 
 	 * @param is the Server's InputStream

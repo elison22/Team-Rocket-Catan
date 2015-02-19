@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
-import shared.dto.Player;
+import shared.dto.Player_DTO;
 import client.base.*;
 import client.data.PlayerInfo;
 import facade.IClientFacade;
@@ -25,7 +25,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		playersInGame = 1;
 	}
 	
-	private PlayerInfo[] getPlayers(Player[] players) {
+	private PlayerInfo[] getPlayers(Player_DTO[] players) {
 		PlayerInfo[] playerInfoList = new PlayerInfo[players.length];
 		for (int i = 0; i < players.length; ++i) {
 			playerInfoList[i] = new PlayerInfo();
@@ -47,7 +47,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start() {
 
 		getView().setAIChoices(modelFacade.getAIList());
-		getView().setPlayers(getPlayers(new Player[] {modelFacade.getPlayerInfo()}));
+		getView().setPlayers(getPlayers(modelFacade.getPlayerList()));
 		getView().showModal();
 	}
 

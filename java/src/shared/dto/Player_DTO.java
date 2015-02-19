@@ -1,13 +1,13 @@
 package shared.dto;
 
-public class Player {
+public class Player_DTO {
 	private String color;
 	private String name;
 	private int id;
 	
-	public Player() {}
+	public Player_DTO() {}
 	
-	public Player(String color, String name, int id) {
+	public Player_DTO(String color, String name, int id) {
 		setColor(color);
 		setName(name);
 		setId(id);

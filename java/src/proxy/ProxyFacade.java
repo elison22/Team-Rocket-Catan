@@ -190,4 +190,9 @@ public class ProxyFacade implements IProxyFacade {
 	public boolean changeLogLevel(Object changeLogLevelParams) throws ServerException {
 		return util.changeLogLevel(changeLogLevelParams);
 	}
+	
+	@Override
+	public String getUserCookie() {
+		return ServerProxy.getInstance().getUserInfo();
+	}
 }

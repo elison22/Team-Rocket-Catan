@@ -6,8 +6,8 @@ import model.cards.ResourceSet;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
 import shared.definitions.ResourceType;
-import shared.dto.GameList;
-import shared.dto.Player;
+import shared.dto.Game_DTO;
+import shared.dto.Player_DTO;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -45,7 +45,7 @@ public interface IClientFacade {
     /**
      * @return list of all the games in progress
      */
-    public GameList[] getGames();
+    public Game_DTO[] getGames();
 
     /**
      * @param gameName name of the game user is trying to create
@@ -125,7 +125,7 @@ public interface IClientFacade {
      * @param AIType type of AI to add to the game
      * @return 
      */
-    public Player[] doAddAI(String AIType);
+    public Player_DTO[] doAddAI(String AIType);
 
     /**
      * @return list of the supoorted AI player types
@@ -330,7 +330,9 @@ public interface IClientFacade {
      */
     public boolean doDiscardCards(HashMap<ResourceType, Integer> cards);
 
-	public Player getPlayerInfo();
+	public Player_DTO getLocalPlayerInfo();
+
+	public Player_DTO[] getPlayerList();
 	
 	
 }

@@ -365,7 +365,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		case 1:
 			return CatanColor.ORANGE;
 		case 2:
-			return CatanColor.RED;
+			return CatanColor.BLUE;//RED
 		case 3:
 			return CatanColor.YELLOW;
 		case 4:

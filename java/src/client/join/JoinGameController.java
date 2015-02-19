@@ -5,8 +5,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
-import shared.dto.GameList;
-import shared.dto.Player;
+import shared.dto.Game_DTO;
+import shared.dto.Player_DTO;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
@@ -104,13 +104,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private void setGameList() {
 		ArrayList<GameInfo> gameInfo = new ArrayList<GameInfo>();
 		
-		for (GameList gL : modelFacade.getGames()) {
+		for (Game_DTO gL : modelFacade.getGames()) {
 			GameInfo gI = new GameInfo();
 			gI.setId(gL.getId());
 			gI.setTitle(gL.getTitle());
 			
 			int index = 0;
-			for (Player p : gL.getPlayers()) {
+			for (Player_DTO p : gL.getPlayers()) {
 				if (p.getName() == null)
 					continue;
 				
@@ -129,7 +129,24 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		GameInfo[] gameInfoArray = new GameInfo[gameInfo.size()];
 		gameInfoArray = gameInfo.toArray(gameInfoArray);
-		getJoinGameView().setGames(gameInfoArray, new PlayerInfo());
+		getJoinGameView().setGames(gameInfoArray, getLocalPlayer(modelFacade.getLocalPlayerInfo()));
+	}
+	
+	private PlayerInfo getLocalPlayer(Player_DTO player) {
+		PlayerInfo localPlayer = new PlayerInfo();
+		if (player.getColor() != null)
+			localPlayer.setColor(CatanColor.convert(player.getColor()));
+		localPlayer.setName(player.getName());
+		localPlayer.setId(player.getId());
+		return localPlayer;
+	}
+	
+	private void disableUsedColors() {
+		int localPlayerID = modelFacade.getLocalPlayerInfo().getId();
+		for (PlayerInfo p : joinGameInfo.getPlayers()) {
+			if (p.getColor() != null && p.getId() != localPlayerID)
+				getSelectColorView().setColorEnabled(p.getColor(), false);
+		}
 	}
 
 	@Override
@@ -166,8 +183,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-
+		
 		joinGameInfo = game;
+		disableUsedColors();
 		getSelectColorView().showModal();
 	}
 
@@ -179,8 +197,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		
-		if (modelFacade.joinGame(joinGameInfo.getId(), getSelectColorView().getSelectedColor().toString())) {
+		System.out.println(color.toString());
+		if (modelFacade.joinGame(joinGameInfo.getId(), color.toString())) {
 			// If join succeeded
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();

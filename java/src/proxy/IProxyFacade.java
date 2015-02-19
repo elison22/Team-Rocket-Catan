@@ -326,4 +326,6 @@ public interface IProxyFacade {
 	 * @throws ServerException 
 	 */
 	public boolean changeLogLevel(Object changeLogLevelParams) throws ServerException;
+
+	String getUserCookie();
 }
