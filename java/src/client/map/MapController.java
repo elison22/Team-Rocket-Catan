@@ -19,7 +19,6 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	private IRobView robView;
     private ClientFacade facade;
-    private AbstractMapState mapState;
 
     public MapController(IMapView view, IRobView robView, ClientFacade facade) {
         this(view, robView);

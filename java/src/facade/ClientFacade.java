@@ -3,7 +3,6 @@ package facade;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import model.board.BoardException;
@@ -24,21 +23,14 @@ import shared.dto.*;
 import shared.locations.*;
 import client.data.PlayerInfo;
 
-// this class needs to have canDo methods as well Do methods for any player actions
 public class ClientFacade extends Observable implements IClientFacade {
 
-    // create DTO's to pass to the proxy as parameters of the do methods
-    // when calling do methods, will receive a json string
-    // pass this json string to the serializer to deserialize it
-    // serializer will return client model object
-    // use the client model object to make a game model object
     private GameModel game;
     private Player_DTO localPlayer;
     private int playerIndex;
     private IProxyFacade proxy;
     private Serializer serializer;
     private ServerPoller poller;
-    private ArrayList<Observer> observers;
     public int versionNumber;
     
     public void updateGameModel(String json)
@@ -65,7 +57,6 @@ public class ClientFacade extends Observable implements IClientFacade {
     	proxy = new MockProxy();
     	game = new GameModel();
     	serializer = new Serializer();
-    	observers = new ArrayList<Observer>();
     }
 
     /**
@@ -75,7 +66,6 @@ public class ClientFacade extends Observable implements IClientFacade {
     	proxy = new ProxyFacade(host, port);
     	game = new GameModel();
     	serializer = new Serializer();
-    	observers = new ArrayList<Observer>();
     	localPlayer = new Player_DTO();
     }
 
@@ -546,22 +536,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 		info.setColor(CatanColor.convert(player.getColor()));
 		return info;
 	}
-	
-//	public PlayerInfo[] getPlayersInfos() {		
-//		ArrayList<Player> players = game.getPlayerList();
-//		PlayerInfo[] playersInfo = new PlayerInfo[players.size()];
-//		
-//		for(int i = 0; i < players.size(); i++) {
-//			PlayerInfo info = new PlayerInfo();
-//			info.setId(players.get(i).getPlayerID());
-//			info.setPlayerIndex(players.get(i).getPlayerIdx());
-//			info.setName(players.get(i).getName());
-//			info.setColor(CatanColor.convert(players.get(i).getColor()));
-//			
-//			playersInfo[i] = info;
-//		}
-//		return playersInfo;
-//	}
 	
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
