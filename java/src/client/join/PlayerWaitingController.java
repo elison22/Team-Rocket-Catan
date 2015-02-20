@@ -3,11 +3,12 @@ package client.join;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.game.TurnState;
 import shared.definitions.CatanColor;
 import shared.dto.Player_DTO;
-import client.base.*;
+import client.base.Controller;
 import client.data.PlayerInfo;
-import facade.IClientFacade;
+import facade.ClientFacade;
 
 
 /**
@@ -15,13 +16,14 @@ import facade.IClientFacade;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController, Observer {
 	
-	private IClientFacade modelFacade;
+	private ClientFacade modelFacade;
 	int playersInGame;
 
-	public PlayerWaitingController(IPlayerWaitingView view, IClientFacade modelFacade) {
+	public PlayerWaitingController(IPlayerWaitingView view, ClientFacade modelFacade) {
 
 		super(view);
 		this.modelFacade = modelFacade;
+		this.modelFacade.addObserver(this);
 		playersInGame = 1;
 	}
 	
@@ -64,8 +66,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		modelFacade = (ClientFacade)o;
+		playersInGame = modelFacade.getPlayersOfGame().size();
+		if(playersInGame == 4 && modelFacade.getGameState() == TurnState.FirstRound)
+			getView().closeModal();
+		else if(playersInGame < 4)
+			getView().setPlayers(modelFacade.getPlayersInfos());
 	}
 
 }
