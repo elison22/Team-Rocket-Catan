@@ -10,7 +10,7 @@ import shared.dto.Player_DTO;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
-import facade.IClientFacade;
+import facade.ClientFacade;
 
 
 /**
@@ -22,7 +22,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
-	private IClientFacade modelFacade;
+	private ClientFacade modelFacade;
 	private GameInfo joinGameInfo;
 	
 	/**
@@ -35,7 +35,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
 								ISelectColorView selectColorView, IMessageView messageView, 
-								IClientFacade modelFacade) {
+								ClientFacade modelFacade) {
 
 		super(view);
 
@@ -44,6 +44,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setMessageView(messageView);
 		
 		this.modelFacade = modelFacade;
+		modelFacade.addObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -197,7 +198,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		System.out.println(color.toString());
 		if (modelFacade.joinGame(joinGameInfo.getId(), color.toString())) {
 			// If join succeeded
 			getSelectColorView().closeModal();
@@ -208,7 +208,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		
+		// Only update if the player is viewing the game list and isn't trying
+		// to create a game or join a selected game
+		if (getJoinGameView().isModalShowing() && !getNewGameView().isModalShowing() 
+											   && !getSelectColorView().isModalShowing()) {
+			getJoinGameView().closeModal();
+			setGameList();
+			getJoinGameView().showModal();
+		}
 		
 	}
 

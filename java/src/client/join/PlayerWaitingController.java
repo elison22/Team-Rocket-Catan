@@ -66,12 +66,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void update(Observable o, Object arg) {
-		modelFacade = (ClientFacade)o;
-		playersInGame = modelFacade.getPlayersOfGame().size();
-		if(playersInGame == 4 && modelFacade.getGameState() == TurnState.FirstRound)
-			getView().closeModal();
-		else if(playersInGame < 4)
-			getView().setPlayers(modelFacade.getPlayersInfos());
+		if (getView().isModalShowing()) {
+			playersInGame = modelFacade.getPlayersOfGame().size();
+			if(playersInGame == 4 && modelFacade.getGameState() == TurnState.FirstRound)
+				getView().closeModal();
+			else if(playersInGame < 4)
+				getView().setPlayers(modelFacade.getPlayersInfos());
+		}
+		
 	}
 
 }

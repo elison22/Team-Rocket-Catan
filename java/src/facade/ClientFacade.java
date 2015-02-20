@@ -18,6 +18,7 @@ import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
+import serverpoller.ServerPoller;
 import shared.definitions.*;
 import shared.dto.*;
 import shared.locations.*;
@@ -36,6 +37,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     private int playerIndex;
     private IProxyFacade proxy;
     private Serializer serializer;
+    private ServerPoller poller;
     private ArrayList<Observer> observers;
     public int versionNumber;
     
@@ -51,6 +53,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 			e.printStackTrace();
 		}
     }
+    
+    public void updateGameList(String gameListJson) {
+    	
+    	// Notifies observers when gameList needs to be updated
+		update(serializer.deSerializeGameList(gameListJson));
+	}
     
     // For testing
     public ClientFacade() {
@@ -86,6 +94,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return false;
 		}
 		
+		// If login successful, initialize poller
+		poller = new ServerPoller(3000, proxy, this);
+		
 		localPlayer = serializer.deSerializeUserCookie(proxy.getUserCookie());
 		return true;
 	}
@@ -105,6 +116,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return false;
 		}
 		
+		// If login successful, initialize poller
+		poller = new ServerPoller(3000, proxy, this);
+				
 		localPlayer = serializer.deSerializeUserCookie(proxy.getUserCookie());
 		return true;
 	}
@@ -147,6 +161,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 			proxy.join(new JoinGame_Params(gameId, color));
 			updateGameModel(proxy.model(game.getVersionNumber()));
 			updated();
+			poller.setInGame(true);
 		} catch (ServerException e) {
 			e.printStackTrace();
 			return false;
@@ -556,6 +571,14 @@ public class ClientFacade extends Observable implements IClientFacade {
 		versionNumber = game.getVersionNumber();
 		setChanged();
 		notifyObservers();
+		clearChanged();
+	}
+	
+	// This allows us to pass objects to our observers. It will be up to the
+	// observers to make sure that the object passed is one they should use.
+	public void update(Object obj) {
+		setChanged();
+		notifyObservers(obj);
 		clearChanged();
 	}
 

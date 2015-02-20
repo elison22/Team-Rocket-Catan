@@ -47,7 +47,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		facade = (ClientFacade)o;
+		if (o != null) return;
+		
 		playerInfo = facade.getPlayerInfo();
 		TurnState turnState = facade.getGameState();
 		

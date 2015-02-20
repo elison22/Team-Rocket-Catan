@@ -17,6 +17,7 @@ public class ServerPoller {
 	
 	private IProxyFacade proxyFacade;
 	private ClientFacade clientFacade;
+	private boolean inGame;
 
 	// For Testing
 	public ServerPoller(int delay) {
@@ -36,6 +37,7 @@ public class ServerPoller {
 		this.DELAY = delay;
 		this.proxyFacade = proxyFacade;
 		this.clientFacade = clientFacade;
+		this.inGame = false;
 		setTimer();
 	}
 	
@@ -60,19 +62,37 @@ public class ServerPoller {
 	 */
 	public void pollServer() {
 		try {
-			String newModel = proxyFacade.model(clientFacade.getVersionNumber());
 			
-			// If version number matches Server version number
-			if (newModel.equals("true")) {
-				// Do nothing
-				return;
+			// If the client is currently in a game
+			if (inGame) {
+				String newModel = proxyFacade.model(clientFacade.getVersionNumber());
+				
+				// If version number matches Server version number
+				if (newModel.equals("true")) {
+					// Do nothing
+					return;
+				}
+				
+				// Update with the new model
+				clientFacade.updateGameModel(newModel);
+			} else {
+				String newGameList = proxyFacade.list();
+				
+				// Update with the new GameList
+				clientFacade.updateGameList(newGameList);
 			}
 			
-			// Update with the new model
-			clientFacade.updateGameModel(newModel);
 			
 		} catch (ServerException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean isInGame() {
+		return inGame;
+	}
+
+	public void setInGame(boolean inGame) {
+		this.inGame = inGame;
 	}
 }
