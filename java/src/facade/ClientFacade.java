@@ -3,7 +3,6 @@ package facade;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import model.board.BoardException;
@@ -38,7 +37,6 @@ public class ClientFacade extends Observable implements IClientFacade {
     private IProxyFacade proxy;
     private Serializer serializer;
     private ServerPoller poller;
-    private ArrayList<Observer> observers;
     public int versionNumber;
     
     public void updateGameModel(String json)
@@ -65,7 +63,6 @@ public class ClientFacade extends Observable implements IClientFacade {
     	proxy = new MockProxy();
     	game = new GameModel();
     	serializer = new Serializer();
-    	observers = new ArrayList<Observer>();
     }
 
     /**
@@ -75,7 +72,6 @@ public class ClientFacade extends Observable implements IClientFacade {
     	proxy = new ProxyFacade(host, port);
     	game = new GameModel();
     	serializer = new Serializer();
-    	observers = new ArrayList<Observer>();
     	localPlayer = new Player_DTO();
     }
 
@@ -547,22 +543,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return info;
 	}
 	
-//	public PlayerInfo[] getPlayersInfos() {		
-//		ArrayList<Player> players = game.getPlayerList();
-//		PlayerInfo[] playersInfo = new PlayerInfo[players.size()];
-//		
-//		for(int i = 0; i < players.size(); i++) {
-//			PlayerInfo info = new PlayerInfo();
-//			info.setId(players.get(i).getPlayerID());
-//			info.setPlayerIndex(players.get(i).getPlayerIdx());
-//			info.setName(players.get(i).getName());
-//			info.setColor(CatanColor.convert(players.get(i).getColor()));
-//			
-//			playersInfo[i] = info;
-//		}
-//		return playersInfo;
-//	}
-	
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
 	}
@@ -581,5 +561,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 		notifyObservers(obj);
 		clearChanged();
 	}
+
+    public TurnState getState() {
+        return game.getTurnState();
+    }
 
 }
