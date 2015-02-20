@@ -23,7 +23,6 @@ import shared.dto.*;
 import shared.locations.*;
 import client.data.PlayerInfo;
 
-// this class needs to have canDo methods as well Do methods for any player actions
 public class ClientFacade extends Observable implements IClientFacade {
 
     private GameModel game;
