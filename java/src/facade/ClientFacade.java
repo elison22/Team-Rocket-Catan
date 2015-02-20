@@ -9,6 +9,8 @@ import java.util.Random;
 import model.board.BoardException;
 import model.cards.ResourceSet;
 import model.game.GameModel;
+import model.game.TurnState;
+import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
 import proxy.IProxyFacade;
@@ -16,10 +18,35 @@ import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
-import shared.definitions.*;
-import shared.dto.*;
+import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.AddAI_Params;
+import shared.dto.BuildCity_Params;
+import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
+import shared.dto.BuyDevCard_Params;
+import shared.dto.CreateGame_Params;
+import shared.dto.DiscardCards_Params;
+import shared.dto.FinishTurn_Params;
+import shared.dto.Game_DTO;
+import shared.dto.JoinGame_Params;
+import shared.dto.Login_Params;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.Monument_Params;
+import shared.dto.OfferTrade_Params;
 import shared.dto.Player_DTO;
-import shared.locations.*;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 // this class needs to have canDo methods as well Do methods for any player actions
 public class ClientFacade extends Observable implements IClientFacade {
@@ -487,6 +514,33 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return false;
 		}
 		return true;
+	}
+	
+	public TurnState getGameState() {
+		return game.getTurnState();
+	}
+	
+	public int getLocalPlayerIndex() {
+		return playerIndex;
+	}
+	
+	public boolean isYourTurn(){
+		if(game.getPlayerTurn() == playerIndex)
+			return true;
+		
+		return false;
+	}
+	
+	public boolean hasLongestRoad() {
+		return playerIndex == game.getLongestRoad();
+	}
+	
+	public boolean hasLargestArmy() {
+		return playerIndex == game.getLargestArmy();
+	}
+	
+	public Player getLocalPlayer() {
+		return game.getPlayerList().get(playerIndex);
 	}
 	
 	@Override

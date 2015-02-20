@@ -77,6 +77,10 @@ public class GameModel {
     public int getLongestRoad() {
         return turnTracker.getLongestRoadPlayerIndex();
     }
+    
+    public int getLargestArmy() {
+    	return turnTracker.getLargestArmyPlayerIndex();
+    }
 
     public void setTurnTracker(TurnTracker turnTracker) {
         this.turnTracker = turnTracker;
