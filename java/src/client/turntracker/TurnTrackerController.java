@@ -3,6 +3,7 @@ package client.turntracker;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.definitions.CatanColor;
 import model.game.TurnState;
 import model.player.Player;
 import client.base.Controller;
@@ -47,9 +48,19 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void update(Observable o, Object arg) {
 		facade = (ClientFacade)o;
+		playerInfo = facade.getPlayerInfo();
 		TurnState turnState = facade.getGameState();
-		updateGameState(turnState);
-		updatePlayer();
+		
+		if(facade.getGameState() == TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
+			for (Player p : facade.getPlayersOfGame()) {
+				getView().initializePlayer(p.getPlayerIdx(), p.getName(), CatanColor.convert(p.getColor()));
+			}
+			getView().setLocalPlayerColor(playerInfo.getColor());
+			updatePlayer();
+		} else if(facade.getGameState() != TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
+			updateGameState(turnState);
+			updatePlayer();
+		}
 	}
 	
 	public void updateGameState(TurnState turnState) {
@@ -94,7 +105,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	public void updatePlayer() {
-		playerInfo = facade.getPlayerInfo();
 		Player player = facade.getLocalPlayer();
 		getView().updatePlayer(player.getPlayerIdx(), player.getVictoryPoints(), facade.isYourTurn(), facade.hasLargestArmy(), facade.hasLongestRoad());
 	}
