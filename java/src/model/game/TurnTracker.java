@@ -33,7 +33,10 @@ public class TurnTracker {
      */
     public TurnTracker()
     {
-
+    	currentPlayerIndex = -1;
+    	currentState = null;
+    	longestRoadPlayerIndex = -1;
+    	largestArmyPlayerIndex = -1;
     }
     
     public TurnTracker(JsonTurnTracker tracker)
@@ -60,7 +63,7 @@ public class TurnTracker {
      */
     public void setCurrentPlayerIndex(int nextPlayerIndex)
     {
-
+    	currentPlayerIndex = nextPlayerIndex;
     }
 
     /**
@@ -69,23 +72,23 @@ public class TurnTracker {
      */
     public void setCurrentState(TurnState newState)
     {
-
+    	currentState = newState;
     }
 
     /**
      * Updates the player with the largest army. Checks for valid input
-     * @param largestArmyPlayerIndex index of the player taking the largest army bonus
+     * @param largestArmy index of the player taking the largest army bonus
      */
-    public void setLargestArmyPlayerIndex(int largestArmyPlayerIndex) {
-
+    public void setLargestArmyPlayerIndex(int largestArmy) {
+    	largestArmyPlayerIndex = largestArmy;
     }
 
     /**
      * Updates the player with the longest road. Checks for valid input
      * @param longestRoadPlayerIndex index of the player taking the longest road bonus
      */
-    public void setLongestRoadPlayerIndex(int longestRoadPlayerIndex) {
-
+    public void setLongestRoadPlayerIndex(int longestRoadIndex) {
+    	longestRoadPlayerIndex = longestRoadIndex;
     }
 
     public int getLargestArmyPlayerIndex() {
