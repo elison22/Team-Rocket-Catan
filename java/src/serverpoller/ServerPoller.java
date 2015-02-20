@@ -44,6 +44,7 @@ public class ServerPoller {
 			
 			public void actionPerformed(ActionEvent actionEvent) {
 				pollServer();
+				//System.out.println("Working!!!!");
 			}
 			
 		});
