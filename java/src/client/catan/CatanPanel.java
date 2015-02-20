@@ -14,6 +14,7 @@ import client.misc.WaitView;
 import client.roll.RollController;
 import client.roll.RollResultView;
 import client.roll.RollView;
+import facade.ClientFacade;
 
 @SuppressWarnings("serial")
 public class CatanPanel extends JPanel
@@ -31,13 +32,13 @@ public class CatanPanel extends JPanel
 	private RollResultView rollResultView;
 	private RollController rollController;
 	
-	public CatanPanel()
+	public CatanPanel(ClientFacade facade)
 	{
 		this.setLayout(new BorderLayout());
 		
 		titlePanel = new TitlePanel();
 		midPanel = new MidPanel();
-		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
+		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(), facade);
 		rightPanel = new RightPanel(midPanel.getMapController());
 		
 		this.add(titlePanel, BorderLayout.NORTH);
