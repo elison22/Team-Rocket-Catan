@@ -582,4 +582,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 		clearChanged();
 	}
 
+    public TurnState getState() {
+        return game.getTurnState();
+    }
+
 }
