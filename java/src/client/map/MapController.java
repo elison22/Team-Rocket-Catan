@@ -2,12 +2,14 @@ package client.map;
 
 import java.util.*;
 
+import client.map.states.AbstractMapState;
 import facade.ClientFacade;
 import model.game.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+
 
 
 /**
@@ -115,7 +117,14 @@ public class MapController extends Controller implements IMapController, Observe
         TurnState curState = facade.getState();
         switch(curState){
             case Rolling:
+            case Robbing:
+            case Discarding:
                 break;
+            case FirstRound:
+            case SecondRound:
+            case Playing:
+                return facade.canBuildRoad(edgeLoc);
+            default:
 
 
         }
