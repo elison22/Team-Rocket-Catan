@@ -2,6 +2,8 @@ package client.map;
 
 import java.util.*;
 
+import facade.ClientFacade;
+import model.game.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -14,11 +16,16 @@ import client.data.*;
 public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
-	
+    private ClientFacade facade;
+    private AbstractMapState mapState;
+
+    public MapController(IMapView view, IRobView robView, ClientFacade facade) {
+        this(view, robView);
+        this.facade = facade;
+    }
+
 	public MapController(IMapView view, IRobView robView) {
-		
 		super(view);
-		
 		setRobView(robView);
 		
 		initFromModel();
@@ -104,7 +111,14 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
+
+        TurnState curState = facade.getState();
+        switch(curState){
+            case Rolling:
+                break;
+
+
+        }
 		return true;
 	}
 
