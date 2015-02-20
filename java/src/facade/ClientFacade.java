@@ -217,15 +217,15 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public Player_DTO[] doAddAI(String AIType) {
+	public boolean doAddAI(String AIType) {
 		try {
 			proxy.addAI(new AddAI_Params(AIType));
 			updateGameModel(proxy.model(game.getVersionNumber()));
 		} catch (ServerException e) {
-			return null;
+			return false;
 		}
 		
-		return getPlayerList();
+		return true;
 	}
 	
 	public Player_DTO getLocalPlayerInfo() {
@@ -547,21 +547,21 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return info;
 	}
 	
-	public PlayerInfo[] getPlayersInfos() {		
-		ArrayList<Player> players = game.getPlayerList();
-		PlayerInfo[] playersInfo = new PlayerInfo[players.size()];
-		
-		for(int i = 0; i < players.size(); i++) {
-			PlayerInfo info = new PlayerInfo();
-			info.setId(players.get(i).getPlayerID());
-			info.setPlayerIndex(players.get(i).getPlayerIdx());
-			info.setName(players.get(i).getName());
-			info.setColor(CatanColor.convert(players.get(i).getColor()));
-			
-			playersInfo[i] = info;
-		}
-		return playersInfo;
-	}
+//	public PlayerInfo[] getPlayersInfos() {		
+//		ArrayList<Player> players = game.getPlayerList();
+//		PlayerInfo[] playersInfo = new PlayerInfo[players.size()];
+//		
+//		for(int i = 0; i < players.size(); i++) {
+//			PlayerInfo info = new PlayerInfo();
+//			info.setId(players.get(i).getPlayerID());
+//			info.setPlayerIndex(players.get(i).getPlayerIdx());
+//			info.setName(players.get(i).getName());
+//			info.setColor(CatanColor.convert(players.get(i).getColor()));
+//			
+//			playersInfo[i] = info;
+//		}
+//		return playersInfo;
+//	}
 	
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();

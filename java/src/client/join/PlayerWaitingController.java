@@ -27,7 +27,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		playersInGame = 1;
 	}
 	
-	private PlayerInfo[] getPlayers(Player_DTO[] players) {
+	// Retrieves the list of players from the facade and converts them to an
+	// array of PlayerInfo that the view can use.
+	private void setPlayers() {
+		
+		// Retrieve list of players
+		Player_DTO[] players = modelFacade.getPlayerList();
+		
+		// Convert each player to a PlayerInfo object and add it to an array
 		PlayerInfo[] playerInfoList = new PlayerInfo[players.length];
 		for (int i = 0; i < players.length; ++i) {
 			playerInfoList[i] = new PlayerInfo();
@@ -35,43 +42,63 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			playerInfoList[i].setName(players[i].getName());
 			playerInfoList[i].setId(players[i].getId());
 		}
+		
+		// Set the current number of players to the size of the PlayerInfo array
 		playersInGame = playerInfoList.length;
-		return playerInfoList;
+		
+		// Set the view to reflect the new list of players
+		getView().setPlayers(playerInfoList);
 	}
 
 	@Override
 	public IPlayerWaitingView getView() {
-
 		return (IPlayerWaitingView)super.getView();
 	}
 
 	@Override
 	public void start() {
 
+		// Retrieve the list of valid AI types
 		getView().setAIChoices(modelFacade.getAIList());
-		getView().setPlayers(getPlayers(modelFacade.getPlayerList()));
-		getView().showModal();
-	}
-
-	@Override
-	public void addAI() {
 		
-		getView().setPlayers(getPlayers(modelFacade.doAddAI(getView().getSelectedAI())));
-		if (getView().isModalShowing()) {
-			getView().closeModal();
-		}
+		// Set the current number of players in the game
+		setPlayers();
+		
+		// If there are less than 4 players in the game, wait for more
 		if (playersInGame < 4)
 			getView().showModal();
 	}
 
 	@Override
+	public void addAI() {
+		
+		// Add selected AI type
+		if (modelFacade.doAddAI(getView().getSelectedAI())) {
+			
+			// Update player list
+			setPlayers();
+			
+			// Refresh view or leave it closed if 4 players have joined
+			if (getView().isModalShowing()) {
+				getView().closeModal();
+			}
+			if (playersInGame < 4)
+				getView().showModal();
+		}
+	}
+
+	@Override
 	public void update(Observable o, Object arg) {
+		
+		// If PlayerWaiting view isn't showing, don't do anything
 		if (getView().isModalShowing()) {
 			playersInGame = modelFacade.getPlayersOfGame().size();
+			
+			// Close modal if ready to start, otherwise update player list
 			if(playersInGame == 4 && modelFacade.getGameState() == TurnState.FirstRound)
 				getView().closeModal();
 			else if(playersInGame < 4)
-				getView().setPlayers(modelFacade.getPlayersInfos());
+				setPlayers();
 		}
 		
 	}

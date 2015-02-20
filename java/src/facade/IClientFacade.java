@@ -125,7 +125,7 @@ public interface IClientFacade {
      * @param AIType type of AI to add to the game
      * @return 
      */
-    public Player_DTO[] doAddAI(String AIType);
+    public boolean doAddAI(String AIType);
 
     /**
      * @return list of the supoorted AI player types

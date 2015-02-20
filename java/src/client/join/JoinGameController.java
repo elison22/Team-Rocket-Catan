@@ -103,48 +103,71 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	// Take game list from facade and turn it into GameInfo list that the
 	// JoinGameView can parse
 	private void setGameList() {
-		ArrayList<GameInfo> gameInfo = new ArrayList<GameInfo>();
+		ArrayList<GameInfo> gameInfoList = new ArrayList<GameInfo>();
 		
-		for (Game_DTO gL : modelFacade.getGames()) {
-			GameInfo gI = new GameInfo();
-			gI.setId(gL.getId());
-			gI.setTitle(gL.getTitle());
+		for (Game_DTO gameDTO : modelFacade.getGames()) {
 			
+			// Convert game to GameInfo's format
+			GameInfo gameInfo = new GameInfo();
+			gameInfo.setId(gameDTO.getId());
+			gameInfo.setTitle(gameDTO.getTitle());
+			
+			// Add players
 			int index = 0;
-			for (Player_DTO p : gL.getPlayers()) {
-				if (p.getName() == null)
+			for (Player_DTO playerDTO : gameDTO.getPlayers()) {
+				if (playerDTO.getName() == null)
 					continue;
 				
-				PlayerInfo pI = new PlayerInfo();
-				pI.setId(p.getId());
-				pI.setPlayerIndex(index);
-				pI.setName(p.getName());
-				if (p.getColor() != null)
-					pI.setColor(CatanColor.convert(p.getColor()));
+				PlayerInfo playerInfo = new PlayerInfo();
+				playerInfo.setId(playerDTO.getId());
+				playerInfo.setPlayerIndex(index);
+				playerInfo.setName(playerDTO.getName());
+				if (playerDTO.getColor() != null)
+					playerInfo.setColor(CatanColor.convert(playerDTO.getColor()));
 				
-				gI.addPlayer(pI);
+				gameInfo.addPlayer(playerInfo);
 				++index;
 			}
-			gameInfo.add(gI);
+			
+			// Add game to list
+			gameInfoList.add(gameInfo);
 		}
 		
-		GameInfo[] gameInfoArray = new GameInfo[gameInfo.size()];
-		gameInfoArray = gameInfo.toArray(gameInfoArray);
+		// Convert to array
+		GameInfo[] gameInfoArray = new GameInfo[gameInfoList.size()];
+		gameInfoArray = gameInfoList.toArray(gameInfoArray);
+		
+		// Set view's game list
 		getJoinGameView().setGames(gameInfoArray, getLocalPlayer(modelFacade.getLocalPlayerInfo()));
 	}
 	
+	// Converts the given local PlayerDTO to a PlayerInfo object that the view
+	// can use
 	private PlayerInfo getLocalPlayer(Player_DTO player) {
 		PlayerInfo localPlayer = new PlayerInfo();
+		
+		// If the player has an assigned color, retrieve it. Otherwise leave it
+		// null.
 		if (player.getColor() != null)
 			localPlayer.setColor(CatanColor.convert(player.getColor()));
+		
 		localPlayer.setName(player.getName());
 		localPlayer.setId(player.getId());
+		
 		return localPlayer;
 	}
 	
+	// Determines which colors have already been chosen/assigned to other
+	// players and disables them
 	private void disableUsedColors() {
+		
+		// Retrieve local player's id- since the player gets to rechoose their
+		// color when they join we don't want to disable their old color
 		int localPlayerID = modelFacade.getLocalPlayerInfo().getId();
+		
 		for (PlayerInfo p : joinGameInfo.getPlayers()) {
+			
+			// Make sure not to disable the localPlayer's old color
 			if (p.getColor() != null && p.getId() != localPlayerID)
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
@@ -152,19 +175,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
+		
+		// Update game list
 		setGameList();
+		
 		getJoinGameView().showModal();
 	}
 
 	@Override
 	public void startCreateNewGame() {
-		
 		getNewGameView().showModal();
 	}
 
 	@Override
 	public void cancelCreateNewGame() {
-		
 		getNewGameView().closeModal();
 	}
 
@@ -185,20 +209,26 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 		
+		// Remember the selected game
 		joinGameInfo = game;
+		
+		// Disable unavailable colors
 		disableUsedColors();
+		
 		getSelectColorView().showModal();
 	}
 
 	@Override
 	public void cancelJoinGame() {
-	
 		getJoinGameView().closeModal();
 	}
 
 	@Override
 	public void joinGame(CatanColor color) {
+		
+		// Attempt to the selected game with the selected color
 		if (modelFacade.joinGame(joinGameInfo.getId(), color.toString())) {
+			
 			// If join succeeded
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();

@@ -24,6 +24,7 @@ public class PollerTest {
 		cFacade = new ClientFacade();
 		proxy = new MockProxy();
 		poller = new ServerPoller(3000, proxy, cFacade);
+		poller.setInGame(true);
 	}
 
 	@Test
