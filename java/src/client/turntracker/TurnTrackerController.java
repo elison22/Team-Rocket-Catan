@@ -37,9 +37,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	private void initFromModel() {
-		playerInfo = facade.getPlayerInfo();
-		getView().setLocalPlayerColor(playerInfo.getColor());
-		getView().initializePlayer(playerInfo.getPlayerIndex(), playerInfo.getName(), playerInfo.getColor());
+		//playerInfo = facade.getPlayerInfo();
+		//getView().updateGameState("Waiting for other Players", false);
+		//getView().setLocalPlayerColor(playerInfo.getColor());
+		//getView().initializePlayer(playerInfo.getPlayerIndex(), playerInfo.getName(), playerInfo.getColor());
 
 	}
 
