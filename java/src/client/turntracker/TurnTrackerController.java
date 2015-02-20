@@ -5,8 +5,8 @@ import java.util.Observer;
 
 import model.game.TurnState;
 import model.player.Player;
-import shared.definitions.CatanColor;
 import client.base.Controller;
+import client.data.PlayerInfo;
 import facade.ClientFacade;
 
 /**
@@ -15,6 +15,7 @@ import facade.ClientFacade;
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 	
 	private ClientFacade facade;
+	private PlayerInfo playerInfo;
 
 	public TurnTrackerController(ITurnTrackerView view, ClientFacade fac) {
 		super(view);
@@ -36,8 +37,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	private void initFromModel() {
-		getView().setLocalPlayerColor(CatanColor.convert(facade.getLocalPlayerInfo().getColor()));
-		getView().initializePlayer(facade.getLocalPlayerIndex(), facade.getLocalPlayer().getName(), CatanColor.convert(facade.getLocalPlayer().getColor()));
+		playerInfo = facade.getPlayerInfo();
+		getView().setLocalPlayerColor(playerInfo.getColor());
+		getView().initializePlayer(playerInfo.getPlayerIndex(), playerInfo.getName(), playerInfo.getColor());
 
 	}
 
@@ -91,6 +93,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	public void updatePlayer() {
+		playerInfo = facade.getPlayerInfo();
 		Player player = facade.getLocalPlayer();
 		getView().updatePlayer(player.getPlayerIdx(), player.getVictoryPoints(), facade.isYourTurn(), facade.hasLargestArmy(), facade.hasLongestRoad());
 	}
