@@ -70,6 +70,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     	try 
     	{
 			game = serializer.deSerializeFromServer(game, json);
+			updated();
 		} 
     	catch (BoardException e) 
     	{
@@ -555,6 +556,22 @@ public class ClientFacade extends Observable implements IClientFacade {
 		info.setName(player.getName());
 		info.setColor(CatanColor.convert(player.getColor()));
 		return info;
+	}
+	
+	public PlayerInfo[] getPlayersInfos() {		
+		ArrayList<Player> players = game.getPlayerList();
+		PlayerInfo[] playersInfo = new PlayerInfo[players.size()];
+		
+		for(int i = 0; i < players.size(); i++) {
+			PlayerInfo info = new PlayerInfo();
+			info.setId(players.get(i).getPlayerID());
+			info.setPlayerIndex(players.get(i).getPlayerIdx());
+			info.setName(players.get(i).getName());
+			info.setColor(CatanColor.convert(players.get(i).getColor()));
+			
+			playersInfo[i] = info;
+		}
+		return playersInfo;
 	}
 	
 	public ArrayList<Player> getPlayersOfGame() {
