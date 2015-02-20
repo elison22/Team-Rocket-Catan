@@ -3,18 +3,23 @@ package client.turntracker;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.game.TurnState;
+import model.player.Player;
 import shared.definitions.CatanColor;
-import client.base.*;
+import client.base.Controller;
+import facade.ClientFacade;
 
 /**
  * Implementation for the turn tracker controller
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
+	
+	private ClientFacade facade;
 
-	public TurnTrackerController(ITurnTrackerView view) {
-		
+	public TurnTrackerController(ITurnTrackerView view, ClientFacade fac) {
 		super(view);
-		
+		fac.addObserver(this);
+		facade = fac;
 		initFromModel();
 	}
 	
@@ -26,19 +31,68 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-		
+		if(facade.canFinishTurn())
+			facade.finishTurn();
 	}
 	
 	private void initFromModel() {
-		//<temp>
-		getView().setLocalPlayerColor(CatanColor.RED);
-		//</temp>
+		getView().setLocalPlayerColor(CatanColor.convert(facade.getLocalPlayerInfo().getColor()));
+		getView().initializePlayer(facade.getLocalPlayerIndex(), facade.getLocalPlayer().getName(), CatanColor.convert(facade.getLocalPlayer().getColor()));
+
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		facade = (ClientFacade)o;
+		TurnState turnState = facade.getGameState();
+		updateGameState(turnState);
+		updatePlayer();
+	}
+	
+	public void updateGameState(TurnState turnState) {
+		switch(turnState) {
+			case Rolling:
+				if(facade.isYourTurn())
+					getView().updateGameState("Roll the Dice", false);
+				else
+					getView().updateGameState("Not Your Turn", false);
+				break;
+			case Robbing:
+				if(facade.isYourTurn())
+					getView().updateGameState("Place the Robber", false);
+				else
+					getView().updateGameState("Not Your Turn", false);
+				break;
+			case Playing:
+				if(facade.isYourTurn())
+					getView().updateGameState("Finish Turn", true);
+				else
+					getView().updateGameState("Not Your Turn", false);
+				break;
+			case Discarding:
+				if(facade.isYourTurn())
+					getView().updateGameState("Discard Cards", false);
+				else
+					getView().updateGameState("Not Your Turn", false);
+				break;
+			case FirstRound:
+				if(facade.isYourTurn())
+					getView().updateGameState("Place First Settlement", false);
+				else
+					getView().updateGameState("Not Your Turn", false);
+				break;
+			case SecondRound:
+				if(facade.isYourTurn())
+					getView().updateGameState("Place Second Settlement", false);
+				else
+					getView().updateGameState("Not Your Turn", false);
+				break;
+		}
+	}
+	
+	public void updatePlayer() {
+		Player player = facade.getLocalPlayer();
+		getView().updatePlayer(player.getPlayerIdx(), player.getVictoryPoints(), facade.isYourTurn(), facade.hasLargestArmy(), facade.hasLongestRoad());
 	}
 
 }
