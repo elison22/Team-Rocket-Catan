@@ -47,6 +47,7 @@ import shared.dto.YearOfPlenty_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.data.PlayerInfo;
 
 // this class needs to have canDo methods as well Do methods for any player actions
 public class ClientFacade extends Observable implements IClientFacade {
@@ -541,6 +542,17 @@ public class ClientFacade extends Observable implements IClientFacade {
 	
 	public Player getLocalPlayer() {
 		return game.getPlayerList().get(playerIndex);
+	}
+	
+	public PlayerInfo getPlayerInfo() {
+		Player player = game.getPlayerList().get(playerIndex);
+		PlayerInfo info = new PlayerInfo();
+		
+		info.setId(player.getPlayerID());
+		info.setPlayerIndex(playerIndex);
+		info.setName(player.getName());
+		info.setColor(CatanColor.convert(player.getColor()));
+		return info;
 	}
 	
 	@Override
