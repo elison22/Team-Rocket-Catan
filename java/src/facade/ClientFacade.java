@@ -63,6 +63,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     private IProxyFacade proxy;
     private Serializer serializer;
     private ArrayList<Observer> observers;
+    public int versionNumber;
     
     public void updateGameModel(String json)
     {
@@ -170,6 +171,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 		try {
 			proxy.join(new JoinGame_Params(gameId, color));
 			updateGameModel(proxy.model(game.getVersionNumber()));
+			updated();
 		} catch (ServerException e) {
 			e.printStackTrace();
 			return false;
@@ -555,12 +557,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return info;
 	}
 	
-	@Override
-	public void addObserver(Observer o) {
-		observers.add(o);
+	public ArrayList<Player> getPlayersOfGame() {
+		return game.getPlayerList();
 	}
 	
 	public void updated() {
+		versionNumber = game.getVersionNumber();
 		setChanged();
 		notifyObservers();
 		clearChanged();
