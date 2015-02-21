@@ -579,6 +579,10 @@ public class ClientFacade extends Observable implements IClientFacade {
     	return game.getTurnTracker();
     }
 
+    public HexLocation getRobberLoc() {
+        return game.getRobberLoc();
+    }
+
     public PortType getPortType(EdgeLocation loc) {
         return game.getPortType(loc);
     }

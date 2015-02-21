@@ -87,6 +87,8 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 		}
 
+        getView().placeRobber(facade.getRobberLoc());
+
 		PortType portType = PortType.BRICK;
 		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
@@ -94,8 +96,6 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-		
-		getView().placeRobber(new HexLocation(0, 0));
 		
 		getView().addNumber(new HexLocation(-2, 0), 2);
 		getView().addNumber(new HexLocation(-2, 1), 3);

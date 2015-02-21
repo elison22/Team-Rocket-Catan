@@ -326,6 +326,10 @@ public class GameModel {
 		return gameHistory;
 	}
 
+    public HexLocation getRobberLoc() {
+        return map.getRobberLoc();
+    }
+
     public PortType getPortType(EdgeLocation loc) {
         return map.getPortType(loc);
     }
