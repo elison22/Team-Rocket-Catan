@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
+import model.game.TurnState;
 import client.base.Controller;
 import facade.ClientFacade;
 
@@ -25,6 +26,7 @@ public class RollController extends Controller implements IRollController, Obser
 	public RollController(IRollView view, IRollResultView resultView, ClientFacade facade) {
 		super(view);
 		modelFacade = facade;
+		facade.addObserver(this);
 		
 		setResultView(resultView);
 	}
@@ -49,15 +51,17 @@ public class RollController extends Controller implements IRollController, Obser
 		Random rand = new Random();
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
 	    
-	    resultView.setRollValue(randomNum);
+	    getResultView().setRollValue(randomNum);
+	    getResultView().showModal();
 	    modelFacade.rollDice(randomNum);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(modelFacade.canRollDice())
-			rollDice();
-		
+		if(modelFacade.getTurnTacker() != null && modelFacade.canRollDice()) {
+			getRollView().setMessage("Roll the dice!");
+			getRollView().showModal();
+		}
 	}
 
 }
