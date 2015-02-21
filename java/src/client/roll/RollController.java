@@ -2,6 +2,7 @@ package client.roll;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 import client.base.Controller;
 import facade.ClientFacade;
@@ -41,13 +42,21 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-
 		getResultView().showModal();
+		int min = 2;
+		int max = 12;
+		
+		Random rand = new Random();
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	    
+	    resultView.setRollValue(randomNum);
+	    modelFacade.rollDice(randomNum);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		if(modelFacade.canRollDice())
+			rollDice();
 		
 	}
 
