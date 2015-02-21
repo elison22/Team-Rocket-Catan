@@ -31,17 +31,12 @@ public class MapController extends Controller implements IMapController, Observe
     private boolean playSecondRoad;
 
     public MapController(IMapView view, IRobView robView, ClientFacade facade) {
-        this(view, robView);
+        super(view);
+        setRobView(robView);
         this.facade = facade;
+        initFromModel();
         facade.addObserver(this);
     }
-
-	public MapController(IMapView view, IRobView robView) {
-		super(view);
-		setRobView(robView);
-		
-		initFromModel();
-	}
 	
 	public IMapView getView() {
 		

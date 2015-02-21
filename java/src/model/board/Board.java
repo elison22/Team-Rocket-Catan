@@ -631,7 +631,8 @@ public class Board {
 //==================== NEW BULL CRAP
 
     public HexType getHexType(HexLocation loc){
-        return tiles.get(loc).getType();
+        HexTile tile = tiles.get(loc);
+        return tile != null ? tile.getType() : HexType.WATER;
     }
 
 
