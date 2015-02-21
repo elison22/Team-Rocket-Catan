@@ -2,8 +2,8 @@ package client.map;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 
+import client.map.states.AbstractMapState;
 import model.game.TurnState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -19,7 +19,6 @@ import client.data.RobPlayerInfo;
 import facade.ClientFacade;
 
 
-
 /**
  * Implementation for the map controller
  */
@@ -28,10 +27,13 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
     private ClientFacade facade;
     private AbstractMapState mapState;
+    private EdgeLocation firstRoad;
+    private boolean playSecondRoad;
 
     public MapController(IMapView view, IRobView robView, ClientFacade facade) {
         this(view, robView);
         this.facade = facade;
+        facade.addObserver(this);
     }
 
 	public MapController(IMapView view, IRobView robView) {
@@ -54,44 +56,38 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-		
-		//<temp>
-		
-		Random rand = new Random();
 
 		for (int x = 0; x <= 3; ++x) {
 			
 			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {				
-				int r = rand.nextInt(HexType.values().length);
-				HexType hexType = HexType.values()[r];
+			for (int y = -3; y <= maxY; ++y) {
 				HexLocation hexLoc = new HexLocation(x, y);
+                HexType hexType = facade.getHexType(hexLoc);
 				getView().addHex(hexLoc, hexType);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+//						CatanColor.RED);
+//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+//						CatanColor.BLUE);
+//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+//						CatanColor.ORANGE);
+//				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
+//				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
 			
 			if (x != 0) {
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) {
-					int r = rand.nextInt(HexType.values().length);
-					HexType hexType = HexType.values()[r];
-					HexLocation hexLoc = new HexLocation(-x, y);
-					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+                    HexLocation hexLoc = new HexLocation(x, y);
+                    HexType hexType = facade.getHexType(hexLoc);
+                    getView().addHex(hexLoc, hexType);
+//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+//							CatanColor.RED);
+//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+//							CatanColor.BLUE);
+//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+//							CatanColor.ORANGE);
+//					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
+//					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 				}
 			}
 		}
@@ -127,11 +123,12 @@ public class MapController extends Controller implements IMapController, Observe
             case Rolling:
             case Robbing:
             case Discarding:
-                break;
+                return false;
             case FirstRound:
             case SecondRound:
             case Playing:
-                return facade.canBuildRoad(edgeLoc);
+//                if(playSecondRoad) return facade.canBuildRoad(firstRoad, edgeLoc);
+                /*else*/ return facade.canBuildRoad(edgeLoc);
             default:
 
 
@@ -190,7 +187,11 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playRoadBuildingCard() {	
-		
+		//build first road
+        playSecondRoad = true;
+
+
+        playSecondRoad = false;
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	

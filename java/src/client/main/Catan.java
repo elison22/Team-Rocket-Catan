@@ -8,6 +8,7 @@ import client.join.*;
 import client.misc.*;
 import client.base.*;
 import facade.ClientFacade;
+import model.board.BoardException;
 
 /**
  * Main entry point for the Catan program
@@ -57,8 +58,13 @@ public class Catan extends JFrame
 			public void run()
 			{
 				//new Catan();
-				ClientFacade modelFacade = new ClientFacade("localhost", "8081");
-				new Catan(modelFacade);
+                ClientFacade modelFacade = null;
+                try {
+                    modelFacade = new ClientFacade("localhost", "8081");
+                } catch (BoardException e) {
+                    e.printStackTrace();
+                }
+                new Catan(modelFacade);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(

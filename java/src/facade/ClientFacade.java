@@ -20,6 +20,7 @@ import serializer.Serializer;
 import serverpoller.ServerPoller;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.dto.AcceptTrade_Params;
 import shared.dto.AddAI_Params;
@@ -79,7 +80,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
     
     // For testing
-    public ClientFacade() {
+    public ClientFacade() throws BoardException {
     	proxy = new MockProxy();
     	game = new GameModel();
     	serializer = new Serializer();
@@ -88,7 +89,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     /**
      * Creates a new Game Object
      */
-    public ClientFacade(String host, String port) {
+    public ClientFacade(String host, String port) throws BoardException {
     	proxy = new ProxyFacade(host, port);
     	game = new GameModel();
     	serializer = new Serializer();
@@ -579,6 +580,10 @@ public class ClientFacade extends Observable implements IClientFacade {
     
     public TurnTracker getTurnTacker() {
     	return game.getTurnTracker();
+    }
+
+    public HexType getHexType(HexLocation loc) {
+        return game.getHexType(loc);
     }
 
 }

@@ -628,5 +628,12 @@ public class Board {
         return true;
     }
 
+//==================== NEW BULL CRAP
+
+    public HexType getHexType(HexLocation loc){
+        return tiles.get(loc).getType();
+    }
+
+
 }
 

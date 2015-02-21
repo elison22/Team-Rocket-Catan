@@ -10,8 +10,10 @@ import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 public class GameModel {
@@ -28,9 +30,10 @@ public class GameModel {
     private ArrayList<String> aiList;
     private int winner;
 
-    public GameModel() {
+    public GameModel() throws BoardException {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
+        map = new Board(false, false, false);
     	//winner = -1;
     }
 
@@ -321,5 +324,9 @@ public class GameModel {
 	{
 		return gameHistory;
 	}
+
+    public HexType getHexType(HexLocation loc) {
+        return map.getHexType(loc);
+    }
 
 }

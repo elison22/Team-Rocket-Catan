@@ -1,6 +1,8 @@
 package test.poller;
 
 import static org.junit.Assert.*;
+
+import model.board.BoardException;
 import org.junit.Before;
 import org.junit.Test;
 import facade.ClientFacade;
@@ -20,7 +22,7 @@ public class PollerTest {
 	IProxyFacade proxy;
 	
 	@Before
-	public void initPoller() {
+	public void initPoller() throws BoardException {
 		cFacade = new ClientFacade();
 		proxy = new MockProxy();
 		poller = new ServerPoller(3000, proxy, cFacade);
