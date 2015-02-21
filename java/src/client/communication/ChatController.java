@@ -1,6 +1,7 @@
 package client.communication;
 
-import client.base.*;
+import client.base.Controller;
+import facade.ClientFacade;
 
 
 /**
@@ -8,9 +9,11 @@ import client.base.*;
  */
 public class ChatController extends Controller implements IChatController {
 
-	public ChatController(IChatView view) {
-		
+	private ClientFacade modelFacade;
+	
+	public ChatController(IChatView view, ClientFacade facade) {
 		super(view);
+		modelFacade = facade;
 	}
 
 	@Override

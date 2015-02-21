@@ -3,9 +3,10 @@ package client.discard;
 import java.util.Observable;
 import java.util.Observer;
 
-import shared.definitions.*;
-import client.base.*;
-import client.misc.*;
+import shared.definitions.ResourceType;
+import client.base.Controller;
+import client.misc.IWaitView;
+import facade.ClientFacade;
 
 
 /**
@@ -14,6 +15,7 @@ import client.misc.*;
 public class DiscardController extends Controller implements IDiscardController, Observer {
 
 	private IWaitView waitView;
+	private ClientFacade modelFacade;
 	
 	/**
 	 * DiscardController constructor
@@ -21,9 +23,9 @@ public class DiscardController extends Controller implements IDiscardController,
 	 * @param view View displayed to let the user select cards to discard
 	 * @param waitView View displayed to notify the user that they are waiting for other players to discard
 	 */
-	public DiscardController(IDiscardView view, IWaitView waitView) {
-		
+	public DiscardController(IDiscardView view, IWaitView waitView, ClientFacade facade) {
 		super(view);
+		modelFacade = facade;
 		
 		this.waitView = waitView;
 	}

@@ -1,9 +1,15 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-import client.map.*;
+import javax.swing.JPanel;
+
+import client.map.IMapController;
+import client.map.MapController;
+import client.map.MapView;
+import client.map.RobView;
+import facade.ClientFacade;
 
 @SuppressWarnings("serial")
 public class MidPanel extends JPanel
@@ -15,12 +21,12 @@ public class MidPanel extends JPanel
 	private MapController mapController;
 	private GameStatePanel gameStatePanel;
 	
-	public MidPanel()
+	public MidPanel(ClientFacade facade)
 	{
 		
 		this.setLayout(new BorderLayout());
 		
-		tradePanel = new TradePanel();
+		tradePanel = new TradePanel(facade);
 		
 		mapView = new MapView();
 		robView = new RobView();

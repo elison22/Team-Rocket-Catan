@@ -3,7 +3,8 @@ package client.roll;
 import java.util.Observable;
 import java.util.Observer;
 
-import client.base.*;
+import client.base.Controller;
+import facade.ClientFacade;
 
 
 /**
@@ -12,6 +13,7 @@ import client.base.*;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
+	private ClientFacade modelFacade;
 
 	/**
 	 * RollController constructor
@@ -19,9 +21,9 @@ public class RollController extends Controller implements IRollController, Obser
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView) {
-
+	public RollController(IRollView view, IRollResultView resultView, ClientFacade facade) {
 		super(view);
+		modelFacade = facade;
 		
 		setResultView(resultView);
 	}

@@ -1,8 +1,13 @@
 package client.resources;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
-import client.base.*;
+import client.base.Controller;
+import client.base.IAction;
+import facade.ClientFacade;
 
 
 /**
@@ -11,10 +16,11 @@ import client.base.*;
 public class ResourceBarController extends Controller implements IResourceBarController, Observer {
 
 	private Map<ResourceBarElement, IAction> elementActions;
+	private ClientFacade modelFacade;
 	
-	public ResourceBarController(IResourceBarView view) {
-
+	public ResourceBarController(IResourceBarView view, ClientFacade facade) {
 		super(view);
+		modelFacade = facade;
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 	}

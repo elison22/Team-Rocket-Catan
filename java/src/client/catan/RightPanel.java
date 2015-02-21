@@ -1,13 +1,21 @@
 package client.catan;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 import shared.definitions.PieceType;
-import client.points.*;
-import client.resources.*;
-import client.base.*;
-import client.map.*;
-import client.devcards.*;
+import client.base.IAction;
+import client.devcards.BuyDevCardView;
+import client.devcards.DevCardController;
+import client.devcards.PlayDevCardView;
+import client.map.IMapController;
+import client.points.GameFinishedView;
+import client.points.PointsController;
+import client.points.PointsView;
+import client.resources.ResourceBarController;
+import client.resources.ResourceBarElement;
+import client.resources.ResourceBarView;
+import facade.ClientFacade;
 
 @SuppressWarnings("serial")
 public class RightPanel extends JPanel
@@ -22,7 +30,7 @@ public class RightPanel extends JPanel
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController)
+	public RightPanel(final IMapController mapController, ClientFacade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -46,7 +54,7 @@ public class RightPanel extends JPanel
 			}
 		};
 		devCardController = new DevCardController(playCardView, buyCardView,
-												  soldierAction, roadAction);
+												  soldierAction, roadAction, facade);
 		playCardView.setController(devCardController);
 		buyCardView.setController(devCardController);
 		
@@ -54,13 +62,13 @@ public class RightPanel extends JPanel
 		//
 		pointsView = new PointsView();
 		finishedView = new GameFinishedView();
-		pointsController = new PointsController(pointsView, finishedView);
+		pointsController = new PointsController(pointsView, finishedView, facade);
 		pointsView.setController(pointsController);
 		
 		// Initialize resource bar view and controller
 		//
 		resourceView = new ResourceBarView();
-		resourceController = new ResourceBarController(resourceView);
+		resourceController = new ResourceBarController(resourceView, facade);
 		resourceController.setElementAction(ResourceBarElement.ROAD,
 											createStartMoveAction(mapController,
 																  PieceType.ROAD));

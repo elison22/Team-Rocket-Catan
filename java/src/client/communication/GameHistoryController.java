@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import client.base.Controller;
+import facade.ClientFacade;
 
 
 /**
@@ -14,9 +15,11 @@ import client.base.Controller;
  */
 public class GameHistoryController extends Controller implements IGameHistoryController, Observer {
 
-	public GameHistoryController(IGameHistoryView view) {
-		
+	private ClientFacade modelFacade;
+	
+	public GameHistoryController(IGameHistoryView view, ClientFacade facade) {
 		super(view);
+		modelFacade = facade;
 		
 		initFromModel();
 	}

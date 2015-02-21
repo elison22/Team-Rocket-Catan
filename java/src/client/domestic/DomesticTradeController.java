@@ -3,9 +3,10 @@ package client.domestic;
 import java.util.Observable;
 import java.util.Observer;
 
-import shared.definitions.*;
-import client.base.*;
-import client.misc.*;
+import shared.definitions.ResourceType;
+import client.base.Controller;
+import client.misc.IWaitView;
+import facade.ClientFacade;
 
 /**
  * Domestic trade controller implementation
@@ -15,6 +16,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
+	private ClientFacade modelFacade;
 
 	/**
 	 * DomesticTradeController constructor
@@ -25,9 +27,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
-
+									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, ClientFacade facade) {
 		super(tradeView);
+		modelFacade = facade;
 		
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
