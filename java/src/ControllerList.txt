@@ -3,11 +3,11 @@ Controller List:
 ----- WORKING ON -------- Implementor -----
 5. ChatController			- Chad
 6. MapController			- Brandt/Hayden
+7. RollController			- Andrew (maybe done?)
 8. ResourceBarController	- Gavin
 9. DevCardController		- Gavin
 
 ----- TO-DO -----
-7. RollController
 10. DiscardController
 11. DomesticTradeController
 12. MaritimeTradeController
