@@ -3,7 +3,6 @@ Controller List:
 ----- WORKING ON -------- Implementor -----
 5. ChatController			- Chad
 6. MapController			- Brandt/Hayden
-7. RollController			- Andrew (maybe done?)
 8. ResourceBarController	- Gavin
 9. DevCardController		- Gavin
 
@@ -19,3 +18,4 @@ Controller List:
 2. JoinGameController
 3. PlayerWaitingController
 4. TurnTrackerController
+7. RollController		
