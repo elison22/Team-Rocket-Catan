@@ -26,7 +26,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	public DiscardController(IDiscardView view, IWaitView waitView, ClientFacade facade) {
 		super(view);
 		modelFacade = facade;
-		
+		facade.addObserver(this);
 		this.waitView = waitView;
 	}
 

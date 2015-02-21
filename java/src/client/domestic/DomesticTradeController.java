@@ -30,7 +30,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, ClientFacade facade) {
 		super(tradeView);
 		modelFacade = facade;
-		
+		facade.addObserver(this);
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);

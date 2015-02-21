@@ -20,7 +20,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	public GameHistoryController(IGameHistoryView view, ClientFacade facade) {
 		super(view);
 		modelFacade = facade;
-		
+		facade.addObserver(this);
 		initFromModel();
 	}
 	

@@ -30,7 +30,7 @@ public class DevCardController extends Controller implements IDevCardController,
 								IAction soldierAction, IAction roadAction, ClientFacade facade) {
 		super(view);
 		modelFacade = facade;
-		
+		facade.addObserver(this);
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;

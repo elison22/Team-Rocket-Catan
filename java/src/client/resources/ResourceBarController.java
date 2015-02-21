@@ -21,7 +21,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public ResourceBarController(IResourceBarView view, ClientFacade facade) {
 		super(view);
 		modelFacade = facade;
-		
+		facade.addObserver(this);
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 	}
 
