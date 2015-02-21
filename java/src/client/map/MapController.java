@@ -54,11 +54,13 @@ public class MapController extends Controller implements IMapController, Observe
 
 		for (int x = 0; x <= 3; ++x) {
 			
-			int maxY = 3 - x;			
+			int maxY = 3 - x;
 			for (int y = -3; y <= maxY; ++y) {
 				HexLocation hexLoc = new HexLocation(x, y);
                 HexType hexType = facade.getHexType(hexLoc);
-				getView().addHex(hexLoc, hexType);
+                int resourceNum = facade.getChit(hexLoc);
+                getView().addHex(hexLoc, hexType);
+                getView().addNumber(hexLoc, resourceNum);
 //				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 //						CatanColor.RED);
 //				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
@@ -74,7 +76,9 @@ public class MapController extends Controller implements IMapController, Observe
 				for (int y = minY; y <= 3; ++y) {
                     HexLocation hexLoc = new HexLocation(-x, y);
                     HexType hexType = facade.getHexType(hexLoc);
+                    int resourceNum = facade.getChit(hexLoc);
                     getView().addHex(hexLoc, hexType);
+                    getView().addNumber(hexLoc, resourceNum);
 //					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
 //							CatanColor.RED);
 //					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
@@ -90,12 +94,17 @@ public class MapController extends Controller implements IMapController, Observe
         getView().placeRobber(facade.getRobberLoc());
 
 		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+        getView().addPort(new EdgeLocation(new HexLocation(-1, -2), EdgeDirection.South), portType); //Wheat Port
+        getView().addPort(new EdgeLocation(new HexLocation(1, -3), EdgeDirection.South), portType); //Ore Port
+        getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType); //Top Right 3for1 Port
+		getView().addPort(new EdgeLocation(new HexLocation(3, -1), EdgeDirection.NorthWest), portType); //Sheep Port
+		getView().addPort(new EdgeLocation(new HexLocation(2, 1), EdgeDirection.NorthWest), portType); //Bottom Right 3for1 Port
+		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType); //Bottom 3for1 Port
+		getView().addPort(new EdgeLocation(new HexLocation(-2, 3), EdgeDirection.NorthEast), portType); //Brick Port
+		getView().addPort(new EdgeLocation(new HexLocation(-3, 2), EdgeDirection.NorthEast), portType); //Wood Port
+		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType); //Top Left 3for1 Port
+
+		getView().placeRobber(new HexLocation(0, 0));
 		
 		getView().addNumber(new HexLocation(-2, 0), 2);
 		getView().addNumber(new HexLocation(-2, 1), 3);

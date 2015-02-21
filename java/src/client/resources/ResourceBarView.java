@@ -2,12 +2,9 @@ package client.resources;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -20,9 +17,7 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import shared.definitions.ResourceType;
 import client.base.*;
-import client.discard.DiscardView;
 import client.utils.FontUtils;
 import client.utils.ImageUtils;
 
