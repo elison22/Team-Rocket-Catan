@@ -494,10 +494,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return true;
 	}
 	
-	public TurnState getGameState() {
-		return game.getTurnState();
-	}
-	
 	public int getLocalPlayerIndex() {
 		return playerIndex;
 	}
