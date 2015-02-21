@@ -1,14 +1,22 @@
 package client.map;
 
-import java.util.*;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Random;
 
-import client.map.states.AbstractMapState;
+import model.game.TurnState;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import client.base.Controller;
+import client.data.RobPlayerInfo;
 import facade.ClientFacade;
-import model.game.*;
-import shared.definitions.*;
-import shared.locations.*;
-import client.base.*;
-import client.data.*;
 
 
 

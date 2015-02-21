@@ -3,12 +3,12 @@ package facade;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Random;
 
 import model.board.BoardException;
 import model.cards.ResourceSet;
 import model.game.GameModel;
 import model.game.TurnState;
+import model.game.TurnTracker;
 import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
@@ -18,9 +18,35 @@ import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
 import serverpoller.ServerPoller;
-import shared.definitions.*;
-import shared.dto.*;
-import shared.locations.*;
+import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.AddAI_Params;
+import shared.dto.BuildCity_Params;
+import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
+import shared.dto.BuyDevCard_Params;
+import shared.dto.CreateGame_Params;
+import shared.dto.DiscardCards_Params;
+import shared.dto.FinishTurn_Params;
+import shared.dto.Game_DTO;
+import shared.dto.JoinGame_Params;
+import shared.dto.Login_Params;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.Monument_Params;
+import shared.dto.OfferTrade_Params;
+import shared.dto.Player_DTO;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import client.data.PlayerInfo;
 
 public class ClientFacade extends Observable implements IClientFacade {
@@ -259,12 +285,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean rollDice() {
-		int min = 2;
-		int max = 12;
-		
-		Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	public boolean rollDice(int randomNum) {
 	    try {
 			game = serializer.deSerializeFromServer(game, proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum)));	
 		} catch (ServerException | BoardException e) {
@@ -499,10 +520,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return true;
 	}
 	
-	public TurnState getGameState() {
-		return game.getTurnState();
-	}
-	
 	public int getLocalPlayerIndex() {
 		return playerIndex;
 	}
@@ -558,6 +575,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 
     public TurnState getState() {
         return game.getTurnState();
+    }
+    
+    public TurnTracker getTurnTacker() {
+    	return game.getTurnTracker();
     }
 
 }

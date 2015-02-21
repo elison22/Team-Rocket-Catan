@@ -148,7 +148,7 @@ public interface IClientFacade {
     /**
      * Allows the user to roll the dice to start his turn
      */
-    public boolean rollDice();
+    public boolean rollDice(int num);
 
     /**
      * Checks if player can move robber piece

@@ -3,8 +3,9 @@ package client.maritime;
 import java.util.Observable;
 import java.util.Observer;
 
-import shared.definitions.*;
-import client.base.*;
+import shared.definitions.ResourceType;
+import client.base.Controller;
+import facade.ClientFacade;
 
 
 /**
@@ -13,11 +14,12 @@ import client.base.*;
 public class MaritimeTradeController extends Controller implements IMaritimeTradeController, Observer {
 
 	private IMaritimeTradeOverlay tradeOverlay;
+	private ClientFacade modelFacade;
 	
-	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
-		
+	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay, ClientFacade facade) {
 		super(tradeView);
-
+		modelFacade = facade;
+		facade.addObserver(this);
 		setTradeOverlay(tradeOverlay);
 	}
 	

@@ -3,7 +3,8 @@ package client.points;
 import java.util.Observable;
 import java.util.Observer;
 
-import client.base.*;
+import client.base.Controller;
+import facade.ClientFacade;
 
 
 /**
@@ -12,6 +13,7 @@ import client.base.*;
 public class PointsController extends Controller implements IPointsController, Observer {
 
 	private IGameFinishedView finishedView;
+	private ClientFacade modelFacade;
 	
 	/**
 	 * PointsController constructor
@@ -19,12 +21,12 @@ public class PointsController extends Controller implements IPointsController, O
 	 * @param view Points view
 	 * @param finishedView Game finished view, which is displayed when the game is over
 	 */
-	public PointsController(IPointsView view, IGameFinishedView finishedView) {
-		
+	public PointsController(IPointsView view, IGameFinishedView finishedView, ClientFacade facade) {
 		super(view);
 		
 		setFinishedView(finishedView);
-		
+		modelFacade = facade;
+		facade.addObserver(this);
 		initFromModel();
 	}
 	

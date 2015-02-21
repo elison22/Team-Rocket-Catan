@@ -1,11 +1,21 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
 
-import client.domestic.*;
-import client.maritime.*;
-import client.misc.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+import client.domestic.AcceptTradeOverlay;
+import client.domestic.DomesticTradeController;
+import client.domestic.DomesticTradeOverlay;
+import client.domestic.DomesticTradeView;
+import client.maritime.MaritimeTradeController;
+import client.maritime.MaritimeTradeOverlay;
+import client.maritime.MaritimeTradeView;
+import client.misc.WaitView;
+import facade.ClientFacade;
 
 @SuppressWarnings("serial")
 public class TradePanel extends JPanel
@@ -21,7 +31,7 @@ public class TradePanel extends JPanel
 	private MaritimeTradeOverlay maritimeOverlay;
 	private MaritimeTradeController maritimeController;
 	
-	public TradePanel()
+	public TradePanel(ClientFacade facade)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -34,7 +44,7 @@ public class TradePanel extends JPanel
 		domesticController = new DomesticTradeController(domesticView,
 														 domesticOverlay,
 														 domesticWaitView,
-														 domesticAcceptOverlay);
+														 domesticAcceptOverlay, facade);
 		domesticView.setController(domesticController);
 		domesticOverlay.setController(domesticController);
 		domesticWaitView.setController(domesticController);
@@ -43,7 +53,7 @@ public class TradePanel extends JPanel
 		maritimeView = new MaritimeTradeView();
 		maritimeOverlay = new MaritimeTradeOverlay();
 		maritimeController = new MaritimeTradeController(maritimeView,
-														 maritimeOverlay);
+														 maritimeOverlay, facade);
 		maritimeView.setController(maritimeController);
 		maritimeOverlay.setController(maritimeController);
 		

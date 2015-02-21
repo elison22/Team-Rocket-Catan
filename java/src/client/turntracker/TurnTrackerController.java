@@ -50,15 +50,15 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		if (arg != null) return;
 		
 		playerInfo = facade.getPlayerInfo();
-		TurnState turnState = facade.getGameState();
+		TurnState turnState = facade.getState();
 		
-		if(facade.getGameState() == TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
+		if(facade.getState() == TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
 			for (Player p : facade.getPlayersOfGame()) {
 				getView().initializePlayer(p.getPlayerIdx(), p.getName(), CatanColor.convert(p.getColor()));
 			}
 			getView().setLocalPlayerColor(playerInfo.getColor());
 			updatePlayer();
-		} else if(facade.getGameState() != TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
+		} else if(facade.getState() != TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
 			updateGameState(turnState);
 			updatePlayer();
 		}

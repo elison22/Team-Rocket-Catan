@@ -2,8 +2,11 @@ package client.roll;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
-import client.base.*;
+import model.game.TurnState;
+import client.base.Controller;
+import facade.ClientFacade;
 
 
 /**
@@ -12,6 +15,7 @@ import client.base.*;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
+	private ClientFacade modelFacade;
 
 	/**
 	 * RollController constructor
@@ -19,9 +23,10 @@ public class RollController extends Controller implements IRollController, Obser
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView) {
-
+	public RollController(IRollView view, IRollResultView resultView, ClientFacade facade) {
 		super(view);
+		modelFacade = facade;
+		facade.addObserver(this);
 		
 		setResultView(resultView);
 	}
@@ -39,14 +44,24 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-
 		getResultView().showModal();
+		int min = 2;
+		int max = 12;
+		
+		Random rand = new Random();
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	    
+	    getResultView().setRollValue(randomNum);
+	    getResultView().showModal();
+	    modelFacade.rollDice(randomNum);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if(modelFacade.getTurnTacker() != null && modelFacade.canRollDice()) {
+			getRollView().setMessage("Roll the dice!");
+			getRollView().showModal();
+		}
 	}
 
 }

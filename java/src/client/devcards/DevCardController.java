@@ -4,7 +4,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.ResourceType;
-import client.base.*;
+import client.base.Controller;
+import client.base.IAction;
+import facade.ClientFacade;
 
 /**
  * "Dev card" controller implementation
@@ -14,6 +16,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private ClientFacade modelFacade;
 	
 	/**
 	 * DevCardController constructor
@@ -24,10 +27,10 @@ public class DevCardController extends Controller implements IDevCardController,
 	 * @param roadAction Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".
 	 */
 	public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, 
-								IAction soldierAction, IAction roadAction) {
-
+								IAction soldierAction, IAction roadAction, ClientFacade facade) {
 		super(view);
-		
+		modelFacade = facade;
+		facade.addObserver(this);
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
