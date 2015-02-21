@@ -72,7 +72,7 @@ public class MapController extends Controller implements IMapController, Observe
 			if (x != 0) {
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) {
-                    HexLocation hexLoc = new HexLocation(x, y);
+                    HexLocation hexLoc = new HexLocation(-x, y);
                     HexType hexType = facade.getHexType(hexLoc);
                     getView().addHex(hexLoc, hexType);
 //					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
@@ -86,7 +86,7 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 			}
 		}
-		
+
 		PortType portType = PortType.BRICK;
 		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);

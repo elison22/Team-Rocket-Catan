@@ -18,10 +18,7 @@ import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
 import serverpoller.ServerPoller;
-import shared.definitions.CatanColor;
-import shared.definitions.DevCardType;
-import shared.definitions.HexType;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 import shared.dto.AcceptTrade_Params;
 import shared.dto.AddAI_Params;
 import shared.dto.BuildCity_Params;
@@ -580,6 +577,10 @@ public class ClientFacade extends Observable implements IClientFacade {
     
     public TurnTracker getTurnTacker() {
     	return game.getTurnTracker();
+    }
+
+    public PortType getPortType(EdgeLocation loc) {
+        return game.getPortType(loc);
     }
 
     public HexType getHexType(HexLocation loc) {

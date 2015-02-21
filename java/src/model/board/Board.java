@@ -29,6 +29,7 @@ public class Board {
     private HashMap<EdgeLocation, Constructable> roads = new HashMap<EdgeLocation, Constructable>();
     /** The port vertices on this Board */
     private HashMap<VertexLocation, PortType> ports = new HashMap<VertexLocation, PortType>();
+    private HashMap<EdgeLocation, PortType> portTypes = new HashMap<EdgeLocation, PortType>();
     /** The HexLocation that represents the robber */
     private HexLocation robber;
 
@@ -139,6 +140,7 @@ public class Board {
 
         for (EdgeLocation location : portLocArray) {
             if (randomPortTypes) portIndex = portRand.nextInt(portTypeArray.size());
+            portTypes.put(location.getNormalizedLocation(), portTypeArray.get(portIndex));
             buildPortPair(location, portTypeArray.get(portIndex));
             portTypeArray.remove(portIndex);
         }
@@ -161,25 +163,25 @@ public class Board {
         HexTile tile;
 
         // Update the hexes
-        int originalCount = tiles.size();
         for (JsonHex hex : newMap.getHexes()) {
             hexloc = new HexLocation(hex.getLocation().getX(), hex.getLocation().getY());
             tile = new HexTile(HexType.convert(hex.getResource()),hex.getNumber());
             tiles.put(hexloc, tile);
         }
-        //if (originalCount != tiles.size()) throw new BoardException("The tiles map had new elements added.");
 
         // Update the ports
-        originalCount = ports.size();
         for (JsonPort doublePort : newMap.getPorts()) {
             hexloc = new HexLocation(doublePort.getLocation().getX(), doublePort.getLocation().getY());
             edge = new EdgeLocation(hexloc, EdgeDirection.convert(doublePort.getDirection()));
-            if(doublePort.getRatio() == 3)
-            	buildPortPair(edge, PortType.THREE_FOR_ONE);
-            else
-            	buildPortPair(edge, PortType.convert(doublePort.getResource()));
+            if(doublePort.getRatio() == 3) {
+                buildPortPair(edge, PortType.THREE_FOR_ONE);
+                portTypes.put(edge.getNormalizedLocation(), PortType.THREE_FOR_ONE);
+            }
+            else {
+                buildPortPair(edge, PortType.convert(doublePort.getResource()));
+                portTypes.put(edge.getNormalizedLocation(), PortType.convert(doublePort.getResource()));
+            }
         }
-        //if (originalCount != ports.size()) throw new BoardException("The ports map had new elements added.");
 
         // Update the settlements
         for (JsonVertexObject settlement : newMap.getSettlements()) {
@@ -237,6 +239,8 @@ public class Board {
     public HexTile getRobberTile() {
         return tiles.get(robber);
     }
+
+    public HexLocation getRobberLoc() { return robber; }
 
     /**
      * Determines whether or not a player can build a Settlement-type Constructable on this
@@ -630,10 +634,15 @@ public class Board {
 
 //==================== NEW BULL CRAP
 
+    public PortType getPortType(EdgeLocation loc) {
+        return portTypes.get(loc.getNormalizedLocation());
+    }
+
     public HexType getHexType(HexLocation loc){
         HexTile tile = tiles.get(loc);
         return tile != null ? tile.getType() : HexType.WATER;
     }
+
 
 
 }

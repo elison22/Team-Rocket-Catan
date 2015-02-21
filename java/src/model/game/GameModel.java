@@ -11,6 +11,7 @@ import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -324,6 +325,10 @@ public class GameModel {
 	{
 		return gameHistory;
 	}
+
+    public PortType getPortType(EdgeLocation loc) {
+        return map.getPortType(loc);
+    }
 
     public HexType getHexType(HexLocation loc) {
         return map.getHexType(loc);
