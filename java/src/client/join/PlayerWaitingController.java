@@ -95,7 +95,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			playersInGame = modelFacade.getPlayersOfGame().size();
 			
 			// Close modal if ready to start, otherwise update player list
-			if(playersInGame == 4 && modelFacade.getGameState() == TurnState.FirstRound)
+			if(playersInGame == 4 && modelFacade.getState() == TurnState.FirstRound)
 				getView().closeModal();
 			else if(playersInGame < 4)
 				setPlayers();
