@@ -259,12 +259,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean rollDice() {
-		int min = 2;
+	public boolean rollDice(int randomNum) {
+		/*int min = 2;
 		int max = 12;
 		
 		Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	    int randomNum = rand.nextInt((max - min) + 1) + min;*/
 	    try {
 			game = serializer.deSerializeFromServer(game, proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum)));	
 		} catch (ServerException | BoardException e) {
