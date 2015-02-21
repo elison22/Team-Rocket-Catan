@@ -2,7 +2,6 @@ package client.roll;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.net.MalformedURLException;
 
 import javax.swing.*;
 

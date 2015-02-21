@@ -635,6 +635,10 @@ public class Board {
         return tile != null ? tile.getType() : HexType.WATER;
     }
 
+    public int getChit(HexLocation loc){
+        HexTile tile = tiles.get(loc);
+        return tile != null ? tile.getDiceNum() : 0;
+    }
 
 }
 

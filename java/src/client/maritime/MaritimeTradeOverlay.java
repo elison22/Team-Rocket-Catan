@@ -67,10 +67,10 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 	}
 
 	private void initImages() {
-		resourceImageFolder = "images"+File.separator+"resources"+File.separator;
+		resourceImageFolder = "images" +File.separator+"resources"+File.separator;
 	
 		
-		reloadImg = ImageUtils.loadImage("images"+File.separator+"misc"+File.separator+"reload.png");
+		reloadImg = ImageUtils.loadImage("images" +File.separator+"misc"+File.separator+"reload.png");
 		
 		woodImg = ImageUtils.loadImage(resourceImageFolder+"wood.png");
 		brickImg = ImageUtils.loadImage(resourceImageFolder+"brick.png");

@@ -642,6 +642,9 @@ public class MapComponent extends JComponent
 		
 		for (Map.Entry<HexLocation, Integer> entry : numbers.entrySet())
 		{
+            if(entry.getValue() == 0){
+                continue;
+            }
 			
 			BufferedImage numImage = getNumberImage(entry.getValue());
 			

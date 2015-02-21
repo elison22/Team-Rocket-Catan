@@ -586,4 +586,8 @@ public class ClientFacade extends Observable implements IClientFacade {
         return game.getHexType(loc);
     }
 
+    public int getChit(HexLocation loc) {
+        return game.getChit(loc);
+    }
+
 }

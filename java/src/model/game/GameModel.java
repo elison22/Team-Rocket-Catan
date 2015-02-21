@@ -329,4 +329,8 @@ public class GameModel {
         return map.getHexType(loc);
     }
 
+    public int getChit(HexLocation loc) {
+        return map.getChit(loc);
+    }
+
 }
