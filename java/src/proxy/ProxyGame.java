@@ -18,7 +18,8 @@ public class ProxyGame {
 	 * @throws ServerException 
 	 */
 	public String model(int modelVersion) throws ServerException {
-		return ServerProxy.getInstance().doGet("/game/model", modelVersion);
+		String encodedVersion = ServerProxy.getInstance().encodeInt(modelVersion);
+		return ServerProxy.getInstance().doGet("/game/model" + "?" + encodedVersion, null);
 	}
 
 	/**(POST) Asks the server to clear the current game's command 

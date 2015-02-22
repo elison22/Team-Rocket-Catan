@@ -4,7 +4,6 @@ package model.chat;
 import java.util.ArrayList;
 
 import serializer.json.JsonMessageList;
-import serializer.json.JsonMessageLine;
 
 /**
  * @author Hayden

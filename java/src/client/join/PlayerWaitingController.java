@@ -49,6 +49,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		// Set the view to reflect the new list of players
 		getView().setPlayers(playerInfoList);
 	}
+	
+	// Refreshes the view by closing and reopening it.
+	private void refreshView() {
+		getView().closeModal();
+		getView().showModal();
+	}
 
 	@Override
 	public IPlayerWaitingView getView() {
@@ -97,8 +103,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			// Close modal if ready to start, otherwise update player list
 			if(playersInGame == 4 && modelFacade.getState() == TurnState.FirstRound)
 				getView().closeModal();
-			else if(playersInGame < 4)
+			else if(playersInGame < 4) {
 				setPlayers();
+				refreshView();
+			}
 		}
 		
 	}

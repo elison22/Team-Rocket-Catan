@@ -68,7 +68,8 @@ public class ServerPoller {
 				String newModel = proxyFacade.model(clientFacade.getVersionNumber());
 				
 				// If version number matches Server version number
-				if (newModel.equals("true")) {
+				if (newModel.equals("\"true\"\n")) {
+					
 					// Do nothing
 					return;
 				}
@@ -81,7 +82,6 @@ public class ServerPoller {
 				// Update with the new GameList
 				clientFacade.updateGameList(newGameList);
 			}
-			
 			
 		} catch (ServerException e) {
 			e.printStackTrace();
