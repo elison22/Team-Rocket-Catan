@@ -172,6 +172,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
 	}
+	
+	private void enableColors() {
+		for (CatanColor color : CatanColor.values()) {
+			getSelectColorView().setColorEnabled(color, true);
+		}
+	}
 
 	@Override
 	public void start() {
@@ -211,6 +217,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		// Remember the selected game
 		joinGameInfo = game;
+		
+		// Refresh all colors
+		enableColors();
 		
 		// Disable unavailable colors
 		disableUsedColors();

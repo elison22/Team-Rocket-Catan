@@ -2,10 +2,12 @@ package facade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 
 import model.board.BoardException;
 import model.cards.ResourceSet;
+import model.chat.Message;
 import model.game.GameModel;
 import model.game.TurnState;
 import model.game.TurnTracker;
@@ -45,6 +47,7 @@ import shared.dto.YearOfPlenty_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.communication.LogEntry;
 import client.data.PlayerInfo;
 
 public class ClientFacade extends Observable implements IClientFacade {
@@ -173,14 +176,17 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean joinGame(int gameId, String color) {
 		try {
 			proxy.join(new JoinGame_Params(gameId, color));
-			updateGameModel(proxy.model(game.getVersionNumber()));
-			updated();
+			updateGameModel(proxy.model(-1));
 			poller.setInGame(true);
 		} catch (ServerException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+	
+	public void setPollerState(boolean waitingForPlayers) {
+		poller.setWaitingForOtherPlayers(waitingForPlayers);
 	}
 
 	@Override
@@ -234,7 +240,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean doAddAI(String AIType) {
 		try {
 			proxy.addAI(new AddAI_Params(AIType));
-			updateGameModel(proxy.model(game.getVersionNumber()));
+			updateGameModel(proxy.model(-1));
 		} catch (ServerException e) {
 			return false;
 		}
@@ -594,5 +600,20 @@ public class ClientFacade extends Observable implements IClientFacade {
     public int getChit(HexLocation loc) {
         return game.getChit(loc);
     }
+
+	/** Retrieves the chat messages in the current game model, then converts
+	 * them to LogEntries.
+	 * 
+	 * @return A list of LogEntries associated with each record chat message.
+	 */
+	public List<LogEntry> getChatMessages() {
+		
+		List<LogEntry> chatEntries = new ArrayList<LogEntry>();
+		for (Message message : game.getChat().getChatMessages()) {
+			chatEntries.add(new LogEntry(game.getPlayerColorByName(message.getOwner()), message.getMessage()));
+		}
+		
+		return chatEntries;
+	}
 
 }

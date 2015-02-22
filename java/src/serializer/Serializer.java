@@ -56,7 +56,6 @@ public class Serializer {
 		Chat newChat = new Chat(newModel.getChat());
 		Chat newGameHistory = new Chat(newModel.getLog());
 		
-		
 		game.setChat(newChat);
 		game.setGameHistory(newGameHistory);
 		game.setMap(newBoard);

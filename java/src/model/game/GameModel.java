@@ -2,6 +2,7 @@ package model.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import model.board.Board;
 import model.board.BoardException;
 import model.cards.GameBank;
@@ -9,6 +10,7 @@ import model.chat.Chat;
 import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
 import shared.definitions.PortType;
@@ -35,6 +37,7 @@ public class GameModel {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
         map = new Board(false, false, false);
+        versionNumber = -1;
     	//winner = -1;
     }
 
@@ -343,6 +346,18 @@ public class GameModel {
 
     public int getChit(HexLocation loc) {
         return map.getChit(loc);
+    }
+    
+    /** Find the color associated with the given name.
+     * @param Name of the player.
+     * @return Color of the player with the given name.
+     */
+    public CatanColor getPlayerColorByName(String name) {
+    	for (Player player : playerList) {
+    		if (player.getName().equals(name)) 
+    			return CatanColor.convert(player.getColor());
+    	}
+    	return null;
     }
 
 }

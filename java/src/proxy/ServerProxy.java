@@ -167,6 +167,17 @@ class ServerProxy {
 		return userCookie;
 	}
 	
+	protected String encodeInt(int version) {
+		String encodedInt = null;
+		try {
+			encodedInt = URLEncoder.encode("version=" + version, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return encodedInt;
+	}
+	
 	/** Writes the response stream from the server as a String.
 	 * 
 	 * @param is the Server's InputStream
