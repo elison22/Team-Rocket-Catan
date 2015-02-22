@@ -1,6 +1,7 @@
 package client.map.states;
 
 import client.map.IMapController;
+import client.map.MapController;
 
 /**
  * Created by brandt on 2/20/15.
