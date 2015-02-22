@@ -16,6 +16,9 @@ public class Round1MapState extends AbstractMapState {
     }
 
     public void start(IMapController controller){
+//        if(controller.getView().isModalShowing()){
+//            return;
+//        }
         controller.startMove(PieceType.ROAD, true, true);
     }
 }

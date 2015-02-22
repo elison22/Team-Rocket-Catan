@@ -75,6 +75,9 @@ public class GameModel {
     }
 
     public TurnState getTurnState() {
+        if (turnTracker == null){
+            return null;
+        }
         return turnTracker.getCurrentState();
     }
 
