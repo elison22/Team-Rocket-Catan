@@ -3,7 +3,7 @@ package client.map;
 import java.util.Observable;
 import java.util.Observer;
 
-import client.map.states.AbstractMapState;
+import client.map.states.*;
 import model.game.TurnState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -12,7 +12,6 @@ import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import client.base.Controller;
 import client.data.RobPlayerInfo;
@@ -117,23 +116,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
-        TurnState curState = facade.getState();
-        switch(curState){
-            case Rolling:
-            case Robbing:
-            case Discarding:
-                return false;
-            case FirstRound:
-            case SecondRound:
-            case Playing:
-//                if(playSecondRoad) return facade.canBuildRoad(firstRoad, edgeLoc);
-                /*else*/ return facade.canBuildRoad(edgeLoc);
-            default:
-
-
-        }
-		return true;
+        return true;
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
@@ -201,8 +184,30 @@ public class MapController extends Controller implements IMapController, Observe
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
-	}
-	
+		initFromModel();
+        TurnState curState = facade.getState();
+        switch(curState){
+            case Rolling:
+                mapState = new RollingMapState();
+                break;
+            case Robbing:
+                mapState = new RobbingMapState();
+                break;
+            case Discarding:
+                mapState = new DiscardMapState();
+                break;
+            case FirstRound:
+                mapState = new Round1MapState();
+                break;
+            case SecondRound:
+                mapState = new Round2MapState();
+                break;
+            case Playing:
+                mapState = new PlayingMapState();
+                break;
+        }
+        mapState.start(this);
+
+    }
 }
 
