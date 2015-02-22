@@ -17,6 +17,7 @@ public class ServerPoller {
 	
 	private IProxyFacade proxyFacade;
 	private ClientFacade clientFacade;
+	private boolean waitingForOtherPlayers;
 	private boolean inGame;
 
 	// For Testing
@@ -64,8 +65,13 @@ public class ServerPoller {
 		try {
 			
 			// If the client is currently in a game
-			if (inGame) {
-				String newModel = proxyFacade.model(clientFacade.getVersionNumber());
+			if (isInGame()) {
+				String newModel;
+				
+				if (isWaitingForOtherPlayers())
+					newModel = proxyFacade.model(-1);
+				else
+					newModel = proxyFacade.model(clientFacade.getVersionNumber());
 				
 				// If version number matches Server version number
 				if (newModel.equals("\"true\"\n")) {
@@ -94,5 +100,13 @@ public class ServerPoller {
 
 	public void setInGame(boolean inGame) {
 		this.inGame = inGame;
+	}
+
+	public boolean isWaitingForOtherPlayers() {
+		return waitingForOtherPlayers;
+	}
+
+	public void setWaitingForOtherPlayers(boolean waitingForOtherPlayers) {
+		this.waitingForOtherPlayers = waitingForOtherPlayers;
 	}
 }

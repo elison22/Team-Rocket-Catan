@@ -184,6 +184,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 		}
 		return true;
 	}
+	
+	public void setPollerState(boolean waitingForPlayers) {
+		poller.setWaitingForOtherPlayers(waitingForPlayers);
+	}
 
 	@Override
 	public boolean canSave() {

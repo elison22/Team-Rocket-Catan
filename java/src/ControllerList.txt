@@ -14,8 +14,8 @@ Controller List:
 14. PointsController
 
 ----- DONE -----
-1. LoginController
-2. JoinGameController
-3. PlayerWaitingController
-4. TurnTrackerController
-7. RollController		
+1. LoginController			- Chad
+2. JoinGameController		- Chad
+3. PlayerWaitingController	- Chad
+4. TurnTrackerController	- Andrew
+7. RollController			- Andrew
