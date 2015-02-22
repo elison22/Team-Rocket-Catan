@@ -299,8 +299,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean canPlaceRobber() {
-		return game.canPlaceRobber(playerIndex);
+	public boolean canPlaceRobber(HexLocation loc) {
+		return game.canPlaceRobber(playerIndex, loc);
 	}
 
 	@Override

@@ -161,9 +161,13 @@ public class GameModel {
      * @param playerId	index of player wanting to place robber
      * @return	true if player can perform this action
      */
-    public boolean canPlaceRobber(int playerId) {
+    public boolean canPlaceRobber(int playerId, HexLocation loc) {
 		if(turnTracker.canPlayerRob(playerId)) {
-			return true;
+            try {
+                return map.canPlayRobber(loc);
+            } catch (BoardException e) {
+                e.printStackTrace();
+            }
 		}
 		return false;
 	}
@@ -349,7 +353,7 @@ public class GameModel {
     }
     
     /** Find the color associated with the given name.
-     * @param Name of the player.
+     * @param name of the player.
      * @return Color of the player with the given name.
      */
     public CatanColor getPlayerColorByName(String name) {

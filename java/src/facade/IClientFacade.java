@@ -63,7 +63,7 @@ public interface IClientFacade {
 
     /**
      * Adds a player to the game
-     * @param playerId id of the player who is joining game
+     * @param gameId id of the player who is joining game
      * @param color the color the player chose to be
      * @return 
      */
@@ -154,7 +154,7 @@ public interface IClientFacade {
      * Checks if player can move robber piece
      * @return whether or not the player can move the robber and select a player to rob
      */
-    public boolean canPlaceRobber();
+    public boolean canPlaceRobber(HexLocation loc);
 
     /**
      * Allows player to move robber piece and select a player to rob
