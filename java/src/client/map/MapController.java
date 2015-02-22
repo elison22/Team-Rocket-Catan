@@ -30,6 +30,8 @@ public class MapController extends Controller implements IMapController, Observe
     private EdgeLocation firstRoad;
     private boolean playSecondRoad;
 
+    public boolean modalOpen;
+
     public MapController(IMapView view, IRobView robView, ClientFacade facade) {
         super(view);
         setRobView(robView);
@@ -137,17 +139,17 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		getView().placeSettlement(vertLoc, facade.getPlayerInfo().getColor());
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
 		
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		getView().placeCity(vertLoc, facade.getPlayerInfo().getColor());
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -185,14 +187,14 @@ public class MapController extends Controller implements IMapController, Observe
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		initFromModel();
-//        if(curState != null && curState.equals(facade.getState())){
-//            return;
-//        }
         curState = facade.getState();
         if(null == curState){
             return;
         }
+        if(facade.getPlayerList().length != 4){
+            return;
+        }
+        initFromModel();
         switch(curState){
             case Rolling:
                 mapState = new RollingMapState();
@@ -205,9 +207,6 @@ public class MapController extends Controller implements IMapController, Observe
                 break;
             case FirstRound:
                 mapState = new Round1MapState();
-                if(facade.getPlayerList().length != 4){
-                    return;
-                }
                 break;
             case SecondRound:
                 mapState = new Round2MapState();
@@ -217,6 +216,7 @@ public class MapController extends Controller implements IMapController, Observe
                 break;
         }
         mapState.start(this);
+        modalOpen = true;
 
     }
 }

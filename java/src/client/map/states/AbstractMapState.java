@@ -10,6 +10,6 @@ public abstract class AbstractMapState {
 
     public abstract void update();
 
-    public abstract void start(IMapController controller);
+    public abstract void start(MapController controller);
 
 }

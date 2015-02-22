@@ -1,6 +1,5 @@
 package client.map.states;
 
-import client.map.IMapController;
 import client.map.MapController;
 
 /**
@@ -12,7 +11,7 @@ public class PlayingMapState extends AbstractMapState {
 
     }
 
-    public void start(IMapController controller){
+    public void start(MapController controller){
 
     }
 

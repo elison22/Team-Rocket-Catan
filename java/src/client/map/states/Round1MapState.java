@@ -1,8 +1,6 @@
 package client.map.states;
 
-import client.map.IMapController;
 import client.map.MapController;
-import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 
 /**
@@ -15,10 +13,11 @@ public class Round1MapState extends AbstractMapState {
 
     }
 
-    public void start(IMapController controller){
-//        if(controller.getView().isModalShowing()){
-//            return;
-//        }
+    public void start(MapController controller){
+        if(controller.modalOpen){
+            return;
+        }
+        controller.startMove(PieceType.SETTLEMENT, true, false);
         controller.startMove(PieceType.ROAD, true, true);
     }
 }
