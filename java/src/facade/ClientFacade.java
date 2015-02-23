@@ -645,6 +645,21 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return chatEntries;
 	}
 	
+	/** Retrieves the game history messages in the current game model, then converts
+	 * them to LogEntries.
+	 * 
+	 * @return A list of LogEntries associated with each record chat message.
+	 */
+	public List<LogEntry> getHistoryMessages() {
+		
+		List<LogEntry> historyEntries = new ArrayList<LogEntry>();
+		for (Message message : game.getGameHistory().getChatMessages()) {
+			historyEntries.add(new LogEntry(game.getPlayerColorByName(message.getOwner()), message.getMessage()));
+		}
+		
+		return historyEntries;
+	}
+	
 	/** Updates the playIndex kept by the proxyFacade by finding the player
 	 * with a matching id from the list of players in the current game.
 	 */

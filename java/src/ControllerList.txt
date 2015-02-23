@@ -1,7 +1,6 @@
 Controller List:
 
 ----- WORKING ON -------- Implementor -----
-5. ChatController			- Chad
 6. MapController			- Brandt/Hayden
 8. ResourceBarController	- Gavin
 9. DevCardController		- Gavin
@@ -10,7 +9,6 @@ Controller List:
 10. DiscardController
 11. DomesticTradeController
 12. MaritimeTradeController
-13. GameHistoryController
 14. PointsController
 
 ----- DONE -----
@@ -18,4 +16,6 @@ Controller List:
 2. JoinGameController		- Chad
 3. PlayerWaitingController	- Chad
 4. TurnTrackerController	- Andrew
+5. ChatController			- Chad
 7. RollController			- Andrew
+13. GameHistoryController	- Chad
