@@ -17,6 +17,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	
 	private ClientFacade facade;
 	private PlayerInfo playerInfo;
+	private boolean noneShallPass;
 
 	public TurnTrackerController(ITurnTrackerView view, ClientFacade fac) {
 		super(view);
@@ -49,19 +50,24 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void update(Observable o, Object arg) {
 		if (arg != null) return;
 		
+		if(facade.getPlayersOfGame().size() == 4)
+			noneShallPass = true;
+		
+		if(!noneShallPass)
+			return;
+		
 		playerInfo = facade.getPlayerInfo();
 		TurnState turnState = facade.getState();
 		
-		if(facade.getState() == TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
+		if(facade.getState() == TurnState.FirstRound) {
 			for (Player p : facade.getPlayersOfGame()) {
 				getView().initializePlayer(p.getPlayerIdx(), p.getName(), CatanColor.convert(p.getColor()));
 			}
 			getView().setLocalPlayerColor(playerInfo.getColor());
-			updatePlayer();
-		} else if(facade.getState() != TurnState.FirstRound && facade.getPlayersOfGame().size() == 4) {
-			updateGameState(turnState);
-			updatePlayer();
-		}
+		} 
+		
+		updatePlayer();
+		updateGameState(turnState);
 	}
 	
 	public void updateGameState(TurnState turnState) {
