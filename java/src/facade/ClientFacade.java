@@ -66,6 +66,10 @@ public class ClientFacade extends Observable implements IClientFacade {
     	try 
     	{
 			game = serializer.deSerializeFromServer(game, json);
+			
+			if (playerIndex < 0)
+				updatePlayerIndex();
+				
 			updated();
 		} 
     	catch (BoardException e) 
@@ -73,8 +77,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 			e.printStackTrace();
 		}
     }
-    
-    public void updateGameList(String gameListJson) {
+
+	public void updateGameList(String gameListJson) {
     	
     	// Notifies observers when gameList needs to be updated
 		update(serializer.deSerializeGameList(gameListJson));
@@ -95,6 +99,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     	game = new GameModel();
     	serializer = new Serializer();
     	localPlayer = new Player_DTO();
+    	playerIndex = -1;
     }
 
 	@Override
@@ -277,8 +282,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doSendChat(String message) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.sendChat(new SendChat_Params(playerIndex, message)));
-		} catch (ServerException | BoardException e) {
+			updateGameModel(proxy.sendChat(new SendChat_Params(playerIndex, message)));
+		} catch (ServerException e) {
 			return false;
 		}
 		return true;
@@ -638,6 +643,18 @@ public class ClientFacade extends Observable implements IClientFacade {
 		}
 		
 		return chatEntries;
+	}
+	
+	/** Updates the playIndex kept by the proxyFacade by finding the player
+	 * with a matching id from the list of players in the current game.
+	 */
+	private void updatePlayerIndex() {
+		for (Player p : game.getPlayerList()) {
+			if (p.getPlayerID() == localPlayer.getId()) {
+				playerIndex = p.getPlayerIdx();
+				break;
+			}
+		}
 	}
 
 }
