@@ -2,6 +2,7 @@ package client.map.states;
 
 import client.data.RobPlayerInfo;
 import client.map.MapController;
+import facade.ClientFacade;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -11,6 +12,11 @@ import shared.locations.VertexLocation;
  * Created by brandt on 2/20/15.
  */
 public class Round2MapState extends AbstractMapState{
+    private ClientFacade facade;
+
+    public Round2MapState(ClientFacade facade){
+        this.facade = facade;
+    }
 
     @Override
     public void update(){
@@ -19,17 +25,23 @@ public class Round2MapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
-
+        if(controller.modalOpen){
+            return;
+        }
+        controller.modalOpen = true;
+        controller.startMove(PieceType.SETTLEMENT, true, true);
+        controller.startMove(PieceType.ROAD, true, false);
+        controller.modalOpen = false;
     }
 
     @Override
     public boolean canBuildRoad(EdgeLocation edgeLoc) {
-        return false;
+        return facade.canBuildInitRoad(edgeLoc);
     }
 
     @Override
     public boolean canBuildSettlement(VertexLocation vertLoc) {
-        return false;
+        return facade.canBuildInitSettlement(vertLoc);
     }
 
     @Override
@@ -44,12 +56,13 @@ public class Round2MapState extends AbstractMapState{
 
     @Override
     public void placeRoad(EdgeLocation edgeLoc) {
-
+        facade.doBuildRoad(edgeLoc, true);
     }
 
     @Override
     public void placeSettlement(VertexLocation vertLoc) {
-
+        facade.doBuildSettlement(vertLoc, true);
+        endTurn();
     }
 
     @Override
@@ -85,6 +98,10 @@ public class Round2MapState extends AbstractMapState{
     @Override
     public void robPlayer(RobPlayerInfo victim) {
 
+    }
+
+    public void endTurn() {
+        facade.finishTurn();
     }
 
 }

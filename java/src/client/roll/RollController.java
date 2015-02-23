@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-import model.game.TurnState;
 import client.base.Controller;
 import facade.ClientFacade;
 

@@ -545,6 +545,13 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return playerIndex;
 	}
 	
+	public boolean isYourTurn(int playerIndx){
+		if(game.getPlayerTurn() == playerIndx)
+			return true;
+		
+		return false;
+	}
+	
 	public boolean isYourTurn(){
 		if(game.getPlayerTurn() == playerIndex)
 			return true;
@@ -552,12 +559,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return false;
 	}
 	
-	public boolean hasLongestRoad() {
-		return playerIndex == game.getLongestRoad();
+	public boolean hasLongestRoad(int playerIndx) {
+		return playerIndx == game.getLongestRoad();
 	}
 	
-	public boolean hasLargestArmy() {
-		return playerIndex == game.getLargestArmy();
+	public boolean hasLargestArmy(int playerIndx) {
+		return playerIndx == game.getLargestArmy();
 	}
 	
 	public Player getLocalPlayer() {
