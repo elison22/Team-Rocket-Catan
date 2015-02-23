@@ -234,14 +234,14 @@ public class MapController extends Controller implements IMapController, Observe
                 mapState = new Round1MapState(facade);
                 break;
             case SecondRound:
-                mapState = new Round2MapState();
+                mapState = new Round2MapState(facade);
                 break;
             case Playing:
                 mapState = new PlayingMapState();
                 break;
         }
         mapState.start(this);
-        modalOpen = true;
+//        modalOpen = true;
 
     }
 }
