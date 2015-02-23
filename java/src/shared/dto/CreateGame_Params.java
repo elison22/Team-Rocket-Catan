@@ -11,14 +11,14 @@ package shared.dto;
 
 public class CreateGame_Params {
 	
-	private Boolean randomTiles;
 	private Boolean randomNumbers;
+	private Boolean randomTiles;
 	private Boolean randomPorts;
 	private String name;
 
 	public CreateGame_Params() {}
 	
-	public CreateGame_Params(Boolean randomTiles, Boolean randomNumbers,
+	public CreateGame_Params(Boolean randomNumbers, Boolean randomTiles,
 			Boolean randomPorts, String name) {
 		setRandomTiles(randomTiles);
 		setRandomNumbers(randomNumbers);

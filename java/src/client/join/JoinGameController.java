@@ -202,11 +202,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void createNewGame() {
 		getNewGameView().closeModal();
 		
+		System.out.println("Random Tiles? : " + getNewGameView().getRandomlyPlaceHexes());
+		System.out.println("Random Ports? : " + getNewGameView().getUseRandomPorts());
+		System.out.println("Random Numbers? : " + getNewGameView().getRandomlyPlaceNumbers());
+		
 		// Create new game
-		if (modelFacade.CreateGame(getNewGameView().getTitle(), 
-							       getNewGameView().getRandomlyPlaceHexes(), 
-							       getNewGameView().getUseRandomPorts(), 
-							       getNewGameView().getRandomlyPlaceNumbers())) {
+		if (modelFacade.CreateGame(getNewGameView().getTitle(),
+				
+								   getNewGameView().getRandomlyPlaceHexes(),
+							       getNewGameView().getUseRandomPorts(),
+							       getNewGameView().getRandomlyPlaceNumbers()
+							       )) {
 			// If successful, update game list
 			setGameList();
 		}
