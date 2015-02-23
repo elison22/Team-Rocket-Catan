@@ -1,18 +1,29 @@
 package client.roll;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-import client.base.*;
+import client.base.OverlayView;
 import client.utils.ImageUtils;
 
 
 /**
  * Implementation for the roll result view, which displays the result of a roll
  */
-@SuppressWarnings({"serial", "unused"})
+@SuppressWarnings({"serial"})
 public class RollResultView extends OverlayView implements IRollResultView {
 
 	private final int TITLE_TEXT_SIZE = 40;

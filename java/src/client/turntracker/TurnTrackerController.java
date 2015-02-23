@@ -59,14 +59,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		playerInfo = facade.getPlayerInfo();
 		TurnState turnState = facade.getState();
 		
-		if(facade.getState() == TurnState.FirstRound) {
-			for (Player p : facade.getPlayersOfGame()) {
-				getView().initializePlayer(p.getPlayerIdx(), p.getName(), CatanColor.convert(p.getColor()));
-			}
-			getView().setLocalPlayerColor(playerInfo.getColor());
-		} 
-		
-		updatePlayer();
+		for (Player p : facade.getPlayersOfGame()) {
+			getView().initializePlayer(p.getPlayerIdx(), p.getName(), CatanColor.convert(p.getColor()));
+			getView().updatePlayer(p.getPlayerIdx(), p.getVictoryPoints(), facade.isYourTurn(p.getPlayerIdx()), facade.hasLargestArmy(p.getPlayerIdx()), facade.hasLongestRoad(p.getPlayerIdx()));
+		}
+		getView().setLocalPlayerColor(playerInfo.getColor());
+
 		updateGameState(turnState);
 	}
 	
@@ -109,11 +107,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					getView().updateGameState("Not Your Turn", false);
 				break;
 		}
-	}
-	
-	public void updatePlayer() {
-		Player player = facade.getLocalPlayer();
-		getView().updatePlayer(player.getPlayerIdx(), player.getVictoryPoints(), facade.isYourTurn(), facade.hasLargestArmy(), facade.hasLongestRoad());
 	}
 
 }
