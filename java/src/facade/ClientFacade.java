@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import model.board.BoardException;
+import model.board.Constructable;
 import model.cards.ResourceSet;
 import model.chat.Message;
 import model.game.GameModel;
@@ -322,6 +323,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean finishTurn() {
 		try {
 			game = serializer.deSerializeFromServer(game, proxy.finishTurn(new FinishTurn_Params(playerIndex)));
+            updateGameModel(proxy.model(-1));
 		} catch (ServerException | BoardException e) {
 			return false;
 		}
@@ -424,6 +426,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
+	public boolean canBuildInitRoad(EdgeLocation location) {
+		return game.canBuildInitRoad(playerIndex, location);
+	}
+
+	@Override
 	public boolean doBuildRoad(EdgeLocation location, boolean freebie) {
 		try {
 			game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
@@ -437,6 +444,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean canBuildSettlement(VertexLocation location) {
 		return game.canBuildSettlement(playerIndex, location);
 	}
+
+    @Override
+    public boolean canBuildInitSettlement(VertexLocation location) {
+        return game.canBuildInitSettlement(playerIndex, location);
+    }
 
 	@Override
 	public boolean doBuildSettlement(VertexLocation location, boolean freebie) {
@@ -561,6 +573,14 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
 	}
+
+    public HashMap<EdgeLocation, Constructable> getRoadPieces() {
+        return game.getRoadPieces();
+    }
+
+    public HashMap<VertexLocation, Constructable> getBuildingPieces(){
+        return game.getBuildingPieces();
+    }
 	
 	public void updated() {
 		versionNumber = game.getVersionNumber();
@@ -576,6 +596,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 		notifyObservers(obj);
 		clearChanged();
 	}
+
+    public GameModel getLocalGame() {
+        return game;
+    }
 
     public TurnState getState() {
         return game.getTurnState();

@@ -648,6 +648,12 @@ public class Board {
         return tile != null ? tile.getDiceNum() : 0;
     }
 
+    public HashMap<VertexLocation, Constructable> getBuildingPieces() {
+        return buildings;
+    }
 
+    public HashMap<EdgeLocation, Constructable> getRoadPieces() {
+        return roads;
+    }
 }
 

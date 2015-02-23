@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import model.board.Board;
 import model.board.BoardException;
+import model.board.Constructable;
 import model.cards.GameBank;
 import model.chat.Chat;
 import model.player.Player;
@@ -204,6 +205,20 @@ public class GameModel {
     	return false;
     }
 
+    public boolean canBuildInitRoad(int playerId, EdgeLocation location) {
+        //This will only be called during the setup rounds so the player doesn't need to check if
+        //it can build a road. It is assumed it has enough road pieces and they are free to place.
+        if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
+            try {
+                if(map.canBuildRoad(location, playerId))
+                    return true;
+            }catch (BoardException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
     /**
      * Checks with game state, player, and board if player can build settlement at location
      * @param playerId	index of player wanting to build settlement
@@ -219,6 +234,20 @@ public class GameModel {
                 } catch (BoardException e) {
                     return false;
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean canBuildInitSettlement(int playerId, VertexLocation location) {
+        //This will only be called during the setup rounds so the player doesn't need to check if
+        //it can build a settlement. It is assumed it has enough settlement pieces and they are free to place.
+        if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
+            try {
+                if(map.canBuildSettlement(location, playerId))
+                    return true;
+            }catch (BoardException e) {
+                return false;
             }
         }
         return false;
@@ -351,6 +380,14 @@ public class GameModel {
     public int getChit(HexLocation loc) {
         return map.getChit(loc);
     }
+
+    public HashMap<EdgeLocation, Constructable> getRoadPieces() {
+        return map.getRoadPieces();
+    }
+
+    public HashMap<VertexLocation, Constructable> getBuildingPieces() {
+        return map.getBuildingPieces();
+    }
     
     /** Find the color associated with the given name.
      * @param name of the player.
@@ -362,6 +399,18 @@ public class GameModel {
     			return CatanColor.convert(player.getColor());
     	}
     	return null;
+    }
+
+    /** Find the color associated with the given player index.
+     * @param playerIndex of the player.
+     * @return Color of the player with the given player index.
+     */
+    public CatanColor getPlayerColorByIndex(int playerIndex) {
+        for (Player player : playerList) {
+            if (player.getPlayerIdx() == playerIndex)
+                return CatanColor.convert(player.getColor());
+        }
+        return null;
     }
 
 }

@@ -247,6 +247,13 @@ public interface IClientFacade {
     public boolean canBuildRoad(EdgeLocation location);
 
     /**
+     * Checks to see if a player can build a road during the setup rounds
+     * @param location where the user wants to build the road
+     * @return true if user is able to build road at location right now
+     */
+    public boolean canBuildInitRoad(EdgeLocation location);
+
+    /**
      * Builds a road for player at given location
      * @param location where the user wants to build the road
      */
@@ -258,6 +265,13 @@ public interface IClientFacade {
      * @return true if user is able to build road at location right now
      */
     public boolean canBuildSettlement(VertexLocation location);
+
+    /**
+     * Checks to see if player can build a settlement during the setup rounds
+     * @param location where the user wants to build the road
+     * @return true if user is able to build road at location right now
+     */
+    public boolean canBuildInitSettlement(VertexLocation location);
 
     /**
      * Builds a settlement for player at given location

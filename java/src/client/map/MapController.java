@@ -1,9 +1,11 @@
 package client.map;
 
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import client.map.states.*;
+import model.board.Constructable;
 import model.game.TurnState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -29,6 +31,8 @@ public class MapController extends Controller implements IMapController, Observe
     private TurnState curState;
     private EdgeLocation firstRoad;
     private boolean playSecondRoad;
+    private boolean allowDisconnectedBuild;
+    private boolean allowFreeBuild;
 
     public boolean modalOpen;
 
@@ -76,6 +80,23 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 			}
 		}
+        HashMap<EdgeLocation, Constructable> roads = facade.getRoadPieces();
+        HashMap<VertexLocation, Constructable> buildings = facade.getBuildingPieces();
+
+        for(EdgeLocation location : roads.keySet()){
+            CatanColor pieceColor = facade.getLocalGame().getPlayerColorByIndex(roads.get(location).getOwner());
+            getView().placeRoad(location, pieceColor);
+        }
+
+        for(VertexLocation location : buildings.keySet()){
+            CatanColor pieceColor = facade.getLocalGame().getPlayerColorByIndex(buildings.get(location).getOwner());
+            if(buildings.get(location).isSettlement()){
+                getView().placeSettlement(location, pieceColor);
+            }
+            else{
+                getView().placeCity(location, pieceColor);
+            }
+        }
 
         getView().placeRobber(facade.getRobberLoc());
 
@@ -119,49 +140,52 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
-        return facade.canBuildRoad(edgeLoc);
+        return mapState.canBuildRoad(edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
-		return facade.canBuildSettlement(vertLoc);
+		return mapState.canBuildSettlement(vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 		
-		return facade.canBuildCity(vertLoc);
+		return mapState.canBuildCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		
-		return facade.canPlaceRobber(hexLoc);
+		return mapState.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
+
+        mapState.placeRoad(edgeLoc);
 		getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
+
+        mapState.placeSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, facade.getPlayerInfo().getColor());
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
+
+        mapState.placeCity(vertLoc);
 		getView().placeCity(vertLoc, facade.getPlayerInfo().getColor());
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		
+
+        mapState.placeRobber(hexLoc);
 		getView().placeRobber(hexLoc);
 		
 		getRobView().showModal();
 	}
 	
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
+	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
+		this.allowDisconnectedBuild = allowDisconnected;
+        this.allowFreeBuild = isFree;
 		getView().startDrop(pieceType, facade.getPlayerInfo().getColor(), true);
 	}
 	
@@ -207,7 +231,7 @@ public class MapController extends Controller implements IMapController, Observe
                 mapState = new DiscardMapState();
                 break;
             case FirstRound:
-                mapState = new Round1MapState();
+                mapState = new Round1MapState(facade);
                 break;
             case SecondRound:
                 mapState = new Round2MapState();
