@@ -44,15 +44,18 @@ public class RollController extends Controller implements IRollController, Obser
 	@Override
 	public void rollDice() {
 		getResultView().showModal();
-		int min = 2;
-		int max = 12;
+		int min = 1;
+		int max = 6;
 		
 		Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	    int randNum1 = rand.nextInt((max - min) + 1) + min;
+	    rand = new Random();
+	    int randNum2 = rand.nextInt((max - min) + 1) + min;
+	    int randomDiceRoll = randNum1 + randNum2;
 	    
-	    getResultView().setRollValue(randomNum);
+	    getResultView().setRollValue(randomDiceRoll);
 	    getResultView().showModal();
-	    modelFacade.rollDice(randomNum);
+	    modelFacade.rollDice(randomDiceRoll);
 	}
 
 	@Override
