@@ -240,6 +240,7 @@ public class Board {
         return tiles.get(robber);
     }
 
+    /**...*/
     public HexLocation getRobberLoc() { return robber; }
 
     /**
@@ -294,6 +295,8 @@ public class Board {
      * the range 0 to 3. Also thrown if the location param is passed in null.
      */
     public boolean canBuildRoad(EdgeLocation location, int owner) throws BoardException {
+        if (!isEdgeOnBoard(location)) return false;
+        if (!roads.containsKey(location.getNormalizedLocation())) return false;
         if (roads.size() > 8) return canBuildNormalRoad(location, owner);
         else return canBuildInitRoad(location, owner);
     }
@@ -565,6 +568,16 @@ public class Board {
             if (owner == -1) return true;
             if (roads.get(counterclockwise).getOwner() == owner) return true;
         }
+        return false;
+    }
+
+    /**...*/
+    private boolean isEdgeOnBoard(EdgeLocation location) throws BoardException {
+        if (location == null) throw new BoardException("Param location cannot be null.");
+        HexLocation testHex = location.getHexLoc();
+        if (tiles.containsKey(testHex)) return true;
+        testHex = testHex.getNeighborLoc(location.getDir());
+        if (tiles.containsKey(testHex)) return true;
         return false;
     }
 
