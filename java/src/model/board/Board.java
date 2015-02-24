@@ -296,7 +296,7 @@ public class Board {
      */
     public boolean canBuildRoad(EdgeLocation location, int owner) throws BoardException {
         if (!isEdgeOnBoard(location)) return false;
-        if (!roads.containsKey(location.getNormalizedLocation())) return false;
+        if (roads.containsKey(location.getNormalizedLocation())) return false;
         if (roads.size() > 8) return canBuildNormalRoad(location, owner);
         else return canBuildInitRoad(location, owner);
     }
@@ -335,7 +335,7 @@ public class Board {
      * the range 0 to 3. Also thrown if the location param is passed in null.
      */
     private boolean canBuildInitRoad(EdgeLocation location, int owner) throws BoardException {
-        if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
+        if (owner < -1 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
         if (location == null) throw new BoardException("Param location cannot be null.");
         if (roads.get(location.getNormalizedLocation()) != null) return false;
         if (hasNeighborBuilding(location, owner)) return false;
@@ -576,8 +576,8 @@ public class Board {
         if (location == null) throw new BoardException("Param location cannot be null.");
         HexLocation testHex = location.getHexLoc();
         if (tiles.containsKey(testHex)) return true;
-        testHex = testHex.getNeighborLoc(location.getDir());
-        if (tiles.containsKey(testHex)) return true;
+        HexLocation testHex2 = testHex.getNeighborLoc(location.getDir());
+        if (tiles.containsKey(testHex2)) return true;
         return false;
     }
 

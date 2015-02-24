@@ -210,7 +210,7 @@ public class GameModel {
         //it can build a road. It is assumed it has enough road pieces and they are free to place.
         if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
             try {
-                if(map.canBuildRoad(location, playerId))
+                if(map.canBuildRoad(location, -1))
                     return true;
             }catch (BoardException e) {
                 return false;
