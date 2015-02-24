@@ -312,8 +312,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doPlaceRobber(int victimIndex, HexLocation loc) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
-		} catch (ServerException | BoardException e) {
+			updateGameModel(proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
+			//game = serializer.deSerializeFromServer(game, proxy.robPlayer(new RobPlayer_Params(playerIndex, victimIndex, loc)));
+		} catch (ServerException e) {
 			return false;
 		}
 		return true;
@@ -327,9 +328,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean finishTurn() {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.finishTurn(new FinishTurn_Params(playerIndex)));
-            updateGameModel(proxy.model(-1));
-		} catch (ServerException | BoardException e) {
+			updateGameModel(proxy.finishTurn(new FinishTurn_Params(playerIndex)));
+            //updateGameModel(proxy.model(-1));
+		} catch (ServerException e) {
 			return false;
 		}
 		return true;
@@ -343,8 +344,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean buyDevCard() {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
-		} catch (ServerException | BoardException e) {
+			updateGameModel(proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
+			//game = serializer.deSerializeFromServer(game, proxy.buyDevCard(new BuyDevCard_Params(playerIndex)));
+		} catch (ServerException e) {
 			return false;
 		}
 		return true;
@@ -358,8 +360,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doUseYearOfPlenty(String resource1, String resource2) {		
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.Year_of_Plenty(new YearOfPlenty_Params(playerIndex, resource1, resource2)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.Year_of_Plenty(new YearOfPlenty_Params(playerIndex, resource1, resource2)));
+			//game = serializer.deSerializeFromServer(game, proxy.Year_of_Plenty(new YearOfPlenty_Params(playerIndex, resource1, resource2)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -373,8 +376,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doUseRoadBuilder(EdgeLocation location1, EdgeLocation location2) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.Road_Building(new RoadBuilding_Params(playerIndex, location1, location2)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.Road_Building(new RoadBuilding_Params(playerIndex, location1, location2)));
+			//game = serializer.deSerializeFromServer(game, proxy.Road_Building(new RoadBuilding_Params(playerIndex, location1, location2)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -388,8 +392,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doUseSoldier(int vicIndex, HexLocation loc) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.Soldier(new Soldier_Params(playerIndex, vicIndex, loc)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.Soldier(new Soldier_Params(playerIndex, vicIndex, loc)));
+			//game = serializer.deSerializeFromServer(game, proxy.Soldier(new Soldier_Params(playerIndex, vicIndex, loc)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -403,8 +408,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doUseMonopoly(String resource) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.Monopoly(new Monopoly_Params(resource, playerIndex)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.Monopoly(new Monopoly_Params(resource, playerIndex)));
+			//game = serializer.deSerializeFromServer(game, proxy.Monopoly(new Monopoly_Params(resource, playerIndex)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -418,8 +424,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doUseMonument() {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.Monument(new Monument_Params(playerIndex)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.Monument(new Monument_Params(playerIndex)));
+			//game = serializer.deSerializeFromServer(game, proxy.Monument(new Monument_Params(playerIndex)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -438,8 +445,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doBuildRoad(EdgeLocation location, boolean freebie) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+			//game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -458,8 +466,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doBuildSettlement(VertexLocation location, boolean freebie) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+			//game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -473,8 +482,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doBuildCity(VertexLocation location) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.buildCity(new BuildCity_Params(playerIndex, location)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.buildCity(new BuildCity_Params(playerIndex, location)));
+			//game = serializer.deSerializeFromServer(game, proxy.buildCity(new BuildCity_Params(playerIndex, location)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -488,8 +498,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doOfferTrade(DomesticTrade trade) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer().getResources(), trade.getReceiver())));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer().getResources(), trade.getReceiver())));
+			//game = serializer.deSerializeFromServer(game, proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer().getResources(), trade.getReceiver())));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -503,8 +514,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doAcceptTrade(DomesticTrade trade, boolean accept) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.acceptTrade(new AcceptTrade_Params(playerIndex, accept)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.acceptTrade(new AcceptTrade_Params(playerIndex, accept)));
+			//game = serializer.deSerializeFromServer(game, proxy.acceptTrade(new AcceptTrade_Params(playerIndex, accept)));
+		} catch (ServerException e) {
 			return false;
 		} 
 		return true;
@@ -518,9 +530,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doMaritimeTrade(MaritimeTrade trade) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.maritimeTrade(new MaritimeTrade_Params(playerIndex, 
-					trade.getRatio(), trade.getResourceToGive().toString(), trade.getResourceToReceive().toString())));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.maritimeTrade(new MaritimeTrade_Params(playerIndex, 
+							trade.getRatio(), trade.getResourceToGive().toString(), trade.getResourceToReceive().toString())));
+			//game = serializer.deSerializeFromServer(game, proxy.maritimeTrade(new MaritimeTrade_Params(playerIndex, 
+			//		trade.getRatio(), trade.getResourceToGive().toString(), trade.getResourceToReceive().toString())));
+		} catch (ServerException e) {
 			return false;
 		}
 		return true;
@@ -534,8 +548,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doDiscardCards(HashMap<ResourceType, Integer> cards) {
 		try {
-			game = serializer.deSerializeFromServer(game, proxy.discardCards(new DiscardCards_Params(playerIndex, cards)));
-		} catch (BoardException | ServerException e) {
+			updateGameModel(proxy.discardCards(new DiscardCards_Params(playerIndex, cards)));
+			//game = serializer.deSerializeFromServer(game, proxy.discardCards(new DiscardCards_Params(playerIndex, cards)));
+		} catch (ServerException e) {
 			return false;
 		}
 		return true;
