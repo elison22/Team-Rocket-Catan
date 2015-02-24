@@ -297,8 +297,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean rollDice(int randomNum) {
 	    try {
-			game = serializer.deSerializeFromServer(game, proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum)));	
-		} catch (ServerException | BoardException e) {
+			updateGameModel(proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum)));	
+		} catch (ServerException e) {
 			return false;
 		}
 	    return true;
