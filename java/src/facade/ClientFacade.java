@@ -438,8 +438,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doBuildRoad(EdgeLocation location, boolean freebie) {
 		try {
-			updateGameModel(proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
-		} catch (ServerException e) {
+			//updateGameModel(proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+			game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+		} catch (ServerException | BoardException e) {
 			return false;
 		} 
 		return true;
