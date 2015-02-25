@@ -58,7 +58,7 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void buyCard() {
-		
+		modelFacade.buyDevCard();
 		getBuyCardView().closeModal();
 	}
 

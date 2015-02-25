@@ -167,6 +167,7 @@ public class MapController extends Controller implements IMapController, Observe
 
         mapState.placeSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, facade.getPlayerInfo().getColor());
+		facade.updated();
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -200,7 +201,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void playRoadBuildingCard() {	
 		//build first road
         playSecondRoad = true;
-
+        
 
         playSecondRoad = false;
 	}
@@ -237,7 +238,7 @@ public class MapController extends Controller implements IMapController, Observe
                 mapState = new Round2MapState(facade);
                 break;
             case Playing:
-                mapState = new PlayingMapState();
+                mapState = new PlayingMapState(facade);
                 break;
         }
         mapState.start(this);

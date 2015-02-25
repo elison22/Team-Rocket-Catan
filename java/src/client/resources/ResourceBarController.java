@@ -44,31 +44,37 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	}
 
 	@Override
-	public void buildRoad() {
+	public void buildRoad() 
+	{
 		executeElementAction(ResourceBarElement.ROAD);
 	}
 
 	@Override
-	public void buildSettlement() {
+	public void buildSettlement() 
+	{
 		executeElementAction(ResourceBarElement.SETTLEMENT);
 	}
 
 	@Override
-	public void buildCity() {
+	public void buildCity() 
+	{
 		executeElementAction(ResourceBarElement.CITY);
 	}
 
 	@Override
-	public void buyCard() {
+	public void buyCard() 
+	{
 		executeElementAction(ResourceBarElement.BUY_CARD);
 	}
 
 	@Override
-	public void playCard() {
+	public void playCard() 
+	{
 		executeElementAction(ResourceBarElement.PLAY_CARD);
 	}
 	
-	private void executeElementAction(ResourceBarElement element) {
+	private void executeElementAction(ResourceBarElement element) 
+	{
 		
 		if (elementActions.containsKey(element)) {
 			
@@ -77,7 +83,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 	}
 	
-	private void setResources() {
+	private void setResources() 
+	{
 		
 		HashMap<ResourceType,Integer> resCards = modelFacade.getPlayerResources();
 		
@@ -89,7 +96,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg) 
+	{
 		if (arg != null) return;
 		
 		setResources();

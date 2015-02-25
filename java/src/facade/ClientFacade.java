@@ -443,6 +443,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 		try {
 			//updateGameModel(proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
 			game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+			if(!freebie)
+				updated();
 		} catch (ServerException | BoardException e) {
 			return false;
 		} 
@@ -469,6 +471,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 		try {
 			//updateGameModel(proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
 			game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+			if(!freebie)
+				updated();
 		} catch (ServerException | BoardException e) {
 			return false;
 		} 
@@ -489,6 +493,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean doBuildCity(VertexLocation location) {
 		try {
 			updateGameModel(proxy.buildCity(new BuildCity_Params(playerIndex, location)));
+			updated();
 		} catch (ServerException e) {
 			return false;
 		} 

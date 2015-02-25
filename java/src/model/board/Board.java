@@ -297,7 +297,7 @@ public class Board {
     public boolean canBuildRoad(EdgeLocation location, int owner) throws BoardException {
         if (!isEdgeOnBoard(location)) return false;
         if (roads.containsKey(location.getNormalizedLocation())) return false;
-        if (roads.size() > 8) return canBuildNormalRoad(location, owner);
+        if (roads.size() >= 8) return canBuildNormalRoad(location, owner);
         else return canBuildInitRoad(location, owner);
     }
 
