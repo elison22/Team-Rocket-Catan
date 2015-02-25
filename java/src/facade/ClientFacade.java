@@ -298,7 +298,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean rollDice(int randomNum) {
 	    try {
 			updateGameModel(proxy.rollNumber(new RollNumber_Params(playerIndex, randomNum)));	
-		} catch (ServerException e) {
+	    } catch (ServerException e) {
 			return false;
 		}
 	    return true;
