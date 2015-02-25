@@ -43,7 +43,7 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-		getResultView().showModal();
+		
 		int min = 1;
 		int max = 6;
 		

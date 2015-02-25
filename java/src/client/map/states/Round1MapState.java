@@ -26,9 +26,9 @@ public class Round1MapState extends AbstractMapState {
 
     @Override
     public void start(MapController controller){
-        if(controller.modalOpen){
-            return;
-        }
+//        if(controller.modalOpen){
+//            return;
+//        }
         controller.modalOpen = true;
         controller.startMove(PieceType.SETTLEMENT, true, true);
         controller.startMove(PieceType.ROAD, true, false);

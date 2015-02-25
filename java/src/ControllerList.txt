@@ -2,7 +2,7 @@ Controller List:
 
 ----- WORKING ON -------- Implementor -----
 6. MapController			- Brandt/Hayden
-8. ResourceBarController	- Gavin
+8. ResourceBarController	- Gavin/Chad
 9. DevCardController		- Gavin
 
 ----- TO-DO -----
