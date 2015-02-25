@@ -226,9 +226,8 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public ResourceSet getPlayerResources() {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<ResourceType, Integer> getPlayerResources() {
+		return game.getPlayerList().get(playerIndex).getBank().getResCards();
 	}
 
 	@Override
@@ -328,7 +327,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean finishTurn() {
 		try {
 			updateGameModel(proxy.finishTurn(new FinishTurn_Params(playerIndex)));
-            //updateGameModel(proxy.model(-1));
 		} catch (ServerException e) {
 			return false;
 		}
@@ -424,12 +422,17 @@ public class ClientFacade extends Observable implements IClientFacade {
 		} 
 		return true;
 	}
+	
+	// Checks to see if the gui should allow a player to build a road or not.
+	public boolean canBuildRoad() {
+		return game.canBuildRoad(playerIndex);
+	}
 
 	@Override
 	public boolean canBuildRoad(EdgeLocation location) {
 		return game.canBuildRoad(playerIndex, location);
 	}
-
+	
 	@Override
 	public boolean canBuildInitRoad(EdgeLocation location) {
 		return game.canBuildInitRoad(playerIndex, location);
@@ -444,6 +447,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return false;
 		} 
 		return true;
+	}
+	
+	// Checks to see if the gui should allow a player to build a settlement or not.
+	public boolean canBuildSettlement() {
+		return game.canBuildSettlement(playerIndex);
 	}
 
 	@Override
@@ -465,6 +473,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 			return false;
 		} 
 		return true;
+	}
+	
+	// Checks to see if the gui should allow a player to build a city or not.
+	public boolean canBuildCity() {
+		return game.canBuildCity(playerIndex);
 	}
 
 	@Override

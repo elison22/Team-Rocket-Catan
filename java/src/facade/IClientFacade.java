@@ -101,7 +101,7 @@ public interface IClientFacade {
      * Used to know what cards are in hand
      * @return list of all the player's resources
      */
-    public ResourceSet getPlayerResources();
+    public HashMap<ResourceType, Integer> getPlayerResources();
 
     /**
      * @return the games card bank to see resources/devcards available

@@ -185,6 +185,12 @@ public class GameModel {
     	return false;
     }
     
+    // Checks to see if the gui should allow a player to build a road or not.
+    public boolean canBuildRoad(int playerIndex) {
+    	return turnTracker.canPlayerBuildRoadSettlement(playerIndex) &&
+    		   playerList.get(playerIndex).canBuildRoad();
+    }
+    
     /**
      * Checks with turn state, player, and board to see if road can be built in certain location 
      * @param playerId	index of player wanting to build road
@@ -217,6 +223,12 @@ public class GameModel {
             }
         }
         return false;
+    }
+    
+    // Checks to see if the gui should allow a player to build a settlement or not.
+    public boolean canBuildSettlement(int playerIndex) {
+    	return turnTracker.canPlayerBuildRoadSettlement(playerIndex) &&
+    		   playerList.get(playerIndex).canBuildSettlement();
     }
 
     /**
@@ -251,6 +263,13 @@ public class GameModel {
             }
         }
         return false;
+    }
+    
+    
+    // Checks to see if the gui should allow a player to build a city or not.
+    public boolean canBuildCity(int playerIndex) {
+    	return turnTracker.canPlayerBuild(playerIndex) &&
+    		   playerList.get(playerIndex).canBuildCity();
     }
 
     /**

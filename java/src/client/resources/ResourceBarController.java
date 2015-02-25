@@ -2,9 +2,11 @@ package client.resources;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.definitions.ResourceType;
 import client.base.Controller;
 import client.base.IAction;
 import facade.ClientFacade;
@@ -74,11 +76,43 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			action.execute();
 		}
 	}
+	
+	private void setResources() {
+		
+		HashMap<ResourceType,Integer> resCards = modelFacade.getPlayerResources();
+		
+		getView().setElementAmount(ResourceBarElement.BRICK, resCards.get(ResourceType.BRICK));
+		getView().setElementAmount(ResourceBarElement.ORE, resCards.get(ResourceType.ORE));
+		getView().setElementAmount(ResourceBarElement.SHEEP, resCards.get(ResourceType.SHEEP));
+		getView().setElementAmount(ResourceBarElement.WHEAT, resCards.get(ResourceType.WHEAT));
+		getView().setElementAmount(ResourceBarElement.WOOD, resCards.get(ResourceType.WOOD));
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		if (arg != null) return;
 		
+		setResources();
+		
+		if (modelFacade.canBuildRoad())
+			getView().setElementEnabled(ResourceBarElement.ROAD, true);
+		else
+			getView().setElementEnabled(ResourceBarElement.ROAD, false);
+		
+		if (modelFacade.canBuildSettlement())
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+		else
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+		
+		if (modelFacade.canBuildCity())
+			getView().setElementEnabled(ResourceBarElement.CITY, true);
+		else
+			getView().setElementEnabled(ResourceBarElement.CITY, false);
+		
+		if (modelFacade.canBuyDevCard())
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+		else
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
 	}
 
 }
