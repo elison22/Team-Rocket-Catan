@@ -459,8 +459,9 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doBuildSettlement(VertexLocation location, boolean freebie) {
 		try {
-			updateGameModel(proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
-		} catch (ServerException e) {
+			//updateGameModel(proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+			game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+		} catch (ServerException | BoardException e) {
 			return false;
 		} 
 		return true;
@@ -593,6 +594,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 
     public HashMap<VertexLocation, Constructable> getBuildingPieces(){
         return game.getBuildingPieces();
+    }
+    
+    public int getGameWinner() {
+    	return game.getWinner();
     }
 	
 	public void updated() {
