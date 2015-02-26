@@ -55,6 +55,7 @@ public class DiscardController extends Controller implements IDiscardController,
         getDiscardView().setResourceDiscardAmount(resource, discardRes.get(resource));
         if (discardRes.get(resource) == playerRes.get(resource))
             getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+        else getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
         if (count == totalRes/2) maxAll();
 
 	}
@@ -68,6 +69,7 @@ public class DiscardController extends Controller implements IDiscardController,
         getDiscardView().setResourceDiscardAmount(resource, discardRes.get(resource));
         if (discardRes.get(resource) == 0)
             getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+        else getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
         if (maxed) unmaxAll();
 
 	}
@@ -75,23 +77,28 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard() {
 //        assert facade.canDiscardCards(discardRes);
+        getDiscardView().closeModal();
+        hasDiscarded = true;
         facade.doDiscardCards(discardRes);
-		getDiscardView().closeModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 
-        if (facade.getState() != TurnState.Discarding) return;
+        if (facade.getState() != TurnState.Discarding) {
+            hasDiscarded = false;
+            return;
+        }
         if (getDiscardView().isModalShowing()) return;
 
+        int total = 0;
         for (int i : facade.getPlayerResources().values()) {
-            totalRes += i;
+            total += i;
         }
-        if (totalRes > 7) {
+        if (total > 7) {
             if (!hasDiscarded && !getDiscardView().isModalShowing()){
                 getDiscardView().showModal();
-                start();
+                start(total);
             }
             else if (hasDiscarded && !getWaitView().isModalShowing()){
                 getWaitView().showModal();
@@ -103,8 +110,9 @@ public class DiscardController extends Controller implements IDiscardController,
             }
 	}
 
-    private void start() {
+    private void start(int total) {
         count = 0;
+        totalRes = total;
         discardRes = new HashMap<ResourceType, Integer>();
         playerRes = facade.getPlayerResources();
         getDiscardView().setDiscardButtonEnabled(false);
@@ -120,6 +128,7 @@ public class DiscardController extends Controller implements IDiscardController,
     private void setupResource(ResourceType type) {
         getDiscardView().setResourceMaxAmount(type, playerRes.get(type));
         getDiscardView().setResourceDiscardAmount(type, 0);
+        discardRes.put(type, 0);
         if (playerRes.get(type) == 0)
             getDiscardView().setResourceAmountChangeEnabled(type, false, false);
         else
