@@ -11,15 +11,15 @@ import client.base.*;
  * Game history view implementation
  */
 @SuppressWarnings("serial")
-public class GameHistoryView extends PanelView implements IGameHistoryView
+public class GameHistoryView extends OverlayView implements IGameHistoryView
 {
 	
 	private LogComponent logPanel;
 	private JScrollPane logScroll;
 	
-	public GameHistoryView()
+	public GameHistoryView(String name)
 	{
-		
+		super(name);
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.white);
 		

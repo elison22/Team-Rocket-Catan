@@ -3,6 +3,7 @@ package client.map.states;
 import client.data.RobPlayerInfo;
 import client.map.IMapController;
 import client.map.MapController;
+import facade.ClientFacade;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -12,6 +13,13 @@ import shared.locations.VertexLocation;
  * Created by brandt on 2/18/15.
  */
 public abstract class AbstractMapState {
+
+    protected ClientFacade facade;
+
+    protected AbstractMapState(){}
+    protected AbstractMapState(ClientFacade facade) {
+        this.facade = facade;
+    }
 
     public abstract void update();
 

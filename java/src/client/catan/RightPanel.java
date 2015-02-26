@@ -37,8 +37,8 @@ public class RightPanel extends JPanel
 		
 		// Initialize development card views and controller
 		//
-		playCardView = new PlayDevCardView();
-		buyCardView = new BuyDevCardView();
+		playCardView = new PlayDevCardView("PlayDevCard");
+		buyCardView = new BuyDevCardView("BuyDevCard");
 		IAction soldierAction = new IAction() {
 			@Override
 			public void execute()
@@ -60,14 +60,14 @@ public class RightPanel extends JPanel
 		
 		// Initialize victory point view and controller
 		//
-		pointsView = new PointsView();
-		finishedView = new GameFinishedView();
+		pointsView = new PointsView("Points");
+		finishedView = new GameFinishedView("GameFinished");
 		pointsController = new PointsController(pointsView, finishedView, facade);
 		pointsView.setController(pointsController);
 		
 		// Initialize resource bar view and controller
 		//
-		resourceView = new ResourceBarView();
+		resourceView = new ResourceBarView("ResourceBar");
 		resourceController = new ResourceBarController(resourceView, facade);
 		resourceController.setElementAction(ResourceBarElement.ROAD,
 											createStartMoveAction(mapController,

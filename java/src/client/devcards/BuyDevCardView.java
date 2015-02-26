@@ -31,8 +31,9 @@ public class BuyDevCardView extends OverlayView implements IBuyDevCardView {
     private JLabel imageLabel;
 	private JPanel buttonPanel;
 
-	public BuyDevCardView() {
+	public BuyDevCardView(String name) {
 
+        super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout(10, 10));
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

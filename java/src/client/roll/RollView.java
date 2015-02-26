@@ -30,8 +30,8 @@ public class RollView extends OverlayView implements IRollView {
 	private JButton rollButton;
 	private JPanel buttonPanel;
 
-	public RollView() {
-		
+	public RollView(String name) {
+		super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

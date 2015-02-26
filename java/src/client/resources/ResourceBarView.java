@@ -45,7 +45,7 @@ import client.utils.ImageUtils;
  * Implementation for the resource bar view
  */
 @SuppressWarnings({"serial", "unused"})
-public class ResourceBarView extends PanelView implements IResourceBarView
+public class ResourceBarView extends OverlayView implements IResourceBarView
 {
 	private final boolean TESTING = false;
 	
@@ -91,9 +91,9 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 	private Map<ResourceBarElement, ResourceElement> resources;
 	private List<ResourceBarElement> resourceElementList;
 	
-	public ResourceBarView()
+	public ResourceBarView(String name)
 	{
-		
+		super(name);
 		// TEMPORARY
 		this.add(new JLabel("Resource Bar View"));
 		

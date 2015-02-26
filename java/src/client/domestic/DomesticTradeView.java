@@ -12,14 +12,14 @@ import client.base.*;
  * "Domestic Trade" button
  */
 @SuppressWarnings("serial")
-public class DomesticTradeView extends PanelView implements IDomesticTradeView
+public class DomesticTradeView extends OverlayView implements IDomesticTradeView
 {
 	
 	private JButton button;
 	
-	public DomesticTradeView()
+	public DomesticTradeView(String name)
 	{
-		
+		super(name);
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		Font font = new JButton().getFont();

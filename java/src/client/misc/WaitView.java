@@ -30,9 +30,9 @@ public class WaitView extends OverlayView implements IWaitView {
 	private BufferedImage img;
 	private String imageLocation = "images" +File.separator + "misc"+ File.separator +"hourglass.png";
 
-	public WaitView() {
+	public WaitView(String name) {
 
-		super();
+		super(name);
 		
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());

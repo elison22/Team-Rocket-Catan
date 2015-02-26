@@ -28,8 +28,8 @@ public class MidPanel extends JPanel
 		
 		tradePanel = new TradePanel(facade);
 		
-		mapView = new MapView();
-		robView = new RobView();
+		mapView = new MapView("MapView");
+		robView = new RobView("RobView");
 		mapController = new MapController(mapView, robView, facade);
 		mapView.setController(mapController);
 		robView.setController(mapController);

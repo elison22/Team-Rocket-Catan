@@ -45,8 +45,9 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 	private JLabel request_component;
 	private JPanel requesting_component;
 	
-	public AcceptTradeOverlay()
+	public AcceptTradeOverlay(String name)
 	{
+        super(name);
 		this.initialize();
 	}
 	

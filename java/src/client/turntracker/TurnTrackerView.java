@@ -14,7 +14,7 @@ import client.utils.ImageUtils;
  * Implementation for the turn tracker view, which displays whose turn it is, and what state the game is in
  */
 @SuppressWarnings("serial")
-public class TurnTrackerView extends PanelView implements ITurnTrackerView {
+public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 
 	private TitlePanel titlePanel;
 	private GameStatePanel gameStatePanel;
@@ -28,8 +28,8 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	private final int NUM_PLAYERS = 4;
 	private final int FONT_SIZE = 13;
 	
-	public TurnTrackerView(TitlePanel titlePanel, GameStatePanel gameStatePanel) {
-		
+	public TurnTrackerView(TitlePanel titlePanel, GameStatePanel gameStatePanel, String name) {
+		super(name);
 		this.titlePanel = titlePanel;
 		this.gameStatePanel = gameStatePanel;
 		

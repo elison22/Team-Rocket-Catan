@@ -25,6 +25,8 @@ public class OverlayView extends PanelView implements IOverlayView
 	 * Stack of overlays that are currently displayed
 	 */
 	private static Deque<OverlayInfo> overlayStack;
+
+    private String name;
 	
 	public static void setWindow(JFrame window)
 	{
@@ -33,9 +35,10 @@ public class OverlayView extends PanelView implements IOverlayView
 		overlayStack = new ArrayDeque<OverlayInfo>();
 	}
 	
-	public OverlayView()
+	protected OverlayView(String name)
 	{
 		super();
+        this.name = name;
 	}
 	
 	/**
@@ -92,6 +95,7 @@ public class OverlayView extends PanelView implements IOverlayView
 		window.setGlassPane(overlayPanel);
 		overlayPanel.setVisible(true);
 		overlayStack.push(new OverlayInfo(this, overlayPanel));
+        printOverlays("SHOW");
 	}
 	
 	/**
@@ -120,6 +124,7 @@ public class OverlayView extends PanelView implements IOverlayView
 				window.getGlassPane().setVisible(false);
 			}
 		}
+        printOverlays("CLOSE");
 	}
 	
 	/**
@@ -177,6 +182,15 @@ public class OverlayView extends PanelView implements IOverlayView
 			this.overlayPanel = overlayPanel;
 		}
 	}
+
+    public void printOverlays(String type) {
+        System.out.println("************** "+type + " **************");
+        for (OverlayInfo info : overlayStack) {
+            if(info.getOverlayView().isModalShowing())
+                System.out.println(info.getOverlayView().name);
+        }
+        System.out.println("*********************************");
+    }
 	
 }
 

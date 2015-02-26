@@ -9,7 +9,7 @@ import client.utils.*;
  * Implementation for the points view, which displays the user's victory points
  */
 @SuppressWarnings("serial")
-public class PointsView extends ComponentView implements IPointsView
+public class PointsView extends OverlayView implements IPointsView
 {
 	
 	private final int TOP_MARGIN = 40;
@@ -23,9 +23,9 @@ public class PointsView extends ComponentView implements IPointsView
 	
 	private int points;
 	
-	public PointsView()
+	public PointsView(String name)
 	{
-		
+		super(name);
 		this.setBackground(Color.white);
 		
 		this.setPreferredSize(new Dimension(100, 700));

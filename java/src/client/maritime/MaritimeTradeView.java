@@ -11,12 +11,12 @@ import client.base.*;
  * Implementation for the maritime trade view, which displays the "Maritime Trade" button
  */
 @SuppressWarnings("serial")
-public class MaritimeTradeView extends PanelView implements IMaritimeTradeView {
+public class MaritimeTradeView extends OverlayView implements IMaritimeTradeView {
 
 	private JButton button;
 	
-	public MaritimeTradeView() {
-		
+	public MaritimeTradeView(String name) {
+		super(name);
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		Font font = new JButton().getFont();

@@ -2,6 +2,8 @@ package client.map.states;
 
 import client.data.RobPlayerInfo;
 import client.map.MapController;
+import facade.ClientFacade;
+import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -12,9 +14,8 @@ import shared.locations.VertexLocation;
  */
 public class RobbingMapState extends AbstractMapState{
 
-    @Override
-    public void update(){
-    	// do nothing
+    public RobbingMapState(ClientFacade facade) {
+        super(facade);
     }
 
     @Override
@@ -84,6 +85,12 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void robPlayer(RobPlayerInfo victim) {
-    	
+
+    }
+
+    @Override
+    public void update(){
+        if (facade.getState() == TurnState.Robbing)
+            System.out.println("Robbing");
     }
 }

@@ -48,16 +48,16 @@ public class LoginView extends OverlayView implements ILoginView
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = new JPanel();
-        mainPanel.add(new LoginView());
+        mainPanel.add(new LoginView("Login"));
 
         jf.getContentPane().add(mainPanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
     }
 
-    public LoginView()
+    public LoginView(String name)
     {
-
+        super(name);
         this.setOpaque(true);
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

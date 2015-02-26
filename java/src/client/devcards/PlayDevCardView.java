@@ -35,7 +35,8 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 	private JButton useButton;
 	private JButton cancelButton;
 
-	public PlayDevCardView() {
+	public PlayDevCardView(String name) {
+        super(name);
 		this.setOpaque(true);
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
 		

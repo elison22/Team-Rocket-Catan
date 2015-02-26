@@ -12,6 +12,8 @@ import shared.locations.VertexLocation;
  */
 public class RollingMapState extends AbstractMapState{
 
+    public RollingMapState(){}
+
     @Override
     public void update(){
 

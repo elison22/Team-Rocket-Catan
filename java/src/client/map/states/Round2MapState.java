@@ -12,10 +12,9 @@ import shared.locations.VertexLocation;
  * Created by brandt on 2/20/15.
  */
 public class Round2MapState extends AbstractMapState{
-    private ClientFacade facade;
 
     public Round2MapState(ClientFacade facade){
-        this.facade = facade;
+        super(facade);
     }
 
     @Override
@@ -56,7 +55,9 @@ public class Round2MapState extends AbstractMapState{
 
     @Override
     public void placeRoad(EdgeLocation edgeLoc) {
+
         facade.doBuildRoad(edgeLoc, true);
+
     }
 
     @Override

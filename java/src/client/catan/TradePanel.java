@@ -36,11 +36,11 @@ public class TradePanel extends JPanel
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
-		domesticView = new DomesticTradeView();
-		domesticOverlay = new DomesticTradeOverlay();
-		domesticWaitView = new WaitView();
+		domesticView = new DomesticTradeView("DomesticTrade");
+		domesticOverlay = new DomesticTradeOverlay("DomesticTrade");
+		domesticWaitView = new WaitView("DomesticWait");
 		domesticWaitView.setMessage("Waiting for Trade to Go Through");
-		domesticAcceptOverlay = new AcceptTradeOverlay();
+		domesticAcceptOverlay = new AcceptTradeOverlay("DomesticAccept");
 		domesticController = new DomesticTradeController(domesticView,
 														 domesticOverlay,
 														 domesticWaitView,
@@ -50,8 +50,8 @@ public class TradePanel extends JPanel
 		domesticWaitView.setController(domesticController);
 		domesticAcceptOverlay.setController(domesticController);
 		
-		maritimeView = new MaritimeTradeView();
-		maritimeOverlay = new MaritimeTradeOverlay();
+		maritimeView = new MaritimeTradeView("MaritimeView");
+		maritimeOverlay = new MaritimeTradeOverlay("MaritimeOverlay");
 		maritimeController = new MaritimeTradeController(maritimeView,
 														 maritimeOverlay, facade);
 		maritimeView.setController(maritimeController);

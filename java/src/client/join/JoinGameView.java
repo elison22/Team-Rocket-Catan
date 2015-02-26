@@ -39,8 +39,9 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 	private GameInfo[] games;
 	private PlayerInfo localPlayer;
 
-	public JoinGameView()
+	public JoinGameView(String name)
 	{
+        super(name);
 		this.initialize();
 	}
 

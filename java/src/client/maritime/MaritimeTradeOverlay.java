@@ -53,7 +53,8 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 	private JPanel buttonPanel;
 	
 
-	public MaritimeTradeOverlay() {
+	public MaritimeTradeOverlay(String name) {
+        super(name);
 		initImages();
 		
 		this.setOpaque(true);

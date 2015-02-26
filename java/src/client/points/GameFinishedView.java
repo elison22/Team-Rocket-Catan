@@ -29,8 +29,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 	private JButton okButton;
 	private JPanel buttonPanel;
 
-	public GameFinishedView() {
-		
+	public GameFinishedView(String name) {
+		super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

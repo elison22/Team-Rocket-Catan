@@ -39,8 +39,8 @@ public class RollResultView extends OverlayView implements IRollResultView {
 	private ImageIcon picture;
 	private JLabel pictureLabel;
 
-	public RollResultView() {
-		
+	public RollResultView(String name) {
+		super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

@@ -29,9 +29,9 @@ public class NewGameView extends OverlayView implements INewGameView
     private JCheckBox chkRandHexes = null;
     private JCheckBox chkRandPorts = null;
 
-    public NewGameView()
+    public NewGameView(String name)
     {
-
+        super(name);
         this.setOpaque(true);
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

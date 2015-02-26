@@ -31,8 +31,8 @@ public class RobView extends OverlayView implements IRobView {
 	RobPlayerInfo[] victims;
 	private ArrayList<JButton> victimButtons;
 
-	public RobView() {
-		
+	public RobView(String name) {
+		super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

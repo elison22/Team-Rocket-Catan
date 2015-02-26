@@ -83,9 +83,10 @@ public class DiscardView extends OverlayView implements IDiscardView
 	private Map<ResourceType, Resource> resources;
 	private List<ResourceType> resourceList;
 	
-	public DiscardView()
+	public DiscardView(String name)
 	{
-		this.initialize();
+        super(name);
+        this.initialize();
 	}
 	
 	private void initialize()

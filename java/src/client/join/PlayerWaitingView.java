@@ -31,8 +31,9 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 	private SpinnerListModel aiModel;
 	private JSpinner aiChoices;
 
-	public PlayerWaitingView() {
-		
+	public PlayerWaitingView(String name) {
+
+        super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));

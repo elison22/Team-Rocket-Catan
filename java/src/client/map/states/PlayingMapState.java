@@ -13,10 +13,8 @@ import shared.locations.VertexLocation;
  */
 public class PlayingMapState extends AbstractMapState {
 
-    private ClientFacade facade;
-    
 	public PlayingMapState(ClientFacade facade){
-        this.facade = facade;
+        super(facade);
     }
 
     @Override

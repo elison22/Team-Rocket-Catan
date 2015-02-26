@@ -226,10 +226,10 @@ public class MapController extends Controller implements IMapController, Observe
                 mapState = new RollingMapState();
                 break;
             case Robbing:
-                mapState = new RobbingMapState();
+                mapState = new RobbingMapState(facade);
                 break;
             case Discarding:
-                mapState = new DiscardMapState();
+                mapState = new DiscardMapState(facade);
                 break;
             case FirstRound:
                 mapState = new Round1MapState(facade);

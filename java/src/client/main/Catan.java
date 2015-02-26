@@ -66,16 +66,16 @@ public class Catan extends JFrame
                 }
                 new Catan(modelFacade);
 				
-				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
+				PlayerWaitingView playerWaitingView = new PlayerWaitingView("PlayerWaiting");
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
 																									playerWaitingView,
 																									modelFacade);
 				playerWaitingView.setController(playerWaitingController);
 				
-				JoinGameView joinView = new JoinGameView();
-				NewGameView newGameView = new NewGameView();
-				SelectColorView selectColorView = new SelectColorView();
-				MessageView joinMessageView = new MessageView();
+				JoinGameView joinView = new JoinGameView("JoinGame");
+				NewGameView newGameView = new NewGameView("NewGame");
+				SelectColorView selectColorView = new SelectColorView("SelectColor");
+				MessageView joinMessageView = new MessageView("Message");
 				final JoinGameController joinController = new JoinGameController(
 																				 joinView,
 																				 newGameView,
@@ -94,8 +94,8 @@ public class Catan extends JFrame
 				selectColorView.setController(joinController);
 				joinMessageView.setController(joinController);
 				
-				LoginView loginView = new LoginView();
-				MessageView loginMessageView = new MessageView();
+				LoginView loginView = new LoginView("Login");
+				MessageView loginMessageView = new MessageView("Message");
 				LoginController loginController = new LoginController(
 																	  loginView,
 																	  loginMessageView,

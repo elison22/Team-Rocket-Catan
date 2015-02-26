@@ -1,5 +1,6 @@
 package client.communication;
 
+import client.base.OverlayView;
 import client.base.PanelView;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,7 +13,7 @@ import javax.swing.JScrollPane;
  * Chat view implementation
  */
 @SuppressWarnings("serial")
-public class ChatView extends PanelView implements IChatView {
+public class ChatView extends OverlayView implements IChatView {
     
     private LogComponent chatPanel;
     private JScrollPane chatScrollPane;
@@ -23,7 +24,8 @@ public class ChatView extends PanelView implements IChatView {
     /**
      * Creates a new chat view component.
      */
-    public ChatView() {
+    public ChatView(String name) {
+        super(name);
         // Create the components
         chatPanel = new LogComponent();
         chatScrollPane = new JScrollPane(chatPanel);

@@ -44,8 +44,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 	private Map<ResourceType, JLabel> resourceCounts;
 	private Map<ResourceType, ArrayList<JButton>> resourceButtonsMap;
 
-	public DomesticTradeOverlay() {
-		
+	public DomesticTradeOverlay(String name) {
+		super(name);
 		this.buildView();
 	}
 

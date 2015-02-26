@@ -34,8 +34,8 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 
 	private int selButton = 0;
 			
-	public SelectColorView() {
-
+	public SelectColorView(String name) {
+        super(name);
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory

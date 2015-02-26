@@ -13,10 +13,8 @@ import shared.locations.VertexLocation;
  */
 public class Round1MapState extends AbstractMapState {
 
-    private ClientFacade facade;
-
     public Round1MapState(ClientFacade facade){
-        this.facade = facade;
+        super(facade);
     }
 
     @Override

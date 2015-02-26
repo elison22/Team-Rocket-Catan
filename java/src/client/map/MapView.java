@@ -13,15 +13,15 @@ import shared.locations.*;
  * Implementation for the map view
  */
 @SuppressWarnings("serial")
-public class MapView extends PanelView implements IMapView
+public class MapView extends OverlayView implements IMapView
 {
 	
 	private MapComponent map;
 	private MapOverlay overlay;
 	
-	public MapView()
+	public MapView(String name)
 	{
-		
+		super(name);
 		this.setLayout(new BorderLayout());
 		
 		map = new MapComponent();
@@ -90,7 +90,7 @@ public class MapView extends PanelView implements IMapView
 	public void startDrop(PieceType pieceType, CatanColor pieceColor,
 						  boolean isCancelAllowed)
 	{
-		overlay = new MapOverlay(map);
+		overlay = new MapOverlay(map, "Map");
 		overlay.setController(overlayController);
 		overlay.startDrop(pieceType, pieceColor, isCancelAllowed);
 		overlay.showModal();
@@ -213,10 +213,10 @@ public class MapView extends PanelView implements IMapView
 		private MapComponent map;
 		private JButton cancelButton;
 		
-		public MapOverlay(MapComponent mainMap)
+		public MapOverlay(MapComponent mainMap, String name)
 		{
 			
-			super();
+			super(name);
 			
 			this.mainMap = mainMap;
 		}

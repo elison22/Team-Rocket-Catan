@@ -2,6 +2,7 @@ package client.map.states;
 
 import client.data.RobPlayerInfo;
 import client.map.MapController;
+import facade.ClientFacade;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -12,6 +13,11 @@ import shared.locations.VertexLocation;
  */
 public class DiscardMapState extends AbstractMapState{
 
+    public DiscardMapState(ClientFacade facade) {
+        super(facade);
+
+    }
+
     @Override
     public void update(){
 
@@ -19,7 +25,6 @@ public class DiscardMapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
-
     }
 
     @Override
