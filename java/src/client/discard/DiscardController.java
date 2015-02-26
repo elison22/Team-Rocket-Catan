@@ -3,6 +3,7 @@ package client.discard;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.game.TurnState;
 import shared.definitions.ResourceType;
 import client.base.Controller;
 import client.misc.IWaitView;
@@ -15,7 +16,8 @@ import facade.ClientFacade;
 public class DiscardController extends Controller implements IDiscardController, Observer {
 
 	private IWaitView waitView;
-	private ClientFacade modelFacade;
+	private ClientFacade facade;
+    private boolean hasDiscarded = false;
 	
 	/**
 	 * DiscardController constructor
@@ -25,7 +27,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	 */
 	public DiscardController(IDiscardView view, IWaitView waitView, ClientFacade facade) {
 		super(view);
-		modelFacade = facade;
+		this.facade = facade;
 		facade.addObserver(this);
 		this.waitView = waitView;
 	}
@@ -40,7 +42,7 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		
+		getDiscardView();
 	}
 
 	@Override
@@ -56,8 +58,27 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+
+        if (facade.getState() != TurnState.Discarding) return;
+        if (getDiscardView().isModalShowing()) return;
+
+        int totalRes = 0;
+        for (int i : facade.getPlayerResources().values()) {
+            totalRes += i;
+        }
+        if (totalRes > 7) {
+            if (!hasDiscarded && !getDiscardView().isModalShowing()){
+                getDiscardView().showModal();
+
+            }
+            else if (hasDiscarded && !getWaitView().isModalShowing()){
+                getWaitView().showModal();
+            }
+        }
+        else
+            if (!getWaitView().isModalShowing()) {
+                getWaitView().showModal();
+            }
 	}
 
 }
