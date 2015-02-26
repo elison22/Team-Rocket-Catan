@@ -1,5 +1,6 @@
 package client.discard;
 
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,7 +19,12 @@ public class DiscardController extends Controller implements IDiscardController,
 	private IWaitView waitView;
 	private ClientFacade facade;
     private boolean hasDiscarded = false;
-	
+    private boolean maxed = false;
+    private HashMap<ResourceType, Integer> discardRes;
+    private HashMap<ResourceType, Integer> playerRes;
+    private int totalRes;
+    private int count;
+
 	/**
 	 * DiscardController constructor
 	 * 
@@ -42,17 +48,34 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		getDiscardView();
+
+        discardRes.put(resource, discardRes.get(resource) + 1);
+        count++;
+        updateMessage();
+        getDiscardView().setResourceDiscardAmount(resource, discardRes.get(resource));
+        if (discardRes.get(resource) == playerRes.get(resource))
+            getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+        if (count == totalRes/2) maxAll();
+
 	}
 
 	@Override
 	public void decreaseAmount(ResourceType resource) {
-		
+
+        discardRes.put(resource, discardRes.get(resource) -1);
+        count--;
+        updateMessage();
+        getDiscardView().setResourceDiscardAmount(resource, discardRes.get(resource));
+        if (discardRes.get(resource) == 0)
+            getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+        if (maxed) unmaxAll();
+
 	}
 
 	@Override
 	public void discard() {
-		
+//        assert facade.canDiscardCards(discardRes);
+        facade.doDiscardCards(discardRes);
 		getDiscardView().closeModal();
 	}
 
@@ -62,14 +85,13 @@ public class DiscardController extends Controller implements IDiscardController,
         if (facade.getState() != TurnState.Discarding) return;
         if (getDiscardView().isModalShowing()) return;
 
-        int totalRes = 0;
         for (int i : facade.getPlayerResources().values()) {
             totalRes += i;
         }
         if (totalRes > 7) {
             if (!hasDiscarded && !getDiscardView().isModalShowing()){
                 getDiscardView().showModal();
-
+                start();
             }
             else if (hasDiscarded && !getWaitView().isModalShowing()){
                 getWaitView().showModal();
@@ -80,6 +102,78 @@ public class DiscardController extends Controller implements IDiscardController,
                 getWaitView().showModal();
             }
 	}
+
+    private void start() {
+        count = 0;
+        discardRes = new HashMap<ResourceType, Integer>();
+        playerRes = facade.getPlayerResources();
+        getDiscardView().setDiscardButtonEnabled(false);
+        updateMessage();
+        setupResource(ResourceType.WHEAT);
+        setupResource(ResourceType.ORE);
+        setupResource(ResourceType.SHEEP);
+        setupResource(ResourceType.WOOD);
+        setupResource(ResourceType.BRICK);
+
+    }
+
+    private void setupResource(ResourceType type) {
+        getDiscardView().setResourceMaxAmount(type, playerRes.get(type));
+        getDiscardView().setResourceDiscardAmount(type, 0);
+        if (playerRes.get(type) == 0)
+            getDiscardView().setResourceAmountChangeEnabled(type, false, false);
+        else
+            getDiscardView().setResourceAmountChangeEnabled(type, true, false);
+    }
+
+    private void maxAll() {
+
+        maxed = true;
+        getDiscardView().setDiscardButtonEnabled(true);
+        maxRes(ResourceType.WHEAT);
+        maxRes(ResourceType.ORE);
+        maxRes(ResourceType.SHEEP);
+        maxRes(ResourceType.WOOD);
+        maxRes(ResourceType.BRICK);
+
+    }
+
+    private void maxRes(ResourceType type) {
+
+        if (discardRes.get(type) == 0)
+            getDiscardView().setResourceAmountChangeEnabled(type, false, false);
+        else
+            getDiscardView().setResourceAmountChangeEnabled(type, false, true);
+
+    }
+
+    private void unmaxAll() {
+
+        maxed = false;
+        getDiscardView().setDiscardButtonEnabled(false);
+        unmaxRes(ResourceType.WHEAT);
+        unmaxRes(ResourceType.ORE);
+        unmaxRes(ResourceType.SHEEP);
+        unmaxRes(ResourceType.WOOD);
+        unmaxRes(ResourceType.BRICK);
+    }
+
+    private void unmaxRes(ResourceType type) {
+
+        boolean increase;
+        boolean decrease;
+        if (discardRes.get(type) == playerRes.get(type))
+            increase = false;
+        else increase = true;
+        if (discardRes.get(type) == 0)
+            decrease = false;
+        else decrease = true;
+        getDiscardView().setResourceAmountChangeEnabled(type, increase, decrease);
+    }
+
+    private void updateMessage() {
+        getDiscardView().setStateMessage("Discard: " + Integer.toString(count) + "/" + Integer.toString(totalRes/2));
+    }
 
 }
 
