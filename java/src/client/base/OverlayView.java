@@ -3,6 +3,7 @@ package client.base;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 /**
@@ -144,6 +145,10 @@ public class OverlayView extends PanelView implements IOverlayView
 		}
 		
 		return false;
+	}
+	
+	public void showDialog(String message) {
+		JOptionPane.showMessageDialog(window, message);
 	}
 	
 	private static class OverlayInfo

@@ -200,16 +200,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-		getNewGameView().closeModal();
-		
-		// Create new game
-		if (modelFacade.CreateGame(getNewGameView().getTitle(), 
-							       getNewGameView().getRandomlyPlaceHexes(), 
-							       getNewGameView().getUseRandomPorts(), 
-							       getNewGameView().getRandomlyPlaceNumbers())) {
-			// If successful, update game list
-			setGameList();
-		}
+		if (!getNewGameView().getTitle().isEmpty()) {
+			// Create new game
+			if (modelFacade.CreateGame(getNewGameView().getTitle(), 
+				       getNewGameView().getRandomlyPlaceHexes(), 
+				       getNewGameView().getUseRandomPorts(), 
+				       getNewGameView().getRandomlyPlaceNumbers())) {
+				
+				// If successful, update game list
+				setGameList();
+				
+				getNewGameView().closeModal();
+			} else getNewGameView().showDialog("Failed to create game!");
+		} else getNewGameView().showDialog("Please type in a name.");
 	}
 
 	@Override
@@ -246,7 +249,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getJoinGameView().closeModal();
 			
 			joinAction.execute();
-		}
+		} else getJoinGameView().showDialog("Failed to join game!");
 	}
 
 	@Override
