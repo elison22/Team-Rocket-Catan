@@ -14,12 +14,12 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void update(){
-
+    	// do nothing
     }
 
     @Override
     public void start(MapController controller){
-
+    	controller.getRobView().showModal();
     }
 
     @Override
@@ -44,17 +44,17 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void placeRoad(EdgeLocation edgeLoc) {
-
+    	// do nothing
     }
 
     @Override
     public void placeSettlement(VertexLocation vertLoc) {
-
+    	// do nothing
     }
 
     @Override
     public void placeCity(VertexLocation vertLoc) {
-
+    	// do nothing
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void cancelMove() {
-
+    	// do nothing
     }
 
     @Override
@@ -79,11 +79,11 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void playRoadBuildingCard() {
-
+    	// do nothing
     }
 
     @Override
     public void robPlayer(RobPlayerInfo victim) {
-
+    	
     }
 }
