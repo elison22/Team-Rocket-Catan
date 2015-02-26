@@ -102,7 +102,8 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		indicatorPanel.add(playerRoad[playerIndex]);
 		playerRoad[playerIndex].setVisible(false);
 		
-		playerPoints[playerIndex] = new JLabel("0");
+		if(playerPoints[playerIndex] == null)
+			playerPoints[playerIndex] = new JLabel("0");
 		playerPoints[playerIndex].setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
 		playerPoints[playerIndex].setFont(labelFont);
 		playerPanel[playerIndex].add(playerPoints[playerIndex], BorderLayout.EAST);
@@ -118,7 +119,6 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerArmy[playerIndex].setVisible(largestArmy);
 		playerRoad[playerIndex].setVisible(longestRoad);
 		playerPoints[playerIndex].setText(String.format("%d", points));
-		
 		
 		if(highlight)
 			playerPanel[playerIndex].setBorder(BorderFactory.createLineBorder(new Color(0,0,0), 3));
