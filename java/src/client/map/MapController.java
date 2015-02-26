@@ -167,7 +167,7 @@ public class MapController extends Controller implements IMapController, Observe
 
         mapState.placeSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, facade.getPlayerInfo().getColor());
-		facade.updated();
+		//facade.updated();
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
