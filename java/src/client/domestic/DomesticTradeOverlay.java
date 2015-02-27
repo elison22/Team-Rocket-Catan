@@ -150,6 +150,11 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 		this.playerSelectionPanel.setLayout(new BoxLayout(this.playerSelectionPanel, BoxLayout.X_AXIS));
 		this.playerSelectionPanel.setAlignmentX(CENTER_ALIGNMENT);
 		this.playerSelectionPanel.add(noneToggle);
+		ArrayList<JToggleButton> playerButtons = new ArrayList<JToggleButton>();
+		/*for(PlayerInfo pi : players)
+		{
+			if(pi.getPlayerIndex() != )
+		}*/
 		
 		return this.playerSelectionPanel;
 	}

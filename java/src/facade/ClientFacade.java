@@ -605,6 +605,36 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
 	}
+	
+	public PlayerInfo[] getNonActivePlayerInfo()
+	{
+		ArrayList<Player> players = getPlayersOfGame();
+		ArrayList<Player> waitingPlayers = new ArrayList<Player>();
+		for(Player player : players)
+		{
+			if(player.getPlayerIdx() != playerIndex)
+			{
+				waitingPlayers.add(player);
+			}
+		}
+		players.trimToSize();
+		PlayerInfo[] playersInfo = new PlayerInfo[waitingPlayers.size()];
+		for(int i = 0; i < waitingPlayers.size(); i++)
+		{
+			PlayerInfo info = new PlayerInfo();
+				
+			//if(players.get(i).getPlayerIdx() != playerIndex)
+			//{
+				info.setId(waitingPlayers.get(i).getPlayerID());
+				info.setPlayerIndex(waitingPlayers.get(i).getPlayerIdx());
+				info.setName(waitingPlayers.get(i).getName());
+				info.setColor(CatanColor.convert(waitingPlayers.get(i).getColor()));
+				playersInfo[i] = info;
+			//}
+		}
+		return playersInfo;
+		
+	}
 
     public HashMap<EdgeLocation, Constructable> getRoadPieces() {
         return game.getRoadPieces();

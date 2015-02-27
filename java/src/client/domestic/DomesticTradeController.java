@@ -67,7 +67,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
-
+		getTradeOverlay().setPlayers(modelFacade.getNonActivePlayerInfo());
+		getTradeOverlay().reset();
 		getTradeOverlay().showModal();
 	}
 
