@@ -52,7 +52,7 @@ public class RollController extends Controller implements IRollController, Obser
 	    rand = new Random();
 	    int randNum2 = rand.nextInt((max - min) + 1) + min;
 	    int randomDiceRoll = randNum1 + randNum2;
-	    
+
 	    getResultView().setRollValue(randomDiceRoll);
 	    getResultView().showModal();
 	    modelFacade.rollDice(randomDiceRoll);
