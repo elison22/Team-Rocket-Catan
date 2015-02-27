@@ -73,6 +73,7 @@ public class RobbingMapState extends AbstractMapState{
             tempInfo = new RobPlayerInfo(facade.getPlayerList()[index]);
             tempInfo.setPlayerIndex(index);
             tempInfo.setNumCards(facade.getPlayersOfGame().get(index).getResCount());
+            if (tempInfo.getNumCards()==0) continue;
             tempList.add(tempInfo);
         }
         if (tempList.size() == 0)
