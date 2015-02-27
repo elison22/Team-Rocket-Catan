@@ -244,7 +244,7 @@ public class MapController extends Controller implements IMapController, Observe
                 mapState = new PlayingMapState(facade);
                 break;
         }
-        mapState.start(this);
+        if(facade.isYourTurn()) mapState.start(this);
 //        modalOpen = true;
 
     }
