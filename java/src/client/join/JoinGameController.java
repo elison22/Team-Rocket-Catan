@@ -238,18 +238,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color) {
 		
+		if (getSelectColorView().isModalShowing())
+			getSelectColorView().closeModal();
+					
+		if (getJoinGameView().isModalShowing())
+			getJoinGameView().closeModal();
+		
 		// Attempt to the selected game with the selected color
 		if (modelFacade.joinGame(joinGameInfo.getId(), color.toString())) {
-	
-			// If join succeeded
-			while (getSelectColorView().isModalShowing())
-				getSelectColorView().closeModal();
-			
-			if (getJoinGameView().isModalShowing())
-				getJoinGameView().closeModal();
-			
+			// Success?
 			joinAction.execute();
-		} else getJoinGameView().showDialog("Failed to join game!");
+		} else {
+			// Failed?
+			getJoinGameView().showDialog("Failed to join game!");
+			getJoinGameView().showModal();
+		}
 	}
 
 	@Override
