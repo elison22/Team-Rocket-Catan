@@ -63,8 +63,8 @@ public class PlayingMapState extends AbstractMapState {
     }
 
     @Override
-    public void placeRobber(HexLocation hexLoc) {
-    	return;
+    public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
+        return null;
     }
 
     @Override

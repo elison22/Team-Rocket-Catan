@@ -178,10 +178,12 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeRobber(HexLocation hexLoc) {
 
-        mapState.placeRobber(hexLoc);
+        RobPlayerInfo[] victims = mapState.placeRobber(hexLoc);
 		getView().placeRobber(hexLoc);
-		
-		getRobView().closeModal();
+        if (victims.length > 0) {
+            getRobView().showModal();
+            getRobView().setPlayers(victims);
+        }
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
@@ -201,13 +203,14 @@ public class MapController extends Controller implements IMapController, Observe
 	public void playRoadBuildingCard() {	
 		//build first road
         playSecondRoad = true;
-        
+        //buildSecondRoad
 
         playSecondRoad = false;
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {	
-		
+	public void robPlayer(RobPlayerInfo victim) {
+        mapState.robPlayer(victim);
+        getRobView().closeModal();
 	}
 
 	@Override

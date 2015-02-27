@@ -1,5 +1,6 @@
 package client.map.states;
 
+import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.map.IMapController;
 import client.map.MapController;
@@ -39,7 +40,7 @@ public abstract class AbstractMapState {
 
     public abstract void placeCity(VertexLocation vertLoc);
 
-    public abstract void placeRobber(HexLocation hexLoc);
+    public abstract RobPlayerInfo[] placeRobber(HexLocation hexLoc);
 
     public abstract void startMove(PieceType pieceType);
 

@@ -1,5 +1,8 @@
 package client.data;
 
+import shared.definitions.CatanColor;
+import shared.dto.Player_DTO;
+
 /**
  * Used to pass player information into the rob view<br>
  * <br>
@@ -22,6 +25,16 @@ public class RobPlayerInfo extends PlayerInfo
 	{
 		super();
 	}
+
+    public RobPlayerInfo(Player_DTO player){
+        this.setId(player.getId());
+        this.setColor(CatanColor.convert(player.getColor()));
+        this.setName(player.getName());
+    }
+
+    public RobPlayerInfo(int index) {
+        this.setPlayerIndex(index);
+    }
 	
 	public int getNumCards()
 	{

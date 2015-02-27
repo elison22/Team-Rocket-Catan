@@ -216,4 +216,8 @@ public class Player {
 	{
 		return playerID;
 	}
+
+    public int getResCount() {
+        return bank.getResCount();
+    }
 }

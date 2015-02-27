@@ -1,9 +1,7 @@
 package model.board;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.io.InputStream;
+import java.util.*;
 
 import serializer.json.*;
 import shared.locations.*;
@@ -219,6 +217,7 @@ public class Board {
      */
     public boolean canPlayRobber(HexLocation newLocation) throws BoardException {
         if (newLocation == null) throw new BoardException("Param newLocation cannot be null.");
+        if (!tiles.containsKey(newLocation)) return false;
         return !robber.equals(newLocation);
     }
 
@@ -242,6 +241,23 @@ public class Board {
 
     /**...*/
     public HexLocation getRobberLoc() { return robber; }
+
+    public HashSet<Integer> getPlayersToRob(HexLocation robber) {
+        HashSet<Integer> playersToRob = new HashSet<Integer>();
+        checkPlayerIndex(new VertexLocation(robber, VertexDirection.West), playersToRob);
+        checkPlayerIndex(new VertexLocation(robber, VertexDirection.NorthWest), playersToRob);
+        checkPlayerIndex(new VertexLocation(robber, VertexDirection.NorthEast), playersToRob);
+        checkPlayerIndex(new VertexLocation(robber, VertexDirection.East), playersToRob);
+        checkPlayerIndex(new VertexLocation(robber, VertexDirection.SouthEast), playersToRob);
+        checkPlayerIndex(new VertexLocation(robber, VertexDirection.SouthWest), playersToRob);
+        return playersToRob;
+    }
+
+    private void checkPlayerIndex(VertexLocation loc, HashSet<Integer> playerSet) {
+        loc = loc.getNormalizedLocation();
+        if (buildings.containsKey(loc.getNormalizedLocation()))
+            playerSet.add(buildings.get(loc).getOwner());
+    }
 
     /**
      * Determines whether or not a player can build a Settlement-type Constructable on this

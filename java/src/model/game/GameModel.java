@@ -2,6 +2,7 @@ package model.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import model.board.Board;
 import model.board.BoardException;
@@ -430,6 +431,10 @@ public class GameModel {
                 return CatanColor.convert(player.getColor());
         }
         return null;
+    }
+
+    public HashSet<Integer> getPlayersToRob(HexLocation loc) {
+        return map.getPlayersToRob(loc);
     }
 
 }

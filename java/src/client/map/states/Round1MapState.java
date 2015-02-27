@@ -71,8 +71,9 @@ public class Round1MapState extends AbstractMapState {
     }
 
     @Override
-    public void placeRobber(HexLocation hexLoc) {
+    public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
 
+        return null;
     }
 
     @Override

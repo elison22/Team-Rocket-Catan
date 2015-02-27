@@ -110,4 +110,12 @@ public class PlayerBank extends CardBank{
         return true;
     }
 
+    public int getResCount() {
+        int count = 0;
+        for (ResourceType key : resCards.keySet()){
+            count += resCards.get(key);
+        }
+        return count;
+    }
+
 }

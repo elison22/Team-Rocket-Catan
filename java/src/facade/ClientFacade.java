@@ -1,9 +1,6 @@
 package facade;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 import model.board.BoardException;
 import model.board.Constructable;
@@ -601,6 +598,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 		info.setColor(CatanColor.convert(player.getColor()));
 		return info;
 	}
+
+    public HashSet<Integer> getPlayersToRob(HexLocation loc) {
+        return game.getPlayersToRob(loc);
+    }
 	
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
