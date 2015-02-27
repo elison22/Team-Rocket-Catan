@@ -132,6 +132,7 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 		devCards.clearSelection();
 		resCard1.clearSelection();
 		resCard2.clearSelection();
+			
 	}
 
 	@Override
@@ -492,6 +493,9 @@ class DevelopmentCardChooser extends ButtonGroupPanel {
 	void setCardAmount(DevCardType cardType, int amount) {
 		JToggleButton button = devCards.get(cardType);
 		button.setText(Integer.toString(amount));
+		if(amount == 0)
+			button.setEnabled(false);
+		else button.setEnabled(true);
 	}
 	
 	public DevCardType getSelectedDevCard() {

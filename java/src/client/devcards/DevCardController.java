@@ -3,6 +3,8 @@ package client.devcards;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.cards.PlayerBank;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.Controller;
 import client.base.IAction;
@@ -27,7 +29,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	 * @param roadAction Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".
 	 */
 	public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, 
-								IAction soldierAction, IAction roadAction, ClientFacade facade) {
+								IAction soldierAction, IAction roadAction, ClientFacade facade) 
+	{
 		super(view);
 		modelFacade = facade;
 		facade.addObserver(this);
@@ -36,74 +39,94 @@ public class DevCardController extends Controller implements IDevCardController,
 		this.roadAction = roadAction;
 	}
 
-	public IPlayDevCardView getPlayCardView() {
+	public IPlayDevCardView getPlayCardView() 
+	{
 		return (IPlayDevCardView)super.getView();
 	}
 
-	public IBuyDevCardView getBuyCardView() {
+	public IBuyDevCardView getBuyCardView() 
+	{
 		return buyCardView;
 	}
 
 	@Override
-	public void startBuyCard() {
+	public void startBuyCard() 
+	{
 		
 		getBuyCardView().showModal();
 	}
 
 	@Override
-	public void cancelBuyCard() {
+	public void cancelBuyCard() 
+	{
 		
 		getBuyCardView().closeModal();
 	}
 
 	@Override
-	public void buyCard() {
+	public void buyCard() 
+	{
 		modelFacade.buyDevCard();
 		getBuyCardView().closeModal();
 	}
 
 	@Override
-	public void startPlayCard() {
-		
+	public void startPlayCard() 
+	{
+		PlayerBank bank = modelFacade.getLocalPlayer().getBank();
+		int soldierCount = bank.getSoldierCount();
+		int monopolyCount = bank.getMonopolyCount();
+		int yearOfPlentyCount = bank.getYearOfPlentyCount();
+		int monumentCount = bank.getMonumentCount();
+		int roadBuildingCount = bank.getRoadBuildingCount();
+		getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldierCount);
+		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopolyCount);
+		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearOfPlentyCount);
+		getPlayCardView().setCardAmount(DevCardType.MONUMENT, monumentCount);
+		getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadBuildingCount);
 		getPlayCardView().showModal();
 	}
 
 	@Override
-	public void cancelPlayCard() {
-
+	public void cancelPlayCard() 
+	{
 		getPlayCardView().closeModal();
 	}
 
 	@Override
-	public void playMonopolyCard(ResourceType resource) {
-		
+	public void playMonopolyCard(ResourceType resource) 
+	{
+		modelFacade.doUseMonopoly(resource.name());
 	}
 
 	@Override
-	public void playMonumentCard() {
-		
+	public void playMonumentCard() 
+	{
+		modelFacade.doUseMonument();
 	}
 
 	@Override
-	public void playRoadBuildCard() {
-		
+	public void playRoadBuildCard() 
+	{
 		roadAction.execute();
 	}
 
 	@Override
-	public void playSoldierCard() {
-		
+	public void playSoldierCard() 
+	{
 		soldierAction.execute();
 	}
 
 	@Override
-	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) 
+	{
+		modelFacade.doUseYearOfPlenty(resource1.name(), resource2.name());
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg) 
+	{
+		
 	}
-
 }
 

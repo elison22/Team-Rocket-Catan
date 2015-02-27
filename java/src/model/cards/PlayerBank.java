@@ -117,5 +117,46 @@ public class PlayerBank extends CardBank{
         }
         return count;
     }
-
+    
+    public int getSoldierCount()
+    {
+    	int soldiers = 0;
+    	for (DevCard card : oldDevs)
+    		if(card.getType() == DevCardType.SOLDIER)
+    			soldiers++;
+    	return soldiers;
+    }
+    public int getMonopolyCount()
+    {
+    	int monopolies = 0;
+    	for (DevCard card : oldDevs)
+    		if(card.getType() == DevCardType.MONOPOLY)
+    			monopolies++;
+    	return monopolies;
+    }
+    public int getRoadBuildingCount()
+    {
+    	int roadBuilding = 0;
+    	for (DevCard card : oldDevs)
+    		if(card.getType() == DevCardType.ROAD_BUILD)
+    			roadBuilding++;
+    	return roadBuilding;
+    }
+    public int getYearOfPlentyCount()
+    {
+    	int yearOfPlenty = 0;
+    	for (DevCard card : oldDevs)
+    		if(card.getType() == DevCardType.YEAR_OF_PLENTY)
+    			yearOfPlenty++;
+    	return yearOfPlenty;
+    }
+    public int getMonumentCount()
+    {
+    	int monument = 0;
+    	for (DevCard card : oldDevs)
+    		if(card.getType() == DevCardType.MONUMENT)
+    			monument++;
+    	return monument;
+    }
+    
 }
