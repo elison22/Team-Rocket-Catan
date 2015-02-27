@@ -20,7 +20,8 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
-    	controller.getRobView().showModal();
+
+        controller.getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public boolean canPlaceRobber(HexLocation hexLoc) {
-        return false;
+        return facade.canPlaceRobber(hexLoc);
     }
 
     @Override

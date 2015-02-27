@@ -181,7 +181,7 @@ public class MapController extends Controller implements IMapController, Observe
         mapState.placeRobber(hexLoc);
 		getView().placeRobber(hexLoc);
 		
-		getRobView().showModal();
+		getRobView().closeModal();
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
