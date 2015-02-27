@@ -31,7 +31,6 @@ public class GameModel {
     private Board map;
     private Chat chat;
     private Chat gameHistory;
-    //private GameHistory gameHistory;
     private ArrayList<String> aiList;
     private int winner;
 

@@ -2,7 +2,6 @@ package client.resources;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -94,14 +93,20 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementAmount(ResourceBarElement.WHEAT, resCards.get(ResourceType.WHEAT));
 		getView().setElementAmount(ResourceBarElement.WOOD, resCards.get(ResourceType.WOOD));
 	}
-
-	@Override
-	public void update(Observable o, Object arg) 
-	{
-		if (arg != null) return;
+	
+	private void setRemainingBuildables() {
+		getView().setElementAmount(ResourceBarElement.ROAD, modelFacade.getRemainingRoads());
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, modelFacade.getRemainingSettlements());
+		getView().setElementAmount(ResourceBarElement.CITY, modelFacade.getRemainingCities());
 		
-		setResources();
 		
+	}
+	
+	private void setPlayedSoldiers() {
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, modelFacade.getPlayedSoldierCards());
+	}
+	
+	private void setButtons() {
 		if (modelFacade.canBuildRoad())
 			getView().setElementEnabled(ResourceBarElement.ROAD, true);
 		else
@@ -121,6 +126,17 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
 		else
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+		if (arg != null) return;
+		
+		setResources();
+		setRemainingBuildables();
+		setButtons();
+		setPlayedSoldiers();
 	}
 
 }

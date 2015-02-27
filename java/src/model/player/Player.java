@@ -116,7 +116,11 @@ public class Player {
         return playerName;
     }
 
-    /**
+    public int getSoldierDevs() {
+		return soldierDevs;
+	}
+
+	/**
      * Called by the Facade to determine if a player has the resources necessary to offer
      * a certain trade
      * @param playerIdx The player that offered the trade

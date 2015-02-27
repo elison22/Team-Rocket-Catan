@@ -27,7 +27,6 @@ public class PointsController extends Controller implements IPointsController, O
 		setFinishedView(finishedView);
 		modelFacade = facade;
 		facade.addObserver(this);
-		initFromModel();
 	}
 	
 	public IPointsView getPointsView() {
@@ -43,15 +42,22 @@ public class PointsController extends Controller implements IPointsController, O
 	}
 
 	private void initFromModel() {
-		//<temp>		
-		getPointsView().setPoints(5);
-		//</temp>
+		getPointsView().setPoints(modelFacade.getLocalVictoryPoints());
+		
+		if (modelFacade.getWinner() == modelFacade.getLocalPlayer().getPlayerIdx())
+			getFinishedView().setWinner(modelFacade.getLocalPlayer().getName(), true);
+		else
+			getFinishedView().setWinner(modelFacade.getPlayerList()[modelFacade.getWinner()].getName(), false);
+		
+		getFinishedView().showModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		if (arg != null) return;
 		
+		if (modelFacade.getWinner() > -1)
+			initFromModel();
 	}
 	
 }

@@ -212,7 +212,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				
 				getNewGameView().closeModal();
 			} else getNewGameView().showDialog("Failed to create game!");
-		} else getNewGameView().showDialog("Please type in a name.");
+		} else getNewGameView().showDialog("Please type in a game title.");
 	}
 
 	@Override

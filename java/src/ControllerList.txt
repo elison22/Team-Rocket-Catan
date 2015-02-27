@@ -2,13 +2,13 @@ Controller List:
 
 ----- WORKING ON -------- Implementor -----
 6. MapController			- Brandt/Hayden
-8. ResourceBarController	- Gavin/Chad
 9. DevCardController		- Gavin
+14. PointsController		- Chad
 
 ----- TO-DO -----
 11. DomesticTradeController
 12. MaritimeTradeController
-14. PointsController
+
 
 ----- DONE -----
 1. LoginController			- Chad
@@ -17,5 +17,6 @@ Controller List:
 4. TurnTrackerController	- Andrew
 5. ChatController			- Chad
 7. RollController			- Andrew
+8. ResourceBarController	- Chad
+10. DiscardController		- Brandt
 13. GameHistoryController	- Chad
-10. DiscardController

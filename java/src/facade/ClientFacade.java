@@ -4,7 +4,6 @@ import java.util.*;
 
 import model.board.BoardException;
 import model.board.Constructable;
-import model.cards.ResourceSet;
 import model.chat.Message;
 import model.game.GameModel;
 import model.game.TurnState;
@@ -690,6 +689,36 @@ public class ClientFacade extends Observable implements IClientFacade {
 		}
 		
 		return historyEntries;
+	}
+	
+	// Used by the ResourceBarController
+	public int getRemainingRoads() {
+		return game.getPlayerList().get(playerIndex).getRemainingRoads();
+	}
+	
+	// Used by the ResourceBarController
+	public int getRemainingSettlements() {
+		return game.getPlayerList().get(playerIndex).getRemainingSettlements();
+	}
+	
+	// Used by the ResourceBarController
+	public int getRemainingCities() {
+		return game.getPlayerList().get(playerIndex).getRemainingCities();
+	}
+	
+	// Used by the ResourceBarController
+	public int getPlayedSoldierCards() {
+		return game.getPlayerList().get(playerIndex).getSoldierDevs();
+	}
+	
+	// Used by the PointsController
+	public int getWinner() {
+		return game.getWinner();
+	}
+	
+	// Used by the PointsController
+	public int getLocalVictoryPoints() {
+		return game.getPlayerList().get(playerIndex).getVictoryPoints();
 	}
 	
 	/** Updates the playIndex kept by the proxyFacade by finding the player
