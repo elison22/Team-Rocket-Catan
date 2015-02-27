@@ -118,6 +118,10 @@ public class GameModel {
 	}
 
 	public int getWinner() {
+		for(Player p: playerList) {
+			if(winner == p.getPlayerID())
+				return p.getPlayerIdx();
+		}
 		return winner;
 	}
 
