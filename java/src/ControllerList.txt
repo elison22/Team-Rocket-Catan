@@ -6,7 +6,6 @@ Controller List:
 9. DevCardController		- Gavin
 
 ----- TO-DO -----
-10. DiscardController
 11. DomesticTradeController
 12. MaritimeTradeController
 14. PointsController
@@ -19,3 +18,4 @@ Controller List:
 5. ChatController			- Chad
 7. RollController			- Andrew
 13. GameHistoryController	- Chad
+10. DiscardController
