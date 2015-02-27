@@ -74,7 +74,7 @@ public class LoginController extends Controller implements ILoginController {
 			// If login succeeded
 			getLoginView().closeModal();
 			loginAction.execute();
-		}
+		} else getLoginView().showDialog("Sign in failed! Please check your username/password and try again.");
 	}
 
 	@Override
@@ -89,8 +89,8 @@ public class LoginController extends Controller implements ILoginController {
 				// If register succeeded
 				getLoginView().closeModal();
 				loginAction.execute();
-			}
-		}
+			} else getLoginView().showDialog("Register Failed! Username may already be in use.");
+		} else getLoginView().showDialog("Passwords don't match!");
 	}
 
 }
