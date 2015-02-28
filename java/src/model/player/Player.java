@@ -159,17 +159,34 @@ public class Player {
                     case ROAD_BUILD:
                         return remainingRoads >= 2;
                     case MONUMENT:
-                        return (victoryPoints + monumentDevs) >= 10;
+                        int monuments = countMonumentDevs();
+                        return (victoryPoints + monuments) >= 10;
                 }
                 return true;
             }
         }
         for(DevCard playerDev : newDevCards){
             if(playerDev.getType() == DevCardType.MONUMENT){
-                return (victoryPoints + monumentDevs) >= 10;
+                int monuments = countMonumentDevs();
+                return (victoryPoints + monuments) >= 10;
             }
         }
     	return false;
+    }
+
+    public int countMonumentDevs(){
+        int monuments = 0;
+        ArrayList<DevCard> oldDevCards = bank.getOldDevCards();
+        ArrayList<DevCard> newDevCards = bank.getNewDevCards();
+        for(DevCard playerDev : oldDevCards){
+            if (playerDev.getType() == DevCardType.MONUMENT)
+                monuments++;
+        }
+        for(DevCard playerDev : newDevCards){
+            if(playerDev.getType() == DevCardType.MONUMENT)
+                monuments++;
+        }
+        return monuments;
     }
 
     public boolean canBuyDevCard() {
