@@ -450,4 +450,8 @@ public class GameModel {
         return map.getPlayersToRob(loc);
     }
 
+    public HashSet<PortType> getPlayerPorts(int index) {
+        return map.getPlayerPorts(index);
+    }
+
 }

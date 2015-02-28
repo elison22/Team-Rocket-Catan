@@ -614,6 +614,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
 	}
+
+    public HashSet<PortType> getPlayerPorts(int index) {
+        return game.getPlayerPorts(index);
+    }
 	
 	public PlayerInfo[] getNonActivePlayerInfo()
 	{

@@ -684,5 +684,15 @@ public class Board {
     public HashMap<EdgeLocation, Constructable> getRoadPieces() {
         return roads;
     }
+
+    public HashSet<PortType> getPlayerPorts(int index) {
+
+        HashSet<PortType> toReturn = new HashSet<PortType>();
+        for (VertexLocation vloc : ports.keySet()) {
+            if (buildings.containsKey(vloc) && buildings.get(vloc).getOwner() == index)
+                toReturn.add(ports.get(vloc));
+        }
+        return toReturn;
+    }
 }
 
