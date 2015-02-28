@@ -236,12 +236,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			HashMap<ResourceType, Integer> resources = trade.getResources();
 			
 			getAcceptOverlay().reset();
+			getAcceptOverlay().setPlayerName(modelFacade.getNameByIndex(trade.getSender()));
 			getAcceptOverlay().setAcceptEnabled(true);
 			for(ResourceType res : resources.keySet()) {
 				if(resources.get(res) > 0) {
 					getAcceptOverlay().addGetResource(res, resources.get(res));
 				} else if(resources.get(res) < 0) {
-					//getAcceptOverlay().addGiveResource(res, resources.get(res));
+					getAcceptOverlay().addGiveResource(res, resources.get(res) * -1);
 					if(Math.abs(resources.get(res)) > modelFacade.getLocalPlayer().getBank().getResCards().get(res))
 						getAcceptOverlay().setAcceptEnabled(false);
 				}
