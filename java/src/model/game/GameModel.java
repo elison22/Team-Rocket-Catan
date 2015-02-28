@@ -134,7 +134,7 @@ public class GameModel {
 	public void setTradeOffer(TradeOffer trade) {
 		tradeOffer = trade;
 	}
-	
+
 	public TradeOffer getTradeOffer() {
 		return tradeOffer;
 	}

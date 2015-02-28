@@ -59,7 +59,7 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		// Development Card Chooser
-		devCards = new DevelopmentCardChooser();
+		devCards = new DevelopmentCardChooser(this);
 		devCards.setListener(btnGrpPnlListener);
 		mainPanel.add(devCards);
 
@@ -413,8 +413,11 @@ class DevelopmentCardChooser extends ButtonGroupPanel {
 	private JToggleButton roadbuilding;
 	private JToggleButton monument;
 
-	DevelopmentCardChooser() {
+    private PlayDevCardView view;
+
+	DevelopmentCardChooser(PlayDevCardView view) {
 		super();
+        this.view = view;
 
 		devCards = new HashMap<DevCardType, JToggleButton>();
 		devCardTypes = new HashMap<JToggleButton, DevCardType>();
@@ -493,9 +496,9 @@ class DevelopmentCardChooser extends ButtonGroupPanel {
 	void setCardAmount(DevCardType cardType, int amount) {
 		JToggleButton button = devCards.get(cardType);
 		button.setText(Integer.toString(amount));
-		if(amount == 0)
-			button.setEnabled(false);
-		else button.setEnabled(true);
+        if(view.getController().canPlayDevCard(cardType))
+            button.setEnabled(true);
+		else button.setEnabled(false);
 	}
 	
 	public DevCardType getSelectedDevCard() {
