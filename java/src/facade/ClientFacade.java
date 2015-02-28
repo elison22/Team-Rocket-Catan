@@ -624,6 +624,16 @@ public class ClientFacade extends Observable implements IClientFacade {
         return game.getPlayersToRob(loc);
     }
 	
+    public String getNameByIndex(int index)
+    {
+    	String name = "";
+    	for(Player player : game.getPlayerList())
+    		if(player.getPlayerIdx() == index)
+    			name = player.getName();
+    	
+    	return name;
+    }
+    
 	public ArrayList<Player> getPlayersOfGame() {
 		return game.getPlayerList();
 	}
