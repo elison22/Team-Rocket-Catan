@@ -12,6 +12,7 @@ import model.chat.Chat;
 import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import model.trade.TradeOffer;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
@@ -33,6 +34,7 @@ public class GameModel {
     private Chat gameHistory;
     private ArrayList<String> aiList;
     private int winner;
+    private TradeOffer tradeOffer;
 
     public GameModel() throws BoardException {
     	aiList = new ArrayList<String>();
@@ -127,6 +129,14 @@ public class GameModel {
 
 	public void setWinner(int winner) {
 		this.winner = winner;
+	}
+	
+	public void setTradeOffer(TradeOffer trade) {
+		tradeOffer = trade;
+	}
+
+	public TradeOffer getTradeOffer() {
+		return tradeOffer;
 	}
 
 	/**
@@ -304,7 +314,7 @@ public class GameModel {
      */
     public boolean canOfferTrade(int playerId, DomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer().getResources())){
+    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
     			return true;
 			}
     	}

@@ -1,8 +1,12 @@
 package client.domestic;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.trade.DomesticTrade;
+import model.trade.TradeOffer;
 import shared.definitions.ResourceType;
 import client.base.Controller;
 import client.misc.IWaitView;
@@ -17,6 +21,17 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private ClientFacade modelFacade;
+	
+	private DomesticTrade tradeOffer;
+	
+    private HashMap<ResourceType, Integer> cardsToTrade;
+    
+    private HashSet<ResourceType> give;
+    private HashSet<ResourceType> receive;	
+    
+    private String SETTRADE = "set the trade you want to make";
+    private String SENDTRADE = "Trade!";
+    private boolean readyToTrade;
 
 	/**
 	 * DomesticTradeController constructor
@@ -67,6 +82,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
+		cardsToTrade = new HashMap<ResourceType, Integer>();
+		cardsToTrade.put(ResourceType.BRICK, 0);
+		cardsToTrade.put(ResourceType.ORE, 0);
+		cardsToTrade.put(ResourceType.SHEEP, 0);
+		cardsToTrade.put(ResourceType.WHEAT, 0);
+		cardsToTrade.put(ResourceType.WOOD, 0);
+		tradeOffer = new DomesticTrade(modelFacade.getLocalPlayerIndex());
+		
 		getTradeOverlay().setPlayers(modelFacade.getNonActivePlayerInfo());
 		getTradeOverlay().reset();
 		getTradeOverlay().showModal();
@@ -74,44 +97,110 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-
+		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
+		Integer amount = new Integer(getTradeOverlay().getResourceAmount(resource));
+		
+		int value = 0;
+		if(receive != null && receive.contains(resource)) {
+			value = cardsToTrade.get(resource) + 1;
+			if(value > 0)
+				value = 0;
+			cardsToTrade.put(resource, value);
+			
+		} else if(give != null && give.contains(resource)) {
+			value = cardsToTrade.get(resource) - 1;
+			if(value < 0) 
+				value = 0;
+			cardsToTrade.put(resource, value);
+		}
+		
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, (amount - 1 > 0));
+		
+		isReadyToTrade();
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-
+		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
+		Integer amount = new Integer(getTradeOverlay().getResourceAmount(resource));
+				
+		int value = 0;
+		if(receive != null && receive.contains(resource)) {
+			value = cardsToTrade.get(resource) - 1;
+			cardsToTrade.put(resource, value);
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
+		} else if(give != null && give.contains(resource)) {
+			value = cardsToTrade.get(resource) + 1;
+			cardsToTrade.put(resource, value);
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, (val > amount + 1), (amount + 1 > 0));
+		}
+		isReadyToTrade();
 	}
 
 	@Override
 	public void sendTradeOffer() {
-
+		tradeOffer.setOffer(cardsToTrade);
+		if(modelFacade.canOfferTrade(tradeOffer))
+			modelFacade.doOfferTrade(tradeOffer);
+		
 		getTradeOverlay().closeModal();
-//		getWaitOverlay().showModal();
+		getWaitOverlay().setMessage("Waiting for Trade to Go Through");
+		getWaitOverlay().showModal();
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-
+		tradeOffer.setReceiver(playerIndex);
+		isReadyToTrade();
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		if(give != null && give.contains(resource))
+			give.remove(resource);
+		
+		if(receive == null) 
+			receive = new HashSet<ResourceType>();
+		
+		receive.add(resource);	
+		isReadyToTrade();
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-
+		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, (val > 0), false);
+		
+		if(receive != null && receive.contains(resource))
+			receive.remove(resource);
+		
+		if(give == null) 
+			give = new HashSet<ResourceType>();
+		
+		give.add(resource);	
+		isReadyToTrade();
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-
+		if(give != null && give.contains(resource))
+			give.remove(resource);
+		else if(receive != null && receive.contains(resource))
+			receive.remove(resource);
+		
+		if(cardsToTrade.containsKey(resource)) 
+			cardsToTrade.put(resource, 0);
+		
+		isReadyToTrade();
 	}
 
 	@Override
 	public void cancelTrade() {
-
+		tradeOffer = null;
+		cardsToTrade.clear();
+		give = null;
+		receive = null;
 		getTradeOverlay().closeModal();
 	}
 
@@ -123,9 +212,66 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		//handle receiving a trade here?
+		if(getWaitOverlay().isModalShowing() && tradeOffer != null) {
+			getWaitOverlay().closeModal();
+			tradeOffer = null;
+			cardsToTrade.clear();
+			give = null;
+			receive = null;
+		}
 		
+		handleAcceptTrade();
+	}
+	
+	public void handleAcceptTrade() {
+		TradeOffer trade = modelFacade.getTradeOffer();
+		if(trade != null && trade.getReceiver() == modelFacade.getLocalPlayerIndex()) {
+			HashMap<ResourceType, Integer> resources = trade.getResources();
+			
+			getAcceptOverlay().reset();
+			getAcceptOverlay().setAcceptEnabled(true);
+			for(ResourceType res : resources.keySet()) {
+				if(resources.get(res) > 0) {
+					getAcceptOverlay().addGetResource(res, resources.get(res));
+				} else if(resources.get(res) < 0) {
+					//getAcceptOverlay().addGiveResource(res, resources.get(res));
+					if(Math.abs(resources.get(res)) > modelFacade.getLocalPlayer().getBank().getResCards().get(res))
+						getAcceptOverlay().setAcceptEnabled(false);
+				}
+			}
+			
+//			modelFacade.doAcceptTrade(trade, accept);
+			getAcceptOverlay().showModal();
+		}
+	}
+	
+	public void isReadyToTrade() {
+		if(give == null || receive == null)
+			return;
+		
+		readyToTrade = true;
+		if(give.size() > 0 && receive.size() > 0) {
+			for(ResourceType res : cardsToTrade.keySet()) {
+				if(cardsToTrade.get(res) == 0 && (give.contains(res) || receive.contains(res))) {
+					readyToTrade = false;
+					break;
+				}
+			}
+			if(tradeOffer.getReceiver() == -1)
+				readyToTrade = false;
+		} 
+		else 
+			readyToTrade = false;
+		
+		if(readyToTrade) {
+			getTradeOverlay().setStateMessage(SENDTRADE);
+			getTradeOverlay().setTradeEnabled(true);
+		}
+		else {
+			getTradeOverlay().setStateMessage(SETTRADE);
+			getTradeOverlay().setTradeEnabled(false);
+		}
 	}
 
 }
-

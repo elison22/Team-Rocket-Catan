@@ -128,5 +128,22 @@ public class DevCardController extends Controller implements IDevCardController,
 	{
 		
 	}
+
+    @Override
+    public boolean canPlayDevCard(DevCardType type){
+        switch(type){
+            case SOLDIER:
+                return modelFacade.canUseSoldier();
+            case ROAD_BUILD:
+                return modelFacade.canUseRoadBuilder();
+            case MONOPOLY:
+                return modelFacade.canUseMonopoly();
+            case MONUMENT:
+                return modelFacade.canUseMonument();
+            case YEAR_OF_PLENTY:
+                return modelFacade.canUseYearOfPlenty();
+        }
+        return false;
+    }
 }
 
