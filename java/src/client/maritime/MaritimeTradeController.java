@@ -130,6 +130,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void startTrade() {
+		getTradeOverlay().setTradeEnabled(false);
 		
 		if (!modelFacade.isYourTurn())
 			getTradeOverlay().hideGiveOptions();
@@ -162,6 +163,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		resourceToGet = resource;
 		
 		getTradeOverlay().selectGetOption(resource, 1);
+		
+		if (modelFacade.canMaritimeTrade(resourceToGive, resourceToGet, ratio)) {
+			getTradeOverlay().setTradeEnabled(true);
+		}
 	}
 
 	@Override
