@@ -124,6 +124,9 @@ public class PlayerBank extends CardBank{
     	for (DevCard card : oldDevs)
     		if(card.getType() == DevCardType.SOLDIER)
     			soldiers++;
+        for (DevCard card : newDevs)
+            if(card.getType() == DevCardType.SOLDIER)
+                soldiers++;
     	return soldiers;
     }
     public int getMonopolyCount()
@@ -132,6 +135,9 @@ public class PlayerBank extends CardBank{
     	for (DevCard card : oldDevs)
     		if(card.getType() == DevCardType.MONOPOLY)
     			monopolies++;
+        for (DevCard card : newDevs)
+            if(card.getType() == DevCardType.MONOPOLY)
+                monopolies++;
     	return monopolies;
     }
     public int getRoadBuildingCount()
@@ -140,6 +146,9 @@ public class PlayerBank extends CardBank{
     	for (DevCard card : oldDevs)
     		if(card.getType() == DevCardType.ROAD_BUILD)
     			roadBuilding++;
+        for (DevCard card : newDevs)
+            if(card.getType() == DevCardType.ROAD_BUILD)
+                roadBuilding++;
     	return roadBuilding;
     }
     public int getYearOfPlentyCount()
@@ -148,6 +157,9 @@ public class PlayerBank extends CardBank{
     	for (DevCard card : oldDevs)
     		if(card.getType() == DevCardType.YEAR_OF_PLENTY)
     			yearOfPlenty++;
+        for (DevCard card : newDevs)
+            if(card.getType() == DevCardType.YEAR_OF_PLENTY)
+                yearOfPlenty++;
     	return yearOfPlenty;
     }
     public int getMonumentCount()
@@ -156,6 +168,9 @@ public class PlayerBank extends CardBank{
     	for (DevCard card : oldDevs)
     		if(card.getType() == DevCardType.MONUMENT)
     			monument++;
+        for (DevCard card : newDevs)
+            if(card.getType() == DevCardType.MONUMENT)
+                monument++;
     	return monument;
     }
     
