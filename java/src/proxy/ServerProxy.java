@@ -32,7 +32,7 @@ class ServerProxy {
 	
 	/**Contains the server's URL. This is determined by http://host:port*/
 	private String url_prefix;
-    private String k_prefix = "http://10.7.77.15:8081";
+    //private String k_prefix = "http://10.7.77.15:8081";
 	
 	// Used to determine which cookie was received from the server
 	private final String userPrefix = "catan.user=";

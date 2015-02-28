@@ -110,11 +110,13 @@ public class ClientFacade extends Observable implements IClientFacade {
     public void resetGame() {
     	try {
 			game = new GameModel();
+			poller.setInGame(false);
+			poller.setWaitingForOtherPlayers(false);
+	    	update(new String("RESET"));
 		} catch (BoardException e) {
 			e.printStackTrace();
 		}
-    	poller = new ServerPoller(3000, proxy, this);
-    	update(new String("RESET"));
+    	
     }
 
 	@Override
