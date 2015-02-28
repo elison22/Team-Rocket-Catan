@@ -50,6 +50,8 @@ public class PointsController extends Controller implements IPointsController, O
 			getFinishedView().setWinner(modelFacade.getPlayerList()[modelFacade.getWinner()].getName(), false);
 		
 		getFinishedView().showModal();
+		
+		modelFacade.resetGame();
 	}
 
 	@Override

@@ -27,8 +27,24 @@ public enum PortType
             default:
                 return null;
         }
-        
     }
     
+    public static PortType convertResourceType(ResourceType t) {
+    	
+    	switch (t) {
+    	case BRICK:
+    		return BRICK;
+    	case SHEEP:
+    		return SHEEP;
+    	case ORE:
+    		return ORE;
+    	case WHEAT:
+    		return WHEAT;
+    	case WOOD:
+    		return WOOD;
+    	default:
+    		return null;
+    	}
+    }
 }
 

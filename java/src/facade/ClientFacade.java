@@ -106,6 +106,16 @@ public class ClientFacade extends Observable implements IClientFacade {
     	localPlayer = new Player_DTO();
     	playerIndex = -1;
     }
+    
+    public void resetGame() {
+    	try {
+			game = new GameModel();
+		} catch (BoardException e) {
+			e.printStackTrace();
+		}
+    	poller = new ServerPoller(3000, proxy, this);
+    	update(new String("RESET"));
+    }
 
 	@Override
 	public boolean canUserLogin(String user, String password) {
@@ -767,6 +777,14 @@ public class ClientFacade extends Observable implements IClientFacade {
 	// Used by the PointsController
 	public int getLocalVictoryPoints() {
 		return game.getPlayerList().get(playerIndex).getVictoryPoints();
+	}
+	
+	public HashSet<PortType> getPlayerPorts() {
+		return game.getMap().getPlayerPorts(playerIndex);
+	}
+	
+	public HashMap<ResourceType,Integer> getBankResCards() {
+		return game.getCardBank().getResCards();
 	}
 	
 	/** Updates the playIndex kept by the proxyFacade by finding the player

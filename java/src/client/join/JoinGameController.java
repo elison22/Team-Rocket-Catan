@@ -265,6 +265,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getJoinGameView().closeModal();
 			setGameList();
 			getJoinGameView().showModal();
+		} else if (arg != null && arg.toString().equalsIgnoreCase("RESET")) {
+			start();
 		}
 		
 	}

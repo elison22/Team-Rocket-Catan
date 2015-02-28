@@ -82,7 +82,7 @@ public class MockProxy implements IProxyFacade {
 				e.printStackTrace();
 			}
 		} else if (modelVersion == 233) {
-			return "true";
+			return "\"true\"\n";
 		}
 		
 		return null;

@@ -84,13 +84,15 @@ public class GameBank extends CardBank{
      * @return Whether a card can be taken or not
      */
     public boolean canGiveResCard(ResourceType card){
-        
-    	for(Map.Entry<ResourceType, Integer> entry : resCards.entrySet()){
-    		if(entry.getKey() == card){
-    			if(entry.getValue() > 0)
-    				return true;
-    		}
-    	}
+        if (resCards.get(card) > 0)
+        	return true;
+    	
+//    	for(Map.Entry<ResourceType, Integer> entry : resCards.entrySet()){
+//    		if(entry.getKey() == card){
+//    			if(entry.getValue() > 0)
+//    				return true;
+//    		}
+//    	}
         return false;
     }
 
