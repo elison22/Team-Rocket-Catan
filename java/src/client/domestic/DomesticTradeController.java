@@ -206,8 +206,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-
+		modelFacade.doAcceptTrade(tradeOffer, willAccept);
+		tradeOffer = null;
+		if(cardsToTrade != null)
+			cardsToTrade.clear();
+		give = null;
+		receive = null;
 		getAcceptOverlay().closeModal();
+		
 	}
 
 	@Override
