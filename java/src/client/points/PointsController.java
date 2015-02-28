@@ -57,6 +57,8 @@ public class PointsController extends Controller implements IPointsController, O
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg != null) return;
+
+		getPointsView().setPoints(modelFacade.getLocalVictoryPoints());
 		
 		if (modelFacade.getWinner() > -1)
 			initFromModel();
