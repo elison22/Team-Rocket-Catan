@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import model.trade.DomesticTrade;
+import model.trade.TradeOffer;
 import shared.definitions.ResourceType;
 import client.base.Controller;
 import client.misc.IWaitView;
@@ -218,6 +219,30 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			cardsToTrade.clear();
 			give = null;
 			receive = null;
+		}
+		
+		handleAcceptTrade();
+	}
+	
+	public void handleAcceptTrade() {
+		TradeOffer trade = modelFacade.getTradeOffer();
+		if(trade != null && trade.getReceiver() == modelFacade.getLocalPlayerIndex()) {
+			HashMap<ResourceType, Integer> resources = trade.getResources();
+			
+			getAcceptOverlay().reset();
+			getAcceptOverlay().setAcceptEnabled(true);
+			for(ResourceType res : resources.keySet()) {
+				if(resources.get(res) > 0) {
+					getAcceptOverlay().addGetResource(res, resources.get(res));
+				} else if(resources.get(res) < 0) {
+					//getAcceptOverlay().addGiveResource(res, resources.get(res));
+					if(Math.abs(resources.get(res)) > modelFacade.getLocalPlayer().getBank().getResCards().get(res))
+						getAcceptOverlay().setAcceptEnabled(false);
+				}
+			}
+			
+//			modelFacade.doAcceptTrade(trade, accept);
+			getAcceptOverlay().showModal();
 		}
 	}
 	
