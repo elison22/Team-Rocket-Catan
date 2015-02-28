@@ -779,7 +779,12 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return game.getPlayerList().get(playerIndex).getVictoryPoints();
 	}
 	
-	public void getPlayerPorts() {
+	public HashSet<PortType> getPlayerPorts() {
+		return game.getMap().getPlayerPorts(playerIndex);
+	}
+	
+	public HashMap<ResourceType,Integer> getBankResCards() {
+		return game.getCardBank().getResCards();
 	}
 	
 	/** Updates the playIndex kept by the proxyFacade by finding the player
