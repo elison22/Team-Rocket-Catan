@@ -406,6 +406,10 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 	public void setResourceAmount(ResourceType resource, String amount) {
 		this.resourceCounts.get(resource).setText(amount);
 	}
+	
+	public String getResourceAmount(ResourceType resource) {
+		return this.resourceCounts.get(resource).getText();
+	}
 
 	@Override
 	public void setResourceAmountChangeEnabled(ResourceType resource, boolean canIncrease, boolean canDecrease) {

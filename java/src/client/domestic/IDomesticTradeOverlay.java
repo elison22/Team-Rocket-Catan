@@ -93,5 +93,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 */
 	void setCancelEnabled(boolean enabled);
 	
+	String getResourceAmount(ResourceType resource);
+	
 }
 
