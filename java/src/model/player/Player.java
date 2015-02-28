@@ -148,7 +148,7 @@ public class Player {
      * requirement to play that certain dev card.
      */
     public boolean canPlayDevCard(DevCardType devCard) {
-        if (playedDevCard == true){
+        if (playedDevCard){
             return false;
         }
     	ArrayList<DevCard> oldDevCards = bank.getOldDevCards();
