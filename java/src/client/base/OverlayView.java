@@ -215,7 +215,7 @@ public class OverlayView extends PanelView implements IOverlayView
         }
         if (toKill == null) return;
         overlayStack.remove(toKill);
-        overlayStack.add(toKill);
+        overlayStack.push(toKill);
         toKill.getOverlayView().closeModal();
     }
 

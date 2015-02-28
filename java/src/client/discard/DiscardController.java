@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import client.base.OverlayView;
 import model.game.TurnState;
 import shared.definitions.ResourceType;
 import client.base.Controller;
@@ -18,7 +19,6 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	private IWaitView waitView;
 	private ClientFacade facade;
-    private boolean hasDiscarded = false;
     private boolean maxed = false;
     private HashMap<ResourceType, Integer> discardRes;
     private HashMap<ResourceType, Integer> playerRes;
@@ -76,9 +76,7 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	@Override
 	public void discard() {
-//        assert facade.canDiscardCards(discardRes);
         getDiscardView().closeModal();
-        hasDiscarded = true;
         facade.doDiscardCards(discardRes);
 	}
 
@@ -86,9 +84,9 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void update(Observable o, Object arg) {
 
         if (facade.getState() != TurnState.Discarding) {
-            hasDiscarded = false;
             return;
         }
+        if (!facade.getLocalPlayer().hasDiscarded()) OverlayView.killView("wait");
         if (getDiscardView().isModalShowing()) return;
 
         int total = 0;
@@ -96,11 +94,11 @@ public class DiscardController extends Controller implements IDiscardController,
             total += i;
         }
         if (total > 7) {
-            if (!hasDiscarded && !getDiscardView().isModalShowing()){
+            if (!facade.getLocalPlayer().hasDiscarded() && !getDiscardView().isModalShowing()){
                 getDiscardView().showModal();
                 start(total);
             }
-            else if (hasDiscarded && !getWaitView().isModalShowing()){
+            else if (facade.getLocalPlayer().hasDiscarded() && !getWaitView().isModalShowing()){
                 getWaitView().showModal();
             }
         }

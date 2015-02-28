@@ -224,4 +224,8 @@ public class Player {
     public int getResCount() {
         return bank.getResCount();
     }
+
+    public boolean hasDiscarded() {
+        return discarded;
+    }
 }
