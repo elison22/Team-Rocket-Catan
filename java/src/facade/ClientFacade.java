@@ -546,15 +546,16 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean canMaritimeTrade(MaritimeTrade trade) {
-		return game.canMaritimeTrade(playerIndex, trade);
+	public boolean canMaritimeTrade(ResourceType give, ResourceType get, int ratio) {
+		MaritimeTrade mTrade = new MaritimeTrade(give, get, ratio);
+		return game.canMaritimeTrade(playerIndex, mTrade);
 	}
 
 	@Override
-	public boolean doMaritimeTrade(MaritimeTrade trade) {
+	public boolean doMaritimeTrade(ResourceType give, ResourceType get, int ratio) {
 		try {
 			updateGameModel(proxy.maritimeTrade(new MaritimeTrade_Params(playerIndex, 
-							trade.getRatio(), trade.getResourceToGive().toString(), trade.getResourceToReceive().toString())));
+							ratio, give.name(), get.name())));
 		} catch (ServerException e) {
 			return false;
 		}

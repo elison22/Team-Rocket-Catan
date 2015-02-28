@@ -3,11 +3,8 @@ package shared.definitions;
 public enum ResourceType
 {
 	WOOD, BRICK, SHEEP, WHEAT, ORE;
-	
-	private static String name;
 
     public static ResourceType convert(String type){
-    	name = type;
 
         switch (type.toLowerCase())
         {
@@ -25,11 +22,6 @@ public enum ResourceType
                 return null;
         }
 
-    }
-    
-    @Override
-    public String toString() {
-    	return name;
     }
 
 }

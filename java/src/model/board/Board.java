@@ -630,6 +630,9 @@ public class Board {
      * @return	true if player has building on the port type that he wants to trade
      */
     public boolean canPlayMaritimeTrade(int playerIndex, PortType type) {
+    	if (type == null)
+    		return true;
+    	
     	for(Map.Entry<VertexLocation, PortType> entry : ports.entrySet()){
     		if(entry.getValue() == type) {
                 if(buildings.get(entry.getKey()) == null) continue;
