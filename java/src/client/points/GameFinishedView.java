@@ -28,6 +28,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 	private JLabel image;
 	private JButton okButton;
 	private JPanel buttonPanel;
+	
+	PointsController con;
 
 	public GameFinishedView(String name) {
 		super(name);
@@ -77,7 +79,7 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == okButton) {
-				closeModal();
+				con.resetGame();
 			}
 		}	
 	};
@@ -107,6 +109,10 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 		BufferedImage b = ImageUtils.loadImage(imagePath);
 		int newWidth = b.getWidth() * IMAGE_HEIGHT / b.getHeight();
 		image.setIcon(new ImageIcon(b.getScaledInstance(newWidth, IMAGE_HEIGHT, BufferedImage.SCALE_FAST)));
+	}
+	
+	public void setCon(PointsController pc) {
+		con = pc;
 	}
 
 }

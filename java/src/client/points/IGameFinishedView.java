@@ -19,5 +19,7 @@ public interface IGameFinishedView extends IOverlayView
 	 */
 	void setWinner(String name, boolean isLocalPlayer);
 	
+	public void setCon(PointsController pc);
+	
 }
 

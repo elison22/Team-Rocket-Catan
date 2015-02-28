@@ -83,8 +83,6 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public void playSoldierCard() {
-    	if(!facade.canUseSoldier())
-    		return;
     }
 
     @Override

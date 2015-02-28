@@ -15,6 +15,8 @@ public class PointsController extends Controller implements IPointsController, O
 	private IGameFinishedView finishedView;
 	private ClientFacade modelFacade;
 	
+	private boolean gameWon;
+	
 	/**
 	 * PointsController constructor
 	 * 
@@ -27,6 +29,8 @@ public class PointsController extends Controller implements IPointsController, O
 		setFinishedView(finishedView);
 		modelFacade = facade;
 		facade.addObserver(this);
+		
+		gameWon = false;
 	}
 	
 	public IPointsView getPointsView() {
@@ -49,20 +53,30 @@ public class PointsController extends Controller implements IPointsController, O
 		else
 			getFinishedView().setWinner(modelFacade.getPlayerList()[modelFacade.getWinner()].getName(), false);
 		
+		getFinishedView().setCon(this);
+		gameWon = true;
 		getFinishedView().showModal();
-		
+	}
+	
+	@Override
+	public void resetGame() {
+		getFinishedView().closeModal();
+		gameWon = false;
 		modelFacade.resetGame();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg != null) return;
+		
+		if (gameWon) return;
 
 		getPointsView().setPoints(modelFacade.getLocalVictoryPoints());
 		
-		if (modelFacade.getWinner() > -1)
+		if (modelFacade.getWinner() > -1) {
 			initFromModel();
+		}
+			
 	}
-	
 }
 
