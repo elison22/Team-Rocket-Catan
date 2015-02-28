@@ -35,9 +35,14 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setTradeOverlay(IMaritimeTradeOverlay tradeOverlay) {
 		this.tradeOverlay = tradeOverlay;
 	}
+	
+	private void initPossibleTrades() {
+	}
 
 	@Override
 	public void startTrade() {
+		
+		initPossibleTrades();
 		
 		getTradeOverlay().showModal();
 	}

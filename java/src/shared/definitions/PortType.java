@@ -27,8 +27,6 @@ public enum PortType
             default:
                 return null;
         }
-        
     }
-    
 }
 
