@@ -57,9 +57,12 @@ public class Serializer {
 		Board newBoard = new Board(newModel.getMap());
 		Chat newChat = new Chat(newModel.getChat());
 		Chat newGameHistory = new Chat(newModel.getLog());
-		TradeOffer tradeOffer = new TradeOffer(newModel.getTradeOffer());
 		
-		game.setTradeOffer(tradeOffer);
+		if(newModel.getTradeOffer() != null) {
+			TradeOffer tradeOffer = new TradeOffer(newModel.getTradeOffer());
+			game.setTradeOffer(tradeOffer);
+		}
+		
 		game.setChat(newChat);
 		game.setGameHistory(newGameHistory);
 		game.setMap(newBoard);
