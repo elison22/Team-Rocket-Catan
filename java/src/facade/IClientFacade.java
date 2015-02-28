@@ -323,13 +323,13 @@ public interface IClientFacade {
      * @param trade details of the trade being offered
      * @return true if trade can be made right now
      */
-    public boolean canMaritimeTrade(MaritimeTrade trade);
+    public boolean canMaritimeTrade(ResourceType give, ResourceType get, int ratio);
 
     /**
      * Sends a trade offer to bank
      * @param trade details of the trade being offered
      */
-    public boolean doMaritimeTrade(MaritimeTrade trade);
+    public boolean doMaritimeTrade(ResourceType give, ResourceType get, int ratio);
 
     /**
      * Checks to see if player can discard the selected resource cards
@@ -347,6 +347,8 @@ public interface IClientFacade {
 	public Player_DTO getLocalPlayerInfo();
 
 	public Player_DTO[] getPlayerList();
+
+	
 	
 	
 }

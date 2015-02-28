@@ -24,6 +24,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private ResourceType[] possibleGives;
 	private ResourceType[] possibleGets;
 	
+	ResourceType resourceToGive;
+	ResourceType resourceToGet;
+	int ratio;
+	
 	private final int TWOtoONE = 2;
 	private final int THREEtoONE = 3;
 	private final int FOURtoONE = 4;
@@ -53,10 +57,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		
 		int i = 0;
 		for (ResourceType t : ResourceType.values()) {
-			if (modelFacade.getBankResCards().get(t) > 0)
+			if (t != resourceToGive && modelFacade.getBankResCards().get(t) > 0)
 				possibleGets[i] = t;
 			i++;
 		}
+		
+		getTradeOverlay().showGetOptions(possibleGets);
 	}
 	
 	private void initPossibleGives() {
@@ -124,15 +130,25 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void startTrade() {
+		getTradeOverlay().setTradeEnabled(false);
 		
-		initPossibleGives();
+		if (!modelFacade.isYourTurn())
+			getTradeOverlay().hideGiveOptions();
+		else 
+			initPossibleGives();
 		
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void makeTrade() {
-
+		if (modelFacade.canMaritimeTrade(resourceToGive, resourceToGet, ratio)) {
+			if (!modelFacade.doMaritimeTrade(resourceToGive, resourceToGet, ratio))
+				getTradeOverlay().showDialog("Maritime trade failed!");
+		}
+		
+		getTradeOverlay().hideGiveOptions();
+		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().closeModal();
 	}
 
@@ -144,17 +160,28 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void setGetResource(ResourceType resource) {
-
+		resourceToGet = resource;
+		
+		getTradeOverlay().selectGetOption(resource, 1);
+		
+		if (modelFacade.canMaritimeTrade(resourceToGive, resourceToGet, ratio)) {
+			getTradeOverlay().setTradeEnabled(true);
+		}
 	}
 
 	@Override
 	public void setGiveResource(ResourceType resource) {
+		resourceToGive = resource;
+		
 		if (playerPorts.contains(PortType.convertResourceType(resource))) {
 			getTradeOverlay().selectGiveOption(resource, TWOtoONE);
+			ratio = TWOtoONE;
 		} else if (playerPorts.contains(PortType.THREE_FOR_ONE)) {
 			getTradeOverlay().selectGiveOption(resource, THREEtoONE);
+			ratio = THREEtoONE;
 		} else {
 			getTradeOverlay().selectGiveOption(resource, FOURtoONE);
+			ratio = FOURtoONE;
 		}
 		
 		initPossibleGets();

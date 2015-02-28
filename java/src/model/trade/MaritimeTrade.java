@@ -13,31 +13,27 @@ import shared.definitions.ResourceType;
  */
 public class MaritimeTrade {
 	
-	private int sender;
 	private int ratio;	// (ie. put 3 for a 3:1 trade)
 	private PortType portType;
-	private ResourceSet resources;
 	private ResourceType resourceToReceive;
 	private ResourceType resourceToGive;
 	
-	public MaritimeTrade(int sender, int ratio, PortType portType, ResourceSet resources) {
-		this.sender = sender;
+	public MaritimeTrade(ResourceType give, ResourceType get, int ratio) {
+		resourceToGive = give;
+		resourceToReceive = get;
 		this.ratio = ratio;
-		this.portType = portType;
-		this.resources = resources;
 		
-		HashMap<ResourceType, Integer> res = resources.getResources();
-		for(Map.Entry<ResourceType, Integer> entry : res.entrySet()){
-    		if(entry.getValue() == -1)
-    			resourceToGive = entry.getKey();
-    		else if(entry.getValue() == 1)
-    			resourceToReceive = entry.getKey(); 
-    	}
+		determinePortType();
 	}
-
-    public void setSender(int sender) {
-        this.sender = sender;
-    }
+	
+	private void determinePortType() {
+		if (ratio == 2)
+			portType = PortType.convertResourceType(resourceToGive);
+		if (ratio == 3)
+			portType = PortType.THREE_FOR_ONE;
+		if (ratio == 4)
+			portType = null;
+	}
 
     public void setRatio(int ratio) {
         this.ratio = ratio;
@@ -46,10 +42,6 @@ public class MaritimeTrade {
     public void setTradeType(PortType resourceType) {
     	this.portType = resourceType;
     }
-    
-    public int getSender() {
-		return sender;
-	}
 
 	public int getRatio() {
 		return ratio;
@@ -57,10 +49,6 @@ public class MaritimeTrade {
 	
 	public PortType getPortType() {
 		return portType;
-	}
-	
-	public ResourceSet getResources() {
-		return resources;
 	}
 	
 	public ResourceType getResourceToGive() {

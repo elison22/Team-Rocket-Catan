@@ -228,6 +228,7 @@ public class MapController extends Controller implements IMapController, Observe
         if(facade.getPlayerList().length != 4){
             return;
         }
+
         initFromModel();
         switch(curState){
             case Rolling:
