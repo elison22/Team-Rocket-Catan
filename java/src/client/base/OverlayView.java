@@ -188,7 +188,7 @@ public class OverlayView extends PanelView implements IOverlayView
 		}
 	}
 
-    public void printOverlays(String type) {
+    private void printOverlays(String type) {
         System.out.println("************** "+type + " **************");
         for (OverlayInfo info : overlayStack) {
             if(info.getOverlayView().isModalShowing())
@@ -196,6 +196,10 @@ public class OverlayView extends PanelView implements IOverlayView
         }
         System.out.println("*********************************");
     }
-	
+
+    public static int getOverlayCount() {
+        return overlayStack.size();
+    }
+
 }
 

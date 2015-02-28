@@ -5,6 +5,7 @@ import java.util.Observer;
 import java.util.Random;
 
 import client.base.Controller;
+import client.base.OverlayView;
 import facade.ClientFacade;
 
 
@@ -61,6 +62,7 @@ public class RollController extends Controller implements IRollController, Obser
 	@Override
 	public void update(Observable o, Object arg) {
 		if(modelFacade.getTurnTacker() != null && modelFacade.canRollDice()) {
+            if(OverlayView.getOverlayCount() == 1) getRollView().closeModal();
 			getRollView().setMessage("Roll the dice!");
 			getRollView().showModal();
 		}

@@ -31,10 +31,10 @@ public class MapController extends Controller implements IMapController, Observe
     private TurnState curState;
     private EdgeLocation firstRoad;
     private boolean playSecondRoad;
-    private boolean allowDisconnectedBuild;
-    private boolean allowFreeBuild;
+//    private boolean allowDisconnectedBuild;
+//    private boolean allowFreeBuild;
 
-    public boolean modalOpen;
+//    public boolean modalOpen;
 
     public MapController(IMapView view, IRobView robView, ClientFacade facade) {
         super(view);
@@ -187,8 +187,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
-		this.allowDisconnectedBuild = allowDisconnected;
-        this.allowFreeBuild = isFree;
+//		this.allowDisconnectedBuild = allowDisconnected;
+//        this.allowFreeBuild = isFree;
 		getView().startDrop(pieceType, facade.getPlayerInfo().getColor(), true);
 	}
 	
@@ -213,6 +213,11 @@ public class MapController extends Controller implements IMapController, Observe
         getRobView().closeModal();
 	}
 
+//    public void closeAllModals() {
+//        while(getRobView().isModalShowing())
+//            getRobView().closeModal();
+//    }
+
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -226,25 +231,31 @@ public class MapController extends Controller implements IMapController, Observe
         initFromModel();
         switch(curState){
             case Rolling:
+                System.out.println("State = Rolling");
                 mapState = new RollingMapState();
                 break;
             case Robbing:
+                System.out.println("State = Robbing");
                 mapState = new RobbingMapState(facade);
                 break;
             case Discarding:
+                System.out.println("State = Discarding");
                 mapState = new DiscardMapState(facade);
                 break;
             case FirstRound:
+                System.out.println("State = Round 1");
                 mapState = new Round1MapState(facade);
                 break;
             case SecondRound:
+                System.out.println("State = Round 2");
                 mapState = new Round2MapState(facade);
                 break;
             case Playing:
+                System.out.println("State = Playing");
                 mapState = new PlayingMapState(facade);
                 break;
         }
-        if(facade.isYourTurn()) mapState.start(this);
+        mapState.start(this);
 //        modalOpen = true;
 
     }

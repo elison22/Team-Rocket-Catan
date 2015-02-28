@@ -3,6 +3,7 @@ package client.map.states;
 import client.data.RobPlayerInfo;
 import client.map.MapController;
 import facade.ClientFacade;
+import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -24,14 +25,17 @@ public class Round2MapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
-        if(controller.modalOpen){
+        if(!facade.isYourTurn())
             return;
-        }
-        controller.modalOpen = true;
-        controller.startMove(PieceType.SETTLEMENT, true, true);
+        if(curState == TurnState.SecondRound)
+            return;
+
+//        controller.modalOpen = true;
+        controller.getView().startDrop(PieceType.SETTLEMENT, facade.getPlayerInfo().getColor(), false);
         if (facade.getLocalPlayer().getRemainingRoads() == 14)
-            controller.startMove(PieceType.ROAD, true, false);
-        controller.modalOpen = false;
+            controller.getView().startDrop(PieceType.ROAD, facade.getPlayerInfo().getColor(), false);
+//        controller.modalOpen = false;
+        curState = TurnState.SecondRound;
     }
 
     @Override

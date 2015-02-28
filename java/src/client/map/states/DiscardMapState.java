@@ -3,6 +3,7 @@ package client.map.states;
 import client.data.RobPlayerInfo;
 import client.map.MapController;
 import facade.ClientFacade;
+import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -25,6 +26,7 @@ public class DiscardMapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
+        curState = TurnState.Discarding;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package client.map.states;
 
+import client.base.OverlayView;
 import client.data.RobPlayerInfo;
 import client.map.MapController;
+import client.map.RobView;
 import facade.ClientFacade;
 import model.game.TurnState;
 import shared.definitions.PieceType;
@@ -24,8 +26,13 @@ public class RobbingMapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
-
-        controller.getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
+        if (curState == TurnState.Robbing)
+            return;
+        if (curState == TurnState.Discarding && !facade.isYourTurn() && OverlayView.getOverlayCount() == 1){
+                controller.getRobView().closeModal();
+        }
+        if (facade.isYourTurn()) controller.getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
+        curState = TurnState.Robbing;
     }
 
     @Override
@@ -74,6 +81,7 @@ public class RobbingMapState extends AbstractMapState{
             tempInfo.setPlayerIndex(index);
             tempInfo.setNumCards(facade.getPlayersOfGame().get(index).getResCount());
             if (tempInfo.getNumCards()==0) continue;
+            if (tempInfo.getPlayerIndex() == facade.getLocalPlayerIndex()) continue;
             tempList.add(tempInfo);
         }
         if (tempList.size() == 0)

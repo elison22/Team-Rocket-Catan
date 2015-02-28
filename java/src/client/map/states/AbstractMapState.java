@@ -5,6 +5,7 @@ import client.data.RobPlayerInfo;
 import client.map.IMapController;
 import client.map.MapController;
 import facade.ClientFacade;
+import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -16,6 +17,7 @@ import shared.locations.VertexLocation;
 public abstract class AbstractMapState {
 
     protected ClientFacade facade;
+    protected static TurnState curState = TurnState.Playing;
 
     protected AbstractMapState(){}
     protected AbstractMapState(ClientFacade facade) {

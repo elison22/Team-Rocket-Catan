@@ -1,8 +1,11 @@
 package client.map.states;
 
+import client.base.OverlayView;
 import client.data.RobPlayerInfo;
 import client.map.MapController;
+import client.map.RobView;
 import facade.ClientFacade;
+import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -24,7 +27,15 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public void start(MapController controller){
-
+        if (!facade.isYourTurn() && OverlayView.getOverlayCount() == 1) {
+            controller.getRobView().closeModal();
+        }
+        if(curState == TurnState.Robbing) {
+            if(facade.isYourTurn() && OverlayView.getOverlayCount() == 2){
+                controller.getRobView().closeModal();
+            }
+        }
+        curState = TurnState.Playing;
     }
 
     @Override

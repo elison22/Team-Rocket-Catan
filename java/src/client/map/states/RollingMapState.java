@@ -2,6 +2,7 @@ package client.map.states;
 
 import client.data.RobPlayerInfo;
 import client.map.MapController;
+import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -21,7 +22,7 @@ public class RollingMapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
-
+        curState = TurnState.Rolling;
     }
 
     @Override
