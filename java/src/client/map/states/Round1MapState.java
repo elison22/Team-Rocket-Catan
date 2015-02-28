@@ -29,7 +29,8 @@ public class Round1MapState extends AbstractMapState {
 //        }
         controller.modalOpen = true;
         controller.startMove(PieceType.SETTLEMENT, true, true);
-        controller.startMove(PieceType.ROAD, true, false);
+        if (facade.getLocalPlayer().getRemainingRoads() == 15)
+            controller.startMove(PieceType.ROAD, true, false);
         controller.modalOpen = false;
 
     }

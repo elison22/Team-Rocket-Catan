@@ -47,9 +47,7 @@ class ServerProxy {
 
 	/**Initializes the server's host and port that the proxy
 	 * will communicate with.
-	 * 
-	 * @param host the name or IP address of the server
-	 * @param port the port that the server will use
+	 *
 	 * */
 	private ServerProxy() {
 		gson = new Gson();
@@ -203,7 +201,7 @@ class ServerProxy {
 	 * Method, and adds cookies to the request header.
 	 * 
 	 * @param url the server url for the given method
-	 * @param request whether the request is a POST or a GET
+	 * @param requestMethod whether the request is a POST or a GET
 	 * @return the established Connection
 	 * @throws ServerException If there was any problem, including decoding
 	 * cookies, bad URLs, or general IO exceptions then a ServerException will
