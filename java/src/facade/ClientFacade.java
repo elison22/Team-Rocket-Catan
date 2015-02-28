@@ -1,6 +1,10 @@
 package facade;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Observable;
 
 import model.board.BoardException;
 import model.board.Constructable;
@@ -11,13 +15,18 @@ import model.game.TurnTracker;
 import model.player.Player;
 import model.trade.DomesticTrade;
 import model.trade.MaritimeTrade;
+import model.trade.TradeOffer;
 import proxy.IProxyFacade;
 import proxy.MockProxy;
 import proxy.ProxyFacade;
 import proxy.ServerException;
 import serializer.Serializer;
 import serverpoller.ServerPoller;
-import shared.definitions.*;
+import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.HexType;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
 import shared.dto.AcceptTrade_Params;
 import shared.dto.AddAI_Params;
 import shared.dto.BuildCity_Params;
@@ -744,6 +753,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 	// Used by the PointsController
 	public int getWinner() {
 		return game.getWinner();
+	}
+	
+	// Used by DomesticTradeController
+	public TradeOffer getTradeOffer() {
+		return game.getTradeOffer();
 	}
 	
 	// Used by the PointsController

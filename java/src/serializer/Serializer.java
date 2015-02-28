@@ -4,16 +4,18 @@ import java.util.ArrayList;
 
 import model.board.Board;
 import model.board.BoardException;
-import model.cards.*;
+import model.cards.GameBank;
 import model.chat.Chat;
 import model.game.GameModel;
 import model.game.TurnTracker;
-import model.player.*;
-import serializer.json.*;
+import model.player.Player;
+import model.trade.TradeOffer;
+import serializer.json.JsonClientModel;
+import serializer.json.JsonPlayer;
 import shared.dto.Game_DTO;
 import shared.dto.Player_DTO;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 
 
 /**
@@ -55,7 +57,9 @@ public class Serializer {
 		Board newBoard = new Board(newModel.getMap());
 		Chat newChat = new Chat(newModel.getChat());
 		Chat newGameHistory = new Chat(newModel.getLog());
+		TradeOffer tradeOffer = new TradeOffer(newModel.getTradeOffer());
 		
+		game.setTradeOffer(tradeOffer);
 		game.setChat(newChat);
 		game.setGameHistory(newGameHistory);
 		game.setMap(newBoard);
