@@ -138,8 +138,8 @@ public class Player {
      * @param desiredRes A list of resource cards desired by the other player
      * @return return whether a trade was accepted or not
      */
-    public boolean canAcceptTrade(int playerIdx, ResourceSet desiredRes){
-        return bank.hasResCards(desiredRes.getResources());
+    public boolean canAcceptTrade(int playerIdx, HashMap<ResourceType,Integer> desiredRes){
+        return bank.hasResCards(desiredRes);
     }
     
     /**
