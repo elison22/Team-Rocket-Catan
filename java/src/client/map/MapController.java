@@ -31,8 +31,6 @@ public class MapController extends Controller implements IMapController, Observe
     private TurnState curState;
     private EdgeLocation firstRoad;
     private boolean playSecondRoad;
-//    private boolean allowDisconnectedBuild;
-//    private boolean allowFreeBuild;
 
 //    public boolean modalOpen;
 
@@ -196,8 +194,9 @@ public class MapController extends Controller implements IMapController, Observe
 		
 	}
 	
-	public void playSoldierCard() {	
-		
+	public void playSoldierCard() {
+
+		mapState.playSoldierCard();
 	}
 	
 	public void playRoadBuildingCard() {	

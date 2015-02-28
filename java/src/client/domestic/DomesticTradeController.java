@@ -249,7 +249,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 			
 //			modelFacade.doAcceptTrade(trade, accept);
-			getAcceptOverlay().showModal();
+			if(!getAcceptOverlay().isModalShowing()) getAcceptOverlay().showModal();
 		}
 	}
 	
