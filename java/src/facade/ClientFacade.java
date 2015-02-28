@@ -504,7 +504,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public boolean doOfferTrade(DomesticTrade trade) {
 		try {
-			updateGameModel(proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer().getResources(), trade.getReceiver())));
+			updateGameModel(proxy.offerTrade(new OfferTrade_Params(playerIndex, trade.getOffer(), trade.getReceiver())));
 		} catch (ServerException e) {
 			return false;
 		} 

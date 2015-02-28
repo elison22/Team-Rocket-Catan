@@ -304,7 +304,7 @@ public class GameModel {
      */
     public boolean canOfferTrade(int playerId, DomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer().getResources())){
+    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
     			return true;
 			}
     	}
