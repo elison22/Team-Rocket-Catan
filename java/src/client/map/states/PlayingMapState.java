@@ -27,14 +27,7 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public void start(MapController controller){
-        if (!facade.isYourTurn() && OverlayView.getOverlayCount() == 1) {
-            controller.getRobView().closeModal();
-        }
-        if(curState == TurnState.Robbing) {
-            if(facade.isYourTurn() && OverlayView.getOverlayCount() == 2){
-                controller.getRobView().closeModal();
-            }
-        }
+        OverlayView.killView("wait");
         curState = TurnState.Playing;
     }
 

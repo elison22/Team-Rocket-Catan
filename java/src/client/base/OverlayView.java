@@ -197,8 +197,26 @@ public class OverlayView extends PanelView implements IOverlayView
         System.out.println("*********************************");
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static int getOverlayCount() {
         return overlayStack.size();
+    }
+
+    public static void killView(String modelName) {
+        OverlayInfo toKill = null;
+        for (OverlayInfo info : overlayStack) {
+            if(info.getOverlayView().getName().equalsIgnoreCase(modelName)) {
+                toKill = info;
+                break;
+            }
+        }
+        if (toKill == null) return;
+        overlayStack.remove(toKill);
+        overlayStack.add(toKill);
+        toKill.getOverlayView().closeModal();
     }
 
 }

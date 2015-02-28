@@ -28,9 +28,7 @@ public class RobbingMapState extends AbstractMapState{
     public void start(MapController controller){
         if (curState == TurnState.Robbing)
             return;
-        if (curState == TurnState.Discarding && !facade.isYourTurn() && OverlayView.getOverlayCount() == 1){
-                controller.getRobView().closeModal();
-        }
+        OverlayView.killView("wait");
         if (facade.isYourTurn()) controller.getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
         curState = TurnState.Robbing;
     }
