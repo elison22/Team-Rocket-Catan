@@ -8,8 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import serializer.json.*;
-
 public class JsonTurnTrackerDeserializer implements JsonDeserializer<JsonTurnTracker> {
 
 	@Override
