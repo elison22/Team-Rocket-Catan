@@ -1,17 +1,16 @@
 package client.map.states;
 
-import client.base.OverlayView;
-import client.data.RobPlayerInfo;
-import client.map.MapController;
-import client.map.RobView;
-import facade.ClientFacade;
+import java.util.ArrayList;
+
 import model.game.TurnState;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-
-import java.util.ArrayList;
+import client.base.OverlayView;
+import client.data.RobPlayerInfo;
+import client.map.MapController;
+import facade.ClientFacade;
 
 /**
  * Created by brandt on 2/20/15.

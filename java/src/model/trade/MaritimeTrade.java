@@ -1,9 +1,5 @@
 package model.trade;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import model.cards.ResourceSet;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 

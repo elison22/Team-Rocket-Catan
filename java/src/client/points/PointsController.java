@@ -2,11 +2,8 @@ package client.points;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import client.base.Controller;
-import client.main.Catan;
 import facade.ClientFacade;
-
 
 /**
  * Implementation for the points controller

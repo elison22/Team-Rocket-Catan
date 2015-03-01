@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import model.cards.DevCard;
 import model.cards.PlayerBank;
-import model.cards.ResourceSet;
 import serializer.json.JsonPlayer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;

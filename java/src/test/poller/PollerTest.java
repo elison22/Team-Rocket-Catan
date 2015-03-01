@@ -1,13 +1,13 @@
 package test.poller;
 
-import static org.junit.Assert.*;
-
 import model.board.BoardException;
+
 import org.junit.Before;
-import org.junit.Test;
-import facade.ClientFacade;
-import proxy.*;
+
+import proxy.IProxyFacade;
+import proxy.MockProxy;
 import serverpoller.ServerPoller;
+import facade.ClientFacade;
 
 /** Tests the functionality of the ServerPoller. Note that because one of the
  * test cases tests the poller's timer it will take ~9 or ~10 seconds to 

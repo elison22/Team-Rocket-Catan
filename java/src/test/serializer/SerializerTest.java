@@ -121,6 +121,7 @@ public class SerializerTest
 	 * @throws BoardException
 	 * @throws FileNotFoundException
 	 */
+	@SuppressWarnings("resource")
 	@Test
 	public void testMap() throws BoardException, FileNotFoundException
 	{
@@ -162,6 +163,7 @@ public class SerializerTest
 	 * @throws FileNotFoundException 
 	 * @throws BoardException 
 	 */
+	@SuppressWarnings("resource")
 	@Test
 	public void testChat() throws FileNotFoundException, BoardException
 	{

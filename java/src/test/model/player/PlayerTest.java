@@ -1,24 +1,24 @@
 package test.model.player;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Scanner;
+
 import model.board.BoardException;
 import model.game.GameModel;
 import model.game.TurnState;
 import model.player.Player;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
+
 import serializer.Serializer;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Hayden on 2/1/15.

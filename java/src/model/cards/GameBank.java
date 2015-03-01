@@ -1,7 +1,5 @@
 package model.cards;
 
-import java.util.Map;
-
 import serializer.json.JsonDevCardList;
 import serializer.json.JsonResourceList;
 import shared.definitions.DevCardType;

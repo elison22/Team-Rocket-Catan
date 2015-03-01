@@ -2,9 +2,7 @@ package facade;
 
 import java.util.HashMap;
 
-import model.cards.ResourceSet;
 import model.trade.DomesticTrade;
-import model.trade.MaritimeTrade;
 import shared.definitions.ResourceType;
 import shared.dto.Game_DTO;
 import shared.dto.Player_DTO;

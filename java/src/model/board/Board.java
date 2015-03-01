@@ -1,13 +1,24 @@
 package model.board;
 
-import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
 
-import serializer.json.*;
-import shared.locations.*;
+import serializer.json.JsonHex;
+import serializer.json.JsonMap;
+import serializer.json.JsonPort;
+import serializer.json.JsonRoad;
+import serializer.json.JsonVertexObject;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * Created by brandt on 1/17/15.

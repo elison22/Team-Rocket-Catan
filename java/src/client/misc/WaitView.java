@@ -13,14 +13,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
-import client.base.*;
+import client.base.OverlayView;
 import client.utils.ImageUtils;
 
 
 /**
  * Implementation for the wait view, which is used to display wait dialogs to the user
  */
-@SuppressWarnings({"serial", "unused"})
+@SuppressWarnings("serial")
 public class WaitView extends OverlayView implements IWaitView {
 
 	private final int LABEL_TEXT_SIZE = 40;
