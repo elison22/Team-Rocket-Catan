@@ -120,6 +120,10 @@ public class Player {
 		return soldierDevs;
 	}
 
+    public void setPlayedDevCard(boolean hasPlayedDev){
+        playedDevCard = hasPlayedDev;
+    }
+
 	/**
      * Called by the Facade to determine if a player has the resources necessary to offer
      * a certain trade

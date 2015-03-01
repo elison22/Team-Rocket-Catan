@@ -212,6 +212,10 @@ public class MapController extends Controller implements IMapController, Observe
         getRobView().closeModal();
 	}
 
+    public void resetView(){
+
+    }
+
 //    public void closeAllModals() {
 //        while(getRobView().isModalShowing())
 //            getRobView().closeModal();
@@ -219,6 +223,9 @@ public class MapController extends Controller implements IMapController, Observe
 
 	@Override
 	public void update(Observable o, Object arg) {
+        if(arg != null && arg.toString().equals("RESET")){
+            resetView();
+        }
 		// TODO Auto-generated method stub
         curState = facade.getState();
         if(null == curState){
