@@ -52,7 +52,7 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public boolean canPlaceRobber(HexLocation hexLoc) {
-        return true;
+        return facade.canPlaceRobber(hexLoc);
     }
 
     @Override
