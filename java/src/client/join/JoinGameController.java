@@ -160,6 +160,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	// Determines which colors have already been chosen/assigned to other
 	// players and disables them
 	private void disableUsedColors() {
+		enableColors();
 		
 		// Retrieve local player's id- since the player gets to rechoose their
 		// color when they join we don't want to disable their old color
@@ -185,6 +186,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// Update game list
 		setGameList();
 		
+		getSelectColorView().resetColorButtons();
 		getJoinGameView().showModal();
 	}
 
@@ -220,9 +222,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		// Remember the selected game
 		joinGameInfo = game;
-		
-		// Refresh all colors
-		enableColors();
 		
 		// Disable unavailable colors
 		disableUsedColors();
@@ -265,7 +264,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getJoinGameView().closeModal();
 			setGameList();
 			getJoinGameView().showModal();
-		} else if (arg != null && arg.toString().equalsIgnoreCase("RESET")) {
+		} else if (arg != null && arg.toString().equals("RESET")) {
+			setSelectColorView(new SelectColorView("SelectColor"));
+			getSelectColorView().setController(this);
 			start();
 		}
 		

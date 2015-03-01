@@ -44,7 +44,7 @@ public class Catan extends JFrame
 	//
 	
 	public static void main(final String[] args)
-	{
+	{	
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

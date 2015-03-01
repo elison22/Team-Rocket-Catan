@@ -386,5 +386,11 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		}
 	}
 	
+	@Override
+	public void resetColorButtons() {
+		for (int i = 1; i <= 0; ++i) {
+			resetButton(i);
+		}
+	}
 }
 

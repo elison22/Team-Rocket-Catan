@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.Controller;
+import client.main.Catan;
 import facade.ClientFacade;
 
 
@@ -60,6 +61,7 @@ public class PointsController extends Controller implements IPointsController, O
 	
 	@Override
 	public void resetGame() {
+		
 		getFinishedView().closeModal();
 		gameWon = false;
 		modelFacade.resetGame();
