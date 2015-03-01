@@ -733,6 +733,10 @@ public class ClientFacade extends Observable implements IClientFacade {
     public int getChit(HexLocation loc) {
         return game.getChit(loc);
     }
+    
+    public boolean canPlayerTrade() {
+    	return game.canPlayerTrade(playerIndex);
+    }
 
 	/** Retrieves the chat messages in the current game model, then converts
 	 * them to LogEntries.

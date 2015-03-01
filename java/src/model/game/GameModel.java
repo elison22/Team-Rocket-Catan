@@ -138,6 +138,10 @@ public class GameModel {
 	public TradeOffer getTradeOffer() {
 		return tradeOffer;
 	}
+	
+	public boolean canPlayerTrade(int playerIndex) {
+		return turnTracker.canPlayerTrade(playerIndex);
+	}
 
 	/**
 	 * Validates that game is in the correct game state, and the player owns and has not yet played the dev card 

@@ -158,4 +158,12 @@ public class TurnTracker {
     	}
     	return false;
     }
+    
+    public boolean canPlayerTrade(int playerIndex) {
+    	if(currentPlayerIndex == playerIndex) {
+    		if(currentState == TurnState.Playing)
+    			return true;
+    	}
+    	return false;
+    }
 }
