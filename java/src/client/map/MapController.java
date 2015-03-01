@@ -31,8 +31,6 @@ public class MapController extends Controller implements IMapController, Observe
     private TurnState curState;
     private EdgeLocation firstRoad;
     private boolean playSecondRoad;
-//    private boolean allowDisconnectedBuild;
-//    private boolean allowFreeBuild;
 
 //    public boolean modalOpen;
 
@@ -57,7 +55,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-
 		for (int x = 0; x <= 3; ++x) {
 			
 			int maxY = 3 - x;
@@ -196,8 +193,10 @@ public class MapController extends Controller implements IMapController, Observe
 		
 	}
 	
-	public void playSoldierCard() {	
-		
+	public void playSoldierCard() {
+        if(curState != TurnState.Robbing)
+            mapState = new RobbingMapState(facade);
+        getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
 	}
 	
 	public void playRoadBuildingCard() {	

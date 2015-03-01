@@ -432,11 +432,14 @@ public class ClientFacade extends Observable implements IClientFacade {
 
 	@Override
 	public boolean doUseMonument() {
-		try {
-			updateGameModel(proxy.Monument(new Monument_Params(playerIndex)));
-		} catch (ServerException e) {
-			return false;
-		} 
+        int playerMonuments = game.getPlayerList().get(playerIndex).countMonumentDevs();
+        for(int i = 0; i < playerMonuments; i++){
+            try {
+                updateGameModel(proxy.Monument(new Monument_Params(playerIndex)));
+            } catch (ServerException e) {
+                return false;
+            }
+        }
 		return true;
 	}
 	

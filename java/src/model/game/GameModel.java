@@ -177,13 +177,11 @@ public class GameModel {
      * @return	true if player can perform this action
      */
     public boolean canPlaceRobber(int playerId, HexLocation loc) {
-		if(turnTracker.canPlayerRob(playerId)) {
-            try {
-                return map.canPlayRobber(loc);
-            } catch (BoardException e) {
-                e.printStackTrace();
-            }
-		}
+        try {
+            return map.canPlayRobber(loc);
+        } catch (BoardException e) {
+            e.printStackTrace();
+        }
 		return false;
 	}
     

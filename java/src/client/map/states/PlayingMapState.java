@@ -48,7 +48,7 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public boolean canPlaceRobber(HexLocation hexLoc) {
-        return false;
+        return true;
     }
 
     @Override
@@ -83,8 +83,6 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public void playSoldierCard() {
-    	if(!facade.canUseSoldier())
-    		return;
     }
 
     @Override
