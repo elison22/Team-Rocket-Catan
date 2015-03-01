@@ -61,6 +61,12 @@ public class RollController extends Controller implements IRollController, Obser
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (arg != null) return;
+		
+		// Do nothing if the view is already showing
+		if (getRollView().isModalShowing())
+			return;
+		
 		if(modelFacade.getTurnTacker() != null && modelFacade.canRollDice()) {
             OverlayView.killView("wait");
 			getRollView().setMessage("Roll the dice!");
