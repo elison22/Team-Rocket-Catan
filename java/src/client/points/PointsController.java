@@ -2,6 +2,8 @@ package client.points;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import model.player.Player;
 import client.base.Controller;
 import facade.ClientFacade;
 
@@ -48,8 +50,8 @@ public class PointsController extends Controller implements IPointsController, O
 		
 		if (modelFacade.getWinner() == modelFacade.getLocalPlayer().getPlayerIdx())
 			getFinishedView().setWinner(modelFacade.getLocalPlayer().getName(), true);
-		else
-			getFinishedView().setWinner(modelFacade.getPlayerList()[modelFacade.getWinner()].getName(), false);
+		else 
+			getFinishedView().setWinner(modelFacade.getPlayersOfGame().get(modelFacade.getWinner()).getName(), false);
 		
 		getFinishedView().setCon(this);
 		gameWon = true;
