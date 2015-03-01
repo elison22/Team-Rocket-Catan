@@ -23,7 +23,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		super(view);
 		fac.addObserver(this);
 		facade = fac;
-		initFromModel();
 	}
 	
 	@Override
@@ -36,14 +35,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void endTurn() {
 		if(facade.canFinishTurn())
 			facade.finishTurn();
-	}
-	
-	private void initFromModel() {
-		//playerInfo = facade.getPlayerInfo();
-		//getView().updateGameState("Waiting for other Players", false);
-		//getView().setLocalPlayerColor(playerInfo.getColor());
-		//getView().initializePlayer(playerInfo.getPlayerIndex(), playerInfo.getName(), playerInfo.getColor());
-
 	}
 
 	@Override
@@ -65,7 +56,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		}
 		
 		getView().setLocalPlayerColor(playerInfo.getColor());
-
 		updateGameState(turnState);
 	}
 	
