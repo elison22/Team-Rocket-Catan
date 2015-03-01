@@ -82,8 +82,9 @@ public class RobbingMapState extends AbstractMapState{
             if (tempInfo.getPlayerIndex() == facade.getLocalPlayerIndex()) continue;
             tempList.add(tempInfo);
         }
-        if (tempList.size() == 0)
+        if (tempList.size() == 0){
             robPlayer(new RobPlayerInfo(-1));
+        }
         RobPlayerInfo[] tempCast = new RobPlayerInfo[0];
         return tempList.toArray(tempCast);
     }
@@ -103,6 +104,10 @@ public class RobbingMapState extends AbstractMapState{
 
     }
 
+    public void playSoldierCard(RobPlayerInfo victim) {
+        facade.doUseSoldier(victim.getPlayerIndex(), newRobberLocation);
+    }
+
     @Override
     public void playRoadBuildingCard() {
     	// do nothing
@@ -114,6 +119,7 @@ public class RobbingMapState extends AbstractMapState{
         facade.doPlaceRobber(victim.getPlayerIndex(), newRobberLocation);
 
     }
+
 
     @Override
     public void update(){

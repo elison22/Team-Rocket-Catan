@@ -335,6 +335,10 @@ public class ClientFacade extends Observable implements IClientFacade {
 		return true;
 	}
 
+    public boolean doPlaceRobber(int victimIndex, HexLocation loc, boolean knightDev){
+        return true;
+    }
+
 	@Override
 	public boolean canFinishTurn() {
 		return game.canFinishTurn(playerIndex);

@@ -11,10 +11,14 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
+import java.util.ArrayList;
+
 /**
  * Created by brandt on 2/20/15.
  */
 public class PlayingMapState extends AbstractMapState {
+
+    HexLocation newRobberLocation;
 
 	public PlayingMapState(ClientFacade facade){
         super(facade);
@@ -68,7 +72,22 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
-        return null;
+        newRobberLocation = hexLoc;
+        ArrayList<RobPlayerInfo> tempList = new ArrayList<RobPlayerInfo>();
+        RobPlayerInfo tempInfo;
+        for (Integer index : facade.getPlayersToRob(hexLoc)) {
+            tempInfo = new RobPlayerInfo(facade.getPlayerList()[index]);
+            tempInfo.setPlayerIndex(index);
+            tempInfo.setNumCards(facade.getPlayersOfGame().get(index).getResCount());
+            if (tempInfo.getNumCards()==0) continue;
+            if (tempInfo.getPlayerIndex() == facade.getLocalPlayerIndex()) continue;
+            tempList.add(tempInfo);
+        }
+        if (tempList.size() == 0){
+            robPlayer(new RobPlayerInfo(-1));
+        }
+        RobPlayerInfo[] tempCast = new RobPlayerInfo[0];
+        return tempList.toArray(tempCast);
     }
 
     @Override
@@ -92,8 +111,9 @@ public class PlayingMapState extends AbstractMapState {
 
     @Override
     public void robPlayer(RobPlayerInfo victim) {
-
+        facade.doUseSoldier(victim.getPlayerIndex(), newRobberLocation);
     }
+
 
 
 }

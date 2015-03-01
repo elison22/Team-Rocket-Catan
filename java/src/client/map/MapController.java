@@ -31,6 +31,7 @@ public class MapController extends Controller implements IMapController, Observe
     private TurnState curState;
     private EdgeLocation firstRoad;
     private boolean playSecondRoad;
+    private boolean robFromDev;
 
 //    public boolean modalOpen;
 
@@ -194,8 +195,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playSoldierCard() {
-        if(curState != TurnState.Robbing)
-            mapState = new RobbingMapState(facade);
         getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
 	}
 	
@@ -243,6 +242,7 @@ public class MapController extends Controller implements IMapController, Observe
                 break;
             case Robbing:
                 System.out.println("State = Robbing");
+                robFromDev = false;
                 mapState = new RobbingMapState(facade);
                 break;
             case Discarding:
