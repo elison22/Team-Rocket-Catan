@@ -80,7 +80,8 @@ public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 			CatanColor playerColor) {
 		
 		if(playerPanel[playerIndex].getBackground() != playerColor.getJavaColor()) {
-				
+			playerPanel[playerIndex].removeAll();
+			revalidate();
 			playerPanel[playerIndex].setLayout(new BorderLayout());
 			
 			JLabel name = new JLabel(playerName);
@@ -94,12 +95,10 @@ public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 			indicatorPanel.setBackground(playerColor.getJavaColor());
 			playerPanel[playerIndex].add(indicatorPanel, BorderLayout.CENTER);
 			
-
 			playerArmy[playerIndex] = new JLabel();
 			playerArmy[playerIndex].setIcon(new ImageIcon(largestArmyImage));
 			indicatorPanel.add(playerArmy[playerIndex]);
 			playerArmy[playerIndex].setVisible(false);
-			
 			
 			playerRoad[playerIndex] = new JLabel();
 			playerRoad[playerIndex].setIcon(new ImageIcon(longestRoadImage));
