@@ -316,7 +316,7 @@ public interface IClientFacade {
      * Allows player to accept trade that was offered them
      * @param trade details of the trade being made
      */
-    public boolean doAcceptTrade(DomesticTrade trade, boolean accept);
+    public boolean doAcceptTrade(boolean accept);
 
     /**
      * Checks to see if player can offer a maritime trade right now

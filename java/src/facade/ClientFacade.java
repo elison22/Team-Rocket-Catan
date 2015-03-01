@@ -545,7 +545,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean doAcceptTrade(DomesticTrade trade, boolean accept) {
+	public boolean doAcceptTrade(boolean accept) {
 		try {
 			updateGameModel(proxy.acceptTrade(new AcceptTrade_Params(playerIndex, accept)));
 		} catch (ServerException e) {
