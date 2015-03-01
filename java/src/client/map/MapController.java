@@ -55,7 +55,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-        //This needs to clear out the view when a new game is created.
 		for (int x = 0; x <= 3; ++x) {
 			
 			int maxY = 3 - x;
@@ -195,9 +194,9 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playSoldierCard() {
-//        getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
-
-//		mapState.playSoldierCard();
+        if(curState != TurnState.Robbing)
+            mapState = new RobbingMapState(facade);
+        getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
 	}
 	
 	public void playRoadBuildingCard() {	
