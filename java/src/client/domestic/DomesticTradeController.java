@@ -83,6 +83,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
+		if(!modelFacade.canPlayerTrade())
+			return;
+		
 		cardsToTrade = new HashMap<ResourceType, Integer>();
 		cardsToTrade.put(ResourceType.BRICK, 0);
 		cardsToTrade.put(ResourceType.ORE, 0);
@@ -145,7 +148,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int ind = tradeOffer.getReceiver();
 		int playerId = modelFacade.getPlayersOfGame().get(ind).getPlayerID();
 		if(playerId < 0) {
-			modelFacade.doOfferTrade(tradeOffer);
+			if(modelFacade.canOfferTrade(tradeOffer))
+				modelFacade.doOfferTrade(tradeOffer);
 			return;
 		}
 		
