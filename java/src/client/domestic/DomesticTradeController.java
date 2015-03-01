@@ -145,7 +145,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int ind = tradeOffer.getReceiver();
 		int playerId = modelFacade.getPlayersOfGame().get(ind).getPlayerID();
 		if(playerId < 0) {
-			modelFacade.doOfferTrade(tradeOffer);
+			if(modelFacade.canOfferTrade(tradeOffer))
+				modelFacade.doOfferTrade(tradeOffer);
 			return;
 		}
 		
