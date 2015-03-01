@@ -225,7 +225,7 @@ public class MapController extends Controller implements IMapController, Observe
         if(arg != null && arg.toString().equals("RESET")){
             resetView();
         }
-		// TODO Auto-generated method stub
+
         curState = facade.getState();
         if(null == curState){
             return;
