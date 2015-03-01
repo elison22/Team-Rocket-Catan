@@ -83,6 +83,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
+		if(!modelFacade.canPlayerTrade())
+			return;
+		
 		cardsToTrade = new HashMap<ResourceType, Integer>();
 		cardsToTrade.put(ResourceType.BRICK, 0);
 		cardsToTrade.put(ResourceType.ORE, 0);
