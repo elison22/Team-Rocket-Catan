@@ -17,21 +17,22 @@ import facade.ClientFacade;
  */
 public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
 
+    private String SETTRADE = "set the trade you want to make";
+    private String SENDTRADE = "Trade!";
+    private String PICKYAPATNA = "choose with whom you want to trade";
+    
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private ClientFacade modelFacade;
 	
 	private DomesticTrade tradeOffer;
-	
-    private HashMap<ResourceType, Integer> cardsToTrade;
-    
+    private HashMap<ResourceType, Integer> cardsToTrade;   
     private HashSet<ResourceType> give;
     private HashSet<ResourceType> receive;	
-    
-    private String SETTRADE = "set the trade you want to make";
-    private String SENDTRADE = "Trade!";
+ 
     private boolean readyToTrade;
+    private boolean waitingForResponse;
 
 	/**
 	 * DomesticTradeController constructor
@@ -97,7 +98,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
 		Integer amount = new Integer(getTradeOverlay().getResourceAmount(resource));
 		
 		int value = 0;
@@ -139,13 +139,27 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void sendTradeOffer() {
-		tradeOffer.setOffer(cardsToTrade);
-		if(modelFacade.canOfferTrade(tradeOffer))
-			modelFacade.doOfferTrade(tradeOffer);
-		
 		getTradeOverlay().closeModal();
+		tradeOffer.setOffer(cardsToTrade);
+		
+		int ind = tradeOffer.getReceiver();
+		int playerId = modelFacade.getPlayersOfGame().get(ind).getPlayerID();
+		if(playerId == -ind) {
+			modelFacade.doOfferTrade(tradeOffer);
+			return;
+		}
+		
 		getWaitOverlay().setMessage("Waiting for Trade to Go Through");
 		getWaitOverlay().showModal();
+		
+		if(modelFacade.canOfferTrade(tradeOffer)) {
+			modelFacade.doOfferTrade(tradeOffer);
+			waitingForResponse = true;
+		}
+		else {
+			getWaitOverlay().setMessage("We're sorry, but your trade was unable to go through");
+			getWaitOverlay().closeModal();
+		}
 	}
 
 	@Override
@@ -198,35 +212,29 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void cancelTrade() {
 		tradeOffer = null;
-		cardsToTrade.clear();
+		cardsToTrade = null;
 		give = null;
 		receive = null;
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
-	public void acceptTrade(boolean willAccept) {
-		modelFacade.doAcceptTrade(tradeOffer, willAccept);
-		tradeOffer = null;
-		if(cardsToTrade != null)
-			cardsToTrade.clear();
-		give = null;
-		receive = null;
+	public void acceptTrade(boolean willAccept) {	
+		modelFacade.doAcceptTrade(willAccept);
 		getAcceptOverlay().closeModal();
-		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//handle receiving a trade here?
-		if(getWaitOverlay().isModalShowing() && tradeOffer != null) {
+		if(waitingForResponse) {
+			waitingForResponse = false;
 			getWaitOverlay().closeModal();
+			
 			tradeOffer = null;
-			cardsToTrade.clear();
+			cardsToTrade = null;
 			give = null;
 			receive = null;
-		}
-		
+		}		
 		handleAcceptTrade();
 	}
 	
@@ -248,8 +256,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 			}
 			
-//			modelFacade.doAcceptTrade(trade, accept);
-			if(!getAcceptOverlay().isModalShowing()) getAcceptOverlay().showModal();
+			if(!getAcceptOverlay().isModalShowing()) 
+				getAcceptOverlay().showModal();
 		}
 	}
 	
@@ -265,8 +273,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					break;
 				}
 			}
-			if(tradeOffer.getReceiver() == -1)
-				readyToTrade = false;
+			if(tradeOffer.getReceiver() == -1 && readyToTrade) {
+				getTradeOverlay().setStateMessage(PICKYAPATNA);
+				getTradeOverlay().setTradeEnabled(false);
+				return;
+			}
 		} 
 		else 
 			readyToTrade = false;
