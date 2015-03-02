@@ -25,10 +25,17 @@ public class MapView extends OverlayView implements IMapView
 		this.setLayout(new BorderLayout());
 		
 		map = new MapComponent();
-		
+
 		this.add(map, BorderLayout.CENTER);
 	}
-	
+
+    @Override
+    public void reset() {
+        this.remove(map);
+        map = new MapComponent();
+        this.add(map, BorderLayout.CENTER);
+    }
+
 	@Override
 	public IMapController getController()
 	{
@@ -104,7 +111,7 @@ public class MapView extends OverlayView implements IMapView
 			assert false;
 			return null;
 		}
-		
+
 		@Override
 		public boolean canPlaceRoad(EdgeLocation edgeLoc)
 		{

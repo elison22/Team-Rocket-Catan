@@ -20,6 +20,8 @@ public class PanelView extends JPanel implements IView
 	{
 		this.controller = controller;
 	}
+
+    public void reset(){}
 	
 }
 

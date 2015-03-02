@@ -215,14 +215,13 @@ public class GameModel {
      */
     public boolean canBuildRoad(int playerId, EdgeLocation location) {
     	if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
-    		if(playerList.get(playerId).canBuildRoad()){
-    			try {
-					if(map.canBuildRoad(location, playerId))
-						return true;
-				} catch (BoardException e) {
-					return false;
-				}
-			}
+            try {
+                if(map.canBuildRoad(location, playerId))
+                    return true;
+            } catch (BoardException e) {
+                return false;
+            }
+
     	}
     	return false;
     }

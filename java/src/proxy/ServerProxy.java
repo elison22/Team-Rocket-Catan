@@ -32,7 +32,7 @@ class ServerProxy {
 	
 	/**Contains the server's URL. This is determined by http://host:port*/
 	private String url_prefix;
-//    private String k_prefix = "http://10.7.77.15:8081";
+    private String k_prefix = "http://10.7.77.15:8081";
 //    private String other_prefix = "http://10.24.11.74:8081";
 	
 	// Used to determine which cookie was received from the server
@@ -93,7 +93,7 @@ class ServerProxy {
 	protected String doGet(String methodPath, Object getParams) throws ServerException {
 		try {
 			// Establish connection with server
-			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "GET");
+			HttpURLConnection connection = getConnection(new URL(k_prefix  + methodPath), "GET");
 			
 			if (getParams != null) {
 				// Write getParams to the connection as Json
@@ -136,7 +136,7 @@ class ServerProxy {
 	protected String doPost(String methodPath, Object postParams) throws ServerException {
 		try {
 			// Establish connection with server
-			HttpURLConnection connection = getConnection(new URL(url_prefix + methodPath), "POST");
+			HttpURLConnection connection = getConnection(new URL(k_prefix  + methodPath), "POST");
 			
 			// Write postParams to the connection as Json
 			OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());

@@ -164,12 +164,12 @@ public class MapController extends Controller implements IMapController, Observe
             playingSecondRoad = false;
             playingFirstRoad = false;
             facade.doUseRoadBuilder(firstRoad, edgeLoc);
-            getView().placeRoad(firstRoad, facade.getPlayerInfo().getColor());
             getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
         }
         else if(playingFirstRoad) {
             firstRoad = edgeLoc;
             playingSecondRoad = true;
+            getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
             getView().startDrop(PieceType.ROAD, facade.getPlayerInfo().getColor(), true);
         }
         else {
@@ -208,9 +208,9 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void cancelMove() {
 
+        if(playingSecondRoad) resetView();
         playingFirstRoad = false;
         playingSecondRoad = false;
-
 	}
 	
 	public void playSoldierCard() {
@@ -229,7 +229,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
     public void resetView(){
-
+        getView().reset();
+        initFromModel();
     }
 
 	@Override

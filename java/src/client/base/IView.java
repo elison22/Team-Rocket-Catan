@@ -20,5 +20,10 @@ public interface IView
 	 * @return The view's controller
 	 */
 	IController getController();
+
+    /**
+     * Reset
+     */
+    void reset();
 }
 

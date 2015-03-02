@@ -20,6 +20,8 @@ public class ComponentView extends JComponent implements IView
 	{
 		this.controller = controller;
 	}
+
+    public void reset(){}
 	
 }
 

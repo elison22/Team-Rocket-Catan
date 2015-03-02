@@ -201,10 +201,6 @@ public class OverlayView extends PanelView implements IOverlayView
         return name;
     }
 
-    public static int getOverlayCount() {
-        return overlayStack.size();
-    }
-
     public static void killView(String modelName) {
         OverlayInfo toKill = null;
         for (OverlayInfo info : overlayStack) {
