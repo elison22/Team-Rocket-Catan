@@ -3,7 +3,6 @@ package client.devcards;
 import java.util.Observable;
 import java.util.Observer;
 
-import model.cards.PlayerBank;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.Controller;
@@ -73,12 +72,11 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void startPlayCard() 
 	{
-		PlayerBank bank = modelFacade.getLocalPlayer().getBank();
-		int soldierCount = bank.getSoldierCount();
-		int monopolyCount = bank.getMonopolyCount();
-		int yearOfPlentyCount = bank.getYearOfPlentyCount();
-		int monumentCount = bank.getMonumentCount();
-		int roadBuildingCount = bank.getRoadBuildingCount();
+		int soldierCount = modelFacade.getLocalPlayer().getBank().getSoldierCount();
+		int monopolyCount = modelFacade.getLocalPlayer().getBank().getMonopolyCount();
+		int yearOfPlentyCount = modelFacade.getLocalPlayer().getBank().getYearOfPlentyCount();
+		int monumentCount = modelFacade.getLocalPlayer().getBank().getMonumentCount();
+		int roadBuildingCount = modelFacade.getLocalPlayer().getBank().getRoadBuildingCount();
 		getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldierCount);
 		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopolyCount);
 		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearOfPlentyCount);
