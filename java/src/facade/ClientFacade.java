@@ -456,7 +456,11 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean canBuildRoad(EdgeLocation location) {
 		return game.canBuildRoad(playerIndex, location);
 	}
-	
+
+    public boolean canBuildSecondRoad(EdgeLocation first, EdgeLocation second) {
+        return game.canBuildSecondRoad(first, second, getLocalPlayerIndex());
+    }
+
 	@Override
 	public boolean canBuildInitRoad(EdgeLocation location) {
 		return game.canBuildInitRoad(playerIndex, location);

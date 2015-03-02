@@ -30,8 +30,8 @@ public class MapController extends Controller implements IMapController, Observe
     private AbstractMapState mapState;
     private TurnState curState;
     private EdgeLocation firstRoad;
-    private boolean playSecondRoad;
-    private boolean robFromDev;
+    private boolean playingFirstRoad;
+    private boolean playingSecondRoad;
 
 //    public boolean modalOpen;
 
@@ -138,7 +138,10 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
+
+        if(playingSecondRoad) return facade.canBuildSecondRoad(firstRoad, edgeLoc);
         return mapState.canBuildRoad(edgeLoc);
+
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
@@ -157,15 +160,28 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 
-        mapState.placeRoad(edgeLoc);
-		getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
+        if(playingSecondRoad) {
+            playingSecondRoad = false;
+            playingFirstRoad = false;
+            facade.doUseRoadBuilder(firstRoad, edgeLoc);
+            getView().placeRoad(firstRoad, facade.getPlayerInfo().getColor());
+            getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
+        }
+        else if(playingFirstRoad) {
+            firstRoad = edgeLoc;
+            playingSecondRoad = true;
+            getView().startDrop(PieceType.ROAD, facade.getPlayerInfo().getColor(), true);
+        }
+        else {
+            mapState.placeRoad(edgeLoc);
+            getView().placeRoad(edgeLoc, facade.getPlayerInfo().getColor());
+        }
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 
         mapState.placeSettlement(vertLoc);
 		getView().placeSettlement(vertLoc, facade.getPlayerInfo().getColor());
-		//facade.updated();
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -185,25 +201,26 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
-//		this.allowDisconnectedBuild = allowDisconnected;
-//        this.allowFreeBuild = isFree;
+
+
 		getView().startDrop(pieceType, facade.getPlayerInfo().getColor(), true);
 	}
 	
 	public void cancelMove() {
-		
+
+        playingFirstRoad = false;
+        playingSecondRoad = false;
+
 	}
 	
 	public void playSoldierCard() {
-        getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), false);
+        getView().startDrop(PieceType.ROBBER, facade.getPlayerInfo().getColor(), true);
 	}
 	
 	public void playRoadBuildingCard() {	
-		//build first road
-        playSecondRoad = true;
-        //buildSecondRoad
 
-        playSecondRoad = false;
+        playingFirstRoad = true;
+        getView().startDrop(PieceType.ROAD, facade.getPlayerInfo().getColor(), true);
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {
@@ -214,11 +231,6 @@ public class MapController extends Controller implements IMapController, Observe
     public void resetView(){
 
     }
-
-//    public void closeAllModals() {
-//        while(getRobView().isModalShowing())
-//            getRobView().closeModal();
-//    }
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -242,7 +254,6 @@ public class MapController extends Controller implements IMapController, Observe
                 break;
             case Robbing:
                 System.out.println("State = Robbing");
-                robFromDev = false;
                 mapState = new RobbingMapState(facade);
                 break;
             case Discarding:
@@ -263,7 +274,6 @@ public class MapController extends Controller implements IMapController, Observe
                 break;
         }
         mapState.start(this);
-//        modalOpen = true;
 
     }
 }

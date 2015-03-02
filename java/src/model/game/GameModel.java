@@ -227,6 +227,15 @@ public class GameModel {
     	return false;
     }
 
+    public boolean canBuildSecondRoad(EdgeLocation first, EdgeLocation second, int playerID) {
+        try {
+            return map.canBuildSecondRoad(first, second, playerID);
+        } catch (BoardException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean canBuildInitRoad(int playerId, EdgeLocation location) {
         //This will only be called during the setup rounds so the player doesn't need to check if
         //it can build a road. It is assumed it has enough road pieces and they are free to place.

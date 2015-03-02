@@ -505,11 +505,11 @@ public class BoardTest {
 
             bypassInitialSetup();
 
-            result = testBoard.canBuildRoad(edgemidNW, edgemidN, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgemidN, 0);
             assertFalse(result);                            // cannot build a road on another owned road
-            result = testBoard.canBuildRoad(edgemidNW, edgeleftN, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgeleftN, 0);
             assertFalse(result);                            // cannot build a road on an opponent road
-            result = testBoard.canBuildRoad(edgemidNW, edgemidN, 1);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgemidN, 1);
             assertFalse(result);                            // cannot build a road on an opponent road
 
         } catch (BoardException e) {
@@ -526,7 +526,7 @@ public class BoardTest {
             bypassInitialSetup();
             testBoard.doBuildRoad(edgemidN, 0);
 
-            result = testBoard.canBuildRoad(edgemidNE, edgemidSW, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNE, edgemidSW, 0);
             assertFalse(result);                            // trying to build a road away from other pieces
         } catch (BoardException e) {
             e.printStackTrace();
@@ -543,7 +543,7 @@ public class BoardTest {
             testBoard.doBuildRoad(edgemidN, 0);
             testBoard.doBuildRoad(edgeleftN, 1);
 
-            result = testBoard.canBuildRoad(edgemidNE, edgemidSW, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNE, edgemidSW, 0);
             assertFalse(result);                            // trying to build a road by only an opponent road
         } catch (BoardException e) {
             e.printStackTrace();
@@ -562,11 +562,11 @@ public class BoardTest {
 
             bypassInitialSetup();
 
-            result = testBoard.canBuildRoad(edgemidNW, edgemidNE, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgemidNE, 0);
             assertTrue(result);                             // trying to build a road by an owned road
-            result = testBoard.canBuildRoad(edgemidNE, edgemidNW, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNE, edgemidNW, 0);
             assertTrue(result);                             // trying to build a road by an owned road
-            result = testBoard.canBuildRoad(edgemidNW, edgemidSW, 1);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgemidSW, 1);
             assertTrue(result);                             // trying to build a road by an owned road
 
         } catch (BoardException e) {
@@ -582,7 +582,7 @@ public class BoardTest {
             bypassInitialSetup();
             testBoard.doBuildRoad(edgemidN, 0);
 
-            result = testBoard.canBuildRoad(edgemidNW, edgemidNW, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgemidNW, 0);
             assertFalse(result);
 
         } catch (BoardException e) {
@@ -599,9 +599,9 @@ public class BoardTest {
             testBoard.doBuildRoad(edgeleftN, 0);
             testBoard.doBuildRoad(edgemidNE, 1);
 
-            result = testBoard.canBuildRoad(edgemidNW, edgemidN, 0);
+            result = testBoard.canBuildSecondRoad(edgemidNW, edgemidN, 0);
             assertTrue(result);
-            result = testBoard.canBuildRoad(edgemidSW, edgemidS, 0);
+            result = testBoard.canBuildSecondRoad(edgemidSW, edgemidS, 0);
             assertTrue(result);
         } catch (BoardException e) {
             assertFalse(true);

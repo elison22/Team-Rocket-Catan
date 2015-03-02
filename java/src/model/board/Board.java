@@ -338,7 +338,7 @@ public class Board {
      * @throws BoardException Thrown when attempting to set the owner to an int outside
      * the range 0 to 3. Also thrown if the firstloc or secondloc param is passed in null.
      */
-    public boolean canBuildRoad(EdgeLocation firstloc, EdgeLocation secondloc, int owner) throws BoardException {
+    public boolean canBuildSecondRoad(EdgeLocation firstloc, EdgeLocation secondloc, int owner) throws BoardException {
         if (owner < 0 || owner > 3) throw new BoardException("Param owner must be in the range 0 to 3.");
         if (firstloc == null) throw new BoardException("Param location cannot be null.");
         if (secondloc == null) throw new BoardException("Param location cannot be null.");
