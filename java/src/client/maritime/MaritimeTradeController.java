@@ -132,14 +132,13 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void startTrade() {
 		getTradeOverlay().setTradeEnabled(false);
 		
-		/*if (!modelFacade.isYourTurn())
-			getTradeOverlay().hideGiveOptions();*/
 		if(!modelFacade.canPlayerTrade())
 			return;
 		else 
 			initPossibleGives();
 		
-		getTradeOverlay().showModal();
+		if (!getTradeOverlay().isModalShowing())
+			getTradeOverlay().showModal();
 	}
 
 	@Override

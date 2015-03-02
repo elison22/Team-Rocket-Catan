@@ -114,6 +114,10 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 	public void setCon(PointsController pc) {
 		con = pc;
 	}
+	
+	public void setFocus() {
+		this.requestFocusInWindow();
+	}
 
 }
 

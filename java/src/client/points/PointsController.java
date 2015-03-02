@@ -55,6 +55,7 @@ public class PointsController extends Controller implements IPointsController, O
 		getFinishedView().setCon(this);
 		gameWon = true;
 		getFinishedView().showModal();
+		getFinishedView().setFocus();
 	}
 	
 	@Override

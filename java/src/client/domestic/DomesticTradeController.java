@@ -17,22 +17,22 @@ import facade.ClientFacade;
  */
 public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
 
-    private String SETTRADE = "set the trade you want to make";
-    private String SENDTRADE = "Trade!";
-    private String PICKYAPATNA = "choose with whom you want to trade";
-    
+	private String SETTRADE = "set the trade you want to make";
+	private String SENDTRADE = "Trade!";
+	private String PICKYAPATNA = "choose with whom you want to trade";
+
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private ClientFacade modelFacade;
-	
+
 	private DomesticTrade tradeOffer;
-    private HashMap<ResourceType, Integer> cardsToTrade;   
-    private HashSet<ResourceType> give;
-    private HashSet<ResourceType> receive;	
- 
-    private boolean readyToTrade;
-    private boolean waitingForResponse;
+	private HashMap<ResourceType, Integer> cardsToTrade;   
+	private HashSet<ResourceType> give;
+	private HashSet<ResourceType> receive;	
+
+	private boolean readyToTrade;
+	private boolean waitingForResponse;
 
 	/**
 	 * DomesticTradeController constructor
@@ -43,7 +43,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, ClientFacade facade) {
+			IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, ClientFacade facade) {
 		super(tradeView);
 		modelFacade = facade;
 		facade.addObserver(this);
@@ -51,9 +51,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 	}
-	
+
 	public IDomesticTradeView getTradeView() {
-		
+
 		return (IDomesticTradeView)super.getView();
 	}
 
@@ -85,40 +85,42 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void startTrade() {
 		if(!modelFacade.canPlayerTrade())
 			return;
-		
-		cardsToTrade = new HashMap<ResourceType, Integer>();
-		cardsToTrade.put(ResourceType.BRICK, 0);
-		cardsToTrade.put(ResourceType.ORE, 0);
-		cardsToTrade.put(ResourceType.SHEEP, 0);
-		cardsToTrade.put(ResourceType.WHEAT, 0);
-		cardsToTrade.put(ResourceType.WOOD, 0);
-		tradeOffer = new DomesticTrade(modelFacade.getLocalPlayerIndex());
-		
-		getTradeOverlay().setPlayers(modelFacade.getNonActivePlayerInfo());
-		getTradeOverlay().reset();
-		getTradeOverlay().showModal();
+
+		if (!getTradeOverlay().isModalShowing()) {
+			cardsToTrade = new HashMap<ResourceType, Integer>();
+			cardsToTrade.put(ResourceType.BRICK, 0);
+			cardsToTrade.put(ResourceType.ORE, 0);
+			cardsToTrade.put(ResourceType.SHEEP, 0);
+			cardsToTrade.put(ResourceType.WHEAT, 0);
+			cardsToTrade.put(ResourceType.WOOD, 0);
+			tradeOffer = new DomesticTrade(modelFacade.getLocalPlayerIndex());
+
+			getTradeOverlay().setPlayers(modelFacade.getNonActivePlayerInfo());
+			getTradeOverlay().reset();
+			getTradeOverlay().showModal();
+		}
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
 		Integer amount = new Integer(getTradeOverlay().getResourceAmount(resource));
-		
+
 		int value = 0;
 		if(receive != null && receive.contains(resource)) {
 			value = cardsToTrade.get(resource) + 1;
 			if(value > 0)
 				value = 0;
 			cardsToTrade.put(resource, value);
-			
+
 		} else if(give != null && give.contains(resource)) {
 			value = cardsToTrade.get(resource) - 1;
 			if(value < 0) 
 				value = 0;
 			cardsToTrade.put(resource, value);
 		}
-		
+
 		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, (amount - 1 > 0));
-		
+
 		isReadyToTrade();
 	}
 
@@ -126,7 +128,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void increaseResourceAmount(ResourceType resource) {
 		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
 		Integer amount = new Integer(getTradeOverlay().getResourceAmount(resource));
-				
+
 		int value = 0;
 		if(receive != null && receive.contains(resource)) {
 			value = cardsToTrade.get(resource) - 1;
@@ -144,7 +146,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void sendTradeOffer() {
 		getTradeOverlay().closeModal();
 		tradeOffer.setOffer(cardsToTrade);
-		
+
 		int ind = tradeOffer.getReceiver();
 		int playerId = modelFacade.getPlayersOfGame().get(ind).getPlayerID();
 		if(playerId < 0) {
@@ -152,10 +154,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				modelFacade.doOfferTrade(tradeOffer);
 			return;
 		}
-		
+
 		getWaitOverlay().setMessage("Waiting for Trade to Go Through");
 		getWaitOverlay().showModal();
-		
+
 		if(modelFacade.canOfferTrade(tradeOffer)) {
 			modelFacade.doOfferTrade(tradeOffer);
 			waitingForResponse = true;
@@ -177,10 +179,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
 		if(give != null && give.contains(resource))
 			give.remove(resource);
-		
+
 		if(receive == null) 
 			receive = new HashSet<ResourceType>();
-		
+
 		receive.add(resource);	
 		isReadyToTrade();
 	}
@@ -189,13 +191,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void setResourceToSend(ResourceType resource) {
 		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
 		getTradeOverlay().setResourceAmountChangeEnabled(resource, (val > 0), false);
-		
+
 		if(receive != null && receive.contains(resource))
 			receive.remove(resource);
-		
+
 		if(give == null) 
 			give = new HashSet<ResourceType>();
-		
+
 		give.add(resource);	
 		isReadyToTrade();
 	}
@@ -206,10 +208,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			give.remove(resource);
 		else if(receive != null && receive.contains(resource))
 			receive.remove(resource);
-		
+
 		if(cardsToTrade.containsKey(resource)) 
 			cardsToTrade.put(resource, 0);
-		
+
 		isReadyToTrade();
 	}
 
@@ -233,7 +235,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if(waitingForResponse) {
 			waitingForResponse = false;
 			getWaitOverlay().closeModal();
-			
+
 			tradeOffer = null;
 			cardsToTrade = null;
 			give = null;
@@ -241,12 +243,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}		
 		handleAcceptTrade();
 	}
-	
+
 	public void handleAcceptTrade() {
 		TradeOffer trade = modelFacade.getTradeOffer();
 		if(trade != null && trade.getReceiver() == modelFacade.getLocalPlayerIndex()) {
 			HashMap<ResourceType, Integer> resources = trade.getResources();
-			
+
 			getAcceptOverlay().reset();
 			getAcceptOverlay().setPlayerName(modelFacade.getNameByIndex(trade.getSender()));
 			getAcceptOverlay().setAcceptEnabled(true);
@@ -259,16 +261,16 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 						getAcceptOverlay().setAcceptEnabled(false);
 				}
 			}
-			
+
 			if(!getAcceptOverlay().isModalShowing()) 
 				getAcceptOverlay().showModal();
 		}
 	}
-	
+
 	public void isReadyToTrade() {
 		if(give == null || receive == null)
 			return;
-		
+
 		readyToTrade = true;
 		if(give.size() > 0 && receive.size() > 0) {
 			for(ResourceType res : cardsToTrade.keySet()) {
@@ -285,7 +287,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		} 
 		else 
 			readyToTrade = false;
-		
+
 		if(readyToTrade) {
 			getTradeOverlay().setStateMessage(SENDTRADE);
 			getTradeOverlay().setTradeEnabled(true);

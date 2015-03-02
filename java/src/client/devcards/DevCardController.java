@@ -52,8 +52,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void startBuyCard() 
 	{
-		
-		getBuyCardView().showModal();
+		if (!getBuyCardView().isModalShowing())
+			getBuyCardView().showModal();	
 	}
 
 	@Override
@@ -73,18 +73,20 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void startPlayCard() 
 	{
-		PlayerBank bank = modelFacade.getLocalPlayer().getBank();
-		int soldierCount = bank.getSoldierCount();
-		int monopolyCount = bank.getMonopolyCount();
-		int yearOfPlentyCount = bank.getYearOfPlentyCount();
-		int monumentCount = bank.getMonumentCount();
-		int roadBuildingCount = bank.getRoadBuildingCount();
-		getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldierCount);
-		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopolyCount);
-		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearOfPlentyCount);
-		getPlayCardView().setCardAmount(DevCardType.MONUMENT, monumentCount);
-		getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadBuildingCount);
-		getPlayCardView().showModal();
+		if (!getPlayCardView().isModalShowing()) {
+			PlayerBank bank = modelFacade.getLocalPlayer().getBank();
+			int soldierCount = bank.getSoldierCount();
+			int monopolyCount = bank.getMonopolyCount();
+			int yearOfPlentyCount = bank.getYearOfPlentyCount();
+			int monumentCount = bank.getMonumentCount();
+			int roadBuildingCount = bank.getRoadBuildingCount();
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldierCount);
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopolyCount);
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearOfPlentyCount);
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, monumentCount);
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, roadBuildingCount);
+			getPlayCardView().showModal();
+		}
 	}
 
 	@Override
