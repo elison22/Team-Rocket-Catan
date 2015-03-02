@@ -44,6 +44,7 @@ public class PointsView extends OverlayView implements IPointsView
 	
 	public void setPoints(int points)
 	{
+		points = points > 10 ? 10 : points;
 		
 		if(0 <= points && points <= MAX_POINTS)
 		{

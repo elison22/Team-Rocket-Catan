@@ -265,6 +265,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			setGameList();
 			getJoinGameView().showModal();
 		} else if (arg != null && arg.toString().equals("RESET")) {
+			newGameView = new NewGameView("NewGame");
+			newGameView.setController(this);
+			
 			setSelectColorView(new SelectColorView("SelectColor"));
 			getSelectColorView().setController(this);
 			start();
