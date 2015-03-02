@@ -25,6 +25,9 @@
 	<property name="demo.dir" value="demo"/>
     <property name="server.jar.file" value="${demo.dir}/server.jar"/>
     <property name="client.jar.file" value="${demo.dir}/client.jar"/>
+	<!-- Default values for command-line properties.  Values specified on the command-line will override these. -->
+	<property name="host" value="localhost"/>
+	<property name="port" value="8081"/>
   
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -137,6 +140,8 @@
 	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
 		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<arg value="${host}"/>
+			<arg value="${port}"/>
 			<assertions>
 				<enable/>
 			</assertions>
