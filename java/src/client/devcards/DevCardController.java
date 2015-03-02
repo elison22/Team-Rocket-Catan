@@ -51,8 +51,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void startBuyCard() 
 	{
-		
-		getBuyCardView().showModal();
+		if (!getBuyCardView().isModalShowing())
+			getBuyCardView().showModal();	
 	}
 
 	@Override

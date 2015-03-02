@@ -21,5 +21,7 @@ public interface IGameFinishedView extends IOverlayView
 	
 	public void setCon(PointsController pc);
 	
+	public void setFocus();
+	
 }
 

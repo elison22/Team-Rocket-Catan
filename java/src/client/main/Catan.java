@@ -57,10 +57,12 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				//new Catan();
                 ClientFacade modelFacade = null;
                 try {
-                    modelFacade = new ClientFacade("localhost", "8081");
+                	if (args.length == 0)
+                		modelFacade = new ClientFacade("localhost", "8081");
+                	else if (args.length == 2)
+                		modelFacade = new ClientFacade(args[0], args[1]);
                 } catch (BoardException e) {
                     e.printStackTrace();
                 }

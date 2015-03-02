@@ -3,7 +3,6 @@ package client.points;
 import java.util.Observable;
 import java.util.Observer;
 
-import model.player.Player;
 import client.base.Controller;
 import facade.ClientFacade;
 
@@ -56,6 +55,7 @@ public class PointsController extends Controller implements IPointsController, O
 		getFinishedView().setCon(this);
 		gameWon = true;
 		getFinishedView().showModal();
+		getFinishedView().setFocus();
 	}
 	
 	@Override
