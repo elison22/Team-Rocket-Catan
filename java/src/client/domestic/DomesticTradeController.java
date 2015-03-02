@@ -232,7 +232,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(waitingForResponse) {
+		if(waitingForResponse && modelFacade.getTradeOffer() == null) {
 			waitingForResponse = false;
 			getWaitOverlay().closeModal();
 
@@ -240,13 +240,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			cardsToTrade = null;
 			give = null;
 			receive = null;
-		}		
+		} /*else if(modelFacade.getTradeOffer() != null && modelFacade.getTradeOffer().getSender() == modelFacade.getLocalPlayerIndex() && !getWaitOverlay().isModalShowing())
+			getWaitOverlay().showModal();*/
+			
 		handleAcceptTrade();
 	}
 
 	public void handleAcceptTrade() {
 		TradeOffer trade = modelFacade.getTradeOffer();
-		if(trade != null && trade.getReceiver() == modelFacade.getLocalPlayerIndex()) {
+		if(trade != null && trade.getReceiver() == modelFacade.getLocalPlayerIndex() && !getAcceptOverlay().isModalShowing()) {
 			HashMap<ResourceType, Integer> resources = trade.getResources();
 
 			getAcceptOverlay().reset();
@@ -262,8 +264,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 			}
 
-			if(!getAcceptOverlay().isModalShowing()) 
-				getAcceptOverlay().showModal();
+			getAcceptOverlay().showModal();
 		}
 	}
 
