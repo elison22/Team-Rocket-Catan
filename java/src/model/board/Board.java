@@ -574,26 +574,48 @@ public class Board {
     private boolean hasNeighborRoad(EdgeLocation location, int owner) throws BoardException {
         if (owner < -1 || owner > 3) throw new BoardException("Param owner must be in the range -1 to 3.");
         if (location == null) throw new BoardException("Param location cannot be null.");
-        EdgeLocation clockwise = location.getClockwiseEdge().getNormalizedLocation();
-        EdgeLocation counterclockwise = location.getCounterClockwiseEdge().getNormalizedLocation();
-        if (roads.get(clockwise)!=null) {
+        EdgeLocation clockwiseEdge = location.getClockwiseEdge().getNormalizedLocation();
+        VertexLocation clockwiseVert = location.getClockwiseVertex().getNormalizedLocation();
+        EdgeLocation counterclockwiseEdge = location.getCounterClockwiseEdge().getNormalizedLocation();
+        VertexLocation counterclockwiseVert = location.getCounterClockwiseVertex().getNormalizedLocation();
+        if (roads.containsKey(clockwiseEdge)) {
             if (owner == -1) return true;
-            if (roads.get(clockwise).getOwner() == owner) return true;
+            if (roads.get(clockwiseEdge).getOwner() == owner) {
+                if (buildings.containsKey(clockwiseVert)) {
+                    if (buildings.get(clockwiseVert).getOwner() == owner) return true;
+                }
+                else return true;
+            }
         }
-        if (roads.get(counterclockwise)!=null) {
+        if (roads.containsKey(counterclockwiseEdge)) {
             if (owner == -1) return true;
-            if (roads.get(counterclockwise).getOwner() == owner) return true;
+            if (roads.get(counterclockwiseEdge).getOwner() == owner) {
+                if (buildings.containsKey(counterclockwiseVert)) {
+                    if (buildings.get(counterclockwiseVert).getOwner() == owner) return true;
+                }
+                else return true;
+            }
         }
         EdgeLocation opposite = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()),location.getDir().getOppositeDirection());
-        clockwise = opposite.getClockwiseEdge().getNormalizedLocation();
-        counterclockwise = opposite.getCounterClockwiseEdge().getNormalizedLocation();
-        if (roads.get(clockwise)!=null) {
+        clockwiseEdge = opposite.getClockwiseEdge().getNormalizedLocation();
+        counterclockwiseEdge = opposite.getCounterClockwiseEdge().getNormalizedLocation();
+        if (roads.containsKey(clockwiseEdge)) {
             if (owner == -1) return true;
-            if (roads.get(clockwise).getOwner() == owner) return true;
+            if (roads.get(clockwiseEdge).getOwner() == owner) {
+                if (buildings.containsKey(counterclockwiseVert)) {
+                    if (buildings.get(counterclockwiseVert).getOwner() == owner) return true;
+                }
+                else return true;
+            }
         }
-        if (roads.get(counterclockwise)!=null) {
+        if (roads.containsKey(counterclockwiseEdge)) {
             if (owner == -1) return true;
-            if (roads.get(counterclockwise).getOwner() == owner) return true;
+            if (roads.get(counterclockwiseEdge).getOwner() == owner) {
+                if (buildings.containsKey(clockwiseVert)) {
+                    if (buildings.get(clockwiseVert).getOwner() == owner) return true;
+                }
+                else return true;
+            }
         }
         return false;
     }
