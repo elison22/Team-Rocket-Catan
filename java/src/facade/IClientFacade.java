@@ -11,13 +11,6 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 public interface IClientFacade {
-
-	/**
-     * @param user user name of person trying to login
-     * @param password password of person trying to login
-     * @return true if user is able to login, false otherwise
-     */
-    public boolean canUserLogin(String user, String password);
 	
 	/**
      * @param user user name of person trying to login
@@ -25,13 +18,6 @@ public interface IClientFacade {
      * @return true if user succesfully logged in, false if otherwise
      */
     public boolean doUserLogin(String user, String password);
-
-    /**
-     * @param user user name of person trying to register
-     * @param password password of user trying to register
-     * @return true if username and password is valid and available and game state is in register mode
-     */
-    public boolean canUserRegister(String user, String password);
 
     /**
      * @param user user name of person trying to register
@@ -55,45 +41,12 @@ public interface IClientFacade {
     public boolean CreateGame(String gameName, boolean randTiles, boolean randPorts, boolean randNums);
 
     /**
-     * @return true if user state is in join mode
-     */
-    public boolean canJoinGame();
-
-    /**
      * Adds a player to the game
      * @param gameId id of the player who is joining game
      * @param color the color the player chose to be
      * @return 
      */
     public boolean joinGame(int gameId, String color);
-
-    /**
-     * @return true if game is in state that can be saved
-     */
-    public boolean canSave();
-
-    /**
-     * @return true if game successfully saved
-     */
-    public boolean doSave();
-
-    /**
-     * @param name name of the saved game file you want to load
-     * @return true if game successfully loaded
-     */
-    public boolean doLoad(String name);
-
-    /**
-     * Checks to see if player can reset the game to the beginning state
-     * @return whether or not the player can restart the game
-     */
-    public boolean canReset();
-
-    /**
-     * Resets the current game to its beginning state
-     * @return true if game successfully restarted
-     */
-    public boolean doReset();
 
     /**
      * Used to know what cards are in hand
@@ -112,12 +65,6 @@ public interface IClientFacade {
      * @return the current client model version number
      */
     public int getVersionNumber();
-
-    /**
-     * Checks to see if player can add an AI player to the game right now
-     * @return true if player can add an AI player to game
-     */
-    public boolean canAddAI();
 
     /**
      * @param AIType type of AI to add to the game

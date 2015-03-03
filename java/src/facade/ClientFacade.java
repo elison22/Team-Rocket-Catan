@@ -116,14 +116,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 		} catch (BoardException e) {
 			e.printStackTrace();
 		}
-    	
     }
-
-	@Override
-	public boolean canUserLogin(String user, String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean doUserLogin(String user, String password) {
@@ -139,12 +132,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 		
 		localPlayer = serializer.deSerializeUserCookie(proxy.getUserCookie());
 		return true;
-	}
-
-	@Override
-	public boolean canUserRegister(String user, String password) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -190,12 +177,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean canJoinGame() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean joinGame(int gameId, String color) {
 		try {
 			proxy.join(new JoinGame_Params(gameId, color));
@@ -213,36 +194,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 	}
 
 	@Override
-	public boolean canSave() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean doSave() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean doLoad(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canReset() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean doReset() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public HashMap<ResourceType, Integer> getPlayerResources() {
 		return game.getPlayerList().get(playerIndex).getBank().getResCards();
 	}
@@ -250,12 +201,6 @@ public class ClientFacade extends Observable implements IClientFacade {
 	@Override
 	public int getVersionNumber() {
 		return game.getVersionNumber();
-	}
-
-	@Override
-	public boolean canAddAI() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
