@@ -343,6 +343,7 @@ public class Board {
         if (firstloc == null) throw new BoardException("Param location cannot be null.");
         if (secondloc == null) throw new BoardException("Param location cannot be null.");
 
+        if (!isEdgeOnBoard(secondloc)) return false;
         Constructable road = new Constructable(PieceType.ROAD, owner);
         roads.put(firstloc.getNormalizedLocation(), road);
         boolean toReturn = canBuildNormalRoad(secondloc, owner);
