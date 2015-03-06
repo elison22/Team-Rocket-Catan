@@ -194,10 +194,8 @@ public class MapController extends Controller implements IMapController, Observe
 
         RobPlayerInfo[] victims = mapState.placeRobber(hexLoc);
 		getView().placeRobber(hexLoc);
-        if (victims.length > 0) {
-            getRobView().showModal();
-            getRobView().setPlayers(victims);
-        }
+        getRobView().showModal();
+        getRobView().setPlayers(victims);
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {

@@ -49,7 +49,8 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-		
+		timer.stop();
+        timer = null;
 		int min = 1;
 		int max = 6;
 		
