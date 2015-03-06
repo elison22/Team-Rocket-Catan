@@ -56,7 +56,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-        getView().reset();
 		for (int x = 0; x <= 3; ++x) {
 			
 			int maxY = 3 - x;
@@ -230,6 +229,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
     public void resetView(){
+        getView().reset();
         initFromModel();
     }
 
