@@ -97,8 +97,8 @@ public class LoginController extends Controller implements ILoginController {
 	
 	// Check that the username/password are the right length and made up of legal characters.
 	private boolean verifyRegister() {
-		String userPattern = "^[a-zA-Z_-]{3,7}$";
-		String passwordPattern = "^[a-zA-Z_-]{5,25}$";
+		String userPattern = "^[0-9a-zA-Z_-]{3,7}$";
+		String passwordPattern = "^[0-9a-zA-Z_-]{5,25}$";
 				
 		if (getLoginView().getRegisterUsername().matches(userPattern)) {
 			if (getLoginView().getRegisterPassword().matches(passwordPattern))
