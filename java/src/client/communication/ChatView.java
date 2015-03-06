@@ -88,6 +88,8 @@ public class ChatView extends OverlayView implements IChatView {
     @Override
     public void setEntries(final List<LogEntry> entries) {
         chatPanel.setEntries(entries);
+        chatPanel.repaint();
+        chatScrollPane.getVerticalScrollBar().setValue(chatScrollPane.getVerticalScrollBar().getMaximum());
     }
     
     /**
