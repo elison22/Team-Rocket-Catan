@@ -1,8 +1,12 @@
 package client.roll;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+
+import javax.swing.Timer;
 
 import client.base.Controller;
 import client.base.OverlayView;
@@ -16,6 +20,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 	private IRollResultView resultView;
 	private ClientFacade modelFacade;
+    private Timer timer;
 
 	/**
 	 * RollController constructor
@@ -44,7 +49,8 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-		
+		timer.stop();
+        timer = null;
 		int min = 1;
 		int max = 6;
 		
@@ -71,7 +77,19 @@ public class RollController extends Controller implements IRollController, Obser
             OverlayView.killView("wait");
 			getRollView().setMessage("Roll the dice!");
 			getRollView().showModal();
+            timedRoll();
 		}
+	}
+    
+    public void timedRoll() {
+		timer = new Timer(3000, new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				getRollView().closeModal();
+				rollDice();
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
 	}
 
 }

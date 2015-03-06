@@ -176,9 +176,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
-		if(give != null && give.contains(resource))
+		if(give != null && give.contains(resource)) {
 			give.remove(resource);
+			getTradeOverlay().setResourceAmount(resource, "0");
+			cardsToTrade.put(resource, 0);
+		}
+        
+        getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
 
 		if(receive == null) 
 			receive = new HashSet<ResourceType>();
@@ -190,10 +194,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setResourceToSend(ResourceType resource) {
 		int val = modelFacade.getLocalPlayer().getBank().getResCards().get(resource);
-		getTradeOverlay().setResourceAmountChangeEnabled(resource, (val > 0), false);
 
-		if(receive != null && receive.contains(resource))
+		if(receive != null && receive.contains(resource)) {
 			receive.remove(resource);
+			getTradeOverlay().setResourceAmount(resource, "0");
+			cardsToTrade.put(resource, 0);
+		}
+        
+        getTradeOverlay().setResourceAmountChangeEnabled(resource, (val > 0), false);
 
 		if(give == null) 
 			give = new HashSet<ResourceType>();
@@ -240,8 +248,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			cardsToTrade = null;
 			give = null;
 			receive = null;
-		} /*else if(modelFacade.getTradeOffer() != null && modelFacade.getTradeOffer().getSender() == modelFacade.getLocalPlayerIndex() && !getWaitOverlay().isModalShowing())
-			getWaitOverlay().showModal();*/
+		} else if(modelFacade.getTradeOffer() != null && modelFacade.getTradeOffer().getSender() == modelFacade.getLocalPlayerIndex() && !getWaitOverlay().isModalShowing()) {
+			getWaitOverlay().showModal();
+			waitingForResponse = true;
+		}
 			
 		handleAcceptTrade();
 	}

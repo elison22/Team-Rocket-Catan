@@ -108,8 +108,6 @@ public class LoginController extends Controller implements ILoginController {
 		} else getLoginView().showDialog("Username must be between 3-7 characters containing " + 
 				                         "only numbers, letters, underscores, and hyphens.");
 		return false;
-		
-		
 	}
 
 }

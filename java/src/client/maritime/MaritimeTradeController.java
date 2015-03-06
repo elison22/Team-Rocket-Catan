@@ -191,6 +191,8 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void unsetGetValue() {
 		getTradeOverlay().showGetOptions(possibleGets);
+		getTradeOverlay().setTradeEnabled(false);
+		
 	}
 
 	@Override
