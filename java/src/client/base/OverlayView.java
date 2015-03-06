@@ -202,17 +202,25 @@ public class OverlayView extends PanelView implements IOverlayView
     }
 
     public static void killView(String modelName) {
-        OverlayInfo toKill = null;
+        boolean removed = bringForward(modelName);
+        if(!removed) return;
+        OverlayInfo toKill = overlayStack.peekFirst();
+        toKill.getOverlayView().closeModal();
+    }
+
+    public static boolean bringForward(String modelName) {
+        OverlayInfo toForward = null;
         for (OverlayInfo info : overlayStack) {
             if(info.getOverlayView().getName().equalsIgnoreCase(modelName)) {
-                toKill = info;
+                toForward = info;
                 break;
             }
         }
-        if (toKill == null) return;
-        overlayStack.remove(toKill);
-        overlayStack.push(toKill);
-        toKill.getOverlayView().closeModal();
+        if (toForward == null) return false;
+        overlayStack.remove(toForward);
+//        overlayStack.push(toForward);
+        toForward.getOverlayView().showModal();
+        return true;
     }
 
 }

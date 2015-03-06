@@ -1,5 +1,6 @@
 package client.map.states;
 
+import client.base.OverlayView;
 import client.data.RobPlayerInfo;
 import client.map.MapController;
 import facade.ClientFacade;
@@ -26,6 +27,8 @@ public class DiscardMapState extends AbstractMapState{
 
     @Override
     public void start(MapController controller){
+        if(curState == TurnState.Rolling)
+            OverlayView.bringForward("rollresult");
         curState = TurnState.Discarding;
     }
 
