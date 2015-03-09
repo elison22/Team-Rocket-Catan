@@ -30,13 +30,15 @@ public class GameStatePanel extends JPanel
 		
 		this.add(button);
 		
-		updateGameState("Waiting for other Players", false);
+		updateGameState("Waiting for other Players", Color.white, false);
 	}
 	
-	public void updateGameState(String stateMessage, boolean enable)
+	public void updateGameState(String stateMessage, Color color, boolean enable)
 	{
 		button.setText(stateMessage);
 		button.setEnabled(enable);
+		button.setBackground(color);
+		button.repaint();
 	}
 	
 	public void setButtonAction(final IAction action)

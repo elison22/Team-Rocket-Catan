@@ -24,6 +24,8 @@ public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 	private JLabel [] playerArmy;
 	private Image longestRoadImage;
 	private Image largestArmyImage;
+	
+	private CatanColor color;
 
 	private final int NUM_PLAYERS = 4;
 	private final int FONT_SIZE = 13;
@@ -71,7 +73,7 @@ public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 
 	@Override
 	public void setLocalPlayerColor(CatanColor value) {
-		
+		this.color = value;
 		titlePanel.setLocalPlayerColor(value);
 	}
 
@@ -113,7 +115,6 @@ public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 			playerPanel[playerIndex].setBackground(playerColor.getJavaColor());
 			playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		}
-		
 	}
 
 	@Override
@@ -133,7 +134,7 @@ public class TurnTrackerView extends OverlayView implements ITurnTrackerView {
 	@Override
 	public void updateGameState(String stateMessage, boolean enable) {
 
-		gameStatePanel.updateGameState(stateMessage, enable);
+		gameStatePanel.updateGameState(stateMessage, color.getJavaColor(), enable);
 	}
 	
 }
