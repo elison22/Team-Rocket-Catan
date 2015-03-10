@@ -3,7 +3,6 @@ package client.map.states;
 import java.util.ArrayList;
 
 import model.game.TurnState;
-import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
