@@ -45,20 +45,20 @@ public class PlayerBank extends CardBank{
 
     public void setDevCards(JsonDevCardList jsonDevCards, ArrayList<DevCard> devCardList){
         for(int i = 0; i < jsonDevCards.getMonopoly(); i++){
-            devCardList.add(new DevCard(DevCardType.MONOPOLY, "Monopoly"));
+            devCardList.add(new DevCard(DevCardType.MONOPOLY));
         }
         for(int i = 0; i< jsonDevCards.getMonument(); i++){
-            devCardList.add(new DevCard(DevCardType.MONUMENT, "Monument"));
+            devCardList.add(new DevCard(DevCardType.MONUMENT));
             // TODO We need some way to know which monument card the player has (ie. Library, University, etc.)
         }
         for(int i = 0; i < jsonDevCards.getRoadBuilding(); i++){
-            devCardList.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building"));
+            devCardList.add(new DevCard(DevCardType.ROAD_BUILD));
         }
         for(int i = 0; i < jsonDevCards.getSoldier(); i++){
-            devCardList.add(new DevCard(DevCardType.SOLDIER, "Soldier"));
+            devCardList.add(new DevCard(DevCardType.SOLDIER));
         }
         for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++){
-            devCardList.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty"));
+            devCardList.add(new DevCard(DevCardType.YEAR_OF_PLENTY));
         }
     }
 

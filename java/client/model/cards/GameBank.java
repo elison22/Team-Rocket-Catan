@@ -38,33 +38,33 @@ public class GameBank extends CardBank{
         resCards.put(ResourceType.ORE, resources.getOre());
         devCards.clear();
         for(int i = 0; i < jsonDevCards.getMonopoly(); i++)
-        	devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly"));
+        	devCards.add(new DevCard(DevCardType.MONOPOLY));
         for(int i = 0; i < jsonDevCards.getMonument(); i++)
-        	devCards.add(new DevCard(DevCardType.MONUMENT, "Palace"));
+        	devCards.add(new DevCard(DevCardType.MONUMENT));
         for(int i = 0; i < jsonDevCards.getRoadBuilding(); i++)
-        	devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building"));
+        	devCards.add(new DevCard(DevCardType.ROAD_BUILD));
         for(int i = 0; i < jsonDevCards.getSoldier(); i++)
-        	devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier"));
+        	devCards.add(new DevCard(DevCardType.SOLDIER));
         for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++)
-        	devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty"));
+        	devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY));
     }
 
     public void initDevCards(){
         //initialize monument cards
         for(int i = 0; i < 5; i++){
-            devCards.add(new DevCard(DevCardType.MONUMENT, "Monument"));
+            devCards.add(new DevCard(DevCardType.MONUMENT));
         }
 
         //initialize soldier cards
         for(int i = 0; i < 14; i++){
-            devCards.add(new DevCard(DevCardType.SOLDIER, "Soldier"));
+            devCards.add(new DevCard(DevCardType.SOLDIER));
         }
 
         //initialize progress cards
         for(int i = 0; i < 2; i++){
-            devCards.add(new DevCard(DevCardType.MONOPOLY, "Monopoly"));
-            devCards.add(new DevCard(DevCardType.ROAD_BUILD, "Road Building"));
-            devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY, "Year of Plenty"));
+            devCards.add(new DevCard(DevCardType.MONOPOLY));
+            devCards.add(new DevCard(DevCardType.ROAD_BUILD));
+            devCards.add(new DevCard(DevCardType.YEAR_OF_PLENTY));
         }
     }
 
