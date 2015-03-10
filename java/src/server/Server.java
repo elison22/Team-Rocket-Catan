@@ -9,6 +9,36 @@ public class Server {
 	
 	private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
+    /*
+    private HttpHandler loginHandler = new LoginHandler();
+    private HttpHandler registerHandler = new RegisterHandler();
+    private HttpHandler getGameModelHandler = new GetGameModelHandler();
+    private HttpHandler getGamesHandler = new GetGamesHandler();
+    private HttpHandler createGameHandler = new CreateGameHandler();
+    private HttpHandler joinGameHandler = new JoinGameHandler();
+    private HttpHandler saveGameHandler = new SaveGameHandler();
+    private HttpHandler loadGameHandler = new LoadGameHandler();
+    private HttpHandler changeLogHandler = new ChangeLogHandler();
+    
+    // moves
+    private HttpHandler sendChatHandler = new SendChatHandler();
+    private HttpHandler rollHandler = new RollHandler();
+    private HttpHandler robPlayerHandler = new RobPlayerHandler();
+    private HttpHandler finishTurnHandler = new FinishTurnHandler();
+    private HttpHandler buyDevCardHandler = new BuyDevCardHandler();
+    private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler();
+    private HttpHandler roadBuildingHandler = new RoadBuildingHandler();
+    private HttpHandler soldierHandler = new SoldierHandler();
+    private HttpHandler monopolyHandler = new MonopolyHandler();
+    private HttpHandler monumentHandler = new MonumentHandler();
+    private HttpHandler buildRoadHandler = new BuildRoadHandler();
+    private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
+    private HttpHandler buildCityHandler = new BuildCityHandler();
+    private HttpHandler offerTradeHandler = new OfferTradeHandler();
+    private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
+    private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler();
+    private HttpHandler discardCardsHandler = new DiscardCardsHandler();
+    */
     
     private HttpServer server;
     
@@ -64,39 +94,7 @@ public class Server {
         */
     	
     	server.start();
-    	
     }
-    
-   /*
-    private HttpHandler loginHandler = new LoginHandler();
-    private HttpHandler registerHandler = new RegisterHandler();
-    private HttpHandler getGameModelHandler = new GetGameModelHandler();
-    private HttpHandler getGamesHandler = new GetGamesHandler();
-    private HttpHandler createGameHandler = new CreateGameHandler();
-    private HttpHandler joinGameHandler = new JoinGameHandler();
-    private HttpHandler saveGameHandler = new SaveGameHandler();
-    private HttpHandler loadGameHandler = new LoadGameHandler();
-    private HttpHandler changeLogHandler = new ChangeLogHandler();
-    
-    // moves
-    private HttpHandler sendChatHandler = new SendChatHandler();
-    private HttpHandler rollHandler = new RollHandler();
-    private HttpHandler robPlayerHandler = new RobPlayerHandler();
-    private HttpHandler finishTurnHandler = new FinishTurnHandler();
-    private HttpHandler buyDevCardHandler = new BuyDevCardHandler();
-    private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler();
-    private HttpHandler roadBuildingHandler = new RoadBuildingHandler();
-    private HttpHandler soldierHandler = new SoldierHandler();
-    private HttpHandler monopolyHandler = new MonopolyHandler();
-    private HttpHandler monumentHandler = new MonumentHandler();
-    private HttpHandler buildRoadHandler = new BuildRoadHandler();
-    private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
-    private HttpHandler buildCityHandler = new BuildCityHandler();
-    private HttpHandler offerTradeHandler = new OfferTradeHandler();
-    private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
-    private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler();
-    private HttpHandler discardCardsHandler = new DiscardCardsHandler();
-    */
 
 	public static void main(String[] args) {
 		Integer i = new Integer(args[0]);
