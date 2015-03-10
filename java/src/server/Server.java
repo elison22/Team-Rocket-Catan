@@ -18,6 +18,8 @@ public class Server {
     
     private void run(Integer port) {
     	
+    	// initialize server facade here
+    	// initialize user facade here
     	
     	try {
             if (port == null)
