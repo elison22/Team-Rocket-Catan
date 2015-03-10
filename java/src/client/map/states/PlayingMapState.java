@@ -24,12 +24,7 @@ public class PlayingMapState extends AbstractMapState {
     }
 
     @Override
-    public void update(){
-
-    }
-
-    @Override
-    public void start(MapController controller){
+    public void update(MapController controller){
         OverlayView.killView("wait");
         curState = TurnState.Playing;
     }
@@ -87,25 +82,6 @@ public class PlayingMapState extends AbstractMapState {
         }
         RobPlayerInfo[] tempCast = new RobPlayerInfo[0];
         return tempList.toArray(tempCast);
-    }
-
-    @Override
-    public void startMove(PieceType pieceType) {
-    	return;
-    }
-
-    @Override
-    public void cancelMove() {
-    	return;
-    }
-
-    @Override
-    public void playSoldierCard() {
-    }
-
-    @Override
-    public void playRoadBuildingCard() {
-    	
     }
 
     @Override

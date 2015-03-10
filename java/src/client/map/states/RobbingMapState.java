@@ -24,7 +24,7 @@ public class RobbingMapState extends AbstractMapState{
     }
 
     @Override
-    public void start(MapController controller){
+    public void update(MapController controller){
         if (curState == TurnState.Robbing)
             return;
         OverlayView.killView("wait");
@@ -35,38 +35,8 @@ public class RobbingMapState extends AbstractMapState{
     }
 
     @Override
-    public boolean canBuildRoad(EdgeLocation edgeLoc) {
-        return false;
-    }
-
-    @Override
-    public boolean canBuildSettlement(VertexLocation vertLoc) {
-        return false;
-    }
-
-    @Override
-    public boolean canBuildCity(VertexLocation vertLoc) {
-        return false;
-    }
-
-    @Override
     public boolean canPlaceRobber(HexLocation hexLoc) {
         return facade.canPlaceRobber(hexLoc);
-    }
-
-    @Override
-    public void placeRoad(EdgeLocation edgeLoc) {
-    	// do nothing
-    }
-
-    @Override
-    public void placeSettlement(VertexLocation vertLoc) {
-    	// do nothing
-    }
-
-    @Override
-    public void placeCity(VertexLocation vertLoc) {
-    	// do nothing
     }
 
     @Override
@@ -91,40 +61,10 @@ public class RobbingMapState extends AbstractMapState{
     }
 
     @Override
-    public void startMove(PieceType pieceType) {
-
-    }
-
-    @Override
-    public void cancelMove() {
-    	// do nothing
-    }
-
-    @Override
-    public void playSoldierCard() {
-
-    }
-
-    public void playSoldierCard(RobPlayerInfo victim) {
-        facade.doUseSoldier(victim.getPlayerIndex(), newRobberLocation);
-    }
-
-    @Override
-    public void playRoadBuildingCard() {
-    	// do nothing
-    }
-
-    @Override
     public void robPlayer(RobPlayerInfo victim) {
 
         facade.doPlaceRobber(victim.getPlayerIndex(), newRobberLocation);
 
     }
 
-
-    @Override
-    public void update(){
-        if (facade.getState() == TurnState.Robbing)
-            System.out.println("Robbing");
-    }
 }

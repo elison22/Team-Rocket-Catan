@@ -15,80 +15,11 @@ public class RollingMapState extends AbstractMapState{
 
     public RollingMapState(){}
 
-    @Override
-    public void update(){
-
-    }
 
     @Override
-    public void start(MapController controller){
+    public void update(MapController controller){
         curState = TurnState.Rolling;
     }
 
-    @Override
-    public boolean canBuildRoad(EdgeLocation edgeLoc) {
-        return false;
-    }
-
-    @Override
-    public boolean canBuildSettlement(VertexLocation vertLoc) {
-        return false;
-    }
-
-    @Override
-    public boolean canBuildCity(VertexLocation vertLoc) {
-        return false;
-    }
-
-    @Override
-    public boolean canPlaceRobber(HexLocation hexLoc) {
-        return false;
-    }
-
-    @Override
-    public void placeRoad(EdgeLocation edgeLoc) {
-
-    }
-
-    @Override
-    public void placeSettlement(VertexLocation vertLoc) {
-
-    }
-
-    @Override
-    public void placeCity(VertexLocation vertLoc) {
-
-    }
-
-    @Override
-    public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
-
-        return null;
-    }
-
-    @Override
-    public void startMove(PieceType pieceType) {
-
-    }
-
-    @Override
-    public void cancelMove() {
-
-    }
-
-    @Override
-    public void playSoldierCard() {
-
-    }
-
-    @Override
-    public void playRoadBuildingCard() {
-
-    }
-
-    @Override
-    public void robPlayer(RobPlayerInfo victim) {
-
-    }
 
 }

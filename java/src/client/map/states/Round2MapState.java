@@ -19,22 +19,16 @@ public class Round2MapState extends AbstractMapState{
     }
 
     @Override
-    public void update(){
-
-    }
-
-    @Override
-    public void start(MapController controller){
+    public void update(MapController controller){
         if(!facade.isYourTurn())
             return;
         if(curState == TurnState.SecondRound)
             return;
 
-//        controller.modalOpen = true;
         controller.getView().startDrop(PieceType.SETTLEMENT, facade.getPlayerInfo().getColor(), false);
         if (facade.getLocalPlayer().getRemainingRoads() == 14)
             controller.getView().startDrop(PieceType.ROAD, facade.getPlayerInfo().getColor(), false);
-//        controller.modalOpen = false;
+
         curState = TurnState.SecondRound;
     }
 
@@ -49,16 +43,6 @@ public class Round2MapState extends AbstractMapState{
     }
 
     @Override
-    public boolean canBuildCity(VertexLocation vertLoc) {
-        return false;
-    }
-
-    @Override
-    public boolean canPlaceRobber(HexLocation hexLoc) {
-        return false;
-    }
-
-    @Override
     public void placeRoad(EdgeLocation edgeLoc) {
 
         facade.doBuildRoad(edgeLoc, true);
@@ -69,42 +53,6 @@ public class Round2MapState extends AbstractMapState{
     public void placeSettlement(VertexLocation vertLoc) {
         facade.doBuildSettlement(vertLoc, true);
         endTurn();
-    }
-
-    @Override
-    public void placeCity(VertexLocation vertLoc) {
-
-    }
-
-    @Override
-    public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
-
-        return null;
-    }
-
-    @Override
-    public void startMove(PieceType pieceType) {
-
-    }
-
-    @Override
-    public void cancelMove() {
-
-    }
-
-    @Override
-    public void playSoldierCard() {
-
-    }
-
-    @Override
-    public void playRoadBuildingCard() {
-
-    }
-
-    @Override
-    public void robPlayer(RobPlayerInfo victim) {
-
     }
 
     public void endTurn() {

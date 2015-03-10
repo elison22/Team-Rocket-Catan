@@ -28,12 +28,10 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
     private ClientFacade facade;
     private AbstractMapState mapState;
-    private TurnState curState;
     private EdgeLocation firstRoad;
-    private boolean playingFirstRoad;
-    private boolean playingSecondRoad;
+    private boolean playingFirstRoad = false;
+    private boolean playingSecondRoad = false;
 
-//    public boolean modalOpen;
 
     public MapController(IMapView view, IRobView robView, ClientFacade facade) {
         super(view);
@@ -200,7 +198,6 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
 
-
 		getView().startDrop(pieceType, facade.getPlayerInfo().getColor(), true);
 	}
 	
@@ -237,7 +234,7 @@ public class MapController extends Controller implements IMapController, Observe
             resetView();
         }
 
-        curState = facade.getState();
+        TurnState curState = facade.getState();
         if(null == curState){
             return;
         }
@@ -272,7 +269,7 @@ public class MapController extends Controller implements IMapController, Observe
                 mapState = new PlayingMapState(facade);
                 break;
         }
-        mapState.start(this);
+        mapState.update(this);
 
     }
 }

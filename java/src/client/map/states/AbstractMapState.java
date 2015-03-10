@@ -22,35 +22,25 @@ public abstract class AbstractMapState {
         this.facade = facade;
     }
 
-    public abstract void update();
+    public abstract void update(MapController controller);
 
-    public abstract void start(MapController controller);
+    public boolean canBuildRoad(EdgeLocation edgeLoc){return false;}
 
-    public abstract boolean canBuildRoad(EdgeLocation edgeLoc);
+    public boolean canBuildSettlement(VertexLocation vertLoc){return false;}
 
-    public abstract boolean canBuildSettlement(VertexLocation vertLoc);
+    public boolean canBuildCity(VertexLocation vertLoc){return false;}
 
-    public abstract boolean canBuildCity(VertexLocation vertLoc);
+    public boolean canPlaceRobber(HexLocation hexLoc){return false;}
 
-    public abstract boolean canPlaceRobber(HexLocation hexLoc);
+    public void placeRoad(EdgeLocation edgeLoc){}
 
-    public abstract void placeRoad(EdgeLocation edgeLoc);
+    public void placeSettlement(VertexLocation vertLoc){}
 
-    public abstract void placeSettlement(VertexLocation vertLoc);
+    public void placeCity(VertexLocation vertLoc){}
 
-    public abstract void placeCity(VertexLocation vertLoc);
+    public RobPlayerInfo[] placeRobber(HexLocation hexLoc){return null;}
 
-    public abstract RobPlayerInfo[] placeRobber(HexLocation hexLoc);
-
-    public abstract void startMove(PieceType pieceType);
-
-    public abstract void cancelMove();
-
-    public abstract void playSoldierCard();
-
-    public abstract void playRoadBuildingCard();
-
-    public abstract void robPlayer(RobPlayerInfo victim);
+    public void robPlayer(RobPlayerInfo victim){}
 
 
 }
