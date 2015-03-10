@@ -1,4 +1,4 @@
-package server.command;
+package command;
 
 public class List_CO implements ICommand {
 

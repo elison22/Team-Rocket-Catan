@@ -1,4 +1,4 @@
-package server.command;
+package command;
 
 /**@author Chad
  * 

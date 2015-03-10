@@ -1,4 +1,4 @@
-package server.command;
+package command;
 
 import shared.dto.JoinGame_Params;
 
