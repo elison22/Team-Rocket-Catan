@@ -1,153 +1,180 @@
 package facade;
 
+public class ModelFacade implements IModelFacade {
 
-/**
- *
- */
-public class ModelFacade {
+	@Override
+	public String listGames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String listGames(){
+	@Override
+	public String createGame(boolean randomTiles, boolean randomNumbers,
+			boolean randomPorts, String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String joinGame(int gameID, String color) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name){
+	@Override
+	public String saveGame(int gameID, String fileName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String loadGame(String fileName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String joinGame(int gameID, String color){
+	@Override
+	public String getGameModel(int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String resetGame(int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String saveGame(int gameID, String fileName){
+	@Override
+	public String getGameCommands(int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String executeGameCommands(int gameID, String gameCommands) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String loadGame(String fileName){
+	@Override
+	public String addAI(String AIType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String listAI() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String getGameModel(int gameID){
+	@Override
+	public String sendChat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String rollNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String resetGame(int gameID){
+	@Override
+	public String robPlayer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String finishTurn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String getGameCommands(int gameID){
+	@Override
+	public String buyDevCard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String doYearOfPlenty() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String executeGameCommands(int gameID, String gameCommands){
+	@Override
+	public String doRoadBuilding() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String doSoldier() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String addAI(String AIType){
+	@Override
+	public String doMonopoly() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String doMonument() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String listAI(){
+	@Override
+	public String buildRoad() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String buildSettlement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String sendChat(){
+	@Override
+	public String buildCity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String offerTrade() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String rollNumber(){
+	@Override
+	public String acceptTrade() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String maritimeTrade() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String robPlayer(){
+	@Override
+	public String discardCards() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public String changeLogLevel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public String finishTurn(){
-
-        return null;
-    }
-
-    public String buyDevCard(){
-
-        return null;
-    }
-
-    public String doYearOfPlenty(){
-
-        return null;
-    }
-
-    public String doRoadBuilding(){
-
-        return null;
-    }
-
-    public String doSoldier(){
-
-        return null;
-    }
-
-    public String doMonopoly(){
-
-        return null;
-    }
-
-    public String doMonument(){
-
-        return null;
-    }
-
-    public String buildRoad(){
-
-        return null;
-    }
-
-    public String buildSettlement(){
-
-        return null;
-    }
-
-    public String buildCity(){
-
-        return null;
-    }
-
-    public String offerTrade(){
-
-        return null;
-    }
-
-    public String acceptTrade(){
-
-        return null;
-    }
-
-    public String maritimeTrade(){
-
-        return null;
-    }
-
-    public String discardCards(){
-
-        return null;
-    }
-
-    public String changeLogLevel(){
-
-        return null;
-    }
 }
