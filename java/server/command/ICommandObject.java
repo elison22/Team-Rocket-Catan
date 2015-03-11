@@ -4,7 +4,7 @@ package command;
  * 
  * Interface for our command objects.
  */
-public interface ICommand {
+public interface ICommandObject {
 	
 	// execute() will return an object for the sake of those commandobjects that 
 	// will need to return a model or another form of json (games/list, etc).
