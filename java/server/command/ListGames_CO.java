@@ -9,14 +9,14 @@ import facade.IModelFacade;
  * including the players in each game and their colors.
  */
 @SuppressWarnings("unused")
-public class List_CO implements ICommandObject {
+public class ListGames_CO implements ICommandObject {
 	
 	private IModelFacade modelFacade;
 	
 	/**
 	 * @param modelFacade The implementation of IModelFacde to be used.
 	 */
-	public List_CO(IModelFacade modelFacade) {
+	public ListGames_CO(IModelFacade modelFacade) {
 		this.modelFacade = modelFacade;
 	}
 
