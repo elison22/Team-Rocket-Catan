@@ -12,6 +12,7 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * The ModelFacade's instance of GameManager
 	 */
+	@SuppressWarnings("unused")
 	private GameManager gameManager;
 	
 	/**
