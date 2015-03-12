@@ -10,9 +10,9 @@ public interface IModelFacade {
 
     public String createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
 
-    public String joinGame(int gameID, String color);
+    public boolean joinGame(int gameID, String color);
 
-    public String saveGame(int gameID, String fileName);
+    public boolean saveGame(int gameID, String fileName);
 
     public String loadGame(String fileName);
 

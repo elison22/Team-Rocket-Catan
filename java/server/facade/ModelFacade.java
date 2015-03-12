@@ -48,7 +48,7 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public boolean joinGame(int gameID, String color) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public boolean saveGame(int gameID, String fileName) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	/**
