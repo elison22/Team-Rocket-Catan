@@ -6,6 +6,7 @@ public class CatanModel {
 	
 	public CatanModel(){}
 	
+	@SuppressWarnings("unused")
 	private GameManager gameManager;
 	
 	public String rollNumber(Object rollNumberParams) throws ServerException {

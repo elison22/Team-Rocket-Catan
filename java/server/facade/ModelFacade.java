@@ -58,18 +58,6 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	@Override
-	public String addAI(String AIType) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String listAI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String sendChat() {
 		// TODO Auto-generated method stub
 		return null;
@@ -167,12 +155,6 @@ public class ModelFacade implements IModelFacade {
 
 	@Override
 	public String discardCards() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String changeLogLevel() {
 		// TODO Auto-generated method stub
 		return null;
 	}

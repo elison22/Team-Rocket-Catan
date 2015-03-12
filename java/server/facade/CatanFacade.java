@@ -5,6 +5,7 @@ import proxy.ServerException;
 public class CatanFacade {
 	public CatanFacade(){}
 
+	@SuppressWarnings("unused")
 	private GameManager gameManager;
 	
 	public String rollNumber(Object rollNumberParams) throws ServerException {

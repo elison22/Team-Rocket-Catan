@@ -24,10 +24,6 @@ public interface IModelFacade {
 
     public String executeGameCommands(int gameID, String gameCommands);
 
-    public String addAI(String AIType);
-
-    public String listAI();
-
     public String sendChat();
 
     public String rollNumber();
@@ -61,6 +57,4 @@ public interface IModelFacade {
     public String maritimeTrade();
 
     public String discardCards();
-
-    public String changeLogLevel();
 }
