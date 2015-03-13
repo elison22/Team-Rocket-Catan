@@ -1,5 +1,6 @@
 package command;
 
+import shared.dto.BuyDevCard_Params;
 import facade.IModelFacade;
 
 /**
@@ -12,14 +13,17 @@ public class BuyDevCard_CO implements ICommandObject {
 
 	private IModelFacade modelFacade;
 	private int gameId;
+	private BuyDevCard_Params params;
 	
 	/**
 	 * @param modelFacade The implementation of IModelFacde to be used.
 	 * @param gameId Id of the game the player is in.
+	 * @param params Parameters for buying a dev card.
 	 */
-	public BuyDevCard_CO(IModelFacade modelFacade, int gameId) {
+	public BuyDevCard_CO(IModelFacade modelFacade, int gameId, BuyDevCard_Params params) {
 		this.modelFacade = modelFacade;
 		this.gameId = gameId;
+		this.params = params;
 	}
 
 	@Override
