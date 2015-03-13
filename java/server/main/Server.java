@@ -1,17 +1,34 @@
 package main;
 
+import handler.AcceptTradeHandler;
+import handler.BuildCityHandler;
+import handler.BuildRoadHandler;
+import handler.BuildSettlementHandler;
+import handler.BuyDevCardHandler;
 import handler.ChangeLogHandler;
 import handler.CreateGameHandler;
+import handler.DiscardCardsHandler;
 import handler.DoGameCommandsHandler;
+import handler.FinishTurnHandler;
 import handler.GetGameCommandsHandler;
 import handler.GetGameModelHandler;
 import handler.GetGamesHandler;
 import handler.JoinGameHandler;
 import handler.LoadGameHandler;
 import handler.LoginHandler;
+import handler.MaritimeTradeHandler;
+import handler.MonopolyHandler;
+import handler.MonumentHandler;
+import handler.OfferTradeHandler;
 import handler.RegisterHandler;
 import handler.ResetGameHandler;
+import handler.RoadBuildingHandler;
+import handler.RobPlayerHandler;
+import handler.RollHandler;
 import handler.SaveGameHandler;
+import handler.SendChatHandler;
+import handler.SoldierHandler;
+import handler.YearOfPlentyHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -38,7 +55,6 @@ public class Server {
     private HttpHandler loadGameHandler = new LoadGameHandler();
     private HttpHandler changeLogHandler = new ChangeLogHandler();
     
-    /*
     // moves
     private HttpHandler sendChatHandler = new SendChatHandler();
     private HttpHandler rollHandler = new RollHandler();
@@ -57,7 +73,7 @@ public class Server {
     private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
     private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler();
     private HttpHandler discardCardsHandler = new DiscardCardsHandler();
-    */
+
     
     private HttpServer server;
     
@@ -104,7 +120,6 @@ public class Server {
         server.createContext("/games/load", loadGameHandler);					// POST
         server.createContext("/util/changeLogLevel", changeLogHandler);			// POST
         
-        /*
         // moves
         server.createContext("/moves/sendChat", sendChatHandler);				// POST
         server.createContext("/moves/rollNumber", rollHandler);					// POST
@@ -123,7 +138,7 @@ public class Server {
         server.createContext("/moves/acceptTrade", acceptTradeHandler);			// POST
         server.createContext("/moves/maritimeTrade", maritimeTradeHandler);		// POST
         server.createContext("/moves/discardCards", discardCardsHandler);		// POST
-        */
+        
     	
     	server.start();
     }

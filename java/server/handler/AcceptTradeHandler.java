@@ -2,16 +2,16 @@ package handler;
 
 import java.io.IOException;
 
-import user.IUserFacade;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import command.ICommandObject;
 
-public class LoginHandler implements HttpHandler {
+import facade.IModelFacade;
+
+public class AcceptTradeHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
-	private IUserFacade userFacade;
+	private IModelFacade modelFacade;
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {
