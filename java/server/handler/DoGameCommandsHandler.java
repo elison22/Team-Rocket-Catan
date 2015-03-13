@@ -12,6 +12,11 @@ public class DoGameCommandsHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
+	
+	public DoGameCommandsHandler(IModelFacade modelFacade) {
+		super();
+		this.modelFacade = modelFacade;
+	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {

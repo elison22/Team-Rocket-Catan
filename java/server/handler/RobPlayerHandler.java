@@ -12,6 +12,11 @@ public class RobPlayerHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
+	
+	public RobPlayerHandler(IModelFacade modelFacade) {
+		super();
+		this.modelFacade = modelFacade;
+	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {

@@ -33,46 +33,54 @@ import handler.YearOfPlentyHandler;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import user.IUserFacade;
+import user.UserFacade;
+
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
+import facade.IModelFacade;
+import facade.ModelFacade;
 
 public class Server {
 	
 	private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
     
+    private IModelFacade modelFacade = new ModelFacade();
+    private IUserFacade userFacade = new UserFacade();
     
-    private HttpHandler loginHandler = new LoginHandler();
-    private HttpHandler registerHandler = new RegisterHandler();
-    private HttpHandler getGameModelHandler = new GetGameModelHandler();
-    private HttpHandler resetGameHandler = new ResetGameHandler();
-    private HttpHandler getGameCommandsHandler = new GetGameCommandsHandler();
-    private HttpHandler doGameCommandsHandler = new DoGameCommandsHandler();
-    private HttpHandler getGamesHandler = new GetGamesHandler();
-    private HttpHandler createGameHandler = new CreateGameHandler();
-    private HttpHandler joinGameHandler = new JoinGameHandler();
-    private HttpHandler saveGameHandler = new SaveGameHandler();
-    private HttpHandler loadGameHandler = new LoadGameHandler();
-    private HttpHandler changeLogHandler = new ChangeLogHandler();
+    private HttpHandler loginHandler = new LoginHandler(userFacade);
+    private HttpHandler registerHandler = new RegisterHandler(userFacade);
+    private HttpHandler getGameModelHandler = new GetGameModelHandler(modelFacade);
+    private HttpHandler resetGameHandler = new ResetGameHandler(modelFacade);
+    private HttpHandler getGameCommandsHandler = new GetGameCommandsHandler(modelFacade);
+    private HttpHandler doGameCommandsHandler = new DoGameCommandsHandler(modelFacade);
+    private HttpHandler getGamesHandler = new GetGamesHandler(modelFacade);
+    private HttpHandler createGameHandler = new CreateGameHandler(modelFacade);
+    private HttpHandler joinGameHandler = new JoinGameHandler(modelFacade);
+    private HttpHandler saveGameHandler = new SaveGameHandler(modelFacade);
+    private HttpHandler loadGameHandler = new LoadGameHandler(modelFacade);
+    private HttpHandler changeLogHandler = new ChangeLogHandler(modelFacade);
     
     // moves
-    private HttpHandler sendChatHandler = new SendChatHandler();
-    private HttpHandler rollHandler = new RollHandler();
-    private HttpHandler robPlayerHandler = new RobPlayerHandler();
-    private HttpHandler finishTurnHandler = new FinishTurnHandler();
-    private HttpHandler buyDevCardHandler = new BuyDevCardHandler();
-    private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler();
-    private HttpHandler roadBuildingHandler = new RoadBuildingHandler();
-    private HttpHandler soldierHandler = new SoldierHandler();
-    private HttpHandler monopolyHandler = new MonopolyHandler();
-    private HttpHandler monumentHandler = new MonumentHandler();
-    private HttpHandler buildRoadHandler = new BuildRoadHandler();
-    private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
-    private HttpHandler buildCityHandler = new BuildCityHandler();
-    private HttpHandler offerTradeHandler = new OfferTradeHandler();
-    private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
-    private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler();
-    private HttpHandler discardCardsHandler = new DiscardCardsHandler();
+    private HttpHandler sendChatHandler = new SendChatHandler(modelFacade);
+    private HttpHandler rollHandler = new RollHandler(modelFacade);
+    private HttpHandler robPlayerHandler = new RobPlayerHandler(modelFacade);
+    private HttpHandler finishTurnHandler = new FinishTurnHandler(modelFacade);
+    private HttpHandler buyDevCardHandler = new BuyDevCardHandler(modelFacade);
+    private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler(modelFacade);
+    private HttpHandler roadBuildingHandler = new RoadBuildingHandler(modelFacade);
+    private HttpHandler soldierHandler = new SoldierHandler(modelFacade);
+    private HttpHandler monopolyHandler = new MonopolyHandler(modelFacade);
+    private HttpHandler monumentHandler = new MonumentHandler(modelFacade);
+    private HttpHandler buildRoadHandler = new BuildRoadHandler(modelFacade);
+    private HttpHandler buildSettlementHandler = new BuildSettlementHandler(modelFacade);
+    private HttpHandler buildCityHandler = new BuildCityHandler(modelFacade);
+    private HttpHandler offerTradeHandler = new OfferTradeHandler(modelFacade);
+    private HttpHandler acceptTradeHandler = new AcceptTradeHandler(modelFacade);
+    private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler(modelFacade);
+    private HttpHandler discardCardsHandler = new DiscardCardsHandler(modelFacade);
 
     
     private HttpServer server;
@@ -85,15 +93,7 @@ public class Server {
     	
     	// initialize server facade here
     	// initialize user facade here
-    	/*
-    	try {
-            IModelFacade.initialize();
-            IUserFacade.initialize();
-        } catch (DatabaseException e) {
-            
-            return;
-        }
-        */
+    	IModelFacade modelFacade = new ModelFacade();
     	
     	try {
             if (port == null)

@@ -12,6 +12,11 @@ public class RoadBuildingHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
+	
+	public RoadBuildingHandler(IModelFacade modelFacade) {
+		super();
+		this.modelFacade = modelFacade;
+	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {

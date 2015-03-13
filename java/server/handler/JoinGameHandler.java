@@ -12,6 +12,11 @@ public class JoinGameHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
+	
+	public JoinGameHandler(IModelFacade modelFacade) {
+		super();
+		this.modelFacade = modelFacade;
+	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {
