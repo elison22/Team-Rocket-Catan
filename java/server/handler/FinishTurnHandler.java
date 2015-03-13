@@ -12,6 +12,11 @@ public class FinishTurnHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
+	
+	public FinishTurnHandler(IModelFacade modelFacade) {
+		super();
+		this.modelFacade = modelFacade;
+	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {

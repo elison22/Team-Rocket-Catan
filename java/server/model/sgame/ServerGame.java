@@ -146,7 +146,108 @@ public class ServerGame {
 	public boolean canPlayerTrade(int playerIndex) {
 		return turnTracker.canPlayerTrade(playerIndex);
 	}
-
+	
+	/**
+	 * Builds a road for a player at the given location
+	 * @param playerIndex
+	 * @param location
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doBuildRoad(int playerIndex, EdgeLocation location)
+	{
+		return true;
+	}
+	
+	/**
+	 * Moves the robber and robs a player
+	 * @param robber index of player robbing
+	 * @param robbee index of player being robbed
+	 * @param location
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doPlaceRobber(int robber, int robbee, HexLocation location)
+	{
+		return true;
+	}
+	
+	/**
+	 * Buys a development card for the player
+	 * @param playerIndex
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doBuyDevCard(int playerIndex)
+	{
+		return true;
+	}
+	
+	/**
+	 * Rewards resources or starts discard phase based on the number rolled
+	 * @param playerIndex
+	 * @param numberRolled
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doRoll(int playerIndex, int numberRolled)
+	{
+		return true;
+	}
+	
+	/**
+	 * Builds a settlement for the player at the given location
+	 * @param playerIndex
+	 * @param location
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doBuildSettlement(int playerIndex, VertexLocation location)
+	{
+		return true;
+	}
+	
+	/**
+	 * Builds a city for the player at the given location 
+	 * @param playerIndex
+	 * @param location
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doBuildCity(int playerIndex, VertexLocation location)
+	{
+		return true;
+	}
+	
+	/**
+	 * Completes a maritime trade for the given player with the resources stored in the ServerTradeOffer
+	 * @param playerIndex
+	 * @param tradeOffer
+	 * @return true if valid and successful, else false
+	 */
+	public boolean doMaritimeTrade(int playerIndex, ServerTradeOffer tradeOffer)
+	{
+		return true;
+	}
+	
+	/**
+	 * Sends an offer of a trade to the receiving player with the resources stored in the ServerTradeOffer
+	 * @param offerer
+	 * @param receiver
+	 * @param tradeOffer
+	 * @return
+	 */
+	public boolean sendDomesticTradeOffer(int offerer, int receiver, ServerTradeOffer tradeOffer)
+	{
+		return true;
+	}
+	
+	/**
+	 * Changes resources listed in the ServerTradeOffer between the offerer and receiver
+	 * @param offerer
+	 * @param receiver
+	 * @param tradeOffer
+	 * @return
+	 */
+	public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
+	{
+		return true;
+	}
+	
 	/**
 	 * Validates that game is in the correct game state, and the player owns and has not yet played the dev card 
 	 * @param playerId	index of the player who wants to play Dev Card
@@ -205,7 +306,11 @@ public class ServerGame {
     	return false;
     }
     
-    // Checks to see if the gui should allow a player to build a road or not.
+    /**
+     *  Checks to see if the gui should allow a player to build a road or not.
+     * @param playerIndex
+     * @return
+     */
     public boolean canBuildRoad(int playerIndex) {
     	return turnTracker.canPlayerBuildRoadSettlement(playerIndex) &&
     		   playerList.get(playerIndex).canBuildRoad();
@@ -229,7 +334,13 @@ public class ServerGame {
     	}
     	return false;
     }
-
+	/**
+	 * Checks to see if the player can build the second road of the RoadBuilding card
+	 * @param first
+	 * @param second
+	 * @param playerID
+	 * @return
+	 */
     public boolean canBuildSecondRoad(EdgeLocation first, EdgeLocation second, int playerID) {
         try {
             return map.canBuildSecondRoad(first, second, playerID);
@@ -238,7 +349,12 @@ public class ServerGame {
         }
         return false;
     }
-
+    /**
+     * Checks to see if the player picked a valid location for his initial roads
+     * @param playerId
+     * @param location
+     * @return
+     */
     public boolean canBuildInitRoad(int playerId, EdgeLocation location) {
         //This will only be called during the setup rounds so the player doesn't need to check if
         //it can build a road. It is assumed it has enough road pieces and they are free to place.
@@ -253,7 +369,11 @@ public class ServerGame {
         return false;
     }
     
-    // Checks to see if the gui should allow a player to build a settlement or not.
+    /**
+     *  Checks to see if the gui should allow a player to build a settlement or not.
+     * @param playerIndex
+     * @return
+     */
     public boolean canBuildSettlement(int playerIndex) {
     	return turnTracker.canPlayerBuildRoadSettlement(playerIndex) &&
     		   playerList.get(playerIndex).canBuildSettlement();
@@ -278,7 +398,12 @@ public class ServerGame {
         }
         return false;
     }
-
+    /**
+     * Checks to see if the player picked a valid location for his initial settlement
+     * @param playerId
+     * @param location
+     * @return
+     */
     public boolean canBuildInitSettlement(int playerId, VertexLocation location) {
         //This will only be called during the setup rounds so the player doesn't need to check if
         //it can build a settlement. It is assumed it has enough settlement pieces and they are free to place.
@@ -294,7 +419,11 @@ public class ServerGame {
     }
     
     
-    // Checks to see if the gui should allow a player to build a city or not.
+    /**
+     *  Checks to see if the gui should allow a player to build a city or not.
+     * @param playerIndex
+     * @return
+     */
     public boolean canBuildCity(int playerIndex) {
     	return turnTracker.canPlayerBuild(playerIndex) &&
     		   playerList.get(playerIndex).canBuildCity();

@@ -12,6 +12,11 @@ public class LoginHandler implements HttpHandler {
 	
 	private ICommandObject commandObject;
 	private IUserFacade userFacade;
+	
+	public LoginHandler(IUserFacade userFacade) {
+		super();
+		this.userFacade = userFacade;
+	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {
