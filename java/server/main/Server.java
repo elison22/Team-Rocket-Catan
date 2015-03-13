@@ -1,8 +1,22 @@
 package main;
 
+import handler.ChangeLogHandler;
+import handler.CreateGameHandler;
+import handler.DoGameCommandsHandler;
+import handler.GetGameCommandsHandler;
+import handler.GetGameModelHandler;
+import handler.GetGamesHandler;
+import handler.JoinGameHandler;
+import handler.LoadGameHandler;
+import handler.LoginHandler;
+import handler.RegisterHandler;
+import handler.ResetGameHandler;
+import handler.SaveGameHandler;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class Server {
@@ -10,7 +24,7 @@ public class Server {
 	private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
     
-    /*
+    
     private HttpHandler loginHandler = new LoginHandler();
     private HttpHandler registerHandler = new RegisterHandler();
     private HttpHandler getGameModelHandler = new GetGameModelHandler();
@@ -24,6 +38,7 @@ public class Server {
     private HttpHandler loadGameHandler = new LoadGameHandler();
     private HttpHandler changeLogHandler = new ChangeLogHandler();
     
+    /*
     // moves
     private HttpHandler sendChatHandler = new SendChatHandler();
     private HttpHandler rollHandler = new RollHandler();
@@ -76,7 +91,7 @@ public class Server {
     	
     	server.setExecutor(null);
     	
-    	/*server.createContext("/user/login", loginHandler);					// POST
+    	server.createContext("/user/login", loginHandler);						// POST
         server.createContext("/user/register", registerHandler);				// POST
         server.createContext("/game/model", getGameModelHandler);				// GET
         server.createContext("/game/reset", resetGameHandler);					// POST
@@ -89,6 +104,7 @@ public class Server {
         server.createContext("/games/load", loadGameHandler);					// POST
         server.createContext("/util/changeLogLevel", changeLogHandler);			// POST
         
+        /*
         // moves
         server.createContext("/moves/sendChat", sendChatHandler);				// POST
         server.createContext("/moves/rollNumber", rollHandler);					// POST
