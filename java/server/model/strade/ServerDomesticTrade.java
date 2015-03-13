@@ -35,5 +35,12 @@ public class ServerDomesticTrade {
     public HashMap<ResourceType,Integer> getOffer() {
         return offer;
     }
-
+    
+    /**Performs the specified domestic trade.
+     * 
+     * @return True if successful, false if otherwise.
+     */
+    public boolean doDomesticTrade() {
+    	return false;
+    }
 }

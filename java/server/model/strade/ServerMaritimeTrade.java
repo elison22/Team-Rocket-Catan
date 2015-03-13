@@ -54,5 +54,12 @@ public class ServerMaritimeTrade {
     public ResourceType getResourceToReceive() {
         return resourceToReceive;
     }
-
+    
+    /**Performs the maritime trade.
+     * 
+     * @return True if maritime trade was successful, false if otherwise.
+     */
+    public boolean doMaritimeTrade() {
+    	return false;
+    }
 }
