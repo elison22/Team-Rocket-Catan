@@ -16,7 +16,7 @@ public class Server {
     private HttpHandler getGameModelHandler = new GetGameModelHandler();
     private HttpHandler resetGameHandler = new ResetGameHandler();
     private HttpHandler getGameCommandsHandler = new GetGameCommandsHandler();
-    private HttpHandler doGameCommandsHandler = new DoIdGameCommandsHandler();
+    private HttpHandler doGameCommandsHandler = new DoGameCommandsHandler();
     private HttpHandler getGamesHandler = new GetGamesHandler();
     private HttpHandler createGameHandler = new CreateGameHandler();
     private HttpHandler joinGameHandler = new JoinGameHandler();
