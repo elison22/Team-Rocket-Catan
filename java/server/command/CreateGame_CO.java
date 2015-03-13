@@ -11,22 +11,19 @@ import shared.dto.CreateGame_Params;
 @SuppressWarnings("unused")
 public class CreateGame_CO implements ICommandObject {
 	
-	private IModelFacade modelFacade;
 	private CreateGame_Params params;
 	
 	/**
 	 * @param modelFacade The implementation of IModelFacde to be used.
 	 * @param params The parameters required to create the game.
 	 */
-	public CreateGame_CO(IModelFacade modelFacade, CreateGame_Params params) {
-		this.modelFacade = modelFacade;
+	public CreateGame_CO(CreateGame_Params params) {
 		this.params = params;
 	}
 
 	@Override
-	public Object execute() {
+	public void execute() {
 		// Request the modelfacade to make a new game with the given params
-		return null;
 	}
 
 }

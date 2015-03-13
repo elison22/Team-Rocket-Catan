@@ -11,7 +11,6 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class YearOfPlenty_CO implements ICommandObject {
 
-	private IModelFacade modelFacade;
 	private int gameId;
 	private YearOfPlenty_Params params;
 	
@@ -20,16 +19,13 @@ public class YearOfPlenty_CO implements ICommandObject {
 	 * @param gameId Id of the game to play a year of plenty card.
 	 * @param params Parameters needed to play a Year of Plenty card.
 	 */
-	public YearOfPlenty_CO(IModelFacade modelFacade, int gameId, YearOfPlenty_Params params) {
-		this.modelFacade = modelFacade;
+	public YearOfPlenty_CO(int gameId, YearOfPlenty_Params params) {
 		this.gameId = gameId;
 		this.params = params;
 	}
 
 	@Override
-	public Object execute() {
-		// TODO Auto-generated method stub
-		return null;
+	public void execute() {
 	}
 
 }

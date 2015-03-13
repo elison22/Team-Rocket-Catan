@@ -10,22 +10,17 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class SendChat_CO implements ICommandObject {
 	
-	private IModelFacade modelFacade;
 	private int gameId;
 	
 	/**
-	 * @param modelFacade The implementation of IModelFacde to be used.
 	 * @param gameId The id of the game where the chat is being sent in.
 	 */
-	public SendChat_CO(IModelFacade modelFacade, int gameId) {
-		this.modelFacade = modelFacade;
+	public SendChat_CO(int gameId) {
 		this.gameId = gameId;
 	}
 
 	@Override
-	public Object execute() {
-		// TODO Auto-generated method stub
-		return null;
+	public void execute() {
 	}
 
 }

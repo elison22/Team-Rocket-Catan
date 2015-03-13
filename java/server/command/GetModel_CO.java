@@ -11,25 +11,21 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class GetModel_CO implements ICommandObject {
 	
-	private IModelFacade modelFacade;
 	private int version;
 	private int gameId;
 	
 	/**
-	 * @param modelFacade The implementation of IModelFacde to be used.
 	 * @Param gameId The game's id.
 	 * @param version The version number to be compared to the server's version
 	 * number for the specified game.
 	 */
-	public GetModel_CO(IModelFacade modelFacade, int gameId, int version) {
-		this.modelFacade = modelFacade;
+	public GetModel_CO(int gameId, int version) {
 		this.gameId = gameId;
 		this.version = version;
 	}
 
 	@Override
-	public Object execute() {
-		return null;
+	public void execute() {
 	}
 
 }

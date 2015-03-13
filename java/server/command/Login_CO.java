@@ -12,23 +12,18 @@ import user.IUserFacade;
 @SuppressWarnings("unused")
 public class Login_CO implements ICommandObject {
 	
-	private IUserFacade userFacade;
 	private Login_Params params;
 
 	/**
-	 * @param userFacade Implementation of IUserfacade to be used.
 	 * @param params Parameters needed to log a user in.
 	 */
-	public Login_CO(IUserFacade userFacade, Login_Params params) {
+	public Login_CO(Login_Params params) {
 		super();
-		this.userFacade = userFacade;
 		this.params = params;
 	}
 
 	@Override
-	public Object execute() {
-		// TODO Auto-generated method stub
-		return null;
+	public void execute() {
 	}
 
 }

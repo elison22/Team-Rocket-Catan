@@ -11,22 +11,19 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class GetCommands_CO implements ICommandObject {
 	
-	private IModelFacade modelFacade;
 	private int gameId;
 	
 	/**
 	 * @param modelFacade The implementation of IModelFacde to be used.
 	 * @param gameId The id of the game whose commands are needed.
 	 */
-	public GetCommands_CO(IModelFacade modelFacade, int gameId) {
-		this.modelFacade = modelFacade;
+	public GetCommands_CO(int gameId) {
 		this.gameId = gameId;
 	}
 
 	@Override
-	public Object execute() {
+	public void execute() {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

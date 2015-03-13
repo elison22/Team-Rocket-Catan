@@ -11,7 +11,6 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class Monopoly_CO implements ICommandObject {
 	
-	private IModelFacade modelFacade;
 	private int gameId;
 	private Monopoly_Params params;
 
@@ -20,18 +19,16 @@ public class Monopoly_CO implements ICommandObject {
 	 * @param gameId Id of the game where the monopoly card is to be played.
 	 * @param params Parameters needed for a player to play the monopoly card.
 	 */
-	public Monopoly_CO(IModelFacade modelFacade, int gameId,
+	public Monopoly_CO(int gameId,
 			Monopoly_Params params) {
 		super();
-		this.modelFacade = modelFacade;
 		this.gameId = gameId;
 		this.params = params;
 	}
 
 	@Override
-	public Object execute() {
+	public void execute() {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

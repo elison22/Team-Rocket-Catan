@@ -13,21 +13,17 @@ import shared.dto.JoinGame_Params;
 @SuppressWarnings("unused")
 public class JoinGame_CO implements ICommandObject {
 	
-	private IModelFacade modelFacade;
-	JoinGame_Params params;
+	private JoinGame_Params params;
 	
 	/**
-	 * @param modelFacade The implementation of IModelFacde to be used.
 	 * @param params The parameters needed to join a game.
 	 */
-	public JoinGame_CO(IModelFacade modelFacade, JoinGame_Params params) {
-		this.modelFacade = modelFacade;
+	public JoinGame_CO(JoinGame_Params params) {
 		this.params = params;
 	}
 
 	@Override
-	public Object execute() {
-		return null;
+	public void execute() {
 	}
 
 }
