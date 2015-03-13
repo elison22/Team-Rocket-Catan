@@ -1,5 +1,12 @@
 package facade;
 
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+
+import java.util.List;
+
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 
  * reading from or modifying a game. Every operation from the swagger page under the 'game,'
@@ -122,160 +129,214 @@ public class ModelFacade implements IModelFacade {
 
 	/**
 	 * Creates a new chat message for a specific player
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's sending this chat message
+     * @param message The chat message
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String sendChat() {
+	public String sendChat(int gameID, int playerIdx, String message) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Rolls the dice for a player's turn
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's sending this command
+     * @param numRolled The number that was rolled (2-12)
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String rollNumber() {
+	public String rollNumber(int gameID, int playerIdx, int numRolled) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Allows a player to rob another after placing the robber on a tile they own
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's doing the robbing
+     * @param victimIdx The index of the player to rob
+     * @param location The new location of the robber
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String robPlayer() {
+	public String robPlayer(int gameID, int playerIdx, int victimIdx, HexLocation location) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Ends a player's turn
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's sending this command
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String finishTurn() {
+	public String finishTurn(int gameID, int playerIdx) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Allows a player to buy a development card if there are any left
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's buying this dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buyDevCard() {
+	public String buyDevCard(int gameID, int playerIdx) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes the effects of playing a year of plenty dev card
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's playing this dev card
+     * @param resource1 first resource
+     * @param resource2 second resource
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doYearOfPlenty() {
+	public String doYearOfPlenty(int gameID, int playerIdx, ResourceType resource1, ResourceType resource2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes the effects of playing a road building dev card
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's playing this dev card
+     * @param road1 location of the first road
+     * @param road2 location of the second road
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doRoadBuilding() {
+	public String doRoadBuilding(int gameID, int playerIdx, EdgeLocation road1, EdgeLocation road2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes the effects of playing a soldier dev card
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's playing this dev card
+     * @param victimIdx The index of the player to rob
+     * @param location The new location of the robber
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doSoldier() {
+	public String doSoldier(int gameID, int playerIdx, int victimIdx, HexLocation location) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes the effects of playing a monopoly dev card
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's playing this dev card
+     * @param resource Resource to steal with dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doMonopoly() {
+	public String doMonopoly(int gameID, int playerIdx, ResourceType resource) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes the effects of playing a monument dev card
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's playing this dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doMonument() {
+	public String doMonument(int gameID, int playerIdx) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Allows a player do build a road
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's placing the road
+     * @param location The location of the new road
+     * @param free Whether this is placed for free
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildRoad() {
+	public String buildRoad(int gameID, int playerIdx, EdgeLocation location, boolean free) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Allows a player to build a settlement
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's placing this settlement
+     * @param location The location of the new settlement
+     * @param free Whether this is placed for free
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildSettlement() {
+	public String buildSettlement(int gameID, int playerIdx, VertexLocation location, boolean free) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Allows a player to build a city
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's placing this city
+     * @param location The location of the new city
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildCity() {
+	public String buildCity(int gameID, int playerIdx, VertexLocation location) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Allows a player to offer a trade to another player
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's sending the offer
+     * @param receiverIdx Who you're offering the trade to
+     * @param offer What you get (+) and what you give (-)
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String offerTrade() {
+	public String offerTrade(int gameID, int playerIdx, int receiverIdx, List<Integer> offer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes a trade that was previously offered between two players
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who is accepting/rejecting the trade
+     * @param tradeAccepted Whether the trade is accepted or not
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String acceptTrade() {
+	public String acceptTrade(int gameID, int playerIdx, boolean tradeAccepted) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Executes a maritime trade
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's doing the trading
+     * @param ratio The ratio of the trade being performed (ie. 3 for 3:1 trade)
+     * @param input The type of resource being given
+     * @param output The type of resource being received
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String maritimeTrade() {
+	public String maritimeTrade(int gameID, int playerIdx, int ratio, ResourceType input, ResourceType output) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -283,10 +344,13 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Removes resource cards from a player's hand if they have more than
 	 * seven cards when a seven is rolled.
+     * @param gameID The ID of the game that has been requested
+     * @param playerIdx Who's discarding
+     * @param discardedResources A list of the resources being discarded
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String discardCards() {
+	public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources) {
 		// TODO Auto-generated method stub
 		return null;
 	}

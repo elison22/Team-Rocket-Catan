@@ -1,6 +1,13 @@
 package facade;
 
 
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+
+import java.util.List;
+
 /**
  *
  */
@@ -24,37 +31,37 @@ public interface IModelFacade {
 
     public String executeGameCommands(int gameID, String gameCommands);
 
-    public String sendChat();
+    public String sendChat(int gameID, int playerIdx, String message);
 
-    public String rollNumber();
+    public String rollNumber(int gameID, int playerIdx, int numRolled);
 
-    public String robPlayer();
+    public String robPlayer(int gameID, int playerIdx, int victimIdx, HexLocation location);
 
-    public String finishTurn();
+    public String finishTurn(int gameID, int playerIdx);
 
-    public String buyDevCard();
+    public String buyDevCard(int gameID, int playerIdx);
 
-    public String doYearOfPlenty();
+    public String doYearOfPlenty(int gameID, int playerIdx, ResourceType resource1, ResourceType resource2);
 
-    public String doRoadBuilding();
+    public String doRoadBuilding(int gameID, int playerIdx, EdgeLocation road1, EdgeLocation road2);
 
-    public String doSoldier();
+    public String doSoldier(int gameID, int playerIdx, int victimIdx, HexLocation location);
 
-    public String doMonopoly();
+    public String doMonopoly(int gameID, int playerIdx, ResourceType resource);
 
-    public String doMonument();
+    public String doMonument(int gameID, int playerIdx);
 
-    public String buildRoad();
+    public String buildRoad(int gameID, int playerIdx, EdgeLocation location, boolean free);
 
-    public String buildSettlement();
+    public String buildSettlement(int gameID, int playerIdx, VertexLocation location, boolean free);
 
-    public String buildCity();
+    public String buildCity(int gameID, int playerIdx, VertexLocation location);
 
-    public String offerTrade();
+    public String offerTrade(int gameID, int playerIdx, int receiverIdx, List<Integer> offer);
 
-    public String acceptTrade();
+    public String acceptTrade(int gameID, int playerIdx, boolean tradeAccepted);
 
-    public String maritimeTrade();
+    public String maritimeTrade(int gameID, int playerIdx, int ratio, ResourceType input, ResourceType output);
 
-    public String discardCards();
+    public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources);
 }
