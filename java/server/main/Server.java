@@ -9,10 +9,14 @@ public class Server {
 	
 	private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
+    
     /*
     private HttpHandler loginHandler = new LoginHandler();
     private HttpHandler registerHandler = new RegisterHandler();
     private HttpHandler getGameModelHandler = new GetGameModelHandler();
+    private HttpHandler resetGameHandler = new ResetGameHandler();
+    private HttpHandler getGameCommandsHandler = new GetGameCommandsHandler();
+    private HttpHandler doGameCommandsHandler = new DoIdGameCommandsHandler();
     private HttpHandler getGamesHandler = new GetGamesHandler();
     private HttpHandler createGameHandler = new CreateGameHandler();
     private HttpHandler joinGameHandler = new JoinGameHandler();
@@ -50,6 +54,15 @@ public class Server {
     	
     	// initialize server facade here
     	// initialize user facade here
+    	/*
+    	try {
+            IModelFacade.initialize();
+            IUserFacade.initialize();
+        } catch (DatabaseException e) {
+            
+            return;
+        }
+        */
     	
     	try {
             if (port == null)
@@ -66,6 +79,9 @@ public class Server {
     	/*server.createContext("/user/login", loginHandler);					// POST
         server.createContext("/user/register", registerHandler);				// POST
         server.createContext("/game/model", getGameModelHandler);				// GET
+        server.createContext("/game/reset", resetGameHandler);					// POST
+        server.createContext("/game/commands", getGameCommandsHandler);			// GET
+        server.createContext("/game/commands", doGameCommandsHandler);			// POST
         server.createContext("/games/list", getGamesHandler);					// GET
         server.createContext("/games/create", createGameHandler);				// POST
         server.createContext("/games/join", joinGameHandler);					// POST
@@ -82,7 +98,7 @@ public class Server {
         server.createContext("/moves/Year_of_Plenty", yearOfPlentyHandler);		// POST
         server.createContext("/moves/Road_Building", roadBuildingHandler);		// POST
         server.createContext("/moves/Soldier", soldierHandler);					// POST
-        server.createContext("/moves/Monopoly", monopolyHandler);				// POST
+        server.createContext("/moves/Monopoly", monopolyHandler);				// POST		not listed in spec?
         server.createContext("/moves/Monument", monumentHandler);				// POST
         server.createContext("/moves/buildRoad", buildRoadHandler);				// POST
         server.createContext("/moves/buildSettlement", buildSettlementHandler);	// POST
