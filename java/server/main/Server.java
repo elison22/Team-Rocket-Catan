@@ -93,7 +93,6 @@ public class Server {
     	
     	// initialize server facade here
     	// initialize user facade here
-    	IModelFacade modelFacade = new ModelFacade();
     	
     	try {
             if (port == null)
