@@ -1,5 +1,7 @@
 package user;
 
+import user.model.UserManager;
+
 /**
  * @author Chad
  *
