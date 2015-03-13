@@ -27,7 +27,7 @@ public class ServerHexTile {
      * @param type The HexType for this HexTile.
      * @param diceNum An integer 0-12 indicating the value of the dice roll token. diceNum may
      *                be set to zero only in the case of HexType as Desert.
-     * @throws BoardException Thrown when diceNum is outside the range 0-12.
+     * @throws ServerBoardException Thrown when diceNum is outside the range 0-12.
      */
     public ServerHexTile(HexType type, int diceNum) throws ServerBoardException {
         this.type = type;
@@ -37,7 +37,7 @@ public class ServerHexTile {
     /**
      * Setter for the diceNum field, which checks to make sure the diceNum param is valid.
      * @param diceNum An integer 2-12 inclusive.
-     * @throws BoardException Thrown when diceNum is outside the range 0-12.
+     * @throws ServerBoardException Thrown when diceNum is outside the range 0-12.
      */
     public void setDiceNum(int diceNum) throws ServerBoardException {
         if(diceNum < 0 || diceNum > 12) throw new ServerBoardException("diceNum param outside the range 0-12");

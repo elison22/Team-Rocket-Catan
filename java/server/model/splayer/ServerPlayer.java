@@ -231,6 +231,47 @@ public class ServerPlayer {
         return false;
     }
 
+    /**
+     * Increments the resource count for the given type.
+     * @param type The resource to take.
+     */
+    public void incResource(ResourceType type){}
+
+    /**
+     * Decrements the resource count for the given type.
+     */
+    public void decResource(ResourceType type){}
+
+    /**
+     * Decrements the road count. Also decrements the necessary resources if
+     * isFree is false.
+     * @param isFree Whether or not the road is free.
+     */
+    public void doBuildRoad(boolean isFree){}
+
+    /**
+     * Decrements the settlement count. Also decrements the necessary resources.
+     */
+    public void doBuildSettlement(){}
+
+    /**
+     * Decrements the city count. Also decrements the necessary resources.
+     */
+    public void doBuildCity(){}
+
+    /**
+     * Gives the player a dev card.
+     * @param type The dev card type.
+     */
+    public void addDevCard(DevCardType type){}
+
+    /**
+     * Takes a dev card from the player. If it's a soldier, it also
+     * increments their soldierDevs.
+     * @return The dev card type.
+     */
+    public void playDevCard(DevCardType type){}
+
     public String getColor()
     {
         return color;

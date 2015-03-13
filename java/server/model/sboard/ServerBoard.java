@@ -6,11 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
-import serializer.json.JsonHex;
-import serializer.json.JsonMap;
-import serializer.json.JsonPort;
-import serializer.json.JsonRoad;
-import serializer.json.JsonVertexObject;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -162,6 +157,7 @@ public class ServerBoard {
      * @throws ServerBoardException Thrown if newMap is null or if a HexTile's diceNum
      * is outside the range 0 to 12.
      */
+    /*
     public ServerBoard(JsonMap newMap) throws ServerBoardException {
 
         if (newMap == null) throw new ServerBoardException("Param newMap cannot be null.");
@@ -219,7 +215,7 @@ public class ServerBoard {
         // Update the robber
         robber = new HexLocation(newMap.getRobber().getX(), newMap.getRobber().getY());
     }
-
+*/
     /**
      * Determines whether or not the robber can be moved to the location
      * represented by newLocation.
