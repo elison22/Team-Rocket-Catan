@@ -12,7 +12,6 @@ import facade.IModelFacade;
 
 public class RegisterHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IUserFacade userFacade;
 	
 	public RegisterHandler(IUserFacade userFacade) {

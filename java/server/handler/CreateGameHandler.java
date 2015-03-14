@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class CreateGameHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public CreateGameHandler(IModelFacade modelFacade) {

@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class DiscardCardsHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public DiscardCardsHandler(IModelFacade modelFacade) {

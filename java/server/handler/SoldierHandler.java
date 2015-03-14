@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class SoldierHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public SoldierHandler(IModelFacade modelFacade) {

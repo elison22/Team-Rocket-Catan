@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class ChangeLogHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public ChangeLogHandler(IModelFacade modelFacade) {

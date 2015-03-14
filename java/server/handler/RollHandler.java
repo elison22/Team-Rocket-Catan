@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class RollHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public RollHandler(IModelFacade modelFacade) {

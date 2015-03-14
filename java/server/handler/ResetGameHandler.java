@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class ResetGameHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public ResetGameHandler(IModelFacade modelFacade) {

@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class BuildSettlementHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public BuildSettlementHandler(IModelFacade modelFacade) {

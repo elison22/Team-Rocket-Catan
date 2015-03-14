@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class FinishTurnHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public FinishTurnHandler(IModelFacade modelFacade) {

@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class SendChatHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public SendChatHandler(IModelFacade modelFacade) {

@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class MonopolyHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public MonopolyHandler(IModelFacade modelFacade) {

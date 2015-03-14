@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class OfferTradeHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public OfferTradeHandler(IModelFacade modelFacade) {

@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class MaritimeTradeHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public MaritimeTradeHandler(IModelFacade modelFacade) {

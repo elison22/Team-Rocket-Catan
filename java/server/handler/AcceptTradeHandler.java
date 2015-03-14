@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class AcceptTradeHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public AcceptTradeHandler(IModelFacade modelFacade) {

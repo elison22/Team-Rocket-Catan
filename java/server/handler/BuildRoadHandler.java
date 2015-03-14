@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class BuildRoadHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public BuildRoadHandler(IModelFacade modelFacade) {

@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class RobPlayerHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public RobPlayerHandler(IModelFacade modelFacade) {

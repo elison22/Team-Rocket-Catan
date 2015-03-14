@@ -10,7 +10,6 @@ import command.ICommandObject;
 
 public class LoginHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IUserFacade userFacade;
 	
 	public LoginHandler(IUserFacade userFacade) {

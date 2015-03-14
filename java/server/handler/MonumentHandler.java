@@ -10,7 +10,6 @@ import facade.IModelFacade;
 
 public class MonumentHandler implements HttpHandler {
 	
-	private ICommandObject commandObject;
 	private IModelFacade modelFacade;
 	
 	public MonumentHandler(IModelFacade modelFacade) {
