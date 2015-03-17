@@ -111,7 +111,10 @@ public class Server {
     }
 
 	public static void main(String[] args) {
-		Integer i = new Integer(args[0]);
+		Integer i = null;
+		if(args.length > 0)
+			i = new Integer(args[0]);
+		
         new Server().run(i);
 	}
 
