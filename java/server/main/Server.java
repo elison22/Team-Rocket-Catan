@@ -28,6 +28,7 @@ import handler.RollHandler;
 import handler.SaveGameHandler;
 import handler.SendChatHandler;
 import handler.SoldierHandler;
+import handler.SwaggerHandler;
 import handler.YearOfPlentyHandler;
 
 import java.io.IOException;
@@ -47,42 +48,6 @@ public class Server {
 	private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
     
-    private IModelFacade modelFacade = new ModelFacade();
-    private IUserFacade userFacade = new UserFacade();
-    
-    private HttpHandler loginHandler = new LoginHandler(userFacade);
-    private HttpHandler registerHandler = new RegisterHandler(userFacade);
-    private HttpHandler getGameModelHandler = new GetGameModelHandler(modelFacade);
-    private HttpHandler resetGameHandler = new ResetGameHandler(modelFacade);
-    private HttpHandler getGameCommandsHandler = new GetGameCommandsHandler(modelFacade);
-    private HttpHandler doGameCommandsHandler = new DoGameCommandsHandler(modelFacade);
-    private HttpHandler getGamesHandler = new GetGamesHandler(modelFacade);
-    private HttpHandler createGameHandler = new CreateGameHandler(modelFacade);
-    private HttpHandler joinGameHandler = new JoinGameHandler(modelFacade);
-    private HttpHandler saveGameHandler = new SaveGameHandler(modelFacade);
-    private HttpHandler loadGameHandler = new LoadGameHandler(modelFacade);
-    private HttpHandler changeLogHandler = new ChangeLogHandler(modelFacade);
-    
-    // moves
-    private HttpHandler sendChatHandler = new SendChatHandler(modelFacade);
-    private HttpHandler rollHandler = new RollHandler(modelFacade);
-    private HttpHandler robPlayerHandler = new RobPlayerHandler(modelFacade);
-    private HttpHandler finishTurnHandler = new FinishTurnHandler(modelFacade);
-    private HttpHandler buyDevCardHandler = new BuyDevCardHandler(modelFacade);
-    private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler(modelFacade);
-    private HttpHandler roadBuildingHandler = new RoadBuildingHandler(modelFacade);
-    private HttpHandler soldierHandler = new SoldierHandler(modelFacade);
-    private HttpHandler monopolyHandler = new MonopolyHandler(modelFacade);
-    private HttpHandler monumentHandler = new MonumentHandler(modelFacade);
-    private HttpHandler buildRoadHandler = new BuildRoadHandler(modelFacade);
-    private HttpHandler buildSettlementHandler = new BuildSettlementHandler(modelFacade);
-    private HttpHandler buildCityHandler = new BuildCityHandler(modelFacade);
-    private HttpHandler offerTradeHandler = new OfferTradeHandler(modelFacade);
-    private HttpHandler acceptTradeHandler = new AcceptTradeHandler(modelFacade);
-    private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler(modelFacade);
-    private HttpHandler discardCardsHandler = new DiscardCardsHandler(modelFacade);
-
-    
     private HttpServer server;
     
     private Server() {
@@ -91,8 +56,8 @@ public class Server {
     
     private void run(Integer port) {
     	
-    	// initialize server facade here
-    	// initialize user facade here
+    	IModelFacade modelFacade = new ModelFacade();
+    	IUserFacade userFacade = new UserFacade();
     	
     	try {
             if (port == null)
@@ -100,44 +65,47 @@ public class Server {
             
             server = HttpServer.create(new InetSocketAddress(port), MAX_WAITING_CONNECTIONS);
         } catch (IOException e) {
-        	// handle server exception; return 400/500 error code
+        	System.out.println("Server was unable to start");
             return;
         }
     	
     	server.setExecutor(null);
     	
-    	server.createContext("/user/login", loginHandler);						// POST
-        server.createContext("/user/register", registerHandler);				// POST
-        server.createContext("/game/model", getGameModelHandler);				// GET
-        server.createContext("/game/reset", resetGameHandler);					// POST
-        server.createContext("/game/commands", getGameCommandsHandler);			// GET
-        server.createContext("/game/commands", doGameCommandsHandler);			// POST
-        server.createContext("/games/list", getGamesHandler);					// GET
-        server.createContext("/games/create", createGameHandler);				// POST
-        server.createContext("/games/join", joinGameHandler);					// POST
-        server.createContext("/games/save", saveGameHandler);					// POST
-        server.createContext("/games/load", loadGameHandler);					// POST
-        server.createContext("/util/changeLogLevel", changeLogHandler);			// POST
+    	server.createContext("/user/login", new LoginHandler(userFacade));							// POST
+        server.createContext("/user/register", new RegisterHandler(userFacade));					// POST
+        server.createContext("/game/model", new GetGameModelHandler(modelFacade));					// GET
+        server.createContext("/game/reset", new ResetGameHandler(modelFacade));						// POST
+        server.createContext("/game/commands", new GetGameCommandsHandler(modelFacade));			// GET
+        server.createContext("/game/commands", new DoGameCommandsHandler(modelFacade));				// POST
+        server.createContext("/games/list", new GetGamesHandler(modelFacade));						// GET
+        server.createContext("/games/create", new CreateGameHandler(modelFacade));					// POST
+        server.createContext("/games/join", new JoinGameHandler(modelFacade));						// POST
+        server.createContext("/games/save", new SaveGameHandler(modelFacade));						// POST
+        server.createContext("/games/load", new LoadGameHandler(modelFacade));						// POST
+        server.createContext("/util/changeLogLevel", new ChangeLogHandler(modelFacade));			// POST
         
         // moves
-        server.createContext("/moves/sendChat", sendChatHandler);				// POST
-        server.createContext("/moves/rollNumber", rollHandler);					// POST
-        server.createContext("/moves/robPlayer", robPlayerHandler);				// POST
-        server.createContext("/moves/finishTurn", finishTurnHandler);			// POST
-        server.createContext("/moves/buyDevCard", buyDevCardHandler);			// POST
-        server.createContext("/moves/Year_of_Plenty", yearOfPlentyHandler);		// POST
-        server.createContext("/moves/Road_Building", roadBuildingHandler);		// POST
-        server.createContext("/moves/Soldier", soldierHandler);					// POST
-        server.createContext("/moves/Monopoly", monopolyHandler);				// POST		not listed in spec?
-        server.createContext("/moves/Monument", monumentHandler);				// POST
-        server.createContext("/moves/buildRoad", buildRoadHandler);				// POST
-        server.createContext("/moves/buildSettlement", buildSettlementHandler);	// POST
-        server.createContext("/moves/buildCity", buildCityHandler);				// POST
-        server.createContext("/moves/offerTrade", offerTradeHandler);			// POST
-        server.createContext("/moves/acceptTrade", acceptTradeHandler);			// POST
-        server.createContext("/moves/maritimeTrade", maritimeTradeHandler);		// POST
-        server.createContext("/moves/discardCards", discardCardsHandler);		// POST
-        
+        server.createContext("/moves/sendChat", new SendChatHandler(modelFacade));					// POST
+        server.createContext("/moves/rollNumber", new RollHandler(modelFacade));					// POST
+        server.createContext("/moves/robPlayer", new RobPlayerHandler(modelFacade));				// POST
+        server.createContext("/moves/finishTurn", new FinishTurnHandler(modelFacade));				// POST
+        server.createContext("/moves/buyDevCard", new BuyDevCardHandler(modelFacade));				// POST
+        server.createContext("/moves/Year_of_Plenty", new YearOfPlentyHandler(modelFacade));		// POST
+        server.createContext("/moves/Road_Building", new RoadBuildingHandler(modelFacade));			// POST
+        server.createContext("/moves/Soldier", new SoldierHandler(modelFacade));					// POST
+        server.createContext("/moves/Monopoly", new MonopolyHandler(modelFacade));					// POST	
+        server.createContext("/moves/Monument", new MonumentHandler(modelFacade));					// POST
+        server.createContext("/moves/buildRoad", new BuildRoadHandler(modelFacade));				// POST
+        server.createContext("/moves/buildSettlement", new BuildSettlementHandler(modelFacade));	// POST
+        server.createContext("/moves/buildCity", new BuildCityHandler(modelFacade));				// POST
+        server.createContext("/moves/offerTrade", new OfferTradeHandler(modelFacade));				// POST
+        server.createContext("/moves/acceptTrade", new AcceptTradeHandler(modelFacade));			// POST
+        server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(modelFacade));		// POST
+        server.createContext("/moves/discardCards", new DiscardCardsHandler(modelFacade));			// POST
+
+        // swagger
+        server.createContext("/docs/api/data", new SwaggerHandler.JSONAppender(""));
+        server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));    
     	
     	server.start();
     }
