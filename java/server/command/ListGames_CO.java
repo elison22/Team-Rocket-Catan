@@ -12,6 +12,7 @@ import facade.IModelFacade;
 public class ListGames_CO implements ICommandObject {
 
 	@Override
-	public void execute() {
+	public boolean execute() {
+		return false;
 	}
 }

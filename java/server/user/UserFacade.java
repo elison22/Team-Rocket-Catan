@@ -1,5 +1,8 @@
 package user;
 
+import command.ICommandObject;
+import command.Login_CO;
+import shared.dto.*;
 import user.model.UserManager;
 
 /**
@@ -17,13 +20,13 @@ public class UserFacade implements IUserFacade {
 	}
 
 	@Override
-	public boolean login(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean login(Login_Params params) {
+		ICommandObject commandObject = new Login_CO(userManager, params);
+		return commandObject.execute();
 	}
 
 	@Override
-	public boolean register(String username, String password) {
+	public boolean register(Login_Params params) {
 		// TODO Auto-generated method stub
 		return false;
 	}

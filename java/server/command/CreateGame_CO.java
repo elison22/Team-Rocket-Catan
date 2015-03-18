@@ -22,8 +22,8 @@ public class CreateGame_CO implements ICommandObject {
 	}
 
 	@Override
-	public void execute() {
-		// Request the modelfacade to make a new game with the given params
+	public boolean execute() {
+		return false;
 	}
 
 }
