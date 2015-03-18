@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import command.ICommandObject;
 
+import command.ICommandObject;
 import facade.IModelFacade;
 
-public class RoadBuildingHandler implements HttpHandler {
+public class RoadBuildingHandler extends MovesHandler {
 	
 	private IModelFacade modelFacade;
 	

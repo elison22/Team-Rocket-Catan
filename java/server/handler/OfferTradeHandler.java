@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import command.ICommandObject;
 
+import command.ICommandObject;
 import facade.IModelFacade;
 
-public class OfferTradeHandler implements HttpHandler {
+public class OfferTradeHandler extends MovesHandler {
 	
 	private IModelFacade modelFacade;
 	

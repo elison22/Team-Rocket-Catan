@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpHandler;
 import command.ICommandObject;
 import facade.IModelFacade;
 
-public class ResetGameHandler implements HttpHandler {
+public class ResetGameHandler extends MovesHandler {
 	
 	private IModelFacade modelFacade;
 	

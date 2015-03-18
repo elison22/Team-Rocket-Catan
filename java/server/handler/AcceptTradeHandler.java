@@ -8,7 +8,7 @@ import command.ICommandObject;
 
 import facade.IModelFacade;
 
-public class AcceptTradeHandler implements HttpHandler {
+public class AcceptTradeHandler extends MovesHandler {
 	
 	private IModelFacade modelFacade;
 	

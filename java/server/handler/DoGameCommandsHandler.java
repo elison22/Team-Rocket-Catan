@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpHandler;
 import command.ICommandObject;
 import facade.IModelFacade;
 
-public class DoGameCommandsHandler implements HttpHandler {
+public class DoGameCommandsHandler extends MovesHandler {
 	
 	private IModelFacade modelFacade;
 	

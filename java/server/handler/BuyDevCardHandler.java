@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import command.ICommandObject;
 
+import command.ICommandObject;
 import facade.IModelFacade;
 
-public class BuyDevCardHandler implements HttpHandler {
+public class BuyDevCardHandler extends MovesHandler {
 	
 	private IModelFacade modelFacade;
 	
