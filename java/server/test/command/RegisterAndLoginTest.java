@@ -34,7 +34,7 @@ public class RegisterAndLoginTest {
 		
 		// Username and Password that's too long
 		assertFalse(userFacade.register(new Login_Params("tooolong", "testing")));
-		assertFalse(userFacade.register(new Login_Params("test", "veryveryveryverymuchtoolong")));
+		assertFalse(userFacade.register(new Login_Params("test", "ThisPasswordIsWayTooFreakingLong")));
 		
 		// Username that's been taken
 		assertTrue(userFacade.register(new Login_Params("test", "testing")));
@@ -44,7 +44,7 @@ public class RegisterAndLoginTest {
 		assertFalse(userFacade.register(new Login_Params("!test", "testing")));
 		assertFalse(userFacade.register(new Login_Params("\n\"\\", "testing")));
 		assertFalse(userFacade.register(new Login_Params("", "testing")));
-		assertFalse(userFacade.register(new Login_Params("test2", "test!")));
+		assertFalse(userFacade.register(new Login_Params("test2", "tested!")));
 		
 		// Username and Password with valid characters
 		assertTrue(userFacade.register(new Login_Params("_Ab-9", "testing")));
@@ -56,6 +56,8 @@ public class RegisterAndLoginTest {
 		
 		// Try to login with a non-existant user
 		assertFalse(userFacade.login(new Login_Params("beef", "beefy")));
+		
+		// Login with a newly created user
 		assertTrue(userFacade.register(new Login_Params("beef", "beefy")));
 		assertTrue(userFacade.login(new Login_Params("beef", "beefy")));
 		
