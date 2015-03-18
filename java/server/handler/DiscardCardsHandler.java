@@ -18,7 +18,7 @@ public class DiscardCardsHandler extends MovesHandler {
 	}
 
 	@Override
-	public void handle(HttpExchange arg0) throws IOException {
+	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
 
 	}
