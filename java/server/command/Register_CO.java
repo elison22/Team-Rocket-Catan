@@ -28,17 +28,11 @@ public class Register_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		String userPattern = "^[0-9a-zA-Z_-]{3,7}$";
-		String passwordPattern = "^[0-9a-zA-Z_-]{5,25}$";
 		
-		if (params.getUser().matches(userPattern)) {
-			if (!userManager.hasUser(params.getUser())) {
-				if (params.getPassword().matches(passwordPattern)) {
-					userManager.createNewUser(params.getUser(), params.getPassword());
-					return true;
-				}
-			}
+		if (!userManager.hasUser(params.getUser())) {
+			return userManager.createNewUser(params.getUser(), params.getPassword());
 		}
+		
 		return false;
 	}
 }

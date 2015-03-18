@@ -25,6 +25,8 @@ public class UserManager {
 	 * @return True if found, false if otherwise.
 	 */
 	public boolean hasUser(String username) {
+		if (!validateUsername(username))
+			return false;
 		return users.containsKey(username);
 	}
 	
@@ -36,7 +38,7 @@ public class UserManager {
 	 * @return True if passwords match, false if otherwise.
 	 */
 	public boolean checkPassword(String username, String password) {
-		return users.get(username).getPassword().equals(password);
+		return getUser(username).getPassword().equals(password);
 	}
 	
 	/**Validates the given username and password then creates a new user.
@@ -45,8 +47,11 @@ public class UserManager {
 	 * @param password Desired password to be stored with the given username.
 	 * @return True if user was successfully created, false if otherwise.
 	 */
-	public void createNewUser(String username, String password) {
+	public boolean createNewUser(String username, String password) {
+		if (!validateUsername(username) || !validatePassword(password))
+			return false;
 		users.put(username, new User(username, password));
+		return true;
 	}
 	
 	/**Returns the user object with the given username.
@@ -55,7 +60,7 @@ public class UserManager {
 	 * @return User object with the given username, null if it can't be found.
 	 */
 	private User getUser(String username) {
-		return null;
+		return users.get(username);
 	}
 	
 	/**Makes sure the given username is unique and that it contains 3 to 7 
@@ -65,7 +70,8 @@ public class UserManager {
 	 * @return True if valid, false if otherwise.
 	 */
 	private boolean validateUsername(String username) {
-		return false;
+		String userPattern = "^[0-9a-zA-Z_-]{3,7}$";
+		return username.matches(userPattern);
 	}
 	
 	/**Makes sure the given password contains 5 to 25 characters consisting of 
@@ -75,6 +81,7 @@ public class UserManager {
 	 * @return True if valid, false if otherwise.
 	 */
 	private boolean validatePassword(String password) {
-		return false;
+		String passwordPattern = "^[0-9a-zA-Z_-]{5,25}$";
+		return password.matches(passwordPattern);
 	}
 }

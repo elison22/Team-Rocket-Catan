@@ -27,10 +27,6 @@ public class Login_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		if (userManager.hasUser(params.getUser())) {
-			if (userManager.checkPassword(params.getUser(), params.getPassword()))
-				return true;
-		}
 		
 		return false;
 	}
