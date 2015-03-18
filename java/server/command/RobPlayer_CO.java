@@ -26,7 +26,8 @@ public class RobPlayer_CO implements ICommandObject {
 	}
 
 	@Override
-	public void execute() {
+	public boolean execute() {
+		return false;
 	}
 
 }

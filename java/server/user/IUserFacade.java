@@ -1,5 +1,7 @@
 package user;
 
+import shared.dto.*;
+
 /**
  * @author Chad
  *
@@ -15,7 +17,7 @@ public interface IUserFacade {
 	 * @param password Password associated with the given username.
 	 * @return True if login was successful, false if otherwise.
 	 */
-	public boolean login(String username, String password);
+	public boolean login(Login_Params params);
 	
 	/**Attempts to register a new user. For this to be successful, the username
 	 * and password must fit the defined character constraints (numbers,
@@ -28,5 +30,5 @@ public interface IUserFacade {
 	 * characters long (inclusive).
 	 * @return True if all constraints are met, false otherwise.
 	 */
-	public boolean register(String username, String password);
+	public boolean register(Login_Params params);
 }

@@ -1,5 +1,7 @@
 package user;
 
+import shared.dto.Login_Params;
+
 /**
  * @author Chad
  *
@@ -9,13 +11,13 @@ package user;
 public class MockUserFacade implements IUserFacade {
 
 	@Override
-	public boolean login(String username, String password) {
+	public boolean login(Login_Params params) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean register(String username, String password) {
+	public boolean register(Login_Params params) {
 		// TODO Auto-generated method stub
 		return false;
 	}

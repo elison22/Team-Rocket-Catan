@@ -1,6 +1,7 @@
 package user.model;
 
 import java.util.HashSet;
+import java.util.Hashtable;
 
 /**
  * @author Chad
@@ -12,10 +13,10 @@ import java.util.HashSet;
 @SuppressWarnings("unused")
 public class UserManager {
 
-	private HashSet<User> users;
+	private Hashtable<String, User> users;
 	
 	public UserManager() {
-		users = new HashSet<User>();
+		users = new Hashtable<String, User>();
 	}
 	
 	/**Determine whether or not a user is registered.
@@ -24,7 +25,7 @@ public class UserManager {
 	 * @return True if found, false if otherwise.
 	 */
 	public boolean hasUser(String username) {
-		return false;
+		return users.containsKey(username);
 	}
 	
 	/**Verify that the given password matches the one stored with the given
@@ -35,7 +36,7 @@ public class UserManager {
 	 * @return True if passwords match, false if otherwise.
 	 */
 	public boolean checkPassword(String username, String password) {
-		return false;
+		return users.get(username).getPassword().equals(password);
 	}
 	
 	/**Validates the given username and password then creates a new user.
@@ -44,8 +45,8 @@ public class UserManager {
 	 * @param password Desired password to be stored with the given username.
 	 * @return True if user was successfully created, false if otherwise.
 	 */
-	public boolean createNewUser(String username, String password) {
-		return false;
+	public void createNewUser(String username, String password) {
+		users.put(username, new User(username, password));
 	}
 	
 	/**Returns the user object with the given username.

@@ -7,7 +7,8 @@ package command;
 public interface ICommandObject {
 	
 	/**Performs the main function of the command object. 
+	 * @return TODO
 	 * 
 	 */
-	public void execute();
+	public boolean execute();
 }

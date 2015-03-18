@@ -27,8 +27,8 @@ public class Monopoly_CO implements ICommandObject {
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
+	public boolean execute() {
+		return false;
 	}
 
 }
