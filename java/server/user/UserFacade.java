@@ -2,7 +2,8 @@ package user;
 
 import command.ICommandObject;
 import command.Login_CO;
-import shared.dto.*;
+import command.Register_CO;
+import shared.dto.Login_Params;
 import user.model.UserManager;
 
 /**
@@ -27,8 +28,7 @@ public class UserFacade implements IUserFacade {
 
 	@Override
 	public boolean register(Login_Params params) {
-		// TODO Auto-generated method stub
-		return false;
+		ICommandObject commandObject = new Register_CO(userManager, params);
+		return commandObject.execute();
 	}
-
 }
