@@ -18,13 +18,15 @@ public class RegisterHandler implements HttpHandler {
 	private Gson gson;
 	
 	public RegisterHandler(IUserFacade userFacade) {
+		super();
 		this.userFacade = userFacade;
 		this.gson = new Gson();
 	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+		// Prepare to read the RequestBody inputStream
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
 		StringBuilder stringBuilder = new StringBuilder();
 		
 		// Process inputStream
@@ -36,11 +38,11 @@ public class RegisterHandler implements HttpHandler {
 		Login_Params params = gson.fromJson(stringBuilder.toString(), Login_Params.class);
 		
 		if (userFacade.register(params)) {
-			// Login successful? HTTP_OK
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			
 			//Prepare Cookies
 			
+			
+			// Login successful? HTTP_OK
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			
 		} else {
 			// Login failed? HTTP_BAD_REQUEST

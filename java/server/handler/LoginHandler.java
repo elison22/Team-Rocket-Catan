@@ -20,7 +20,7 @@ public class LoginHandler implements HttpHandler {
 	public LoginHandler(IUserFacade userFacade) {
 		super();
 		this.userFacade = userFacade;
-		gson = new Gson();
+		this.gson = new Gson();
 	}
 
 	@Override
@@ -38,11 +38,11 @@ public class LoginHandler implements HttpHandler {
 		Login_Params params = gson.fromJson(stringBuilder.toString(), Login_Params.class);
 		
 		if (userFacade.login(params)) {
-			// Login successful? HTTP_OK
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			
 			//Prepare Cookies
 			
+			
+			// Login successful? HTTP_OK
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			
 		} else {
 			// Login failed? HTTP_BAD_REQUEST
