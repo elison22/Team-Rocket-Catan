@@ -31,4 +31,9 @@ public class UserFacade implements IUserFacade {
 		ICommandObject commandObject = new Register_CO(userManager, params);
 		return commandObject.execute();
 	}
+
+	@Override
+	public String getUserID() {
+		return (new Integer(userManager.getUserID() - 1)).toString();
+	}
 }

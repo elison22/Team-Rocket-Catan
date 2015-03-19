@@ -86,4 +86,8 @@ public class UserManager {
 		String passwordPattern = "^[0-9a-zA-Z_-]{5,25}$";
 		return password.matches(passwordPattern);
 	}
+	
+	public int getUserID() {
+		return players;
+	}
 }
