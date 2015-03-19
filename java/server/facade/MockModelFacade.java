@@ -3,6 +3,7 @@ package facade;
 import java.util.List;
 
 import shared.definitions.ResourceType;
+import shared.dto.CreateGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -40,8 +41,7 @@ public class MockModelFacade implements IModelFacade
 	 * @return returns a JSON string with the new game information
 	 */
 	@Override
-	public String createGame(boolean randomTiles, boolean randomNumbers,
-			boolean randomPorts, String name) {
+	public String createGame(CreateGame_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,7 @@
 package serializer;
 
+import com.google.gson.Gson;
+
 import serializer.json.JsonPlayer;
 import shared.dto.Game_DTO;
 import model.sgame.ServerGame;
@@ -10,9 +12,11 @@ import model.sgame.ServerGame;
  * This class serializes all data that needs to reach the client in JSON format.
  */
 public class ServerSerializer {
+	
+	Gson gson;
 
 	public ServerSerializer() {
-		// TODO Auto-generated constructor stub
+		gson = new Gson();
 	}
 	
 	/**Converts a given model into json format.
@@ -30,7 +34,7 @@ public class ServerSerializer {
 	 * @return The String containing the json array of games.
 	 */
 	public String serializeGameList(Game_DTO[] games) {
-		return null;
+		return gson.toJson(games);
 	}
 	
 	/**Serializes a newly created game in json format.

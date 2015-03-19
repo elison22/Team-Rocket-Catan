@@ -35,6 +35,7 @@ public class ServerGame {
     private ArrayList<String> aiList;
     private int winner;
     private ServerTradeOffer tradeOffer;
+    private int gameId;
 
     public ServerGame() throws ServerBoardException {
     	aiList = new ArrayList<String>();
@@ -604,4 +605,12 @@ public class ServerGame {
     public HashSet<PortType> getPlayerPorts(int index) {
         return map.getPlayerPorts(index);
     }
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
 }

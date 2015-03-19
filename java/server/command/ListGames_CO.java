@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import facade.IModelFacade;
 
 /**
@@ -10,6 +11,13 @@ import facade.IModelFacade;
  */
 @SuppressWarnings("unused")
 public class ListGames_CO implements ICommandObject {
+	
+	GameManager gameManager;
+
+	public ListGames_CO(GameManager gameManager) {
+		super();
+		this.gameManager = gameManager;
+	}
 
 	@Override
 	public boolean execute() {

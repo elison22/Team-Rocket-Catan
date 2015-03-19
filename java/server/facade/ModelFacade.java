@@ -1,11 +1,16 @@
 package facade;
 
+import serializer.ServerSerializer;
 import shared.definitions.ResourceType;
+import shared.dto.CreateGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import java.util.List;
+
+import command.CreateGame_CO;
+import command.ICommandObject;
 
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 
@@ -19,17 +24,22 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * The ModelFacade's instance of GameManager
 	 */
-	@SuppressWarnings("unused")
 	private GameManager gameManager;
+	private ServerSerializer serializer;
 	
+	public ModelFacade() {
+		super();
+		this.gameManager = new GameManager();
+		this.serializer = new ServerSerializer();
+	}
+
 	/**
 	 * Lists all games currently on the server
 	 * @return returns a JSON string of the available games.
 	 */
 	@Override
 	public String listGames() {
-		// TODO Auto-generated method stub
-		return null;
+		return serializer.serializeGameList(gameManager.getGameList());
 	}
 
 	/**
@@ -41,10 +51,10 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON string with the new game information
 	 */
 	@Override
-	public String createGame(boolean randomTiles, boolean randomNumbers,
-			boolean randomPorts, String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public String createGame(CreateGame_Params params) {
+		ICommandObject commandObject = new CreateGame_CO(params);
+		commandObject.execute();
+		return serializer.serializeGameModel(gameManager.getNewestGame());
 	}
 
 	/**

@@ -2,6 +2,7 @@ package facade;
 
 
 import shared.definitions.ResourceType;
+import shared.dto.CreateGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -15,7 +16,7 @@ public interface IModelFacade {
 
     public String listGames();
 
-    public String createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
+    public String createGame(CreateGame_Params params);
 
     public boolean joinGame(int gameID, String color);
 
