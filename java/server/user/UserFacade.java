@@ -33,7 +33,7 @@ public class UserFacade implements IUserFacade {
 	}
 
 	@Override
-	public String getUserID() {
-		return (new Integer(userManager.getUserID() - 1)).toString();
+	public String getUserID(String username) {
+		return new Integer(userManager.getUser(username).getId()).toString();
 	}
 }

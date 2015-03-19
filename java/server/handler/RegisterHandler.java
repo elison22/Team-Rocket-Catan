@@ -46,8 +46,9 @@ public class RegisterHandler implements HttpHandler {
 			head.set("Content-Type", "text/plain");
 			
 			//Prepare Cookies
-			String encode = "{\"authentication\":" + "\"" + (new Long(System.currentTimeMillis())).toString() + "\",\"name\":\"" + 
-					params.getUser() + "\",\"password\":\"" + params.getPassword() + "\",\"playerID\":" + userFacade.getUserID() + "}";
+			String encode = "{\"authentication\":" + "\"" + (new Long(System.currentTimeMillis())).toString() 
+						  + "\",\"name\":\"" + params.getUser() + "\",\"password\":\"" + params.getPassword() 
+						  + "\",\"playerID\":" + userFacade.getUserID(params.getUser()) + "}";
 			String encoded = URLEncoder.encode(encode, "UTF-8");
 			head.add("Set-cookie", "catan.user=" + encoded + ";Path=/;");
 			
