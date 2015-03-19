@@ -15,11 +15,7 @@ import model.splayer.ServerPlayer;
 import model.strade.ServerDomesticTrade;
 import model.strade.ServerMaritimeTrade;
 import model.strade.ServerTradeOffer;
-import shared.definitions.CatanColor;
-import shared.definitions.DevCardType;
-import shared.definitions.HexType;
-import shared.definitions.PortType;
-import shared.definitions.ResourceType;
+import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -153,9 +149,18 @@ public class ServerGame {
 	 * @param location
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doBuildRoad(int playerIndex, EdgeLocation location)
+	public boolean doBuildRoad(int playerIndex, EdgeLocation location, boolean isFree)
 	{
-		return true;
+		if(!canBuildRoad(playerIndex, location)) return false;
+        try {
+            map.doBuildRoad(location, playerIndex);
+            playerList.get(playerIndex).doBuildRoad(isFree);
+            cardBank.buyPiece(PieceType.ROAD);
+        } catch (ServerBoardException e) {
+            return false;
+        }
+
+        return true;
 	}
 	
 	/**
@@ -323,16 +328,19 @@ public class ServerGame {
      * @return	true if player can place road at location
      */
     public boolean canBuildRoad(int playerId, EdgeLocation location) {
-    	if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
-            try {
-                if(map.canBuildRoad(location, playerId))
-                    return true;
-            } catch (ServerBoardException e) {
-                return false;
-            }
 
-    	}
-    	return false;
+        try {
+    	    if(!turnTracker.canPlayerBuildRoadSettlement(playerId))     //check the turn
+                return false;
+            if(!map.canBuildRoad(location, playerId))                   //check the board
+                return false;
+            if(!playerList.get(playerId).canBuildRoad())                //check the player
+                return false;
+        } catch (ServerBoardException e) {
+            return false;
+        }
+        return true;
+
     }
 	/**
 	 * Checks to see if the player can build the second road of the RoadBuilding card
