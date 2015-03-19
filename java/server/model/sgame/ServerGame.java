@@ -28,7 +28,7 @@ public class ServerGame {
     private int versionNumber;
     private ArrayList<ServerPlayer> playerList;   // holds all the players
     private ServerGameBank cardBank;              // holds all the resource cards and all the dev cards
-    private ServerTurnTracker turnTracker;        // holds whos turn it is, as well as game state
+    private ServerTurnTracker turnTracker;        // holds whose turn it is, as well as game state
     private ServerBoard map;
     private ServerChat chat;
     private ServerChat gameHistory;
@@ -43,6 +43,12 @@ public class ServerGame {
         map = new ServerBoard(false, false, false);
         versionNumber = -1;
     	//winner = -1;
+    }
+    
+    public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
+    	this.gameName = title;
+    	map = new ServerBoard(randNumbers, randTiles, randPorts);
+    	versionNumber = 0;
     }
 
     public String getGameName() {
