@@ -3,12 +3,14 @@ package handler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import shared.dto.Login_Params;
 import user.IUserFacade;
 
 import com.google.gson.Gson;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -40,9 +42,15 @@ public class RegisterHandler implements HttpHandler {
 		if (userFacade.register(params)) {
 			//Prepare Cookies
 			
-			
 			// Login successful? HTTP_OK
+			Headers head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/plain");
+			//head.set(arg0, arg1);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			
+			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
+			os.write(new String("success"));
+			os.close();
 			
 		} else {
 			// Login failed? HTTP_BAD_REQUEST
