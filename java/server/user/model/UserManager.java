@@ -14,9 +14,11 @@ import java.util.Hashtable;
 public class UserManager {
 
 	private Hashtable<String, User> users;
+	private int players;
 	
 	public UserManager() {
 		users = new Hashtable<String, User>();
+		players = 0;
 	}
 	
 	/**Determine whether or not a user is registered.
@@ -50,7 +52,7 @@ public class UserManager {
 	public boolean createNewUser(String username, String password) {
 		if (!validateUsername(username) || !validatePassword(password))
 			return false;
-		users.put(username, new User(username, password));
+		users.put(username, new User(username, password, players++));
 		return true;
 	}
 	
@@ -59,7 +61,7 @@ public class UserManager {
 	 * @param username Username of the user object to be retrieved.
 	 * @return User object with the given username, null if it can't be found.
 	 */
-	private User getUser(String username) {
+	public User getUser(String username) {
 		return users.get(username);
 	}
 	
@@ -83,5 +85,9 @@ public class UserManager {
 	private boolean validatePassword(String password) {
 		String passwordPattern = "^[0-9a-zA-Z_-]{5,25}$";
 		return password.matches(passwordPattern);
+	}
+	
+	public int getUserID() {
+		return players;
 	}
 }

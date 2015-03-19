@@ -8,7 +8,6 @@ import org.junit.Test;
 import shared.dto.Login_Params;
 import user.IUserFacade;
 import user.UserFacade;
-import user.model.UserManager;
 import command.Login_CO;
 import command.Register_CO;
 

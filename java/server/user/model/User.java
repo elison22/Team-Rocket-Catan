@@ -10,6 +10,7 @@ public class User {
 	
 	private String username;
 	private String password;
+	private int id;
 
 	/**Creates a user with the given credentials. These values are assumed to
 	 * be valid, so they must be validated BEFORE creating the user!
@@ -17,10 +18,11 @@ public class User {
 	 * @param username Username for the user.
 	 * @param password Password to associate with the username.
 	 */
-	public User(String username, String password) {
+	public User(String username, String password, int id) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -37,6 +39,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

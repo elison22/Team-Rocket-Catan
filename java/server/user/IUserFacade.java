@@ -31,4 +31,6 @@ public interface IUserFacade {
 	 * @return True if all constraints are met, false otherwise.
 	 */
 	public boolean register(Login_Params params);
+	
+	public String getUserID(String username);
 }
