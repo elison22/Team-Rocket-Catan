@@ -3,8 +3,6 @@ package handler;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.List;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -32,7 +30,5 @@ public class GetGamesHandler implements HttpHandler {
 		OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
 		os.write(games);
 		os.close();
-
 	}
-
 }

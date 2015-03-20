@@ -7,6 +7,7 @@ import model.scards.ServerDevCard;
 import model.scards.ServerPlayerBank;
 import serializer.json.JsonPlayer;
 import shared.definitions.DevCardType;
+import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 
 /**
@@ -247,17 +248,27 @@ public class ServerPlayer {
      * isFree is false.
      * @param isFree Whether or not the road is free.
      */
-    public void doBuildRoad(boolean isFree){}
+    public void doBuildRoad(boolean isFree){
+        remainingRoads--;
+        if(!isFree)
+            bank.buyPiece(PieceType.ROAD);
+    }
 
     /**
      * Decrements the settlement count. Also decrements the necessary resources.
      */
-    public void doBuildSettlement(){}
+    public void doBuildSettlement(){
+        remainingSettlements--;
+        bank.buyPiece(PieceType.SETTLEMENT);
+    }
 
     /**
      * Decrements the city count. Also decrements the necessary resources.
      */
-    public void doBuildCity(){}
+    public void doBuildCity(){
+        remainingCities--;
+        bank.buyPiece(PieceType.CITY);
+    }
 
     /**
      * Gives the player a dev card.

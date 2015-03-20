@@ -44,8 +44,20 @@ public class GameManager {
 		return games;
 	}
 	
-	public ServerGame getNewestGame() {
-		return games.get(games.size() - 1);
+	public Game_DTO getNewestGame() {
+		ServerGame model = games.get(games.size() - 1);
+		List<Player_DTO> playerList = new ArrayList<Player_DTO>();
+		
+		for (ServerPlayer player : model.getPlayerList()) {
+			playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
+		}
+		Player_DTO[] arr = playerList.toArray(new Player_DTO[playerList.size()]);
+		
+		return new Game_DTO(model.getGameName(), model.getGameId(), arr);
+	}
+	
+	public int getNewestGameId() {
+		return games.size() - 1;
 	}
 	
 	public Game_DTO[] getGameList() {
@@ -53,10 +65,9 @@ public class GameManager {
 		
 		for (ServerGame game : games) {
 			
-			List<ServerPlayer> players = game.getPlayerList();
 			List<Player_DTO> playerList = new ArrayList<Player_DTO>();
 			
-			for (ServerPlayer player : players) {
+			for (ServerPlayer player : game.getPlayerList()) {
 				playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
 			}
 			Player_DTO[] arr = playerList.toArray(new Player_DTO[playerList.size()]);
@@ -73,5 +84,18 @@ public class GameManager {
 	public void createGame() throws ServerBoardException
 	{
 		games.add(new ServerGame());
+		games.get(games.size() - 1).setGameId(games.size() - 1);
+	}
+	
+	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
+		ServerGame game = games.get(gameId);
+		if (game.getPlayerList().size() >= 4) {
+			// Game is full
+			return false;
+		} else {
+			game.addPlayer(player, playerId, color);
+			return true;
+		}
+		
 	}
 }

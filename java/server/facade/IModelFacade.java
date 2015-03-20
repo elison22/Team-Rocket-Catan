@@ -3,6 +3,7 @@ package facade;
 
 import shared.definitions.ResourceType;
 import shared.dto.CreateGame_Params;
+import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -18,7 +19,7 @@ public interface IModelFacade {
 
     public String createGame(CreateGame_Params params);
 
-    public boolean joinGame(int gameID, String color);
+    public boolean joinGame(JoinGame_Params params, String user, int userId);
 
     public boolean saveGame(int gameID, String fileName);
 
@@ -65,4 +66,6 @@ public interface IModelFacade {
     public String maritimeTrade(int gameID, int playerIdx, int ratio, ResourceType input, ResourceType output);
 
     public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources);
+
+	int getCreatedGameId();
 }

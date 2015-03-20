@@ -1,8 +1,10 @@
 package facade;
 
 import serializer.ServerSerializer;
+import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.dto.CreateGame_Params;
+import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -54,7 +56,7 @@ public class ModelFacade implements IModelFacade {
 	public String createGame(CreateGame_Params params) {
 		ICommandObject commandObject = new CreateGame_CO(params);
 		commandObject.execute();
-		return serializer.serializeGameModel(gameManager.getNewestGame());
+		return serializer.serializeNewGame(gameManager.getNewestGame());
 	}
 
 	/**
@@ -64,9 +66,12 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns success or failure
 	 */
 	@Override
-	public boolean joinGame(int gameID, String color) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean joinGame(JoinGame_Params params, String player, int playerId) {
+		// Verify the color is valid
+		if (CatanColor.convert(params.getColor()) == null)
+			return false;
+		
+		return gameManager.addPlayerToGame(params.getId(), player, playerId, params.getColor());
 	}
 
 	/**
@@ -363,5 +368,10 @@ public class ModelFacade implements IModelFacade {
 	public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public int getCreatedGameId() {
+		return gameManager.getNewestGameId();
 	}
 }

@@ -47,8 +47,13 @@ public class ServerGame {
     
     public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
     	this.gameName = title;
-    	map = new ServerBoard(randNumbers, randTiles, randPorts);
     	versionNumber = 0;
+    	playerList = new ArrayList<ServerPlayer>();
+    	cardBank = new ServerGameBank();
+    	turnTracker = new ServerTurnTracker();
+    	map = new ServerBoard(randNumbers, randTiles, randPorts);
+    	chat = new ServerChat();
+    	gameHistory = new ServerChat();
     }
 
     public String getGameName() {
@@ -211,7 +216,17 @@ public class ServerGame {
 	 */
 	public boolean doBuildSettlement(int playerIndex, VertexLocation location)
 	{
-		return true;
+        if(!canBuildSettlement(playerIndex, location)) return false;
+        try {
+            map.doBuildSettlement(location, playerIndex);
+            playerList.get(playerIndex).doBuildSettlement();
+            cardBank.buyPiece(PieceType.SETTLEMENT);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
 	}
 	
 	/**
@@ -222,6 +237,15 @@ public class ServerGame {
 	 */
 	public boolean doBuildCity(int playerIndex, VertexLocation location)
 	{
+        if(!canBuildCity(playerIndex, location)) return false;
+        try {
+            map.doBuildCity(location, playerIndex);
+            playerList.get(playerIndex).doBuildCity();
+            cardBank.buyPiece(PieceType.CITY);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
 		return true;
 	}
 	
@@ -330,18 +354,18 @@ public class ServerGame {
     
     /**
      * Checks with turn state, player, and board to see if road can be built in certain location 
-     * @param playerId	index of player wanting to build road
+     * @param playerIndex index of player wanting to build road
      * @param location	where the player wants to place road
      * @return	true if player can place road at location
      */
-    public boolean canBuildRoad(int playerId, EdgeLocation location) {
+    public boolean canBuildRoad(int playerIndex, EdgeLocation location) {
 
         try {
-    	    if(!turnTracker.canPlayerBuildRoadSettlement(playerId))     //check the turn
+    	    if(!turnTracker.canPlayerBuildRoadSettlement(playerIndex))     //check the turn
                 return false;
-            if(!map.canBuildRoad(location, playerId))                   //check the board
+            if(!map.canBuildRoad(location, playerIndex))                   //check the board
                 return false;
-            if(!playerList.get(playerId).canBuildRoad())                //check the player
+            if(!playerList.get(playerIndex).canBuildRoad())                //check the player
                 return false;
         } catch (ServerBoardException e) {
             return false;
@@ -401,17 +425,19 @@ public class ServerGame {
      * @return	true if player can build settlement at location
      */
     public boolean canBuildSettlement(int playerId, VertexLocation location) {
-        if(turnTracker.canPlayerBuildRoadSettlement(playerId)) {
-            if(playerList.get(playerId).canBuildSettlement()){
-                try {
-                    if(map.canBuildSettlement(location, playerId))
-                        return true;
-                } catch (ServerBoardException e) {
-                    return false;
-                }
-            }
+
+        try {
+            if(!turnTracker.canPlayerBuildRoadSettlement(playerId))     //check the turn
+                return false;
+            if(!map.canBuildSettlement(location, playerId))             //check the board
+                return false;
+            if(!playerList.get(playerId).canBuildSettlement())          //check the player
+                return false;
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
+        return true;
     }
     /**
      * Checks to see if the player picked a valid location for his initial settlement
@@ -451,17 +477,19 @@ public class ServerGame {
      * @return	true if player can build city at location
      */
     public boolean canBuildCity(int playerId, VertexLocation location) {
-    	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canBuildCity()){
-    			try {
-					if(map.canBuildCity(location, playerId))
-						return true;
-				} catch (ServerBoardException e) {
-					return false;
-				}
-			}
-    	}
-    	return false;
+
+        try {
+            if(!turnTracker.canPlayerBuild(playerId))                   //check the turn
+                return false;
+            if(!map.canBuildCity(location, playerId))             //check the board
+                return false;
+            if(!playerList.get(playerId).canBuildCity())          //check the player
+                return false;
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -472,7 +500,7 @@ public class ServerGame {
      */
     public boolean canOfferTrade(int playerId, ServerDomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
+            if (playerList.get(playerId).canOfferTrade(playerId, trade.getOffer())){
     			return true;
 			}
     	}
@@ -487,7 +515,7 @@ public class ServerGame {
      */
     public boolean canAcceptTrade(int playerId, ServerDomesticTrade trade) {
     	if(turnTracker.canPlayerBuild(playerId)) {
-    		if(playerList.get(playerId).canAcceptTrade(playerId, trade.getOffer())){
+            if (playerList.get(playerId).canAcceptTrade(playerId, trade.getOffer())){
     			return true;
 			}
     	}
@@ -618,5 +646,9 @@ public class ServerGame {
 
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
+	}
+	
+	public void addPlayer(String player, int playerId, String color) {
+		
 	}
 }
