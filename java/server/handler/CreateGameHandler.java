@@ -25,22 +25,25 @@ public class CreateGameHandler extends NonMoveHandler {
 		StringBuilder stringBuild = handleRequestBody(exchange);
 		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);
 		
+		String jsonString = modelFacade.createGame(gameParams);
+		
 		Headers head = exchange.getResponseHeaders();
 		head.set("Content-Type", "application/json");
 		
 		int gameId = modelFacade.getCreatedGameId();
-		String encode = "catan.game=" + gameId + ";Path=/";
+		String encode = "catan.game=" + gameId + ";Path=/;";
 		head.add("Set-cookie", encode);
 		
-		String jsonString = modelFacade.createGame(gameParams);
 		if(jsonString != null) {
-			JoinGame_Params joinGame = new JoinGame_Params(gameId, "white");
-			modelFacade.joinGame(joinGame, cookie[1], new Integer(cookie[2]));
+			//JoinGame_Params joinGame = new JoinGame_Params(gameId, "white");
+			//modelFacade.joinGame(joinGame, cookie[1], new Integer(cookie[2]));
 			
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			sendResponseBody(exchange, jsonString);
-		} else if(jsonString == null)
+		} else if(jsonString == null) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
+			sendResponseBody(exchange, "Internal Error!");
+		}
 		exchange.close();
 	}
 }
