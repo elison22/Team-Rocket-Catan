@@ -43,7 +43,7 @@ public class ServerSerializer {
 	 * @return The String containing the json format of the newly created game.
 	 */
 	public String serializeNewGame(Game_DTO newGame) {
-		return null;
+		return gson.toJson(newGame);
 	}
 	
 	/**Serializes the player data to be transmitted as a cookie.
