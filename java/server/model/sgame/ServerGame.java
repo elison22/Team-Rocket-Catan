@@ -49,7 +49,12 @@ public class ServerGame {
     public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
     	this.gameName = title;
     	versionNumber = 0;
+    	
     	playerList = new ArrayList<ServerPlayer>();
+    	for (int i = 0; i < 4; ++i) {
+    		playerList.add(null);
+    	}
+    	
     	cardBank = new ServerGameBank();
     	turnTracker = new ServerTurnTracker();
     	map = new ServerBoard(randNumbers, randTiles, randPorts);

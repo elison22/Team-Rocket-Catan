@@ -49,7 +49,13 @@ public class GameManager {
 		List<Player_DTO> playerList = new ArrayList<Player_DTO>();
 		
 		for (ServerPlayer player : model.getPlayerList()) {
-			playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
+			if (player == null) {
+				playerList.add(new Player_DTO());
+			} else {
+				playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
+			}
+				
+			
 		}
 		Player_DTO[] arr = playerList.toArray(new Player_DTO[playerList.size()]);
 		
