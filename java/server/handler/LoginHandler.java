@@ -3,23 +3,24 @@ package handler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 
 import shared.dto.Login_Params;
 import user.IUserFacade;
 
 import com.google.gson.Gson;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-public class LoginHandler implements HttpHandler {
+public class LoginHandler extends UserHandler {
 	
-	private IUserFacade userFacade;
 	private Gson gson;
 	
 	public LoginHandler(IUserFacade userFacade) {
-		super();
-		this.userFacade = userFacade;
+		super(userFacade);
 		this.gson = new Gson();
 	}
 
@@ -38,11 +39,8 @@ public class LoginHandler implements HttpHandler {
 		Login_Params params = gson.fromJson(stringBuilder.toString(), Login_Params.class);
 		
 		if (userFacade.login(params)) {
-			//Prepare Cookies
 			
-			
-			// Login successful? HTTP_OK
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			sendInfo(exchange, params);
 			
 		} else {
 			// Login failed? HTTP_BAD_REQUEST
