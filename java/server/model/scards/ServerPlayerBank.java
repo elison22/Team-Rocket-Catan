@@ -3,6 +3,7 @@ package model.scards;
 import serializer.json.JsonDevCardList;
 import serializer.json.JsonResourceList;
 import shared.definitions.DevCardType;
+import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 
 import java.util.ArrayList;
@@ -173,5 +174,29 @@ public class ServerPlayerBank extends ServerCardBank {
                 monument++;
         return monument;
     }
+
+    public void buyPiece(PieceType type) {
+
+        switch (type) {
+            case ROAD:
+                resCards.put(ResourceType.WOOD, resCards.get(ResourceType.WOOD) - 1);
+                resCards.put(ResourceType.BRICK, resCards.get(ResourceType.BRICK) - 1);
+                return;
+            case SETTLEMENT:
+                resCards.put(ResourceType.WOOD, resCards.get(ResourceType.WOOD) - 1);
+                resCards.put(ResourceType.BRICK, resCards.get(ResourceType.BRICK) - 1);
+                resCards.put(ResourceType.SHEEP, resCards.get(ResourceType.SHEEP) - 1);
+                resCards.put(ResourceType.WHEAT, resCards.get(ResourceType.WHEAT) - 1);
+                return;
+            case CITY:
+                resCards.put(ResourceType.WHEAT, resCards.get(ResourceType.WHEAT) - 2);
+                resCards.put(ResourceType.ORE, resCards.get(ResourceType.ORE) - 3);
+                return;
+            default:
+        }
+
+    }
+
+
 
 }
