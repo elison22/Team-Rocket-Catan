@@ -1,5 +1,7 @@
 package model.scards;
 
+import java.util.Random;
+
 import serializer.json.JsonDevCardList;
 import serializer.json.JsonResourceList;
 import shared.definitions.DevCardType;
@@ -27,6 +29,7 @@ public class ServerGameBank extends ServerCardBank {
         resCards.put(ResourceType.WHEAT, 19);
         resCards.put(ResourceType.SHEEP, 19);
         resCards.put(ResourceType.ORE, 19);
+        rand = new Random();
         initDevCards();
     }
 
@@ -85,13 +88,6 @@ public class ServerGameBank extends ServerCardBank {
     public boolean canGiveResCard(ResourceType card){
         if (resCards.get(card) > 0)
             return true;
-
-//    	for(Map.Entry<ResourceType, Integer> entry : resCards.entrySet()){
-//    		if(entry.getKey() == card){
-//    			if(entry.getValue() > 0)
-//    				return true;
-//    		}
-//    	}
         return false;
     }
 
@@ -109,8 +105,11 @@ public class ServerGameBank extends ServerCardBank {
      * @return DevCard object to be placed in the PlayerBank
      */
     public ServerDevCard giveDevCard(){
-        //random dev card
-        return null;
+        int deckSize = devCards.size();
+        int chosenCardIndex = rand.nextInt() % deckSize;
+        ServerDevCard chosenCard = devCards.get(chosenCardIndex);
+        devCards.remove(chosenCardIndex);
+        return chosenCard;
     }
 
     public void buyPiece(PieceType type) {

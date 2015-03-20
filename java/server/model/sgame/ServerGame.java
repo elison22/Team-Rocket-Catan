@@ -7,6 +7,7 @@ import java.util.HashSet;
 import model.sboard.ServerBoard;
 import model.sboard.ServerBoardException;
 import model.sboard.ServerConstructable;
+import model.scards.ServerDevCard;
 import model.scards.ServerGameBank;
 import model.schat.ServerChat;
 import model.sgame.ServerTurnState;
@@ -194,6 +195,11 @@ public class ServerGame {
 	 */
 	public boolean doBuyDevCard(int playerIndex)
 	{
+		if(canBuyDevCard(playerIndex))
+		{
+			ServerDevCard chosenCard = cardBank.giveDevCard();
+			
+		}
 		return true;
 	}
 	

@@ -5,6 +5,7 @@ import shared.definitions.ResourceType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @author Hayden
@@ -24,6 +25,7 @@ public class ServerCardBank {
     protected ArrayList<ServerDevCard> devCards = new ArrayList<ServerDevCard>();
     protected ArrayList<ServerDevCard> oldDevs = new ArrayList<>();
     protected ArrayList<ServerDevCard> newDevs = new ArrayList<>();
+    protected Random rand;
 
     /**
      * Used to give a resource card to a player and decrements the total number of available
@@ -31,9 +33,22 @@ public class ServerCardBank {
      * @param card The type of resource card to be given to the player
      * @return Whether a card was given to the player or not.
      */
-    public boolean giveCard(ResourceType card){
-        //decrement the count for that resource
-        return true;
+    public boolean giveResourceCard(ResourceType card){
+    	if(canGiveResource(card))
+    	{
+    		int resourceCount = resCards.get(card);
+    		resourceCount--;
+    		resCards.put(card, resourceCount);
+    		return true;
+    	}
+    	else return false;
+    }
+    
+    public boolean canGiveResource(ResourceType card)
+    {
+    	if(resCards.get(card) > 0)
+    		return true;
+    	else return false;
     }
 
     /**
@@ -42,9 +57,10 @@ public class ServerCardBank {
      * @param card The type of resource taken.
      * @return Whether a card was taken or not.
      */
-    public boolean takeCard(ResourceType card){
-        //increment the count for that resource
-        return true;
+    public void receiveCard(ResourceType card){
+    	int resourceCount = resCards.get(card);
+		resourceCount--;
+		resCards.put(card, resourceCount);
     }
 
     public HashMap<ResourceType, Integer> getResCards()

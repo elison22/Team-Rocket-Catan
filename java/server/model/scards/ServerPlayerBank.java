@@ -68,10 +68,11 @@ public class ServerPlayerBank extends ServerCardBank {
      * to the player's list of development cards
      * @return True if the player successfully took a DevCard
      */
-    public boolean takeDevCard(){
-        //take from the bank
-        //add to card list
-        return true;
+    public void buyDevCard(ServerDevCard card){
+        resCards.put(ResourceType.ORE, resCards.get(ResourceType.BRICK) - 1);
+        resCards.put(ResourceType.SHEEP, resCards.get(ResourceType.SHEEP) - 1);
+        resCards.put(ResourceType.WHEAT, resCards.get(ResourceType.WHEAT) - 1);
+        devCards.add(card);
     }
 
     public boolean canAffordDevCard() {
