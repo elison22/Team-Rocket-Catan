@@ -1,30 +1,39 @@
 package handler;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+import java.net.HttpURLConnection;
+
+import shared.dto.CreateGame_Params;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 import facade.IModelFacade;
 
-public class CreateGameHandler implements HttpHandler {
+public class CreateGameHandler extends NonMoveHandler {
 	
 	private IModelFacade modelFacade;
 	
 	public CreateGameHandler(IModelFacade modelFacade) {
-		super();
 		this.modelFacade = modelFacade;
 	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		Headers head = exchange.getRequestHeaders();
-		List<String> cookies = head.get("Cookie");
-		InputStream is = exchange.getRequestBody();
-		is.close();
+		String[] cookie = decodeCookie(exchange);
+		StringBuilder stringBuild = handleRequestBody(exchange);
+		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);
+		String jsonString = modelFacade.createGame(gameParams);
+		
+		Headers head = exchange.getResponseHeaders();
+		head.set("Content-Type", "application/json");
+		
+		String encode = "catan.game=" + modelFacade.getCreatedGameId() + ";Path=/";
+		head.add("Set-cookie", encode);
+		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		
+		sendResponseBody(exchange, jsonString);
+		
+		exchange.close();
 	}
-
 }
