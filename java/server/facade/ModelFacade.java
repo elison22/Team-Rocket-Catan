@@ -54,7 +54,7 @@ public class ModelFacade implements IModelFacade {
 	public String createGame(CreateGame_Params params) {
 		ICommandObject commandObject = new CreateGame_CO(params);
 		commandObject.execute();
-		return serializer.serializeGameModel(gameManager.getNewestGame());
+		return serializer.serializeNewGame(gameManager.getNewestGame());
 	}
 
 	/**
@@ -363,5 +363,10 @@ public class ModelFacade implements IModelFacade {
 	public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public int getCreatedGameId() {
+		return gameManager.getNewestGameId();
 	}
 }

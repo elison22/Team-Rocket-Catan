@@ -354,4 +354,10 @@ public class MockModelFacade implements IModelFacade
 		return null;
 	}
 
+	@Override
+	public int getCreatedGameId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

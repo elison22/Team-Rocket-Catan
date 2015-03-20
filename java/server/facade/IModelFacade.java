@@ -65,4 +65,6 @@ public interface IModelFacade {
     public String maritimeTrade(int gameID, int playerIdx, int ratio, ResourceType input, ResourceType output);
 
     public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources);
+
+	int getCreatedGameId();
 }
