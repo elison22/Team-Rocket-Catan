@@ -47,8 +47,13 @@ public class ServerGame {
     
     public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
     	this.gameName = title;
-    	map = new ServerBoard(randNumbers, randTiles, randPorts);
     	versionNumber = 0;
+    	playerList = new ArrayList<ServerPlayer>();
+    	cardBank = new ServerGameBank();
+    	turnTracker = new ServerTurnTracker();
+    	map = new ServerBoard(randNumbers, randTiles, randPorts);
+    	chat = new ServerChat();
+    	gameHistory = new ServerChat();
     }
 
     public String getGameName() {
@@ -349,18 +354,18 @@ public class ServerGame {
     
     /**
      * Checks with turn state, player, and board to see if road can be built in certain location 
-     * @param playerId	index of player wanting to build road
+     * @param playerIndex index of player wanting to build road
      * @param location	where the player wants to place road
      * @return	true if player can place road at location
      */
-    public boolean canBuildRoad(int playerId, EdgeLocation location) {
+    public boolean canBuildRoad(int playerIndex, EdgeLocation location) {
 
         try {
-    	    if(!turnTracker.canPlayerBuildRoadSettlement(playerId))     //check the turn
+    	    if(!turnTracker.canPlayerBuildRoadSettlement(playerIndex))     //check the turn
                 return false;
-            if(!map.canBuildRoad(location, playerId))                   //check the board
+            if(!map.canBuildRoad(location, playerIndex))                   //check the board
                 return false;
-            if(!playerList.get(playerId).canBuildRoad())                //check the player
+            if(!playerList.get(playerIndex).canBuildRoad())                //check the player
                 return false;
         } catch (ServerBoardException e) {
             return false;

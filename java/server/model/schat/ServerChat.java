@@ -13,6 +13,10 @@ public class ServerChat {
 
     /**The list of chat messages*/
     private ArrayList<ServerMessage> chatMessages;
+    
+    public ServerChat() {
+    	chatMessages = new ArrayList<ServerMessage>();
+    }
 
     /**
      * Creates a chat object with the list of messages that have been
