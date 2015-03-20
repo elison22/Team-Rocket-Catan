@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import shared.dto.CreateGame_Params;
+import shared.dto.JoinGame_Params;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -23,17 +24,23 @@ public class CreateGameHandler extends NonMoveHandler {
 		String[] cookie = decodeCookie(exchange);
 		StringBuilder stringBuild = handleRequestBody(exchange);
 		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);
-		String jsonString = modelFacade.createGame(gameParams);
 		
 		Headers head = exchange.getResponseHeaders();
 		head.set("Content-Type", "application/json");
 		
-		String encode = "catan.game=" + modelFacade.getCreatedGameId() + ";Path=/";
+		int gameId = modelFacade.getCreatedGameId();
+		String encode = "catan.game=" + gameId + ";Path=/";
 		head.add("Set-cookie", encode);
-		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 		
-		sendResponseBody(exchange, jsonString);
-		
+		String jsonString = modelFacade.createGame(gameParams);
+		if(jsonString != null) {
+			JoinGame_Params joinGame = new JoinGame_Params(gameId, "white");
+			modelFacade.joinGame(joinGame, cookie[1], new Integer(cookie[2]));
+			
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			sendResponseBody(exchange, jsonString);
+		} else if(jsonString == null)
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
 		exchange.close();
 	}
 }
