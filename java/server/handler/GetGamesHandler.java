@@ -19,7 +19,7 @@ public class GetGamesHandler implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
+		System.out.println("It's getting here");
 
 	}
 

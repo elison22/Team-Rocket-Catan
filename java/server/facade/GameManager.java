@@ -86,4 +86,16 @@ public class GameManager {
 		games.add(new ServerGame());
 		games.get(games.size() - 1).setGameId(games.size() - 1);
 	}
+	
+	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
+		ServerGame game = games.get(gameId);
+		if (game.getPlayerList().size() >= 4) {
+			// Game is full
+			return false;
+		} else {
+			game.addPlayer(player, playerId, color);
+			return true;
+		}
+		
+	}
 }

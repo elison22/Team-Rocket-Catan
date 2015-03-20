@@ -4,6 +4,7 @@ import java.util.List;
 
 import shared.definitions.ResourceType;
 import shared.dto.CreateGame_Params;
+import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -53,7 +54,7 @@ public class MockModelFacade implements IModelFacade
 	 * @return returns success or failure
 	 */
 	@Override
-	public boolean joinGame(int gameID, String color) {
+	public boolean joinGame(JoinGame_Params params, String user, int userId) {
 		// TODO Auto-generated method stub
 		return false;
 	}

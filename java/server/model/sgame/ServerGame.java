@@ -647,4 +647,8 @@ public class ServerGame {
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
 	}
+	
+	public void addPlayer(String player, int playerId, String color) {
+		
+	}
 }
