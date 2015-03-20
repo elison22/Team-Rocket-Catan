@@ -81,9 +81,9 @@ public class GameManager {
 	 * Creates a new game
 	 * @throws ServerBoardException 
 	 */
-	public void createGame() throws ServerBoardException
+	public void createGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException
 	{
-		games.add(new ServerGame());
+		games.add(new ServerGame(randNumbers, randTiles, randPorts, title));
 		games.get(games.size() - 1).setGameId(games.size() - 1);
 	}
 	

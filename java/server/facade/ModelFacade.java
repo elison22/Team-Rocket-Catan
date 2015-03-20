@@ -11,6 +11,7 @@ import shared.locations.VertexLocation;
 
 import java.util.List;
 
+import model.sboard.ServerBoardException;
 import command.CreateGame_CO;
 import command.ICommandObject;
 
@@ -54,8 +55,13 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String createGame(CreateGame_Params params) {
-		ICommandObject commandObject = new CreateGame_CO(params);
-		commandObject.execute();
+		
+		try {
+			gameManager.createGame(params.getRandomNumbers(), params.getRandomTiles(), params.getRandomPorts(), params.getName());
+		} catch (ServerBoardException e) {
+			return null;
+		}
+		
 		return serializer.serializeNewGame(gameManager.getNewestGame());
 	}
 
