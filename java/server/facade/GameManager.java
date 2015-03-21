@@ -105,13 +105,29 @@ public class GameManager {
 	
 	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
 		ServerGame game = games.get(gameId);
-		if (game.getPlayerList().size() >= 4) {
-			// Game is full
-			return false;
-		} else {
-			game.addPlayer(player, playerId, color);
-			return true;
+		
+		// Make sure the player hasn't already joined the game or
+		// the color isn't already taken
+		for (ServerPlayer gamePlayer : game.getPlayerList()) {
+
+			// If the player is already in the game, don't re-add them
+			if (gamePlayer.getPlayerID() == playerId)
+				return true;
+
+			// If the color has already been taken, don't let them join
+			if (gamePlayer.getColor().equalsIgnoreCase(color))
+				return false;
 		}
 		
+		if (game.getPlayerList().size() >= 4) {
+
+			// Game is full
+			return false;
+
+		}
+
+		game.addPlayer(player, playerId, color);
+		return true;
+
 	}
 }

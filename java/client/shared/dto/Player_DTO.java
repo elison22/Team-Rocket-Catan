@@ -5,7 +5,11 @@ public class Player_DTO {
 	private String name;
 	private Integer id;
 	
-	public Player_DTO() {}
+	public Player_DTO() {
+		color = null;
+		name = null;
+		id = null;
+	}
 	
 	public Player_DTO(String color, String name, int id) {
 		setColor(color);
@@ -26,6 +30,8 @@ public class Player_DTO {
 		this.name = name;
 	}
 	public int getId() {
+		if (id == null)
+			return -1;
 		return id;
 	}
 	public void setId(int id) {
