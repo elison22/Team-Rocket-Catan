@@ -18,7 +18,7 @@ public class ServerConstructable {
      * Initializes the owner and type of this object.
      * @param type The type of constructable, which is 1 of the 3 options in the PieceType enum.
      * @param owner The object owner, which can only be in the range 0-3 inclusive.
-     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * @throws ServerBoardException Thrown when attempting to set the owner to an int outside
      * the range 0-3
      */
     public ServerConstructable(PieceType type, int owner) throws ServerBoardException {
@@ -30,7 +30,7 @@ public class ServerConstructable {
     /**
      * Sets the field owner to the param owner if the owner is within 0-3 inclusive.
      * @param owner An integer representing the player index.
-     * @throws BoardException Thrown when attempting to set the owner to an int outside
+     * @throws ServerBoardException Thrown when attempting to set the owner to an int outside
      * the range 0-3
      */
     public void setOwner(int owner) throws ServerBoardException {
