@@ -33,9 +33,9 @@ public class CreateGameTest {
 		assertNull(modelFacade.createGame(new CreateGame_Params(false, false, false, "_-_")));
 		
 		// Try valid titles
-		assertNotNull(modelFacade.createGame(new CreateGame_Params(false, false, false, "test123")));
-		assertNotNull(modelFacade.createGame(new CreateGame_Params(false, false, false, "1")));
-		assertNotNull(modelFacade.createGame(new CreateGame_Params(false, false, false, "123456789abcDEFGHILMNOPQR")));
+		assertNotNull(modelFacade.createGame(new CreateGame_Params(true, false, false, "test123")));
+		assertNotNull(modelFacade.createGame(new CreateGame_Params(false, true, false, "1")));
+		assertNotNull(modelFacade.createGame(new CreateGame_Params(false, false, true, "123456789abcDEFGHILMNOPQR")));
 	}
 
 }
