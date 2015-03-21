@@ -3,6 +3,7 @@ package model.sboard;
 /**
  * Created by Hayden on 3/12/15.
  */
+@SuppressWarnings("serial")
 public class ServerBoardException extends Exception{
 
     public ServerBoardException() {

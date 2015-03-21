@@ -1,6 +1,5 @@
 package model.scards;
 
-import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 
 import java.util.ArrayList;

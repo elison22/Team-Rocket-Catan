@@ -12,8 +12,6 @@ import shared.locations.VertexLocation;
 import java.util.List;
 
 import model.sboard.ServerBoardException;
-import command.CreateGame_CO;
-import command.ICommandObject;
 
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 

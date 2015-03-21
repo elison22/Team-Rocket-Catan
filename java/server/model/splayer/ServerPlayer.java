@@ -24,7 +24,8 @@ public class ServerPlayer {
     private ServerPlayerBank bank;			        // The player's bank of cards
     private String      color;                  // The player's color
     private boolean     discarded;              // True if the player has discarded this turn.
-    private int         monumentDevs;           // The number of monument cards a player holds. Used to determine when the cards can be played.
+    @SuppressWarnings("unused")
+	private int         monumentDevs;           // The number of monument cards a player holds. Used to determine when the cards can be played.
     private boolean     playedDevCard;          // True if the player has used a dev card this turn.
     private int         playerID;               // The player's unique ID
     private int         playerIdx;				// The player's index in list of players
@@ -165,6 +166,8 @@ public class ServerPlayer {
                     case MONUMENT:
                         int monuments = countMonumentDevs();
                         return (victoryPoints + monuments) >= 10;
+                    default:
+                    	break;
                 }
                 return true;
             }
