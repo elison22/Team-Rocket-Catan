@@ -727,5 +727,34 @@ public class ServerBoard {
         }
         return toReturn;
     }
+
+    public ArrayList<ServerConstructable> getAdjacentBuildings(int diceNum) {
+
+        ArrayList<ServerConstructable> adjBuildings = new ArrayList<ServerConstructable>();
+        for(HexLocation loc : tiles.keySet()) {
+            if(diceNum == tiles.get(loc).getDiceNum()){
+                VertexLocation vloc = new VertexLocation(loc, VertexDirection.West).getNormalizedLocation();
+                if(buildings.containsKey(vloc))
+                    adjBuildings.add(buildings.get(vloc));
+                vloc = new VertexLocation(loc, VertexDirection.NorthEast).getNormalizedLocation();
+                if(buildings.containsKey(vloc))
+                    adjBuildings.add(buildings.get(vloc));
+                vloc = new VertexLocation(loc, VertexDirection.NorthWest).getNormalizedLocation();
+                if(buildings.containsKey(vloc))
+                    adjBuildings.add(buildings.get(vloc));
+                vloc = new VertexLocation(loc, VertexDirection.East).getNormalizedLocation();
+                if(buildings.containsKey(vloc))
+                    adjBuildings.add(buildings.get(vloc));
+                vloc = new VertexLocation(loc, VertexDirection.SouthEast).getNormalizedLocation();
+                if(buildings.containsKey(vloc))
+                    adjBuildings.add(buildings.get(vloc));
+                vloc = new VertexLocation(loc, VertexDirection.SouthWest).getNormalizedLocation();
+                if(buildings.containsKey(vloc))
+                    adjBuildings.add(buildings.get(vloc));
+            }
+        }
+        return adjBuildings;
+    }
+
 }
 

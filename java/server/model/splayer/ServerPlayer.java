@@ -288,7 +288,9 @@ public class ServerPlayer {
      * increments their soldierDevs.
      * @return The dev card type.
      */
-    public void playDevCard(DevCardType type){}
+    public void playDevCard(DevCardType type){
+        bank.playDevCard(new ServerDevCard(type));
+    }
 
     public String getColor()
     {
@@ -310,7 +312,11 @@ public class ServerPlayer {
 
     public ResourceType getRandRes() {
 
-        return bank.removeRandCard();
+        return bank.removeRandRes();
 
+    }
+
+    public int addPoint() {
+        return ++victoryPoints;
     }
 }

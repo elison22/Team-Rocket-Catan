@@ -262,6 +262,7 @@ public class ServerGame {
         try {
             map.doBuildSettlement(location, playerIndex);
             playerList.get(playerIndex).doBuildSettlement();
+            playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.SETTLEMENT);
         } catch (ServerBoardException e) {
             e.printStackTrace();
@@ -281,6 +282,7 @@ public class ServerGame {
         try {
             map.doBuildCity(location, playerIndex);
             playerList.get(playerIndex).doBuildCity();
+            playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.CITY);
         } catch (ServerBoardException e) {
             e.printStackTrace();
@@ -309,12 +311,37 @@ public class ServerGame {
 	}
 
     /***/
-    public boolean doPlayMonopoly(int playerIdx, ResourceType resource) {
+    public boolean doMonopoly(int playerIdx, ResourceType resource) {
         for(int i = 0; i < 4; i++) {
             if(i == playerIdx) continue;
             while(playerList.get(i).decResource(resource))
                 playerList.get(playerIdx).incResource(resource);
         }
+        playerList.get(playerIdx).playDevCard(DevCardType.MONOPOLY);
+        return true;
+    }
+
+    /***/
+    public boolean doMonument(int playerIndex) {
+        playerList.get(playerIndex).addPoint();
+        playerList.get(playerIndex).playDevCard(DevCardType.MONUMENT);
+        return true;
+    }
+
+    /***/
+    public boolean doRoadBuilding(int playerIdx, EdgeLocation road1, EdgeLocation road2) {
+
+        try {
+            map.doBuildRoad(road1, playerIdx);
+            map.doBuildRoad(road2, playerIdx);
+            playerList.get(playerIdx).doBuildRoad(true);
+            playerList.get(playerIdx).doBuildRoad(true);
+            playerList.get(playerIdx).playDevCard(DevCardType.ROAD_BUILD);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 
