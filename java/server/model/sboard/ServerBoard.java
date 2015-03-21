@@ -737,11 +737,11 @@ public class ServerBoard {
 		return ports;
 	}
 
-    public ArrayList<ServerHexTile> getTilesByNum(int diceNum) {
-        ArrayList<ServerHexTile> hexes = new ArrayList<ServerHexTile>();
+    public ArrayList<HexLocation> getHexLocsByNum(int diceNum) {
+        ArrayList<HexLocation> hexes = new ArrayList<HexLocation>();
         for(HexLocation loc : tiles.keySet()) {
             if (diceNum == tiles.get(loc).getDiceNum())
-                hexes.add(tiles.get(loc));
+                hexes.add(loc);
         }
         return hexes;
     }
