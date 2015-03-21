@@ -1,8 +1,10 @@
 package serializer;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import model.sboard.ServerBoard;
 import model.sboard.ServerHexTile;
@@ -228,13 +230,40 @@ public class ServerSerializer {
 	}
 	
 	private JsonTurnTracker convertTurnTracker(ServerTurnTracker turnTracker) {
-		
-		return null;
+		int whosTurn = turnTracker.getCurrentPlayerIndex();
+		String state = turnTracker.getCurrentState().toString();
+		int longestRoad = turnTracker.getLongestRoadPlayerIndex();
+		int largestArmy = turnTracker.getLargestArmyPlayerIndex();
+		return new JsonTurnTracker(whosTurn, state, longestRoad, largestArmy);
 	}
 	
 	private JsonTradeOffer convertTradeOffer(ServerTradeOffer tradeOffer) {
+		int sender = tradeOffer.getSender();
+		int receiver = tradeOffer.getReceiver();
+		HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
+		Iterator<Entry<ResourceType, Integer>> it = offer.entrySet().iterator();
 		
-		return null;
+		int brick = 0;
+		int ore = 0; 
+		int sheep = 0;
+		int wheat = 0;
+		int wood = 0;
+	    while (it.hasNext()) {
+	        Map.Entry<ResourceType, Integer> pair = (Entry<ResourceType, Integer>)it.next();
+	        if(pair.getKey() == ResourceType.BRICK)
+	        	brick = pair.getValue();
+	        else if(pair.getKey() == ResourceType.ORE)
+	        	ore = pair.getValue();
+	        else if(pair.getKey() == ResourceType.SHEEP)
+	        	sheep = pair.getValue();
+	        else if(pair.getKey() == ResourceType.WHEAT)
+	        	wheat = pair.getValue();
+	        else if(pair.getKey() == ResourceType.WOOD)
+	        	wood = pair.getValue();
+	    }
+		JsonResourceList jResList = new JsonResourceList(brick, ore, sheep, wheat, wood);
+		
+		return new JsonTradeOffer(sender, receiver, jResList);
 	}
 
 }
