@@ -120,6 +120,10 @@ public class ServerPlayer {
     public int getSoldierDevs() {
         return soldierDevs;
     }
+    
+    public boolean getPlayerDevCard() {
+    	return playedDevCard;
+    }
 
     public void setPlayedDevCard(boolean hasPlayedDev){
         playedDevCard = hasPlayedDev;

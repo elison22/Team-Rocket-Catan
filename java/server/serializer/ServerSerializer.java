@@ -1,19 +1,23 @@
 package serializer;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 
-import serializer.json.JsonClientModel;
-import serializer.json.JsonMessageLine;
-import serializer.json.JsonMessageList;
-import serializer.json.JsonPlayer;
-import serializer.json.JsonResourceList;
+import serializer.json.*;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.dto.Game_DTO;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+import model.sboard.ServerBoard;
+import model.sboard.ServerHexTile;
+import model.scards.ServerDevCard;
 import model.schat.ServerMessage;
 import model.sgame.ServerGame;
+import model.splayer.ServerPlayer;
 
 /**
  * @author Chad
@@ -64,12 +68,17 @@ public class ServerSerializer {
 		return null;
 	}
 	
+	/**************************************************************************
+	 *  All following methods are used in convert the serverModel into a client
+	 *  compatible Json String. 
+	 **************************************************************************/
+	
 	private JsonClientModel convertServerModel(ServerGame serverModel) {
 		return new JsonClientModel(convertResourceList(serverModel.getCardBank()),
 								   convertChatList(serverModel.getChat()),
-								   null,
-								   null,
-								   null,
+								   convertChatList(serverModel.getGameHistory()),
+								   convertMap(serverModel.getMap()),
+								   convertPlayerList(serverModel.getPlayerList()),
 								   null,
 								   null,
 								   null,
@@ -95,6 +104,114 @@ public class ServerSerializer {
 		}
 		
 		return new JsonMessageList(jsonMessages);
+	}
+	
+	private JsonMap convertMap(ServerBoard map) {
+		return new JsonMap(convertHexes(map.getTiles()),
+						   convertPorts(map.getPorts()),
+						   null,
+						   null,
+						   null,
+						   -1,
+						   null);
+	}
+	
+	private JsonHex[] convertHexes(HashMap<HexLocation, ServerHexTile> tiles) {
+		JsonHex[] jsonHexes = new JsonHex[tiles.size()];
+		
+		int i = 0;
+		for (Map.Entry<HexLocation, ServerHexTile> entry : tiles.entrySet()) {
+			HexLocation hexLocation = entry.getKey();
+			ServerHexTile serverHexTile = entry.getValue();
+			
+			jsonHexes[i] = new JsonHex(new JsonHexLocation(hexLocation.getX(), hexLocation.getY()),
+									   serverHexTile.getType().toString(),
+									   serverHexTile.getDiceNum());
+			++i;
+		}
+		
+		return jsonHexes;
+	}
+	
+	private JsonPort[] convertPorts(HashMap<VertexLocation, PortType> ports) {
+		JsonPort[] jsonPorts = new JsonPort[ports.size()];
+		
+		int i = 0;
+		for (Map.Entry<VertexLocation, PortType> entry : ports.entrySet()) {
+			VertexLocation vertex = entry.getKey();
+			PortType portType = entry.getValue();
+			
+			String resource;
+			int ratio;
+			switch (portType) {
+				case THREE_FOR_ONE:
+					resource = null;
+					ratio = 3;
+				default:
+					resource = portType.toString();
+					ratio = 2;
+			}
+			
+			jsonPorts[i] = new JsonPort(resource,
+									    new JsonHexLocation(vertex.getHexLoc().getX(), vertex.getHexLoc().getY()),
+									    vertex.getDir().toString(),
+									    ratio);
+			++i;
+		}
+		
+		
+		return jsonPorts;
+	}
+	
+	private JsonPlayer[] convertPlayerList(List<ServerPlayer> players) {
+		JsonPlayer[] jsonPlayers = new JsonPlayer[4];
+		
+		int i = 0;
+		for (ServerPlayer player : players) {
+			jsonPlayers[i] = new JsonPlayer(player.getRemainingCities(),
+									 player.getColor(),
+									 player.hasDiscarded(),
+									 player.getBank().getMonumentCount(),
+									 player.getName(),
+									 convertDevCardList(player.getBank().getNewDevCards()),
+									 convertDevCardList(player.getBank().getOldDevCards()),
+									 player.getPlayerIdx(),
+									 player.getPlayerDevCard(),
+									 player.getPlayerID(),
+									 convertResourceList(player.getBank().getResCards()),
+									 player.getRemainingRoads(),
+									 player.getRemainingSettlements(),
+									 player.getSoldierDevs(),
+									 player.getVictoryPoints());
+			++i;
+		}
+		
+		return jsonPlayers;
+	}
+	
+	private JsonDevCardList convertDevCardList(List<ServerDevCard> devCards) {
+		int monopoly = 0;
+		int monument = 0;
+		int roadBuilding = 0;
+		int soldier = 0;
+		int yearOfPlenty = 0;
+		
+		for (ServerDevCard devCard : devCards) {
+			switch (devCard.getType()) {
+				case MONOPOLY:
+					++monopoly;
+				case MONUMENT:
+					++monument;
+				case ROAD_BUILD:
+					++roadBuilding;
+				case SOLDIER:
+					++soldier;
+				case YEAR_OF_PLENTY:
+					++yearOfPlenty;
+			}
+		}
+		
+		return new JsonDevCardList(monopoly, monument, roadBuilding, soldier, yearOfPlenty);
 	}
 
 }

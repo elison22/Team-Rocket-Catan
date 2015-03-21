@@ -27,7 +27,8 @@ public class ServerBoard {
 
     /** The HexTile objects that make up this Board */
     private HashMap<HexLocation, ServerHexTile> tiles = new HashMap<HexLocation, ServerHexTile>();
-    /** The CITY and SETTLEMENT type Constructable objects on this Board */
+
+	/** The CITY and SETTLEMENT type Constructable objects on this Board */
     private HashMap<VertexLocation, ServerConstructable> buildings = new HashMap<VertexLocation, ServerConstructable>();
     /** The ROAD type Constructable objects on this Board */
     private HashMap<EdgeLocation, ServerConstructable> roads = new HashMap<EdgeLocation, ServerConstructable>();
@@ -259,6 +260,10 @@ public class ServerBoard {
         checkPlayerIndex(new VertexLocation(robber, VertexDirection.SouthWest), playersToRob);
         return playersToRob;
     }
+    
+    public HashMap<HexLocation, ServerHexTile> getTiles() {
+		return tiles;
+	}
 
     private void checkPlayerIndex(VertexLocation loc, HashSet<Integer> playerSet) {
         loc = loc.getNormalizedLocation();
@@ -727,5 +732,9 @@ public class ServerBoard {
         }
         return toReturn;
     }
+
+	public HashMap<VertexLocation, PortType> getPorts() {
+		return ports;
+	}
 }
 
