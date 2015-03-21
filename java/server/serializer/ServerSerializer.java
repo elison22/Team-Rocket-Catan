@@ -1,9 +1,18 @@
 package serializer;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.gson.Gson;
 
+import serializer.json.JsonClientModel;
+import serializer.json.JsonMessageLine;
+import serializer.json.JsonMessageList;
 import serializer.json.JsonPlayer;
+import serializer.json.JsonResourceList;
+import shared.definitions.ResourceType;
 import shared.dto.Game_DTO;
+import model.schat.ServerMessage;
 import model.sgame.ServerGame;
 
 /**
@@ -21,11 +30,11 @@ public class ServerSerializer {
 	
 	/**Converts a given model into json format.
 	 * 
-	 * @param gameModel The model of the game to be serialized.
+	 * @param serverModel The model of the game to be serialized.
 	 * @return The json format of the model as a String.
 	 */
-	public String serializeGameModel(ServerGame gameModel) {
-		return null;
+	public String serializeGameModel(ServerGame serverModel) {
+		return gson.toJson(convertServerModel(serverModel));
 	}
 	
 	/**Converts the current list of games to a json array inside a String.
@@ -53,6 +62,39 @@ public class ServerSerializer {
 	 */
 	public String serializeCookie(JsonPlayer player) {
 		return null;
+	}
+	
+	private JsonClientModel convertServerModel(ServerGame serverModel) {
+		return new JsonClientModel(convertResourceList(serverModel.getCardBank()),
+								   convertChatList(serverModel.getChat()),
+								   null,
+								   null,
+								   null,
+								   null,
+								   null,
+								   null,
+								   -1,
+								   -1);
+	}
+	
+	private JsonResourceList convertResourceList(Map<ResourceType, Integer> resourceMap) {
+		return new JsonResourceList(resourceMap.get(ResourceType.BRICK), 
+									resourceMap.get(ResourceType.ORE),
+									resourceMap.get(ResourceType.SHEEP),
+									resourceMap.get(ResourceType.WHEAT),
+									resourceMap.get(ResourceType.WOOD));
+	}
+	
+	private JsonMessageList convertChatList(List<ServerMessage> messages) {
+		JsonMessageLine[] jsonMessages = new JsonMessageLine[messages.size()];
+		
+		int i = 0;
+		for (ServerMessage sm : messages) {
+			jsonMessages[i] = new JsonMessageLine(sm.getMessage(), sm.getOwner());
+			++i;
+		}
+		
+		return new JsonMessageList(jsonMessages);
 	}
 
 }

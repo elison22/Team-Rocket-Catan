@@ -10,6 +10,7 @@ import model.sboard.ServerConstructable;
 import model.scards.ServerDevCard;
 import model.scards.ServerGameBank;
 import model.schat.ServerChat;
+import model.schat.ServerMessage;
 import model.sgame.ServerTurnState;
 import model.sgame.ServerTurnTracker;
 import model.splayer.ServerPlayer;
@@ -87,8 +88,8 @@ public class ServerGame {
         this.playerList = playerList;
     }
 
-    public ServerGameBank getCardBank() {
-        return cardBank;
+    public HashMap<ResourceType, Integer> getCardBank() {
+        return cardBank.getResCards();
     }
 
     public void setCardBank(ServerGameBank cardBank) {
@@ -163,9 +164,9 @@ public class ServerGame {
         return turnTracker;
     }
 
-    public ServerChat getChat()
+    public ArrayList<ServerMessage> getChat()
     {
-        return chat;
+        return chat.getChatMessages();
     }
 
     public ServerChat getGameHistory()
