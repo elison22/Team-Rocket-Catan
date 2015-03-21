@@ -80,7 +80,7 @@ public class ServerSerializer {
 								   convertMap(serverModel.getMap()),
 								   convertPlayerList(serverModel.getPlayerList()),
 								   null,
-								   null,
+								   convertDevCardList(serverModel.getDevBank()),
 								   null,
 								   -1,
 								   -1);
