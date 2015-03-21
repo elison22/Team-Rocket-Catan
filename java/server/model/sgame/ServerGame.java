@@ -3,6 +3,7 @@ package model.sgame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import model.sboard.ServerBoard;
 import model.sboard.ServerBoardException;
@@ -48,7 +49,7 @@ public class ServerGame {
         versionNumber = -1;
     	//winner = -1;
     }
-    
+
     public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
     	this.gameName = title;
     	versionNumber = 0;
@@ -110,7 +111,7 @@ public class ServerGame {
     public int getLongestRoad() {
         return turnTracker.getLongestRoadPlayerIndex();
     }
-    
+
     public int getLargestArmy() {
     	return turnTracker.getLargestArmyPlayerIndex();
     }
@@ -126,11 +127,11 @@ public class ServerGame {
     public void setMap(ServerBoard map) {
         this.map = map;
     }
-    
+
     public ArrayList<String> getAiList() {
     	return aiList;
     }
-    
+
     public void setChat(ServerChat chat) {
 		this.chat = chat;
 	}
@@ -150,7 +151,7 @@ public class ServerGame {
 	public void setWinner(int winner) {
 		this.winner = winner;
 	}
-	
+
 	public void setTradeOffer(ServerTradeOffer trade) {
 		tradeOffer = trade;
 	}
@@ -233,7 +234,7 @@ public class ServerGame {
     //**********************************************************
     //**** DO METHODS ******************************************
     //**********************************************************
-	
+
 	/**
 	 * Builds a road for a player at the given location
 	 * @param playerIndex blah
@@ -290,7 +291,7 @@ public class ServerGame {
         }
         return true;
     }
-	
+
 	/**
 	 * Moves the robber and robs a player
 	 * @param robber index of player robbing
@@ -370,6 +371,16 @@ public class ServerGame {
         turnTracker.setNumRolled(numberRolled);
 		return true;
 	}
+
+    public boolean doDiscardCards(int playerIndex, HashMap<Integer, ResourceType> resourceList){
+        ServerPlayer playerDiscarding = playerList.get(playerIndex);
+        for(Map.Entry<Integer, ResourceType> entry : resourceList.entrySet()){
+            for(int i = 0; i < entry.getKey(); i++){
+                playerDiscarding.decResource(entry.getValue());
+            }
+        }
+        return false;
+    }
 	
 	/**
 	 * Completes a maritime trade for the given player with the resources stored in the ServerTradeOffer
