@@ -4,20 +4,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
-
-import serializer.json.*;
-import shared.definitions.PortType;
-import shared.definitions.ResourceType;
-import shared.dto.Game_DTO;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 import model.sboard.ServerBoard;
 import model.sboard.ServerHexTile;
 import model.scards.ServerDevCard;
 import model.schat.ServerMessage;
 import model.sgame.ServerGame;
+import model.sgame.ServerTurnTracker;
 import model.splayer.ServerPlayer;
+import model.strade.ServerTradeOffer;
+import serializer.json.JsonClientModel;
+import serializer.json.JsonDevCardList;
+import serializer.json.JsonHex;
+import serializer.json.JsonHexLocation;
+import serializer.json.JsonMap;
+import serializer.json.JsonMessageLine;
+import serializer.json.JsonMessageList;
+import serializer.json.JsonPlayer;
+import serializer.json.JsonPort;
+import serializer.json.JsonResourceList;
+import serializer.json.JsonTradeOffer;
+import serializer.json.JsonTurnTracker;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.dto.Game_DTO;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+
+import com.google.gson.Gson;
 
 /**
  * @author Chad
@@ -79,11 +92,11 @@ public class ServerSerializer {
 								   convertChatList(serverModel.getGameHistory()),
 								   convertMap(serverModel.getMap()),
 								   convertPlayerList(serverModel.getPlayerList()),
-								   null,
+								   convertTradeOffer(serverModel.getTradeOffer()),
 								   convertDevCardList(serverModel.getDevBank()),
-								   null,
-								   -1,
-								   -1);
+								   convertTurnTracker(serverModel.getTurnTracker()),
+								   serverModel.getVersionNumber(),
+								   serverModel.getWinner());
 	}
 	
 	private JsonResourceList convertResourceList(Map<ResourceType, Integer> resourceMap) {
@@ -212,6 +225,16 @@ public class ServerSerializer {
 		}
 		
 		return new JsonDevCardList(monopoly, monument, roadBuilding, soldier, yearOfPlenty);
+	}
+	
+	private JsonTurnTracker convertTurnTracker(ServerTurnTracker turnTracker) {
+		
+		return null;
+	}
+	
+	private JsonTradeOffer convertTradeOffer(ServerTradeOffer tradeOffer) {
+		
+		return null;
 	}
 
 }
