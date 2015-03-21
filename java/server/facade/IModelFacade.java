@@ -2,6 +2,7 @@ package facade;
 
 
 import shared.definitions.ResourceType;
+import shared.dto.BuyDevCard_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
@@ -41,7 +42,7 @@ public interface IModelFacade {
 
     public String finishTurn(int gameID, int playerIdx);
 
-    public String buyDevCard(int gameID, int playerIdx);
+    public String buyDevCard(BuyDevCard_Params params, int gameID, int playerIdx);
 
     public String doYearOfPlenty(int gameID, int playerIdx, ResourceType resource1, ResourceType resource2);
 

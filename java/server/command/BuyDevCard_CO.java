@@ -1,5 +1,7 @@
 package command;
 
+import facade.GameManager;
+import model.sgame.ServerGame;
 import shared.dto.BuyDevCard_Params;
 import facade.IModelFacade;
 
@@ -18,7 +20,7 @@ public class BuyDevCard_CO implements ICommandObject {
 	 * @param gameId Id of the game the player is in.
 	 * @param params Parameters for buying a dev card.
 	 */
-	public BuyDevCard_CO(int gameId, BuyDevCard_Params params) {
+	public BuyDevCard_CO(int gameId, BuyDevCard_Params params, GameManager manager) {
 		this.gameId = gameId;
 		this.params = params;
 	}

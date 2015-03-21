@@ -1,8 +1,10 @@
 package facade;
 
+import command.BuyDevCard_CO;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
+import shared.dto.BuyDevCard_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
@@ -208,9 +210,11 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buyDevCard(int gameID, int playerIdx) {
+	public String buyDevCard(BuyDevCard_Params params, int gameID, int playerIdx) {
 		// TODO Auto-generated method stub
-		return null;
+        BuyDevCard_CO command = new BuyDevCard_CO(gameID, params, gameManager);
+//        return serializer.serializeGameModel(command.execute());
+        return null;
 	}
 
 	/**
