@@ -202,7 +202,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
+		
 		if (!getNewGameView().getTitle().isEmpty()) {
+			
+			// Check that the game name is valid (alphanumeric under 25 chars)
+			String namePattern = "^[0-9a-zA-Z]{1,25}$";
+			if (!getNewGameView().getTitle().matches(namePattern)) {
+				getNewGameView().showDialog("Please use only alphanumeric characters.");
+				return;
+			}
+			
 			// Create new game
 			if (modelFacade.CreateGame(getNewGameView().getTitle(), 
 				       getNewGameView().getRandomlyPlaceHexes(), 
