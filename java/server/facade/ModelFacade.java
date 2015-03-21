@@ -380,4 +380,9 @@ public class ModelFacade implements IModelFacade {
 	public int getCreatedGameId() {
 		return gameManager.getNewestGameId();
 	}
+
+	@Override
+	public int getVersionId(int gameId) {
+		return gameManager.getVersionId(gameId);
+	}
 }

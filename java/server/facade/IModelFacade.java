@@ -68,4 +68,6 @@ public interface IModelFacade {
     public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources);
 
 	int getCreatedGameId();
+	
+	public int getVersionId(int gameId);
 }

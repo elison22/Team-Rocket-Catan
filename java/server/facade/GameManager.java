@@ -130,4 +130,8 @@ public class GameManager {
 		return true;
 
 	}
+	
+	public int getVersionId(int gameId) {
+		return games.get(gameId).getVersionNumber();
+	}
 }
