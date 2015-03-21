@@ -36,12 +36,14 @@ public abstract class NonMoveHandler implements HttpHandler {
 		String value = URLDecoder.decode(headerValue, "UTF-8");
 		String[] values = value.split(",");
 		
-		String[] cookieItems = new String[3];
+		String[] idGame = values[3].split(";");
+		
+		String[] cookieItems = new String[4];
 		cookieItems[0] = values[1].substring(8, values[1].length() - 1);
 		cookieItems[1] = values[2].substring(12, values[2].length() - 1);
-		cookieItems[2] = values[3].substring(11, values[3].length() - 1);
-		if(values.length == 5)
-			cookieItems[3] = values[4].substring(11, values[4].length() - 1);
+		cookieItems[2] = idGame[0].substring(11, idGame[0].length() - 1);
+		if(idGame.length == 2)
+			cookieItems[3] = idGame[1].substring(12, idGame[1].length());
 		
 		return cookieItems;
 	}

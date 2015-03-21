@@ -1,14 +1,13 @@
 package handler;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 
 import shared.dto.JoinGame_Params;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
-import command.ICommandObject;
 import facade.IModelFacade;
 
 public class JoinGameHandler extends NonMoveHandler {
@@ -27,17 +26,19 @@ public class JoinGameHandler extends NonMoveHandler {
 		JoinGame_Params params = gson.fromJson(stringBuild.toString(), JoinGame_Params.class);
 		
 		Headers head = exchange.getResponseHeaders();
-		head.set("Content-Type", "application/json");
-		
+		head.set("Content-Type", "text/html");
 		int gameId = modelFacade.getCreatedGameId();
 		String encode = "catan.game=" + gameId + ";Path=/;";
 		head.add("Set-cookie", encode);
-		System.out.println(cookie[1] + " " + cookie[2]);
+		
 		if(modelFacade.joinGame(params, cookie[1], new Integer(cookie[2]))) {
-			
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			sendResponseBody(exchange, "Success");
 		} else {
-			
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
+			sendResponseBody(exchange, "Internal Error!");
 		}
+		exchange.close();
 	}
 
 }

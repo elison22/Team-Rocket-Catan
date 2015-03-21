@@ -21,7 +21,6 @@ public class CreateGameHandler extends NonMoveHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		String[] cookie = decodeCookie(exchange);
 		StringBuilder stringBuild = handleRequestBody(exchange);
 		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);
 		
@@ -29,15 +28,11 @@ public class CreateGameHandler extends NonMoveHandler {
 		
 		Headers head = exchange.getResponseHeaders();
 		head.set("Content-Type", "application/json");
-		
 		int gameId = modelFacade.getCreatedGameId();
 		String encode = "catan.game=" + gameId + ";Path=/;";
 		head.add("Set-cookie", encode);
 		
 		if(jsonString != null) {
-			//JoinGame_Params joinGame = new JoinGame_Params(gameId, "white");
-			//modelFacade.joinGame(joinGame, cookie[1], new Integer(cookie[2]));
-			
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			sendResponseBody(exchange, jsonString);
 		} else if(jsonString == null) {
