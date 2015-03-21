@@ -259,6 +259,10 @@ public class ServerBoard {
         checkPlayerIndex(new VertexLocation(robber, VertexDirection.SouthWest), playersToRob);
         return playersToRob;
     }
+    
+    public HashMap<HexLocation, ServerHexTile> getTiles() {
+		return tiles;
+	}
 
     private void checkPlayerIndex(VertexLocation loc, HashSet<Integer> playerSet) {
         loc = loc.getNormalizedLocation();
@@ -727,6 +731,10 @@ public class ServerBoard {
         }
         return toReturn;
     }
+
+	public HashMap<VertexLocation, PortType> getPorts() {
+		return ports;
+	}
 
     public ArrayList<ServerConstructable> getAdjacentBuildings(int diceNum) {
 

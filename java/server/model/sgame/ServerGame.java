@@ -169,9 +169,9 @@ public class ServerGame {
         return chat.getChatMessages();
     }
 
-    public ServerChat getGameHistory()
+    public ArrayList<ServerMessage> getGameHistory()
     {
-        return gameHistory;
+        return gameHistory.getChatMessages();
     }
 
     public HexLocation getRobberLoc() {
@@ -365,6 +365,9 @@ public class ServerGame {
 	 */
 	public boolean doRoll(int playerIndex, int numberRolled)
 	{
+        //What do we use playerIndex for? According to the Swagger page, this is part of the /rollNumber operation
+        //but shouldn't we already know whose turn it is from the TurnTracker?
+        turnTracker.setNumRolled(numberRolled);
 		return true;
 	}
 	
@@ -388,6 +391,8 @@ public class ServerGame {
      */
     public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
     {
+        ServerPlayer offeringPlayer = playerList.get(offerer);
+        ServerPlayer receivingPlayer = playerList.get(receiver);
         return true;
     }
 	

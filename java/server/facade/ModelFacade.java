@@ -111,8 +111,7 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String getGameModel(int gameID) {
-		// TODO Auto-generated method stub
-		return null;
+		return serializer.serializeGameModel(gameManager.getGame(gameID));
 	}
 
 	/**
@@ -380,5 +379,10 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public int getCreatedGameId() {
 		return gameManager.getNewestGameId();
+	}
+
+	@Override
+	public int getVersionId(int gameId) {
+		return gameManager.getVersionId(gameId);
 	}
 }
