@@ -92,6 +92,10 @@ public class ServerGame {
     public HashMap<ResourceType, Integer> getCardBank() {
         return cardBank.getResCards();
     }
+    
+    public ArrayList<ServerDevCard> getDevBank() {
+    	return cardBank.getDevCards();
+    }
 
     public void setCardBank(ServerGameBank cardBank) {
         this.cardBank = cardBank;
