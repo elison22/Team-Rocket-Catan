@@ -20,7 +20,7 @@ public class BuildRoadHandler extends MovesHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
-		handleCookie(exchange, modelFacade);
+		String[] cookieItems = decodeCookie(exchange);
 	}
 
 }
