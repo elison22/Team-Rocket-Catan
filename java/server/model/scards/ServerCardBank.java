@@ -32,8 +32,8 @@ public class ServerCardBank {
      * @param card The type of resource card to be given to the player
      * @return Whether a card was given to the player or not.
      */
-    public boolean giveResourceCard(ResourceType card){
-    	if(canGiveResource(card))
+    public boolean removeResourceCard(ResourceType card){
+    	if(canRemoveResource(card))
     	{
     		int resourceCount = resCards.get(card);
     		resourceCount--;
@@ -43,7 +43,7 @@ public class ServerCardBank {
     	else return false;
     }
     
-    public boolean canGiveResource(ResourceType card)
+    public boolean canRemoveResource(ResourceType card)
     {
     	if(resCards.get(card) > 0)
     		return true;

@@ -307,7 +307,17 @@ public class ServerGame {
         }
         return true;
 	}
-	
+
+    /***/
+    public boolean doPlayMonopoly(int playerIdx, ResourceType resource) {
+        for(int i = 0; i < 4; i++) {
+            if(i == playerIdx) continue;
+            while(playerList.get(i).decResource(resource))
+                playerList.get(playerIdx).incResource(resource);
+        }
+        return true;
+    }
+
 	/**
 	 * Buys a development card for the player
 	 * @param playerIndex blah
@@ -319,11 +329,11 @@ public class ServerGame {
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
 		return true;
 	}
-	
+
 	/**
 	 * Rewards resources or starts discard phase based on the number rolled
-	 * @param playerIndex
-	 * @param numberRolled
+	 * @param playerIndex blah
+	 * @param numberRolled blah
 	 * @return true if valid and successful, else false
 	 */
 	public boolean doRoll(int playerIndex, int numberRolled)
@@ -341,6 +351,18 @@ public class ServerGame {
 	{
 		return true;
 	}
+
+    /**
+     * Changes resources listed in the ServerTradeOffer between the offerer and receiver
+     * @param offerer blah
+     * @param receiver blah
+     * @param tradeOffer blah
+     * @return blah
+     */
+    public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
+    {
+        return true;
+    }
 	
 	/**
 	 * Sends an offer of a trade to the receiving player with the resources stored in the ServerTradeOffer
@@ -353,18 +375,10 @@ public class ServerGame {
 	{
 		return true;
 	}
-	
-	/**
-	 * Changes resources listed in the ServerTradeOffer between the offerer and receiver
-	 * @param offerer blah
-	 * @param receiver blah
-	 * @param tradeOffer blah
-	 * @return blah
-	 */
-	public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
-	{
-		return true;
-	}
+
+    public void addPlayer(String player, int playerId, String color) {
+        playerList.add(new ServerPlayer(playerList.size(), playerId, player, color));
+    }
 
     //**********************************************************
     //**** CAN DO METHODS **************************************
@@ -463,6 +477,7 @@ public class ServerGame {
         return true;
 
     }
+
 	/**
 	 * Checks to see if the player can build the second road of the RoadBuilding card
 	 * @param first
@@ -478,6 +493,7 @@ public class ServerGame {
         }
         return false;
     }
+
     /**
      * Checks to see if the player picked a valid location for his initial roads
      * @param playerId
@@ -529,6 +545,7 @@ public class ServerGame {
         }
         return true;
     }
+
     /**
      * Checks to see if the player picked a valid location for his initial settlement
      * @param playerId
@@ -548,8 +565,7 @@ public class ServerGame {
         }
         return false;
     }
-    
-    
+
     /**
      *  Checks to see if the gui should allow a player to build a city or not.
      * @param playerIndex
@@ -658,8 +674,6 @@ public class ServerGame {
         }
     	return false;
     }
-	
-	public void addPlayer(String player, int playerId, String color) {
-		playerList.add(new ServerPlayer(playerList.size(), playerId, player, color));
-	}
+
+
 }
