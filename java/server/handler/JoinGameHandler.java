@@ -32,7 +32,7 @@ public class JoinGameHandler extends NonMoveHandler {
 		int gameId = modelFacade.getCreatedGameId();
 		String encode = "catan.game=" + gameId + ";Path=/;";
 		head.add("Set-cookie", encode);
-		
+		System.out.println(cookie[1] + " " + cookie[2]);
 		if(modelFacade.joinGame(params, cookie[1], new Integer(cookie[2]))) {
 			
 		} else {

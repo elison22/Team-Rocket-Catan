@@ -49,14 +49,15 @@ public class GameManager {
 		List<Player_DTO> playerList = new ArrayList<Player_DTO>();
 		
 		for (ServerPlayer player : model.getPlayerList()) {
-			if (player == null) {
-				playerList.add(new Player_DTO());
-			} else {
-				playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
-			}
-				
-			
+			playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
 		}
+		
+		// If there are less than 4 players, fill it with empty player objects
+		while (playerList.size() < 4) {
+			playerList.add(new Player_DTO());
+		}
+		
+		// Convert list to array
 		Player_DTO[] arr = playerList.toArray(new Player_DTO[playerList.size()]);
 		
 		return new Game_DTO(model.getGameName(), model.getGameId(), arr);
@@ -73,10 +74,19 @@ public class GameManager {
 			
 			List<Player_DTO> playerList = new ArrayList<Player_DTO>();
 			
+			// Retrieve the players who have joined the game
 			for (ServerPlayer player : game.getPlayerList()) {
 				playerList.add(new Player_DTO(player.getColor(), player.getName(), player.getPlayerID()));
 			}
+			
+			// If there are less than 4 players, fill it with empty player objects
+			while (playerList.size() < 4) {
+				playerList.add(new Player_DTO());
+			}
+			
+			// Convert playerlist to array
 			Player_DTO[] arr = playerList.toArray(new Player_DTO[playerList.size()]);
+			
 			gameList.add(new Game_DTO(game.getGameName(), game.getGameId(), arr));
 		}
 		
