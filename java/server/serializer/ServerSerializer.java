@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import model.sboard.ServerBoard;
+import model.sboard.ServerConstructable;
 import model.sboard.ServerHexTile;
 import model.scards.ServerDevCard;
 import model.schat.ServerMessage;
@@ -24,11 +25,14 @@ import serializer.json.JsonMessageList;
 import serializer.json.JsonPlayer;
 import serializer.json.JsonPort;
 import serializer.json.JsonResourceList;
+import serializer.json.JsonRoad;
 import serializer.json.JsonTradeOffer;
 import serializer.json.JsonTurnTracker;
+import serializer.json.JsonVertexObject;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.dto.Game_DTO;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
@@ -117,18 +121,17 @@ public class ServerSerializer {
 			jsonMessages[i] = new JsonMessageLine(sm.getMessage(), sm.getOwner());
 			++i;
 		}
-		
 		return new JsonMessageList(jsonMessages);
 	}
 	
 	private JsonMap convertMap(ServerBoard map) {
 		return new JsonMap(convertHexes(map.getTiles()),
 						   convertPorts(map.getPorts()),
-						   null,
-						   null,
-						   null,
-						   -1,
-						   null);
+						   convertRoads(map.getRoadPieces()),
+						   convertSettlements(map.getBuildingPieces()),
+						   convertCities(map.getBuildingPieces()),
+						   -1,//radius
+						   convertRobber(map.getRobberLoc()));
 	}
 	
 	private JsonHex[] convertHexes(HashMap<HexLocation, ServerHexTile> tiles) {
@@ -144,7 +147,6 @@ public class ServerSerializer {
 									   serverHexTile.getDiceNum());
 			++i;
 		}
-		
 		return jsonHexes;
 	}
 	
@@ -173,9 +175,27 @@ public class ServerSerializer {
 									    ratio);
 			++i;
 		}
-		
-		
 		return jsonPorts;
+	}
+	
+	private JsonRoad[] convertRoads(HashMap<EdgeLocation, ServerConstructable>roads) {
+		
+		return null;
+	}
+	
+	private JsonVertexObject[] convertSettlements(HashMap<VertexLocation, ServerConstructable> buildings) {
+		
+		return null;
+	}
+	
+	private JsonVertexObject[] convertCities(HashMap<VertexLocation, ServerConstructable> buildings) {
+		
+		return null;
+	}
+	
+	private JsonHexLocation convertRobber(HexLocation loc) {
+		
+		return new JsonHexLocation(loc.getX(), loc.getY());
 	}
 	
 	private JsonPlayer[] convertPlayerList(List<ServerPlayer> players) {
@@ -200,7 +220,6 @@ public class ServerSerializer {
 									 player.getVictoryPoints());
 			++i;
 		}
-		
 		return jsonPlayers;
 	}
 	
@@ -225,7 +244,6 @@ public class ServerSerializer {
 					++yearOfPlenty;
 			}
 		}
-		
 		return new JsonDevCardList(monopoly, monument, roadBuilding, soldier, yearOfPlenty);
 	}
 	
@@ -268,5 +286,4 @@ public class ServerSerializer {
 		}
 		return null;
 	}
-
 }
