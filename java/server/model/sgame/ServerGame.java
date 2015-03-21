@@ -164,7 +164,6 @@ public class ServerGame {
 	 */
 	public boolean doBuildRoad(int playerIndex, EdgeLocation location, boolean isFree)
 	{
-		if(!canBuildRoad(playerIndex, location)) return false;
         try {
             map.doBuildRoad(location, playerIndex);
             playerList.get(playerIndex).doBuildRoad(isFree);
@@ -222,7 +221,6 @@ public class ServerGame {
 	 */
 	public boolean doBuildSettlement(int playerIndex, VertexLocation location)
 	{
-        if(!canBuildSettlement(playerIndex, location)) return false;
         try {
             map.doBuildSettlement(location, playerIndex);
             playerList.get(playerIndex).doBuildSettlement();
@@ -242,8 +240,7 @@ public class ServerGame {
 	 * @return true if valid and successful, else false
 	 */
 	public boolean doBuildCity(int playerIndex, VertexLocation location)
-	{
-        if(!canBuildCity(playerIndex, location)) return false;
+    {
         try {
             map.doBuildCity(location, playerIndex);
             playerList.get(playerIndex).doBuildCity();
