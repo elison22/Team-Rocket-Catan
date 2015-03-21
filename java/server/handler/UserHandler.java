@@ -60,7 +60,7 @@ public abstract class UserHandler implements HttpHandler {
 			
 			// write response body
 			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
-			os.write(new String("success"));
+			os.write(new String("Success"));
 			os.close();
 			
 		} else {

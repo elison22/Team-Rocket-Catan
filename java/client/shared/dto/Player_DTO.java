@@ -3,7 +3,7 @@ package shared.dto;
 public class Player_DTO {
 	private String color;
 	private String name;
-	private int id;
+	private Integer id;
 	
 	public Player_DTO() {}
 	

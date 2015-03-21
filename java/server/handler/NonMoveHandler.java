@@ -40,6 +40,8 @@ public abstract class NonMoveHandler implements HttpHandler {
 		cookieItems[0] = values[1].substring(8, values[1].length() - 1);
 		cookieItems[1] = values[2].substring(12, values[2].length() - 1);
 		cookieItems[2] = values[3].substring(11, values[3].length() - 1);
+		if(values.length == 5)
+			cookieItems[3] = values[4].substring(11, values[4].length() - 1);
 		
 		return cookieItems;
 	}
@@ -59,6 +61,10 @@ public abstract class NonMoveHandler implements HttpHandler {
 		OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
 		os.write(message);
 		os.close();
+	}
+	
+	public void setGameCookie(HttpExchange exchange) {
+		
 	}
 
 }
