@@ -239,12 +239,16 @@ public class ServerPlayer {
      * Increments the resource count for the given type.
      * @param type The resource to take.
      */
-    public void incResource(ResourceType type){}
+    public void incResource(ResourceType type){
+        bank.receiveResourceCard(type);
+    }
 
     /**
      * Decrements the resource count for the given type.
      */
-    public void decResource(ResourceType type){}
+    public boolean decResource(ResourceType type){
+        return bank.removeResourceCard(type);
+    }
 
     /**
      * Decrements the road count. Also decrements the necessary resources if
