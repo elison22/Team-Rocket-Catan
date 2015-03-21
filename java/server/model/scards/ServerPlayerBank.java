@@ -50,7 +50,6 @@ public class ServerPlayerBank extends ServerCardBank {
         }
         for(int i = 0; i< jsonDevCards.getMonument(); i++){
             devCardList.add(new ServerDevCard(DevCardType.MONUMENT));
-            // TODO We need some way to know which monument card the player has (ie. Library, University, etc.)
         }
         for(int i = 0; i < jsonDevCards.getRoadBuilding(); i++){
             devCardList.add(new ServerDevCard(DevCardType.ROAD_BUILD));
