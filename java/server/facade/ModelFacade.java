@@ -47,10 +47,7 @@ public class ModelFacade implements IModelFacade {
 
 	/**
 	 * Creates a new game on the server
-	 * @param randomTiles whether the game should have randomly placed resource tiles
-	 * @param randomNumbers whether the game should randomly place chits
-	 * @param randomPorts whether the game should randomly place ports
-	 * @param name the name of the game
+	 * @param params blah
 	 * @return returns a JSON string with the new game information
 	 */
 	@Override
@@ -67,8 +64,9 @@ public class ModelFacade implements IModelFacade {
 
 	/**
 	 * Allows a user to join a game if the game isn't full
-	 * @param gameID The ID of the game that has been requested
-	 * @param color The color the player has selected upon joining the game
+	 * @param params blah
+	 * @param player blah
+     * @param playerId blah
 	 * @return returns success or failure
 	 */
 	@Override
@@ -76,8 +74,8 @@ public class ModelFacade implements IModelFacade {
 		// Verify the color is valid
 		if (CatanColor.convert(params.getColor()) == null)
 			return false;
-		
-		return gameManager.addPlayerToGame(params.getId(), player, playerId, params.getColor());
+		else
+		    return gameManager.addPlayerToGame(params.getId(), player, playerId, params.getColor());
 	}
 
 	/**

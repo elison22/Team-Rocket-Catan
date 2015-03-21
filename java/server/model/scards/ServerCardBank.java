@@ -57,9 +57,9 @@ public class ServerCardBank {
      * @param card The type of resource taken.
      * @return Whether a card was taken or not.
      */
-    public void receiveCard(ResourceType card){
+    public void receiveResourceCard(ResourceType card){
     	int resourceCount = resCards.get(card);
-		resourceCount--;
+		resourceCount++;
 		resCards.put(card, resourceCount);
     }
 

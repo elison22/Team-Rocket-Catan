@@ -300,4 +300,10 @@ public class ServerPlayer {
     public boolean hasDiscarded() {
         return discarded;
     }
+
+    public ResourceType getRandRes() {
+
+        return bank.removeRandCard();
+
+    }
 }

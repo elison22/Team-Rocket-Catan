@@ -195,7 +195,19 @@ public class ServerPlayerBank extends ServerCardBank {
                 return;
             default:
         }
+    }
 
+    public ResourceType removeRandCard() {
+        int deckSize = getResCount();
+        int chosenCardIndex = rand.nextInt() % deckSize;
+        ResourceType chosenRes = null;
+        for(ResourceType res : resCards.keySet()) {
+            chosenCardIndex -= resCards.get(res);
+            if(chosenCardIndex <= 0)
+                chosenRes = res;
+        }
+        resCards.put(chosenRes, resCards.get(chosenRes) - 1);
+        return chosenRes;
     }
 
 

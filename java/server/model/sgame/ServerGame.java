@@ -21,9 +21,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
-/**
- * Created by Hayden on 3/13/15.
- */
+
 public class ServerGame {
 	private String gameName;
     private int versionNumber;
@@ -37,6 +35,10 @@ public class ServerGame {
     private int winner;
     private ServerTradeOffer tradeOffer;
     private int gameId;
+
+    //**********************************************************
+    //**** CONSTRUCTORS ****************************************
+    //**********************************************************
 
     public ServerGame() throws ServerBoardException {
     	aiList = new ArrayList<String>();
@@ -56,6 +58,10 @@ public class ServerGame {
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
     }
+
+    //**********************************************************
+    //**** GETTERS AND SETTERS *********************************
+    //**********************************************************
 
     public String getGameName() {
         return gameName;
@@ -151,19 +157,89 @@ public class ServerGame {
 	public ServerTradeOffer getTradeOffer() {
 		return tradeOffer;
 	}
-	
-	public boolean canPlayerTrade(int playerIndex) {
-		return turnTracker.canPlayerTrade(playerIndex);
-	}
+
+    public ServerTurnTracker getTurnTracker()
+    {
+        return turnTracker;
+    }
+
+    public ServerChat getChat()
+    {
+        return chat;
+    }
+
+    public ServerChat getGameHistory()
+    {
+        return gameHistory;
+    }
+
+    public HexLocation getRobberLoc() {
+        return map.getRobberLoc();
+    }
+
+    public PortType getPortType(EdgeLocation loc) {
+        return map.getPortType(loc);
+    }
+
+    public HexType getHexType(HexLocation loc) {
+        return map.getHexType(loc);
+    }
+
+    public int getChit(HexLocation loc) {
+        return map.getChit(loc);
+    }
+
+    public HashMap<EdgeLocation, ServerConstructable> getRoadPieces() {
+        return map.getRoadPieces();
+    }
+
+    public HashMap<VertexLocation, ServerConstructable> getBuildingPieces() {
+        return map.getBuildingPieces();
+    }
+
+    public CatanColor getPlayerColorByName(String name) {
+        for (ServerPlayer player : playerList) {
+            if (player.getName().equals(name))
+                return CatanColor.convert(player.getColor());
+        }
+        return null;
+    }
+
+    public CatanColor getPlayerColorByIndex(int playerIndex) {
+        for (ServerPlayer player : playerList) {
+            if (player.getPlayerIdx() == playerIndex)
+                return CatanColor.convert(player.getColor());
+        }
+        return null;
+    }
+
+    public HashSet<Integer> getPlayersToRob(HexLocation loc) {
+        return map.getPlayersToRob(loc);
+    }
+
+    public HashSet<PortType> getPlayerPorts(int index) {
+        return map.getPlayerPorts(index);
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    //**********************************************************
+    //**** DO METHODS ******************************************
+    //**********************************************************
 	
 	/**
 	 * Builds a road for a player at the given location
-	 * @param playerIndex
-	 * @param location
+	 * @param playerIndex blah
+	 * @param location blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doBuildRoad(int playerIndex, EdgeLocation location, boolean isFree)
-	{
+	public boolean doBuildRoad(int playerIndex, EdgeLocation location, boolean isFree) {
         try {
             map.doBuildRoad(location, playerIndex);
             playerList.get(playerIndex).doBuildRoad(isFree);
@@ -174,31 +250,72 @@ public class ServerGame {
 
         return true;
 	}
+
+    /**
+     * Builds a settlement for the player at the given location
+     * @param playerIndex blah
+     * @param location blah
+     * @return true if valid and successful, else false
+     */
+    public boolean doBuildSettlement(int playerIndex, VertexLocation location) {
+        try {
+            map.doBuildSettlement(location, playerIndex);
+            playerList.get(playerIndex).doBuildSettlement();
+            cardBank.buyPiece(PieceType.SETTLEMENT);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Builds a city for the player at the given location
+     * @param playerIndex blah
+     * @param location blah
+     * @return true if valid and successful, else false
+     */
+    public boolean doBuildCity(int playerIndex, VertexLocation location) {
+        try {
+            map.doBuildCity(location, playerIndex);
+            playerList.get(playerIndex).doBuildCity();
+            cardBank.buyPiece(PieceType.CITY);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 	
 	/**
 	 * Moves the robber and robs a player
 	 * @param robber index of player robbing
 	 * @param robbee index of player being robbed
-	 * @param location
+	 * @param location blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doPlaceRobber(int robber, int robbee, HexLocation location)
-	{
-		return true;
+	public boolean doPlaceRobber(int robber, int robbee, HexLocation location) {
+        try {
+            map.doPlayRobber(location);
+            ResourceType stolenRes = playerList.get(robber).getRandRes();
+            playerList.get(robbee).incResource(stolenRes);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
 	}
 	
 	/**
 	 * Buys a development card for the player
-	 * @param playerIndex
+	 * @param playerIndex blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doBuyDevCard(int playerIndex)
-	{
-		if(canBuyDevCard(playerIndex))
-		{
-			ServerDevCard chosenCard = cardBank.giveDevCard();
-			
-		}
+	public boolean doBuyDevCard(int playerIndex) {
+		// canDo should be called prior to this
+        ServerDevCard chosenCard = cardBank.giveDevCard();
+        playerList.get(playerIndex).addDevCard(chosenCard.getType());
 		return true;
 	}
 	
@@ -214,48 +331,9 @@ public class ServerGame {
 	}
 	
 	/**
-	 * Builds a settlement for the player at the given location
-	 * @param playerIndex
-	 * @param location
-	 * @return true if valid and successful, else false
-	 */
-	public boolean doBuildSettlement(int playerIndex, VertexLocation location)
-	{
-        try {
-            map.doBuildSettlement(location, playerIndex);
-            playerList.get(playerIndex).doBuildSettlement();
-            cardBank.buyPiece(PieceType.SETTLEMENT);
-        } catch (ServerBoardException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-	}
-	
-	/**
-	 * Builds a city for the player at the given location 
-	 * @param playerIndex
-	 * @param location
-	 * @return true if valid and successful, else false
-	 */
-	public boolean doBuildCity(int playerIndex, VertexLocation location)
-    {
-        try {
-            map.doBuildCity(location, playerIndex);
-            playerList.get(playerIndex).doBuildCity();
-            cardBank.buyPiece(PieceType.CITY);
-        } catch (ServerBoardException e) {
-            e.printStackTrace();
-            return false;
-        }
-		return true;
-	}
-	
-	/**
 	 * Completes a maritime trade for the given player with the resources stored in the ServerTradeOffer
-	 * @param playerIndex
-	 * @param tradeOffer
+	 * @param playerIndex blah
+	 * @param tradeOffer blah
 	 * @return true if valid and successful, else false
 	 */
 	public boolean doMaritimeTrade(int playerIndex, ServerTradeOffer tradeOffer)
@@ -265,10 +343,10 @@ public class ServerGame {
 	
 	/**
 	 * Sends an offer of a trade to the receiving player with the resources stored in the ServerTradeOffer
-	 * @param offerer
-	 * @param receiver
-	 * @param tradeOffer
-	 * @return
+	 * @param offerer blah
+	 * @param receiver blah
+	 * @param tradeOffer blah
+	 * @return blah
 	 */
 	public boolean sendDomesticTradeOffer(int offerer, int receiver, ServerTradeOffer tradeOffer)
 	{
@@ -277,15 +355,23 @@ public class ServerGame {
 	
 	/**
 	 * Changes resources listed in the ServerTradeOffer between the offerer and receiver
-	 * @param offerer
-	 * @param receiver
-	 * @param tradeOffer
-	 * @return
+	 * @param offerer blah
+	 * @param receiver blah
+	 * @param tradeOffer blah
+	 * @return blah
 	 */
 	public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
 	{
 		return true;
 	}
+
+    //**********************************************************
+    //**** CAN DO METHODS **************************************
+    //**********************************************************
+
+    public boolean canPlayerTrade(int playerIndex) {
+        return turnTracker.canPlayerTrade(playerIndex);
+    }
 	
 	/**
 	 * Validates that game is in the correct game state, and the player owns and has not yet played the dev card 
@@ -571,85 +657,6 @@ public class ServerGame {
         }
     	return false;
     }
-
-	public ServerTurnTracker getTurnTracker()
-	{
-		return turnTracker;
-	}
-
-	public ServerChat getChat()
-	{
-		return chat;
-	}
-
-	public ServerChat getGameHistory()
-	{
-		return gameHistory;
-	}
-
-    public HexLocation getRobberLoc() {
-        return map.getRobberLoc();
-    }
-
-    public PortType getPortType(EdgeLocation loc) {
-        return map.getPortType(loc);
-    }
-
-    public HexType getHexType(HexLocation loc) {
-        return map.getHexType(loc);
-    }
-
-    public int getChit(HexLocation loc) {
-        return map.getChit(loc);
-    }
-
-    public HashMap<EdgeLocation, ServerConstructable> getRoadPieces() {
-        return map.getRoadPieces();
-    }
-
-    public HashMap<VertexLocation, ServerConstructable> getBuildingPieces() {
-        return map.getBuildingPieces();
-    }
-    
-    /** Find the color associated with the given name.
-     * @param name of the player.
-     * @return Color of the player with the given name.
-     */
-    public CatanColor getPlayerColorByName(String name) {
-    	for (ServerPlayer player : playerList) {
-    		if (player.getName().equals(name)) 
-    			return CatanColor.convert(player.getColor());
-    	}
-    	return null;
-    }
-
-    /** Find the color associated with the given player index.
-     * @param playerIndex of the player.
-     * @return Color of the player with the given player index.
-     */
-    public CatanColor getPlayerColorByIndex(int playerIndex) {
-        for (ServerPlayer player : playerList) {
-            if (player.getPlayerIdx() == playerIndex)
-                return CatanColor.convert(player.getColor());
-        }
-        return null;
-    }
-
-    public HashSet<Integer> getPlayersToRob(HexLocation loc) {
-        return map.getPlayersToRob(loc);
-    }
-
-    public HashSet<PortType> getPlayerPorts(int index) {
-        return map.getPlayerPorts(index);
-    }
-
-	public int getGameId() {
-		return gameId;
-	}
-
-	public void setGameId(int gameId) {
-		this.gameId = gameId;
-	}
 	
 	public void addPlayer(String player, int playerId, String color) {
 		
