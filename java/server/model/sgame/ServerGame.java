@@ -169,9 +169,9 @@ public class ServerGame {
         return chat.getChatMessages();
     }
 
-    public ServerChat getGameHistory()
+    public ArrayList<ServerMessage> getGameHistory()
     {
-        return gameHistory;
+        return gameHistory.getChatMessages();
     }
 
     public HexLocation getRobberLoc() {
