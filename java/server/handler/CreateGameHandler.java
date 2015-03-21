@@ -23,7 +23,6 @@ public class CreateGameHandler extends NonMoveHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		StringBuilder stringBuild = handleRequestBody(exchange);
 		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);
-		
 		String jsonString = modelFacade.createGame(gameParams);
 		
 		Headers head = exchange.getResponseHeaders();
