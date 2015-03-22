@@ -19,6 +19,7 @@ import handler.LoginHandler;
 import handler.MaritimeTradeHandler;
 import handler.MonopolyHandler;
 import handler.MonumentHandler;
+import handler.MovesHandler;
 import handler.OfferTradeHandler;
 import handler.RegisterHandler;
 import handler.ResetGameHandler;
@@ -37,7 +38,6 @@ import java.net.InetSocketAddress;
 import user.IUserFacade;
 import user.UserFacade;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import facade.IModelFacade;
@@ -85,6 +85,8 @@ public class Server {
         server.createContext("/util/changeLogLevel", new ChangeLogHandler(modelFacade));			// POST
         
         // moves
+        server.createContext("/moves/", new MovesHandler(modelFacade));
+        /*
         server.createContext("/moves/sendChat", new SendChatHandler(modelFacade));					// POST
         server.createContext("/moves/rollNumber", new RollHandler(modelFacade));					// POST
         server.createContext("/moves/robPlayer", new RobPlayerHandler(modelFacade));				// POST
@@ -102,7 +104,7 @@ public class Server {
         server.createContext("/moves/acceptTrade", new AcceptTradeHandler(modelFacade));			// POST
         server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(modelFacade));		// POST
         server.createContext("/moves/discardCards", new DiscardCardsHandler(modelFacade));			// POST
-
+*/
         // swagger
         server.createContext("/docs/api/data", new SwaggerHandler.JSONAppender(""));
         server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));    
