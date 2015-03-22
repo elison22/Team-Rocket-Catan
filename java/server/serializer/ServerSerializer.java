@@ -133,7 +133,7 @@ public class ServerSerializer {
 						   convertRoads(map.getRoadPieces()),
 						   convertSettlements(map.getBuildingPieces()),
 						   convertCities(map.getBuildingPieces()),
-						   -1,//radius
+						   3,
 						   convertRobber(map.getRobberLoc()));
 	}
 	
@@ -194,7 +194,10 @@ public class ServerSerializer {
 	        int owner = pair.getValue().getOwner();
 	        roads.add(new JsonRoad(owner, jEdgeLoc));
 	    }
-		return (JsonRoad[]) roads.toArray();
+		if(roads.size() > 0) 
+			return (JsonRoad[]) roads.toArray();
+		else
+			return new JsonRoad[0];
 	}
 	
 	private JsonVertexObject[] convertSettlements(HashMap<VertexLocation, ServerConstructable> buildings) {
@@ -210,8 +213,10 @@ public class ServerSerializer {
 	        int owner = pair.getValue().getOwner();
 	        settlements.add(new JsonVertexObject(owner, jEdgeLoc));
 	    }
-		
-		return (JsonVertexObject[]) settlements.toArray();
+		if(settlements.size() > 0)
+			return (JsonVertexObject[]) settlements.toArray();
+		else
+			return new JsonVertexObject[0];
 	}
 	
 	private JsonVertexObject[] convertCities(HashMap<VertexLocation, ServerConstructable> buildings) {
@@ -227,8 +232,10 @@ public class ServerSerializer {
 	        int owner = pair.getValue().getOwner();
 	        cities.add(new JsonVertexObject(owner, jEdgeLoc));
 	    }
-		
-		return (JsonVertexObject[]) cities.toArray();
+		if(cities.size() > 0)
+			return (JsonVertexObject[]) cities.toArray();
+		else
+			return new JsonVertexObject[0];
 	}
 	
 	private JsonHexLocation convertRobber(HexLocation loc) {
