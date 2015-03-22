@@ -1,8 +1,8 @@
 package facade;
 
+import model.sboard.ServerBoardException;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
-import shared.definitions.ResourceType;
 import shared.dto.AcceptTrade_Params;
 import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
@@ -19,13 +19,6 @@ import shared.dto.RollNumber_Params;
 import shared.dto.SendChat_Params;
 import shared.dto.Soldier_Params;
 import shared.dto.YearOfPlenty_Params;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
-
-import java.util.List;
-
-import model.sboard.ServerBoardException;
 
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 

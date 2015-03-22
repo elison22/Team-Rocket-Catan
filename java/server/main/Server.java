@@ -1,36 +1,19 @@
 package main;
 
-import handler.AcceptTradeHandler;
-import handler.BuildCityHandler;
-import handler.BuildRoadHandler;
-import handler.BuildSettlementHandler;
-import handler.BuyDevCardHandler;
 import handler.ChangeLogHandler;
 import handler.CreateGameHandler;
-import handler.DiscardCardsHandler;
 import handler.DoGameCommandsHandler;
-import handler.FinishTurnHandler;
 import handler.GetGameCommandsHandler;
 import handler.GetGameModelHandler;
 import handler.GetGamesHandler;
 import handler.JoinGameHandler;
 import handler.LoadGameHandler;
 import handler.LoginHandler;
-import handler.MaritimeTradeHandler;
-import handler.MonopolyHandler;
-import handler.MonumentHandler;
 import handler.MovesHandler;
-import handler.OfferTradeHandler;
 import handler.RegisterHandler;
 import handler.ResetGameHandler;
-import handler.RoadBuildingHandler;
-import handler.RobPlayerHandler;
-import handler.RollHandler;
 import handler.SaveGameHandler;
-import handler.SendChatHandler;
-import handler.SoldierHandler;
 import handler.SwaggerHandler;
-import handler.YearOfPlentyHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

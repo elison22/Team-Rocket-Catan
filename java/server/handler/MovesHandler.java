@@ -50,7 +50,6 @@ public class MovesHandler implements HttpHandler {
 		String jsonString = null;
 		String path = exchange.getRequestURI().getPath();
 		path = path.substring(7);
-		System.out.println(path);
 		switch (path) {
 			case "sendChat":
 				SendChat_Params chatParams = gson.fromJson(stringBuild.toString(), SendChat_Params.class);
@@ -122,7 +121,6 @@ public class MovesHandler implements HttpHandler {
 				break;
 	
 		}
-		
 		setResponseCookie(exchange, cookieItems[3]);
 		if(jsonString != null) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -132,10 +130,6 @@ public class MovesHandler implements HttpHandler {
 			sendResponseBody(exchange, "Internal Error!");
 		}
 		exchange.close();
-		
-		
-		
-		
 	}
 	
 	public String[] decodeCookie(HttpExchange exchange) throws IOException {		
@@ -179,77 +173,5 @@ public class MovesHandler implements HttpHandler {
 		Headers head = exchange.getResponseHeaders();
 		head.set("Content-Type", "application/json");
 		head.add("Set-cookie", "catan.game=" + gameId + ";Path=/;");
-	}
-	
-	public void handleMove(HttpExchange exchange, String handler) throws IOException {
-		String[] cookieItems = decodeCookie(exchange);
-		StringBuilder stringBuild = handleRequestBody(exchange);
-		String jsonString = null;
-		switch (handler) {
-			case "BuildRoad_Params":
-				BuildRoad_Params roadParams = gson.fromJson(stringBuild.toString(), BuildRoad_Params.class);
-				jsonString = modelFacade.buildRoad(new Integer(cookieItems[3]), roadParams);
-				break;
-			case "BuildSettlement_Params":
-				BuildSettlement_Params settlementParams = gson.fromJson(stringBuild.toString(), BuildSettlement_Params.class);
-				jsonString = modelFacade.buildSettlement(new Integer(cookieItems[3]), settlementParams);
-				break;
-			case "RollNumber_Params":
-				;
-				break;
-			case "RobPlayer_Params":
-				;
-				break;
-			case "FinishTurn_Params":
-				;
-				break;
-			case "BuyDevCard_Params":
-				;
-				break;
-			case "YearOfPlenty_Params":
-				;
-				break;
-			case "RoadBuilding_Params":
-				;
-				break;
-			case "Soldier_Params":
-				;
-				break;
-			case "Monopoly_Params":
-				;
-				break;
-			case "Monument_Params":
-				;
-				break;
-			case "BuildCity_Params":
-				;
-				break;
-			case "OfferTrade_Params":
-				;
-				break;
-			case "AcceptTrade_Params":
-				;
-				break;
-			case "MaritimeTrade_Params":
-				;
-				break;
-			case "DiscardCards_Params":
-				;
-				break;
-			case "SendChat_Params":
-				;
-				break;
-	
-		}
-		
-		setResponseCookie(exchange, cookieItems[3]);
-		if(jsonString != null) {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			sendResponseBody(exchange, jsonString);
-		} else if(jsonString == null) {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-			sendResponseBody(exchange, "Internal Error!");
-		}
-		exchange.close();
 	}
 }

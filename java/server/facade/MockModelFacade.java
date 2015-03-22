@@ -1,8 +1,5 @@
 package facade;
 
-import java.util.List;
-
-import shared.definitions.ResourceType;
 import shared.dto.AcceptTrade_Params;
 import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
@@ -19,9 +16,6 @@ import shared.dto.RollNumber_Params;
 import shared.dto.SendChat_Params;
 import shared.dto.Soldier_Params;
 import shared.dto.YearOfPlenty_Params;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 
 /**
  * Mock implementation of the IModelFacade for use in testing the server.  Methods will always return the same values.
