@@ -1,14 +1,15 @@
 package facade;
 
 
+import java.util.List;
+
 import shared.definitions.ResourceType;
+import shared.dto.BuildRoad_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-
-import java.util.List;
 
 /**
  *
@@ -53,7 +54,7 @@ public interface IModelFacade {
 
     public String doMonument(int gameID, int playerIdx);
 
-    public String buildRoad(int gameID, int playerIdx, EdgeLocation location, boolean free);
+    public String buildRoad(int gameID, BuildRoad_Params roadParams);
 
     public String buildSettlement(int gameID, int playerIdx, VertexLocation location, boolean free);
 

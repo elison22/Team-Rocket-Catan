@@ -3,6 +3,7 @@ package facade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
+import shared.dto.BuildRoad_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
@@ -282,13 +283,11 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Allows a player do build a road
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's placing the road
-     * @param location The location of the new road
-     * @param free Whether this is placed for free
+     * @param roadParams all the params needed to build a road
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildRoad(int gameID, int playerIdx, EdgeLocation location, boolean free) {
+	public String buildRoad(int gameID, BuildRoad_Params roadParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}

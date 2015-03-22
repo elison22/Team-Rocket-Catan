@@ -3,6 +3,7 @@ package facade;
 import java.util.List;
 
 import shared.definitions.ResourceType;
+import shared.dto.BuildRoad_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
 import shared.locations.EdgeLocation;
@@ -264,7 +265,7 @@ public class MockModelFacade implements IModelFacade
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildRoad(int gameID, int playerIdx, EdgeLocation location, boolean free) {
+	public String buildRoad(int gameID, BuildRoad_Params roadParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
