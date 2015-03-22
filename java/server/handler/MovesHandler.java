@@ -7,14 +7,19 @@ import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public abstract class MovesHandler implements HttpHandler {
 
+	protected Gson gson;
+	
 	@Override
-	public void handle(HttpExchange exchange) throws IOException {}
+	public void handle(HttpExchange exchange) throws IOException {
+		gson = new Gson();
+	}
 	
 	public String[] decodeCookie(HttpExchange exchange) throws IOException {		
 		Headers head = exchange.getRequestHeaders();
