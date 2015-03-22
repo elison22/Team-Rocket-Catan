@@ -1,5 +1,6 @@
 package serializer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +18,7 @@ import model.splayer.ServerPlayer;
 import model.strade.ServerTradeOffer;
 import serializer.json.JsonClientModel;
 import serializer.json.JsonDevCardList;
+import serializer.json.JsonEdgeLocation;
 import serializer.json.JsonHex;
 import serializer.json.JsonHexLocation;
 import serializer.json.JsonMap;
@@ -28,6 +30,7 @@ import serializer.json.JsonResourceList;
 import serializer.json.JsonRoad;
 import serializer.json.JsonTradeOffer;
 import serializer.json.JsonTurnTracker;
+import serializer.json.JsonVertexLocation;
 import serializer.json.JsonVertexObject;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
@@ -178,23 +181,57 @@ public class ServerSerializer {
 		return jsonPorts;
 	}
 	
-	private JsonRoad[] convertRoads(HashMap<EdgeLocation, ServerConstructable>roads) {
-		
-		return null;
+	private JsonRoad[] convertRoads(HashMap<EdgeLocation, ServerConstructable> roadLoc) {
+	
+		ArrayList<JsonRoad> roads = new ArrayList<JsonRoad>();
+		Iterator<Entry<EdgeLocation, ServerConstructable>> it = roadLoc.entrySet().iterator();
+		while (it.hasNext()) {
+	        Map.Entry<EdgeLocation, ServerConstructable> pair = (Entry<EdgeLocation, ServerConstructable>)it.next();
+	        EdgeLocation edgeLoc = pair.getKey();
+	        HexLocation hex = edgeLoc.getHexLoc();
+	        String dir = edgeLoc.getDir().toString();
+	        JsonEdgeLocation jEdgeLoc = new JsonEdgeLocation(hex.getX(), hex.getY(), dir);
+	        int owner = pair.getValue().getOwner();
+	        roads.add(new JsonRoad(owner, jEdgeLoc));
+	    }
+		return (JsonRoad[]) roads.toArray();
 	}
 	
 	private JsonVertexObject[] convertSettlements(HashMap<VertexLocation, ServerConstructable> buildings) {
+		ArrayList<JsonVertexObject> settlements = new ArrayList<JsonVertexObject>();
+		Iterator<Entry<VertexLocation, ServerConstructable>> it = buildings.entrySet().iterator();
 		
-		return null;
+		while (it.hasNext()) {
+	        Map.Entry<VertexLocation, ServerConstructable> pair = (Entry<VertexLocation, ServerConstructable>)it.next();
+	        VertexLocation vertLoc = pair.getKey();
+	        HexLocation hex = vertLoc.getHexLoc();
+	        String dir = vertLoc.getDir().toString();
+	        JsonVertexLocation jEdgeLoc = new JsonVertexLocation(hex.getX(), hex.getY(), dir);
+	        int owner = pair.getValue().getOwner();
+	        settlements.add(new JsonVertexObject(owner, jEdgeLoc));
+	    }
+		
+		return (JsonVertexObject[]) settlements.toArray();
 	}
 	
 	private JsonVertexObject[] convertCities(HashMap<VertexLocation, ServerConstructable> buildings) {
+		ArrayList<JsonVertexObject> cities = new ArrayList<JsonVertexObject>();
+		Iterator<Entry<VertexLocation, ServerConstructable>> it = buildings.entrySet().iterator();
 		
-		return null;
+		while (it.hasNext()) {
+	        Map.Entry<VertexLocation, ServerConstructable> pair = (Entry<VertexLocation, ServerConstructable>)it.next();
+	        VertexLocation vertLoc = pair.getKey();
+	        HexLocation hex = vertLoc.getHexLoc();
+	        String dir = vertLoc.getDir().toString();
+	        JsonVertexLocation jEdgeLoc = new JsonVertexLocation(hex.getX(), hex.getY(), dir);
+	        int owner = pair.getValue().getOwner();
+	        cities.add(new JsonVertexObject(owner, jEdgeLoc));
+	    }
+		
+		return (JsonVertexObject[]) cities.toArray();
 	}
 	
 	private JsonHexLocation convertRobber(HexLocation loc) {
-		
 		return new JsonHexLocation(loc.getX(), loc.getY());
 	}
 	
