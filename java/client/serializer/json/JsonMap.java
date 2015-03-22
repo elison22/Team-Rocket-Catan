@@ -17,11 +17,11 @@ public class JsonMap
 	}
 
 	private JsonHex[]			hexes;
-	private JsonPort[]			ports;
 	private JsonRoad[]	        roads;
-	private JsonVertexObject[]	settlements;
 	private JsonVertexObject[]	cities;
+	private JsonVertexObject[]	settlements;
 	private int				radius;
+	private JsonPort[]			ports;
 	private JsonHexLocation robber;
 
 	public JsonHex[] getHexes()
