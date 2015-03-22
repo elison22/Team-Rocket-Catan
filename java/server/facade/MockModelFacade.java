@@ -8,12 +8,15 @@ import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
 import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
+import shared.dto.DiscardCards_Params;
 import shared.dto.JoinGame_Params;
 import shared.dto.MaritimeTrade_Params;
 import shared.dto.Monopoly_Params;
+import shared.dto.OfferTrade_Params;
 import shared.dto.RoadBuilding_Params;
 import shared.dto.RobPlayer_Params;
 import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
 import shared.dto.Soldier_Params;
 import shared.dto.YearOfPlenty_Params;
 import shared.locations.EdgeLocation;
@@ -138,12 +141,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Creates a new chat message for a specific player
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's sending this chat message
-     * @param message The chat message
+     * @param chatParams contains int playerIdx and string message
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String sendChat(int gameID, int playerIdx, String message) {
+	public String sendChat(int gameID, SendChat_Params chatParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -297,13 +299,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player to offer a trade to another player
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's sending the offer
-     * @param receiverIdx Who you're offering the trade to
-     * @param offer What you get (+) and what you give (-)
+     * @param params contains playerIdx sending offer, receiverIdx receiving offer, what you get/give
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String offerTrade(int gameID, int playerIdx, int receiverIdx, List<Integer> offer) {
+	public String offerTrade(int gameID, OfferTrade_Params tradeParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -336,12 +336,11 @@ public class MockModelFacade implements IModelFacade
 	 * Removes resource cards from a player's hand if they have more than
 	 * seven cards when a seven is rolled.
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's discarding
-     * @param discardedResources A list of the resources being discarded
+     * @param cardParams contains playerIdx, list of resources being discarded 
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources) {
+	public String discardCards(int gameID, DiscardCards_Params cardParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}

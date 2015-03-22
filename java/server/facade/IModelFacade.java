@@ -1,19 +1,20 @@
 package facade;
 
 
-import java.util.List;
-
 import shared.dto.AcceptTrade_Params;
 import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
 import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
+import shared.dto.DiscardCards_Params;
 import shared.dto.JoinGame_Params;
 import shared.dto.MaritimeTrade_Params;
 import shared.dto.Monopoly_Params;
+import shared.dto.OfferTrade_Params;
 import shared.dto.RoadBuilding_Params;
 import shared.dto.RobPlayer_Params;
 import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
 import shared.dto.Soldier_Params;
 import shared.dto.YearOfPlenty_Params;
 
@@ -40,7 +41,7 @@ public interface IModelFacade {
 
     public String executeGameCommands(int gameID, String gameCommands);
 
-    public String sendChat(int gameID, int playerIdx, String message);
+    public String sendChat(int gameID, SendChat_Params chatParams);
 
     public String rollNumber(int gameID, RollNumber_Params rollNum);
 
@@ -66,13 +67,13 @@ public interface IModelFacade {
 
     public String buildCity(int gameID, BuildCity_Params params);
 
-    public String offerTrade(int gameID, int playerIdx, int receiverIdx, List<Integer> offer);
+    public String offerTrade(int gameID, OfferTrade_Params tradeParams);
 
     public String acceptTrade(int gameID, AcceptTrade_Params acceptParams);
 
     public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams);
 
-    public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources);
+    public String discardCards(int gameID, DiscardCards_Params cardParams);
 
 	int getCreatedGameId();
 	
