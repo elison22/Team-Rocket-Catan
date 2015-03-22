@@ -167,9 +167,11 @@ public class ServerSerializer {
 				case THREE_FOR_ONE:
 					resource = null;
 					ratio = 3;
+					break;
 				default:
 					resource = portType.toString();
 					ratio = 2;
+					break;
 			}
 			
 			jsonPorts[i] = new JsonPort(resource,
@@ -278,14 +280,19 @@ public class ServerSerializer {
 			switch (devCard.getType()) {
 				case MONOPOLY:
 					++monopoly;
+					break;
 				case MONUMENT:
 					++monument;
+					break;
 				case ROAD_BUILD:
 					++roadBuilding;
+					break;
 				case SOLDIER:
 					++soldier;
+					break;
 				case YEAR_OF_PLENTY:
 					++yearOfPlenty;
+					break;
 			}
 		}
 		return new JsonDevCardList(monopoly, monument, roadBuilding, soldier, yearOfPlenty);
