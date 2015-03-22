@@ -21,9 +21,15 @@ public class GetModelTest {
 
 	@Test
 	public void test() {
+		// Create and join a game
 		assertNotNull(facade.createGame(new CreateGame_Params(false, false, false, "test")));
 		assertTrue(facade.joinGame(new JoinGame_Params(0, "white"), "string", 12));
-		System.out.println(facade.getGameModel(0));
+		
+		// Make sure the facade sent back something
+		assertNotNull(facade.getGameModel(0));
+		
+		// Make sure the model is the right length (2493 is minimum)
+		assertTrue(facade.getGameModel(0).length() >= 2493);
 	}
 
 }

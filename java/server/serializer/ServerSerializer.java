@@ -129,7 +129,7 @@ public class ServerSerializer {
 	
 	private JsonMap convertMap(ServerBoard map) {
 		return new JsonMap(convertHexes(map.getTiles()),
-						   convertPorts(map.getPorts()),
+						   convertPorts(map.getPortTypes()),
 						   convertRoads(map.getRoadPieces()),
 						   convertSettlements(map.getBuildingPieces()),
 						   convertCities(map.getBuildingPieces()),
@@ -153,12 +153,12 @@ public class ServerSerializer {
 		return jsonHexes;
 	}
 	
-	private JsonPort[] convertPorts(HashMap<VertexLocation, PortType> ports) {
+	private JsonPort[] convertPorts(HashMap<EdgeLocation, PortType> ports) {
 		JsonPort[] jsonPorts = new JsonPort[ports.size()];
 		
 		int i = 0;
-		for (Map.Entry<VertexLocation, PortType> entry : ports.entrySet()) {
-			VertexLocation vertex = entry.getKey();
+		for (Map.Entry<EdgeLocation, PortType> entry : ports.entrySet()) {
+			EdgeLocation edge = entry.getKey();
 			PortType portType = entry.getValue();
 			
 			String resource;
@@ -175,8 +175,8 @@ public class ServerSerializer {
 			}
 			
 			jsonPorts[i] = new JsonPort(resource,
-									    new JsonHexLocation(vertex.getHexLoc().getX(), vertex.getHexLoc().getY()),
-									    vertex.getDir().toString(),
+									    new JsonHexLocation(edge.getHexLoc().getX(), edge.getHexLoc().getY()),
+									    edge.getDir().toString(),
 									    ratio);
 			++i;
 		}
