@@ -46,7 +46,7 @@ public class ServerGame {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
         map = new ServerBoard(false, false, false);
-        versionNumber = -1;
+        versionNumber = 0;
     	winner = -1;
     }
 
