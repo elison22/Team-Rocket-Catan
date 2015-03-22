@@ -10,11 +10,8 @@ import facade.IModelFacade;
 
 public class SoldierHandler extends MovesHandler {
 	
-	private IModelFacade modelFacade;
-	
 	public SoldierHandler(IModelFacade modelFacade) {
-		super();
-		this.modelFacade = modelFacade;
+		super(modelFacade);
 	}
 
 	@Override

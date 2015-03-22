@@ -3,18 +3,13 @@ package handler;
 import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
-import command.ICommandObject;
 import facade.IModelFacade;
 
 public class MonopolyHandler extends MovesHandler {
 	
-	private IModelFacade modelFacade;
-	
 	public MonopolyHandler(IModelFacade modelFacade) {
-		super();
-		this.modelFacade = modelFacade;
+		super(modelFacade);
 	}
 
 	@Override

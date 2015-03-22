@@ -11,11 +11,8 @@ import facade.IModelFacade;
 
 public class BuildRoadHandler extends MovesHandler {
 	
-	private IModelFacade modelFacade;
-	
 	public BuildRoadHandler(IModelFacade modelFacade) {
-		super();
-		this.modelFacade = modelFacade;
+		super(modelFacade);
 	}
 
 	@Override
