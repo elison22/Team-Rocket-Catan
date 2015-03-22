@@ -23,8 +23,8 @@ public class BuildRoadHandler extends MovesHandler {
 
 		String[] cookieItems = decodeCookie(exchange);
 		StringBuilder stringBuild = handleRequestBody(exchange);
-		BuildRoad_Params gameParams = gson.fromJson(stringBuild.toString(), BuildRoad_Params.class);
-		String jsonString = modelFacade.buildRoad(new Integer(cookieItems[3]), gameParams);
+		BuildRoad_Params roadParams = gson.fromJson(stringBuild.toString(), BuildRoad_Params.class);
+		String jsonString = modelFacade.buildRoad(new Integer(cookieItems[3]), roadParams);
 		
 		setResponseCookie(exchange, cookieItems[3]);
 		if(jsonString != null) {
