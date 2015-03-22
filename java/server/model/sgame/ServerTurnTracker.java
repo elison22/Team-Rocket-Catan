@@ -27,12 +27,17 @@ public class ServerTurnTracker
     private int largestArmyPlayerIndex;
 
     /**
+     * The number rolled by the player
+     */
+    private int numRolled;
+
+    /**
      * Constructor
      */
     public ServerTurnTracker()
     {
     	currentPlayerIndex = -1;
-    	currentState = null;
+    	currentState = ServerTurnState.FirstRound;
     	longestRoadPlayerIndex = -1;
     	largestArmyPlayerIndex = -1;
     }
@@ -83,11 +88,13 @@ public class ServerTurnTracker
 
     /**
      * Updates the player with the longest road. Checks for valid input
-     * @param longestRoadPlayerIndex index of the player taking the longest road bonus
+     * @param longestRoadIndex index of the player taking the longest road bonus
      */
     public void setLongestRoadPlayerIndex(int longestRoadIndex) {
     	longestRoadPlayerIndex = longestRoadIndex;
     }
+
+    public void setNumRolled(int numRolled) { this.numRolled = numRolled; }
 
     public int getLargestArmyPlayerIndex() {
         return largestArmyPlayerIndex;
@@ -106,6 +113,8 @@ public class ServerTurnTracker
     {
         return currentState;
     }
+
+    public int getNumRolled() { return numRolled; }
     
     public boolean canPlayerBuild(int playerIndex) {
     	if(currentPlayerIndex == playerIndex) {

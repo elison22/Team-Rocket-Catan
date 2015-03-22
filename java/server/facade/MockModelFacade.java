@@ -35,10 +35,7 @@ public class MockModelFacade implements IModelFacade
 
 	/**
 	 * Creates a new game on the server
-	 * @param randomTiles whether the game should have randomly placed resource tiles
-	 * @param randomNumbers whether the game should randomly place chits
-	 * @param randomPorts whether the game should randomly place ports
-	 * @param name the name of the game
+	 * @param params blah
 	 * @return returns a JSON string with the new game information
 	 */
 	@Override
@@ -49,8 +46,8 @@ public class MockModelFacade implements IModelFacade
 
 	/**
 	 * Allows a user to join a game if the game isn't full
-	 * @param gameID The ID of the game that has been requested
-	 * @param color The color the player has selected upon joining the game
+	 * @param userId blah
+	 * @param user blah
 	 * @return returns success or failure
 	 */
 	@Override
@@ -357,6 +354,12 @@ public class MockModelFacade implements IModelFacade
 
 	@Override
 	public int getCreatedGameId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getVersionId(int gameId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

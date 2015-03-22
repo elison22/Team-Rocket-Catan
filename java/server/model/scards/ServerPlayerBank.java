@@ -65,13 +65,17 @@ public class ServerPlayerBank extends ServerCardBank {
     /**
      * Used to take a development card from the GameBank and add it
      * to the player's list of development cards
-     * @return True if the player successfully took a DevCard
      */
     public void buyDevCard(ServerDevCard card){
         resCards.put(ResourceType.ORE, resCards.get(ResourceType.BRICK) - 1);
         resCards.put(ResourceType.SHEEP, resCards.get(ResourceType.SHEEP) - 1);
         resCards.put(ResourceType.WHEAT, resCards.get(ResourceType.WHEAT) - 1);
-        devCards.add(card);
+        newDevs.add(card);
+    }
+
+    public void playDevCard(ServerDevCard card) {
+        newDevs.remove(card);
+        oldDevs.add(card);
     }
 
     public boolean canAffordDevCard() {
@@ -196,7 +200,7 @@ public class ServerPlayerBank extends ServerCardBank {
         }
     }
 
-    public ResourceType removeRandCard() {
+    public ResourceType removeRandRes() {
         int deckSize = getResCount();
         int chosenCardIndex = rand.nextInt() % deckSize;
         ResourceType chosenRes = null;

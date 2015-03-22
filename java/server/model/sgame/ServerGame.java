@@ -3,6 +3,7 @@ package model.sgame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import model.sboard.ServerBoard;
 import model.sboard.ServerBoardException;
@@ -48,7 +49,7 @@ public class ServerGame {
         versionNumber = -1;
     	//winner = -1;
     }
-    
+
     public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
     	this.gameName = title;
     	versionNumber = 0;
@@ -91,6 +92,10 @@ public class ServerGame {
     public HashMap<ResourceType, Integer> getCardBank() {
         return cardBank.getResCards();
     }
+    
+    public ArrayList<ServerDevCard> getDevBank() {
+    	return cardBank.getDevCards();
+    }
 
     public void setCardBank(ServerGameBank cardBank) {
         this.cardBank = cardBank;
@@ -110,7 +115,7 @@ public class ServerGame {
     public int getLongestRoad() {
         return turnTracker.getLongestRoadPlayerIndex();
     }
-    
+
     public int getLargestArmy() {
     	return turnTracker.getLargestArmyPlayerIndex();
     }
@@ -126,11 +131,11 @@ public class ServerGame {
     public void setMap(ServerBoard map) {
         this.map = map;
     }
-    
+
     public ArrayList<String> getAiList() {
     	return aiList;
     }
-    
+
     public void setChat(ServerChat chat) {
 		this.chat = chat;
 	}
@@ -150,7 +155,7 @@ public class ServerGame {
 	public void setWinner(int winner) {
 		this.winner = winner;
 	}
-	
+
 	public void setTradeOffer(ServerTradeOffer trade) {
 		tradeOffer = trade;
 	}
@@ -169,9 +174,9 @@ public class ServerGame {
         return chat.getChatMessages();
     }
 
-    public ServerChat getGameHistory()
+    public ArrayList<ServerMessage> getGameHistory()
     {
-        return gameHistory;
+        return gameHistory.getChatMessages();
     }
 
     public HexLocation getRobberLoc() {
@@ -233,7 +238,7 @@ public class ServerGame {
     //**********************************************************
     //**** DO METHODS ******************************************
     //**********************************************************
-	
+
 	/**
 	 * Builds a road for a player at the given location
 	 * @param playerIndex blah
@@ -262,6 +267,7 @@ public class ServerGame {
         try {
             map.doBuildSettlement(location, playerIndex);
             playerList.get(playerIndex).doBuildSettlement();
+            playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.SETTLEMENT);
         } catch (ServerBoardException e) {
             e.printStackTrace();
@@ -281,6 +287,7 @@ public class ServerGame {
         try {
             map.doBuildCity(location, playerIndex);
             playerList.get(playerIndex).doBuildCity();
+            playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.CITY);
         } catch (ServerBoardException e) {
             e.printStackTrace();
@@ -288,7 +295,7 @@ public class ServerGame {
         }
         return true;
     }
-	
+
 	/**
 	 * Moves the robber and robs a player
 	 * @param robber index of player robbing
@@ -309,12 +316,37 @@ public class ServerGame {
 	}
 
     /***/
-    public boolean doPlayMonopoly(int playerIdx, ResourceType resource) {
+    public boolean doMonopoly(int playerIdx, ResourceType resource) {
         for(int i = 0; i < 4; i++) {
             if(i == playerIdx) continue;
             while(playerList.get(i).decResource(resource))
                 playerList.get(playerIdx).incResource(resource);
         }
+        playerList.get(playerIdx).playDevCard(DevCardType.MONOPOLY);
+        return true;
+    }
+
+    /***/
+    public boolean doMonument(int playerIndex) {
+        playerList.get(playerIndex).addPoint();
+        playerList.get(playerIndex).playDevCard(DevCardType.MONUMENT);
+        return true;
+    }
+
+    /***/
+    public boolean doRoadBuilding(int playerIdx, EdgeLocation road1, EdgeLocation road2) {
+
+        try {
+            map.doBuildRoad(road1, playerIdx);
+            map.doBuildRoad(road2, playerIdx);
+            playerList.get(playerIdx).doBuildRoad(true);
+            playerList.get(playerIdx).doBuildRoad(true);
+            playerList.get(playerIdx).playDevCard(DevCardType.ROAD_BUILD);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 
@@ -338,8 +370,21 @@ public class ServerGame {
 	 */
 	public boolean doRoll(int playerIndex, int numberRolled)
 	{
+        //What do we use playerIndex for? According to the Swagger page, this is part of the /rollNumber operation
+        //but shouldn't we already know whose turn it is from the TurnTracker?
+        turnTracker.setNumRolled(numberRolled);
 		return true;
 	}
+
+    public boolean doDiscardCards(int playerIndex, HashMap<Integer, ResourceType> resourceList){
+        ServerPlayer playerDiscarding = playerList.get(playerIndex);
+        for(Map.Entry<Integer, ResourceType> entry : resourceList.entrySet()){
+            for(int i = 0; i < entry.getKey(); i++){
+                playerDiscarding.decResource(entry.getValue());
+            }
+        }
+        return false;
+    }
 	
 	/**
 	 * Completes a maritime trade for the given player with the resources stored in the ServerTradeOffer
@@ -361,6 +406,8 @@ public class ServerGame {
      */
     public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
     {
+        ServerPlayer offeringPlayer = playerList.get(offerer);
+        ServerPlayer receivingPlayer = playerList.get(receiver);
         return true;
     }
 	

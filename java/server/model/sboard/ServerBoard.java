@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
+import model.board.HexTile;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -259,6 +260,10 @@ public class ServerBoard {
         checkPlayerIndex(new VertexLocation(robber, VertexDirection.SouthWest), playersToRob);
         return playersToRob;
     }
+    
+    public HashMap<HexLocation, ServerHexTile> getTiles() {
+		return tiles;
+	}
 
     private void checkPlayerIndex(VertexLocation loc, HashSet<Integer> playerSet) {
         loc = loc.getNormalizedLocation();
@@ -727,5 +732,45 @@ public class ServerBoard {
         }
         return toReturn;
     }
+
+	public HashMap<VertexLocation, PortType> getPorts() {
+		return ports;
+	}
+
+    public ArrayList<HexLocation> getHexLocsByNum(int diceNum) {
+        ArrayList<HexLocation> hexes = new ArrayList<HexLocation>();
+        for(HexLocation loc : tiles.keySet()) {
+            if (diceNum == tiles.get(loc).getDiceNum())
+                hexes.add(loc);
+        }
+        return hexes;
+    }
+
+    public ArrayList<ServerConstructable> getAdjacentBuildings(HexLocation loc) {
+
+        ArrayList<ServerConstructable> adjBuildings = new ArrayList<ServerConstructable>();
+
+        VertexLocation vloc = new VertexLocation(loc, VertexDirection.West).getNormalizedLocation();
+        if(buildings.containsKey(vloc))
+            adjBuildings.add(buildings.get(vloc));
+        vloc = new VertexLocation(loc, VertexDirection.NorthEast).getNormalizedLocation();
+        if(buildings.containsKey(vloc))
+            adjBuildings.add(buildings.get(vloc));
+        vloc = new VertexLocation(loc, VertexDirection.NorthWest).getNormalizedLocation();
+        if(buildings.containsKey(vloc))
+            adjBuildings.add(buildings.get(vloc));
+        vloc = new VertexLocation(loc, VertexDirection.East).getNormalizedLocation();
+        if(buildings.containsKey(vloc))
+            adjBuildings.add(buildings.get(vloc));
+        vloc = new VertexLocation(loc, VertexDirection.SouthEast).getNormalizedLocation();
+        if(buildings.containsKey(vloc))
+            adjBuildings.add(buildings.get(vloc));
+        vloc = new VertexLocation(loc, VertexDirection.SouthWest).getNormalizedLocation();
+        if(buildings.containsKey(vloc))
+            adjBuildings.add(buildings.get(vloc));
+
+        return adjBuildings;
+    }
+
 }
 
