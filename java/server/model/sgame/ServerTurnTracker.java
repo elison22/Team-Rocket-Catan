@@ -36,7 +36,7 @@ public class ServerTurnTracker
      */
     public ServerTurnTracker()
     {
-    	currentPlayerIndex = -1;
+    	currentPlayerIndex = 0;
     	currentState = ServerTurnState.FirstRound;
     	longestRoadPlayerIndex = -1;
     	largestArmyPlayerIndex = -1;
