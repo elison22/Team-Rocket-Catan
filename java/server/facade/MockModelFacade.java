@@ -3,9 +3,19 @@ package facade;
 import java.util.List;
 
 import shared.definitions.ResourceType;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -141,12 +151,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Rolls the dice for a player's turn
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's sending this command
-     * @param numRolled The number that was rolled (2-12)
+     * @param rollNum contains number rolled and player
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String rollNumber(int gameID, int playerIdx, int numRolled) {
+	public String rollNumber(int gameID, RollNumber_Params rollNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -154,13 +163,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player to rob another after placing the robber on a tile they own
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's doing the robbing
-     * @param victimIdx The index of the player to rob
-     * @param location The new location of the robber
+     * @param robParams contains robbing info
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String robPlayer(int gameID, int playerIdx, int victimIdx, HexLocation location) {
+	public String robPlayer(int gameID, RobPlayer_Params robParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -192,13 +199,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes the effects of playing a year of plenty dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
-     * @param resource1 first resource
-     * @param resource2 second resource
+     * @param params contains year plenty params
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doYearOfPlenty(int gameID, int playerIdx, ResourceType resource1, ResourceType resource2) {
+	public String doYearOfPlenty(int gameID, YearOfPlenty_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -206,13 +211,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes the effects of playing a road building dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
-     * @param road1 location of the first road
-     * @param road2 location of the second road
+     * @param roadParams contains playerIndx, and 2 road locations
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doRoadBuilding(int gameID, int playerIdx, EdgeLocation road1, EdgeLocation road2) {
+	public String doRoadBuilding(int gameID, RoadBuilding_Params roadParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -220,13 +223,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes the effects of playing a soldier dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
-     * @param victimIdx The index of the player to rob
-     * @param location The new location of the robber
+     * @param params contains playerIdx of who played card, victimIdx, location to move robber 
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doSoldier(int gameID, int playerIdx, int victimIdx, HexLocation location) {
+	public String doSoldier(int gameID, Soldier_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -234,12 +235,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes the effects of playing a monopoly dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
-     * @param resource Resource to steal with dev card
+     * @param params contains playerIdx and the resource type
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doMonopoly(int gameID, int playerIdx, ResourceType resource) {
+	public String doMonopoly(int gameID, Monopoly_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -273,13 +273,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player to build a settlement
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's placing this settlement
-     * @param location The location of the new settlement
-     * @param free Whether this is placed for free
+     * @param params contains playerIdx, location, and whether/not its free 
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildSettlement(int gameID, int playerIdx, VertexLocation location, boolean free) {
+	public String buildSettlement(int gameID, BuildSettlement_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -287,12 +285,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player to build a city
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's placing this city
-     * @param location The location of the new city
+     * @param params contains playerIdx and location 
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buildCity(int gameID, int playerIdx, VertexLocation location) {
+	public String buildCity(int gameID, BuildCity_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -314,12 +311,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes a trade that was previously offered between two players
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who is accepting/rejecting the trade
-     * @param tradeAccepted Whether the trade is accepted or not
+     * @param acceptParams contains playerIdx of who is accept/reject and if they did accept
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String acceptTrade(int gameID, int playerIdx, boolean tradeAccepted) {
+	public String acceptTrade(int gameID, AcceptTrade_Params acceptParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -327,14 +323,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes a maritime trade
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's doing the trading
-     * @param ratio The ratio of the trade being performed (ie. 3 for 3:1 trade)
-     * @param input The type of resource being given
-     * @param output The type of resource being received
+     * @param tradeParams contains playerIdx, ratio, resource to give, resource to receive 
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String maritimeTrade(int gameID, int playerIdx, int ratio, ResourceType input, ResourceType output) {
+	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
 		// TODO Auto-generated method stub
 		return null;
 	}

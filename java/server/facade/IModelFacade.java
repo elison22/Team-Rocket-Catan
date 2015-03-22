@@ -3,13 +3,19 @@ package facade;
 
 import java.util.List;
 
-import shared.definitions.ResourceType;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.BuildCity_Params;
 import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.JoinGame_Params;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
 
 /**
  *
@@ -36,35 +42,35 @@ public interface IModelFacade {
 
     public String sendChat(int gameID, int playerIdx, String message);
 
-    public String rollNumber(int gameID, int playerIdx, int numRolled);
+    public String rollNumber(int gameID, RollNumber_Params rollNum);
 
-    public String robPlayer(int gameID, int playerIdx, int victimIdx, HexLocation location);
+    public String robPlayer(int gameID, RobPlayer_Params robParams);
 
     public String finishTurn(int gameID, int playerIdx);
 
     public String buyDevCard(int gameID, int playerIdx);
 
-    public String doYearOfPlenty(int gameID, int playerIdx, ResourceType resource1, ResourceType resource2);
+    public String doYearOfPlenty(int gameID, YearOfPlenty_Params params);
 
-    public String doRoadBuilding(int gameID, int playerIdx, EdgeLocation road1, EdgeLocation road2);
+    public String doRoadBuilding(int gameID, RoadBuilding_Params roadParams);
 
-    public String doSoldier(int gameID, int playerIdx, int victimIdx, HexLocation location);
+    public String doSoldier(int gameID, Soldier_Params params);
 
-    public String doMonopoly(int gameID, int playerIdx, ResourceType resource);
+    public String doMonopoly(int gameID, Monopoly_Params params);
 
     public String doMonument(int gameID, int playerIdx);
 
     public String buildRoad(int gameID, BuildRoad_Params roadParams);
 
-    public String buildSettlement(int gameID, int playerIdx, VertexLocation location, boolean free);
+    public String buildSettlement(int gameID, BuildSettlement_Params params);
 
-    public String buildCity(int gameID, int playerIdx, VertexLocation location);
+    public String buildCity(int gameID, BuildCity_Params params);
 
     public String offerTrade(int gameID, int playerIdx, int receiverIdx, List<Integer> offer);
 
-    public String acceptTrade(int gameID, int playerIdx, boolean tradeAccepted);
+    public String acceptTrade(int gameID, AcceptTrade_Params acceptParams);
 
-    public String maritimeTrade(int gameID, int playerIdx, int ratio, ResourceType input, ResourceType output);
+    public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams);
 
     public String discardCards(int gameID, int playerIdx, List<Integer> discardedResources);
 
