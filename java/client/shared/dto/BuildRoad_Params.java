@@ -2,6 +2,7 @@ package shared.dto;
 
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
 public class BuildRoad_Params {
 	
@@ -12,7 +13,6 @@ public class BuildRoad_Params {
 	/**Whether or not the road is free (i.e. during initial placement phase)*/
 	private boolean free;
 	
-	@SuppressWarnings("unused")
 	private class RoadLocation {
 		private int x;
 		private int y;
@@ -66,6 +66,10 @@ public class BuildRoad_Params {
 
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+	
+	public EdgeLocation getLocation() {
+		return new EdgeLocation(new HexLocation(roadLocation.x, roadLocation.y), EdgeDirection.convert(roadLocation.direction));
 	}
 	
 	private void initLocation(EdgeLocation edge) {

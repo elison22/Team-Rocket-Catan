@@ -1,7 +1,6 @@
 package facade;
 
 import command.*;
-import main.Server;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import model.strade.ServerDomesticTrade;
@@ -240,7 +239,6 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doRoadBuilding(int gameID, RoadBuilding_Params roadParams) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -288,7 +286,22 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String buildRoad(int gameID, BuildRoad_Params roadParams) {
-		// TODO Auto-generated method stub
+		
+		// Retrieve the right game
+		ServerGame game = gameManager.getGame(gameID);
+		
+		// Can the player build the road?
+		if (game.canBuildRoad(roadParams.getPlayerIndex(), roadParams.getLocation())) {
+			
+			// Prepare command object
+			ICommandObject command = new BuildRoad_CO(roadParams, game);
+			
+			// Execute and return new model
+			if (command.execute())
+				return serializer.serializeGameModel(game);
+		}
+		
+		// If any of the above failed, return null
 		return null;
 	}
 
@@ -394,5 +407,11 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public int getVersionId(int gameId) {
 		return gameManager.getVersionId(gameId);
+	}
+	
+	// FOR TESTING
+	@Override
+	public ServerGame getGame(int gameId) {
+		return gameManager.getGame(gameId);
 	}
 }

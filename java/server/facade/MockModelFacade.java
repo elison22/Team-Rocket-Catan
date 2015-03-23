@@ -1,5 +1,6 @@
 package facade;
 
+import model.sgame.ServerGame;
 import shared.dto.*;
 
 /**
@@ -332,6 +333,12 @@ public class MockModelFacade implements IModelFacade
 	public int getVersionId(int gameId) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ServerGame getGame(int gameId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

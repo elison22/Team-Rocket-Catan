@@ -1,6 +1,7 @@
 package facade;
 
 
+import model.sgame.ServerGame;
 import shared.dto.*;
 
 /**
@@ -63,4 +64,6 @@ public interface IModelFacade {
 	int getCreatedGameId();
 	
 	public int getVersionId(int gameId);
+
+	ServerGame getGame(int gameId);
 }
