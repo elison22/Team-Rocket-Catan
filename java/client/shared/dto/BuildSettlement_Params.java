@@ -59,6 +59,18 @@ public class BuildSettlement_Params {
 	public void setFree(boolean free) {
 		this.free = free;
 	}
+	
+	public int getVertexX() {
+		return vertexLocation.x;
+	}
+	
+	public int getVertexY() {
+		return vertexLocation.y;
+	}
+	
+	public String getVertexDir() {
+		return vertexLocation.direction;
+	}
 
 	private void initVertex(VertexLocation loc) {
 		int x = loc.getHexLoc().getX();
