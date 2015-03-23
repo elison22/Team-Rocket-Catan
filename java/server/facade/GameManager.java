@@ -110,9 +110,13 @@ public class GameManager {
 		// the color isn't already taken
 		for (ServerPlayer gamePlayer : game.getPlayerList()) {
 
-			// If the player is already in the game, don't re-add them
-			if (gamePlayer.getPlayerID() == playerId)
+			// If the player is already in the game, don't re-add them, just 
+			// change their color
+			if (gamePlayer.getPlayerID() == playerId) {
+				game.updatePlayerColor(gamePlayer.getPlayerIdx(), color);
 				return true;
+			}
+				
 
 			// If the color has already been taken, don't let them join
 			if (gamePlayer.getColor().equalsIgnoreCase(color))

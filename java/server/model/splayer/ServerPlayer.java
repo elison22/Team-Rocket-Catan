@@ -300,6 +300,10 @@ public class ServerPlayer {
     {
         return color;
     }
+    
+    public void setColor(String color) {
+    	this.color = color;
+    }
 
     public int getPlayerID()
     {

@@ -427,6 +427,10 @@ public class ServerGame {
     public void addPlayer(String player, int playerId, String color) {
         playerList.add(new ServerPlayer(playerList.size(), playerId, player, color));
     }
+    
+    public void updatePlayerColor(int playerIndex, String color) {
+    	playerList.get(playerIndex).setColor(color);
+    }
 
     //**********************************************************
     //**** CAN DO METHODS **************************************
