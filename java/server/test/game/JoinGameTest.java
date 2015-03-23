@@ -28,7 +28,7 @@ public class JoinGameTest {
 		assertNotNull(facade.createGame(new CreateGame_Params(false, false, false, "testJoin")));
 		
 		// Test being able to join the game
-		assertTrue(facade.joinGame(new JoinGame_Params(0, "white"), "TestUser", 15));
+		assertTrue(facade.joinGame(new JoinGame_Params(0, "blue"), "TestUser", 15));
 		
 		// Test attempting to rejoin the game. It should allow them to re-join
 		// a game, but the model shouldn't re-add them as a new player
@@ -39,6 +39,9 @@ public class JoinGameTest {
 		Game_DTO[] games = gson.fromJson(facade.listGames(), Game_DTO[].class);
 		assertTrue(games[0].getPlayers()[0].getId() == 15);
 		assertTrue(games[0].getPlayers()[1].getId() == -1);
+		
+		// Make sure the player was able to update their color
+		assertTrue(games[0].getPlayers()[0].getColor().equalsIgnoreCase("white"));
 		
 		// Try to add another user with the same color
 		assertFalse(facade.joinGame(new JoinGame_Params(0, "white"), "TestUser1", 16));
