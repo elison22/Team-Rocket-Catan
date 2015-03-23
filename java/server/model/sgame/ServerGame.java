@@ -81,6 +81,10 @@ public class ServerGame {
     public void setVersionNumber(int versionNumber) {
         this.versionNumber = versionNumber;
     }
+    
+    public void incVersionNumber() {
+    	versionNumber += 1;
+    }
 
     public ArrayList<ServerPlayer> getPlayerList() {
         return playerList;
@@ -254,7 +258,7 @@ public class ServerGame {
         } catch (ServerBoardException e) {
             return false;
         }
-
+        incVersionNumber();
         return true;
 	}
 
@@ -274,7 +278,7 @@ public class ServerGame {
             e.printStackTrace();
             return false;
         }
-
+        incVersionNumber();
         return true;
     }
 
