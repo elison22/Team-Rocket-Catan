@@ -29,7 +29,7 @@ public class BuildSettlement_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		if(game.doBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir()))), params.isFree()) {
+		if(game.doBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())), params.isFree())) {
 				game.incVersionNumber();
 				return true;
 		}

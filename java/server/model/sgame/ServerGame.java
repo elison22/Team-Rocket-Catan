@@ -268,7 +268,7 @@ public class ServerGame {
      * @param location blah
      * @return true if valid and successful, else false
      */
-    public boolean doBuildSettlement(int playerIndex, VertexLocation location) {
+    public boolean doBuildSettlement(int playerIndex, VertexLocation location, boolean isFree) {
         try {
             map.doBuildSettlement(location, playerIndex);
             playerList.get(playerIndex).doBuildSettlement();
