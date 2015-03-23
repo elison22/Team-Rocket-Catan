@@ -10,10 +10,10 @@ public class ServerDomesticTrade {
     private int receiver;
     private HashMap<ResourceType,Integer> offer;
 
-    public ServerDomesticTrade(int sender) {
+    public ServerDomesticTrade(int sender, int receiver, HashMap<ResourceType, Integer> offer) {
         this.sender = sender;
-        receiver = -1;
-        offer = null;
+        this.receiver = receiver;
+        this.offer = offer;
     }
 
     public void setReceiver(int receiver) {
