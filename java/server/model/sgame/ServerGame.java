@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import main.Server;
 import model.sboard.ServerBoard;
 import model.sboard.ServerBoardException;
 import model.sboard.ServerConstructable;
@@ -26,7 +25,6 @@ import shared.locations.VertexLocation;
 
 
 public class ServerGame {
-    @SuppressWarnings("unused")
 	private String gameName;
     private int versionNumber;
     private ArrayList<ServerPlayer> playerList;   // holds all the players
