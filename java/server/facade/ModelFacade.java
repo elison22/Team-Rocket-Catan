@@ -1,6 +1,9 @@
 package facade;
 
+import command.DiscardCards_CO;
+import command.RollNumber_CO;
 import model.sboard.ServerBoardException;
+import model.sgame.ServerGame;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
 import shared.dto.AcceptTrade_Params;
@@ -175,7 +178,12 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String rollNumber(int gameID, RollNumber_Params rollNum) {
-		// TODO Auto-generated method stub
+        ServerGame game = gameManager.getGame(gameID);
+        if(!game.canRollDice(rollNum.getPlayerIndex()))
+            return null;
+        RollNumber_CO command = new RollNumber_CO(gameID, rollNum, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 
@@ -314,7 +322,7 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Allows a player to offer a trade to another player
      * @param gameID The ID of the game that has been requested
-     * @param params contains playerIdx sending offer, receiverIdx receiving offer, what you get/give
+     * @param tradeParams contains playerIdx sending offer, receiverIdx receiving offer, what you get/give
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
@@ -357,6 +365,12 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String discardCards(int gameID, DiscardCards_Params cardParams) {
 		// TODO Auto-generated method stub
+        ServerGame game = gameManager.getGame(gameID);
+        if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
+            return null;
+        DiscardCards_CO command = new DiscardCards_CO(gameID, cardParams, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 	

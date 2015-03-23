@@ -293,11 +293,11 @@ public class ServerSerializer {
 	}
 	
 	private JsonTurnTracker convertTurnTracker(ServerTurnTracker turnTracker) {
-		int whosTurn = turnTracker.getCurrentPlayerIndex();
+		int whoseTurn = turnTracker.getCurrentPlayerIndex();
 		String state = turnTracker.getCurrentState().toString();
 		int longestRoad = turnTracker.getLongestRoadPlayerIndex();
 		int largestArmy = turnTracker.getLargestArmyPlayerIndex();
-		return new JsonTurnTracker(whosTurn, state, longestRoad, largestArmy);
+		return new JsonTurnTracker(whoseTurn, state, longestRoad, largestArmy);
 	}
 	
 	private JsonTradeOffer convertTradeOffer(ServerTradeOffer tradeOffer) {
