@@ -1,13 +1,41 @@
 package facade;
 
-import command.*;
-import main.Server;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
-import shared.dto.*;
+import shared.dto.AcceptTrade_Params;
+import shared.dto.BuildCity_Params;
+import shared.dto.BuildRoad_Params;
+import shared.dto.BuildSettlement_Params;
+import shared.dto.BuyDevCard_Params;
+import shared.dto.CreateGame_Params;
+import shared.dto.DiscardCards_Params;
+import shared.dto.FinishTurn_Params;
+import shared.dto.JoinGame_Params;
+import shared.dto.MaritimeTrade_Params;
+import shared.dto.Monopoly_Params;
+import shared.dto.OfferTrade_Params;
+import shared.dto.RoadBuilding_Params;
+import shared.dto.RobPlayer_Params;
+import shared.dto.RollNumber_Params;
+import shared.dto.SendChat_Params;
+import shared.dto.Soldier_Params;
+import shared.dto.YearOfPlenty_Params;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+
+import command.AcceptTrade_CO;
+import command.BuildSettlement_CO;
+import command.BuyDevCard_CO;
+import command.DiscardCards_CO;
+import command.FinishTurn_CO;
+import command.ICommandObject;
+import command.MaritimeTrade_CO;
+import command.OfferTrade_CO;
+import command.RollNumber_CO;
 
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 
@@ -300,7 +328,9 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String buildSettlement(int gameID, BuildSettlement_Params params) {
-		// TODO Auto-generated method stub
+		ServerGame game = gameManager.getGame(gameID);
+		ICommandObject buildSet = new BuildSettlement_CO(game, params);
+		buildSet.execute();
 		return null;
 	}
 
