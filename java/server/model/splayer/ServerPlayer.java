@@ -128,6 +128,19 @@ public class ServerPlayer {
     public void setPlayedDevCard(boolean hasPlayedDev){
         playedDevCard = hasPlayedDev;
     }
+    
+    public void resetPlayer()
+    {
+    	this.bank = new ServerPlayerBank();
+    	this.discarded = false;
+        this.monumentDevs = 0;
+        this.remainingCities = 4;
+        this.remainingRoads = 15;
+        this.remainingSettlements = 5;
+        this.playedDevCard = false;
+        this.soldierDevs = 0;
+        this.victoryPoints = 0;
+    }
 
     /**
      * Called by the Facade to determine if a player has the resources necessary to offer

@@ -41,4 +41,9 @@ public class ServerChat {
     {
         return chatMessages;
     }
+    
+    public void sendChat(String owner, String message)
+    {
+    	chatMessages.add(new ServerMessage(owner, message));
+    }
 }
