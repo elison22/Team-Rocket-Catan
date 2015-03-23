@@ -1,5 +1,6 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.BuildRoad_Params;
 import facade.IModelFacade;
 
@@ -11,23 +12,22 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class BuildRoad_CO implements ICommandObject {
 	
-	private int gameId;
 	private BuildRoad_Params params;
+	private ServerGame game;
 
 	/**
-	 * @param gameId The id of the game where the road is to be built.
 	 * @param params Parameters needed for a player to build a road.
+	 * @param game The game to build a road in.
 	 */
-	public BuildRoad_CO(int gameId,
-			BuildRoad_Params params) {
+	public BuildRoad_CO(BuildRoad_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
+		this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+		return game.doBuildRoad(params.getPlayerIndex(), params.getLocation(), params.isFree());
 	}
 
 }
