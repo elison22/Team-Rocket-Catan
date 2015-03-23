@@ -457,14 +457,16 @@ public class ServerGame {
 
     /**
      * Changes resources listed in the ServerTradeOffer between the offerer and receiver
-     * @param offerer blah
      * @param receiver blah
-     * @param tradeOffer blah
      * @return blah
      */
-    public boolean doDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
+    public boolean doDomesticTrade(int receiver, boolean willAccept)
     {
-        ServerPlayer offeringPlayer = playerList.get(offerer);
+        if(!willAccept) {
+            tradeOffer = null;
+            return false;
+        }
+        ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
         ServerPlayer receivingPlayer = playerList.get(receiver);
         HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
         for(ResourceType resource : offer.keySet()){
@@ -494,9 +496,9 @@ public class ServerGame {
 	 * @param tradeOffer blah
 	 * @return blah
 	 */
-	public boolean offerDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
+	public boolean offerDomesticTrade(int offerer, int receiver, HashMap<ResourceType, Integer> tradeOffer)
 	{
-        this.tradeOffer = tradeOffer;
+        this.tradeOffer = new ServerTradeOffer(offerer, receiver, tradeOffer);
 		return true;
 	}
 
@@ -752,12 +754,12 @@ public class ServerGame {
     /**
      * Checks if player has appropriate resources to give in trade offer
      * @param playerId	index of player to accept trade
-     * @param trade	list of resources to give and receive
      * @return	true if player is able to accept trade
      */
-    public boolean canAcceptTrade(int playerId, ServerDomesticTrade trade) {
+    public boolean canAcceptTrade(int playerId) {
+        ServerTradeOffer trade = tradeOffer;
     	if(turnTracker.canPlayerBuild(playerId)) {
-            if (playerList.get(playerId).canAcceptTrade(playerId, trade.getOffer())){
+            if (playerList.get(playerId).canAcceptTrade(playerId, trade.getResources())){
     			return true;
 			}
     	}
