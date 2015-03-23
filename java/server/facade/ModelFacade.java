@@ -1,27 +1,13 @@
 package facade;
 
-import command.DiscardCards_CO;
-import command.RollNumber_CO;
+import command.*;
+import main.Server;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
+import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
-import shared.dto.AcceptTrade_Params;
-import shared.dto.BuildCity_Params;
-import shared.dto.BuildRoad_Params;
-import shared.dto.BuildSettlement_Params;
-import shared.dto.CreateGame_Params;
-import shared.dto.DiscardCards_Params;
-import shared.dto.JoinGame_Params;
-import shared.dto.MaritimeTrade_Params;
-import shared.dto.Monopoly_Params;
-import shared.dto.OfferTrade_Params;
-import shared.dto.RoadBuilding_Params;
-import shared.dto.RobPlayer_Params;
-import shared.dto.RollNumber_Params;
-import shared.dto.SendChat_Params;
-import shared.dto.Soldier_Params;
-import shared.dto.YearOfPlenty_Params;
+import shared.dto.*;
 
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 
@@ -202,24 +188,35 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Ends a player's turn
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's sending this command
+     * @param params Who's sending this command
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String finishTurn(int gameID, int playerIdx) {
-		// TODO Auto-generated method stub
+	public String finishTurn(int gameID, FinishTurn_Params params) {
+		ServerGame game = gameManager.getGame(gameID);
+        if(!game.canFinishTurn(params.getPlayerIndex()))
+            return null;
+
+        FinishTurn_CO command = new FinishTurn_CO(gameID, params, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 
 	/**
 	 * Allows a player to buy a development card if there are any left
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's buying this dev card
+     * @param params Parameters that detail who is buying the dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buyDevCard(int gameID, int playerIdx) {
-		// TODO Auto-generated method stub
+	public String buyDevCard(int gameID, BuyDevCard_Params params) {
+        ServerGame game = gameManager.getGame(gameID);
+        if(!game.canBuyDevCard(params.getPlayerIndex()))
+            return null;
+        BuyDevCard_CO command = new BuyDevCard_CO(gameID, params, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 
@@ -327,7 +324,14 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String offerTrade(int gameID, OfferTrade_Params tradeParams) {
-		// TODO Auto-generated method stub
+        ServerGame game = gameManager.getGame(gameID);
+        ServerDomesticTrade trade = new ServerDomesticTrade(tradeParams.getPlayerIndex(), tradeParams.getReceiver(),
+                tradeParams.getOfferedResources());
+        if(!game.canOfferTrade(tradeParams.getPlayerIndex(), trade))
+            return null;
+        OfferTrade_CO command = new OfferTrade_CO(gameID, tradeParams, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 
@@ -339,7 +343,12 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String acceptTrade(int gameID, AcceptTrade_Params acceptParams) {
-		// TODO Auto-generated method stub
+        ServerGame game = gameManager.getGame(gameID);
+        if(!game.canAcceptTrade(acceptParams.getPlayerIndex()))
+            return null;
+        AcceptTrade_CO command = new AcceptTrade_CO(gameID, acceptParams, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 
@@ -351,7 +360,11 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
-		// TODO Auto-generated method stub
+        ServerGame game = gameManager.getGame(gameID);
+        //The canDo check for this method is in the command object because it was easier that way
+        MaritimeTrade_CO command = new MaritimeTrade_CO(gameID, tradeParams, gameManager);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 		return null;
 	}
 
@@ -364,7 +377,6 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String discardCards(int gameID, DiscardCards_Params cardParams) {
-		// TODO Auto-generated method stub
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
             return null;

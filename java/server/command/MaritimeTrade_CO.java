@@ -1,5 +1,9 @@
 package command;
 
+import facade.GameManager;
+import model.sgame.ServerGame;
+import model.strade.ServerMaritimeTrade;
+import shared.definitions.ResourceType;
 import shared.dto.MaritimeTrade_Params;
 import facade.IModelFacade;
 
@@ -13,21 +17,50 @@ public class MaritimeTrade_CO implements ICommandObject {
 	
 	private int gameId;
 	private MaritimeTrade_Params params;
+    private GameManager gameManager;
 
 	/**
 	 * @param gameId Id of the game where the player is making a maritime trade.
 	 * @param params Parameters needed for a player to make a maritime trade.
 	 */
 	public MaritimeTrade_CO(int gameId,
-			MaritimeTrade_Params params) {
+			MaritimeTrade_Params params, GameManager gameManager) {
 		super();
 		this.gameId = gameId;
 		this.params = params;
+        this.gameManager = gameManager;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+        ServerGame game = gameManager.getGame(gameId);
+        ResourceType input = convertString(params.getInputResource());
+        ResourceType output = convertString(params.getOutputResource());
+        if(input == null || output == null)
+            return false;
+
+        ServerMaritimeTrade maritimeTrade = new ServerMaritimeTrade(input, output, params.getRatio());
+        if(!game.canMaritimeTrade(params.getPlayerIndex(), maritimeTrade))
+            return false;
+        game.doMaritimeTrade(params.getPlayerIndex(), maritimeTrade);
+		return true;
 	}
+
+    public ResourceType convertString(String res) {
+        String resource = res.toLowerCase();
+        switch(resource){
+            case("brick"):
+                return ResourceType.BRICK;
+            case("wood"):
+                return ResourceType.WOOD;
+            case("wheat"):
+                return ResourceType.WHEAT;
+            case("sheep"):
+                return ResourceType.SHEEP;
+            case("ore"):
+                return ResourceType.ORE;
+        }
+        return null;
+    }
 
 }
