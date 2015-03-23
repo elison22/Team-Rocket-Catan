@@ -46,8 +46,8 @@ public class ServerGame {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
         map = new ServerBoard(false, false, false);
-        versionNumber = -1;
-    	//winner = -1;
+        versionNumber = 0;
+    	winner = -1;
     }
 
     public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
@@ -59,6 +59,7 @@ public class ServerGame {
     	map = new ServerBoard(randNumbers, randTiles, randPorts);
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
+    	winner = -1;
     }
 
     //**********************************************************

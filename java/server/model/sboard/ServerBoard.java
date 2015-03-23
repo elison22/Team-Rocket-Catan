@@ -733,8 +733,8 @@ public class ServerBoard {
         return toReturn;
     }
 
-	public HashMap<VertexLocation, PortType> getPorts() {
-		return ports;
+	public HashMap<EdgeLocation, PortType> getPortTypes() {
+		return portTypes;
 	}
 
     public ArrayList<HexLocation> getHexLocsByNum(int diceNum) {

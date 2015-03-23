@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import shared.dto.CreateGame_Params;
-import shared.dto.JoinGame_Params;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;

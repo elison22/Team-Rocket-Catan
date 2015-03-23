@@ -18,14 +18,14 @@ public class JsonClientModel {
 		this.deck = deck;
 	}
 
-	private JsonResourceList 	bank;
-	private JsonMessageList 	chat;
-	private JsonMessageList 	log;
 	private JsonDevCardList 	deck;
 	private JsonMap 			map;
 	private JsonPlayer[]		players;
-	private JsonTradeOffer 		tradeOffer;
+	private JsonMessageList 	log;
+	private JsonMessageList 	chat;
+	private JsonResourceList 	bank;
 	private JsonTurnTracker 	turnTracker;
+	private JsonTradeOffer 		tradeOffer;
 	private int					version;
 	private int					winner;
 

@@ -2,19 +2,15 @@ package handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import facade.IModelFacade;
 
 public class GetGameModelHandler extends MovesHandler {
 	
-	private IModelFacade modelFacade;
-	
 	public GetGameModelHandler(IModelFacade modelFacade) {
-		this.modelFacade = modelFacade;
+		super(modelFacade);
 	}
 
 	@Override

@@ -129,11 +129,11 @@ public class ServerSerializer {
 	
 	private JsonMap convertMap(ServerBoard map) {
 		return new JsonMap(convertHexes(map.getTiles()),
-						   convertPorts(map.getPorts()),
+						   convertPorts(map.getPortTypes()),
 						   convertRoads(map.getRoadPieces()),
 						   convertSettlements(map.getBuildingPieces()),
 						   convertCities(map.getBuildingPieces()),
-						   -1,//radius
+						   3,
 						   convertRobber(map.getRobberLoc()));
 	}
 	
@@ -153,12 +153,12 @@ public class ServerSerializer {
 		return jsonHexes;
 	}
 	
-	private JsonPort[] convertPorts(HashMap<VertexLocation, PortType> ports) {
+	private JsonPort[] convertPorts(HashMap<EdgeLocation, PortType> ports) {
 		JsonPort[] jsonPorts = new JsonPort[ports.size()];
 		
 		int i = 0;
-		for (Map.Entry<VertexLocation, PortType> entry : ports.entrySet()) {
-			VertexLocation vertex = entry.getKey();
+		for (Map.Entry<EdgeLocation, PortType> entry : ports.entrySet()) {
+			EdgeLocation edge = entry.getKey();
 			PortType portType = entry.getValue();
 			
 			String resource;
@@ -167,14 +167,16 @@ public class ServerSerializer {
 				case THREE_FOR_ONE:
 					resource = null;
 					ratio = 3;
+					break;
 				default:
 					resource = portType.toString();
 					ratio = 2;
+					break;
 			}
 			
 			jsonPorts[i] = new JsonPort(resource,
-									    new JsonHexLocation(vertex.getHexLoc().getX(), vertex.getHexLoc().getY()),
-									    vertex.getDir().toString(),
+									    new JsonHexLocation(edge.getHexLoc().getX(), edge.getHexLoc().getY()),
+									    edge.getDir().toString(),
 									    ratio);
 			++i;
 		}
@@ -194,7 +196,8 @@ public class ServerSerializer {
 	        int owner = pair.getValue().getOwner();
 	        roads.add(new JsonRoad(owner, jEdgeLoc));
 	    }
-		return (JsonRoad[]) roads.toArray();
+		
+		return roads.toArray(new JsonRoad[roads.size()]);
 	}
 	
 	private JsonVertexObject[] convertSettlements(HashMap<VertexLocation, ServerConstructable> buildings) {
@@ -210,8 +213,8 @@ public class ServerSerializer {
 	        int owner = pair.getValue().getOwner();
 	        settlements.add(new JsonVertexObject(owner, jEdgeLoc));
 	    }
-		
-		return (JsonVertexObject[]) settlements.toArray();
+
+		return settlements.toArray(new JsonVertexObject[settlements.size()]);
 	}
 	
 	private JsonVertexObject[] convertCities(HashMap<VertexLocation, ServerConstructable> buildings) {
@@ -228,7 +231,7 @@ public class ServerSerializer {
 	        cities.add(new JsonVertexObject(owner, jEdgeLoc));
 	    }
 		
-		return (JsonVertexObject[]) cities.toArray();
+		return cities.toArray(new JsonVertexObject[cities.size()]);
 	}
 	
 	private JsonHexLocation convertRobber(HexLocation loc) {
@@ -271,14 +274,19 @@ public class ServerSerializer {
 			switch (devCard.getType()) {
 				case MONOPOLY:
 					++monopoly;
+					break;
 				case MONUMENT:
 					++monument;
+					break;
 				case ROAD_BUILD:
 					++roadBuilding;
+					break;
 				case SOLDIER:
 					++soldier;
+					break;
 				case YEAR_OF_PLENTY:
 					++yearOfPlenty;
+					break;
 			}
 		}
 		return new JsonDevCardList(monopoly, monument, roadBuilding, soldier, yearOfPlenty);

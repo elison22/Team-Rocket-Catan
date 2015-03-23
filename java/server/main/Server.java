@@ -1,35 +1,19 @@
 package main;
 
-import handler.AcceptTradeHandler;
-import handler.BuildCityHandler;
-import handler.BuildRoadHandler;
-import handler.BuildSettlementHandler;
-import handler.BuyDevCardHandler;
 import handler.ChangeLogHandler;
 import handler.CreateGameHandler;
-import handler.DiscardCardsHandler;
 import handler.DoGameCommandsHandler;
-import handler.FinishTurnHandler;
 import handler.GetGameCommandsHandler;
 import handler.GetGameModelHandler;
 import handler.GetGamesHandler;
 import handler.JoinGameHandler;
 import handler.LoadGameHandler;
 import handler.LoginHandler;
-import handler.MaritimeTradeHandler;
-import handler.MonopolyHandler;
-import handler.MonumentHandler;
-import handler.OfferTradeHandler;
+import handler.MovesHandler;
 import handler.RegisterHandler;
 import handler.ResetGameHandler;
-import handler.RoadBuildingHandler;
-import handler.RobPlayerHandler;
-import handler.RollHandler;
 import handler.SaveGameHandler;
-import handler.SendChatHandler;
-import handler.SoldierHandler;
 import handler.SwaggerHandler;
-import handler.YearOfPlentyHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -37,7 +21,6 @@ import java.net.InetSocketAddress;
 import user.IUserFacade;
 import user.UserFacade;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import facade.IModelFacade;
@@ -85,6 +68,8 @@ public class Server {
         server.createContext("/util/changeLogLevel", new ChangeLogHandler(modelFacade));			// POST
         
         // moves
+        server.createContext("/moves/", new MovesHandler(modelFacade));
+        /*
         server.createContext("/moves/sendChat", new SendChatHandler(modelFacade));					// POST
         server.createContext("/moves/rollNumber", new RollHandler(modelFacade));					// POST
         server.createContext("/moves/robPlayer", new RobPlayerHandler(modelFacade));				// POST
@@ -102,7 +87,7 @@ public class Server {
         server.createContext("/moves/acceptTrade", new AcceptTradeHandler(modelFacade));			// POST
         server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(modelFacade));		// POST
         server.createContext("/moves/discardCards", new DiscardCardsHandler(modelFacade));			// POST
-
+*/
         // swagger
         server.createContext("/docs/api/data", new SwaggerHandler.JSONAppender(""));
         server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));    

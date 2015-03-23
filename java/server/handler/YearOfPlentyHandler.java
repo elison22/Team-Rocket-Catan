@@ -3,18 +3,13 @@ package handler;
 import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
-import command.ICommandObject;
 import facade.IModelFacade;
 
 public class YearOfPlentyHandler extends MovesHandler {
 	
-	private IModelFacade modelFacade;
-	
 	public YearOfPlentyHandler(IModelFacade modelFacade) {
-		super();
-		this.modelFacade = modelFacade;
+		super(modelFacade);
 	}
 
 	@Override
