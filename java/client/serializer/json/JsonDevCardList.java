@@ -12,11 +12,11 @@ public class JsonDevCardList
 		this.yearOfPlenty = yearOfPlenty;
 	}
 
-	private int	monopoly;
-	private int	monument;
-	private int	roadBuilding;
-	private int	soldier;
 	private int	yearOfPlenty;
+	private int	monopoly;
+	private int	soldier;
+	private int	roadBuilding;
+	private int	monument;
 
 	public int getMonopoly()
 	{

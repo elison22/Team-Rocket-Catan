@@ -9,8 +9,8 @@ public class JsonMessageLine
 		this.source = source;
 	}
 
-	private String	message;
 	private String	source;
+	private String	message;
 
 	public String getMessage()
 	{
