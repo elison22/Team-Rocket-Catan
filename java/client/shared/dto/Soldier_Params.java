@@ -52,4 +52,8 @@ public class Soldier_Params {
 		this.victimIndex = victimIndex;
 	}
 
+    public HexLocation getLocation() {
+        return new HexLocation(location.x, location.y);
+    }
+
 }

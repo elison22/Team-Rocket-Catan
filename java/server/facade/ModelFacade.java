@@ -8,6 +8,7 @@ import model.sgame.ServerTurnState;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.dto.*;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -238,7 +239,14 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doYearOfPlenty(int gameID, YearOfPlenty_Params params) {
-		// TODO Auto-generated method stub
+
+//        ServerGame game = gameManager.getGame(gameID);
+//        game.doYearOfPlenty(
+//                params.getPlayerIndex(),
+//                ResourceType.convert(params.getResource1()),
+//                ResourceType.convert(params.getResource2())
+//        );
+
 		return null;
 	}
 

@@ -281,9 +281,9 @@ public class ServerPlayer {
     /**
      * Decrements the settlement count. Also decrements the necessary resources.
      */
-    public void doBuildSettlement(){
+    public void doBuildSettlement(boolean isFree){
         remainingSettlements--;
-        bank.buyPiece(PieceType.SETTLEMENT);
+        if(!isFree) bank.buyPiece(PieceType.SETTLEMENT);
     }
 
     /**

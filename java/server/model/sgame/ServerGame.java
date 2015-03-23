@@ -310,7 +310,7 @@ public class ServerGame {
     public boolean doBuildSettlement(int playerIndex, VertexLocation location, boolean isFree) {
         try {
             map.doBuildSettlement(location, playerIndex);
-            playerList.get(playerIndex).doBuildSettlement();
+            playerList.get(playerIndex).doBuildSettlement(isFree);
             playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.SETTLEMENT);
         } catch (ServerBoardException e) {
@@ -337,6 +337,38 @@ public class ServerGame {
             e.printStackTrace();
             return false;
         }
+        return true;
+    }
+
+    /**
+     *
+     */
+    public boolean doSoldier(int playerIndex, int victimIndex, HexLocation loc){
+
+        return true;
+
+    }
+
+    /**
+     * blah
+     */
+    public boolean doYearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2) {
+
+
+        if(cardBank.canRemoveResource(res1)) {
+            cardBank.removeResourceCard(res1);
+            if (cardBank.canRemoveResource(res2)) {
+                cardBank.removeResourceCard(res2);
+                playerList.get(playerIndex).incResource(res1);
+                playerList.get(playerIndex).incResource(res2);
+            }
+            else {
+                cardBank.receiveResourceCard(res1);
+                return false;
+            }
+            return false;
+        }
+        playerList.get(playerIndex).playDevCard(DevCardType.YEAR_OF_PLENTY);
         return true;
     }
 
