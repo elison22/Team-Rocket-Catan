@@ -65,11 +65,11 @@ public class MovesHandler implements HttpHandler {
 				break;
 			case "finishTurn":
 				FinishTurn_Params finishTurnParams = gson.fromJson(stringBuild.toString(), FinishTurn_Params.class);
-				jsonString = modelFacade.finishTurn(new Integer(cookieItems[3]), finishTurnParams.getPlayerIndex());
+				jsonString = modelFacade.finishTurn(new Integer(cookieItems[3]), finishTurnParams);
 				break;
 			case "buyDevCard":
 				BuyDevCard_Params devCarParams = gson.fromJson(stringBuild.toString(), BuyDevCard_Params.class);
-				jsonString = modelFacade.buyDevCard(new Integer(cookieItems[3]), devCarParams.getPlayerIndex());
+				jsonString = modelFacade.buyDevCard(new Integer(cookieItems[3]), devCarParams);
 				break;
 			case "Year_of_Plenty":
 				YearOfPlenty_Params Params = gson.fromJson(stringBuild.toString(), YearOfPlenty_Params.class);

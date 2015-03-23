@@ -1,21 +1,6 @@
 package facade;
 
-import shared.dto.AcceptTrade_Params;
-import shared.dto.BuildCity_Params;
-import shared.dto.BuildRoad_Params;
-import shared.dto.BuildSettlement_Params;
-import shared.dto.CreateGame_Params;
-import shared.dto.DiscardCards_Params;
-import shared.dto.JoinGame_Params;
-import shared.dto.MaritimeTrade_Params;
-import shared.dto.Monopoly_Params;
-import shared.dto.OfferTrade_Params;
-import shared.dto.RoadBuilding_Params;
-import shared.dto.RobPlayer_Params;
-import shared.dto.RollNumber_Params;
-import shared.dto.SendChat_Params;
-import shared.dto.Soldier_Params;
-import shared.dto.YearOfPlenty_Params;
+import shared.dto.*;
 
 /**
  * Mock implementation of the IModelFacade for use in testing the server.  Methods will always return the same values.
@@ -171,11 +156,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Ends a player's turn
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's sending this command
+     * @param params Who's sending this command
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String finishTurn(int gameID, int playerIdx) {
+	public String finishTurn(int gameID, FinishTurn_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -183,11 +168,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player to buy a development card if there are any left
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's buying this dev card
+     * @param params Who's buying this dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String buyDevCard(int gameID, int playerIdx) {
+	public String buyDevCard(int gameID, BuyDevCard_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -255,9 +240,7 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player do build a road
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's placing the road
-     * @param location The location of the new road
-     * @param free Whether this is placed for free
+     * @param roadParams The parameters of the action
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
@@ -293,7 +276,7 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Allows a player to offer a trade to another player
      * @param gameID The ID of the game that has been requested
-     * @param params contains playerIdx sending offer, receiverIdx receiving offer, what you get/give
+     * @param tradeParams contains playerIdx sending offer, receiverIdx receiving offer, what you get/give
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
