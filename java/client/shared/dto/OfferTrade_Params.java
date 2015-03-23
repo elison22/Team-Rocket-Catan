@@ -1,5 +1,6 @@
 package shared.dto;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import shared.definitions.ResourceType;
@@ -11,6 +12,7 @@ public class OfferTrade_Params {
 	@SuppressWarnings("unused")
 	private ResourceTrade offer;
 	private int receiver;
+    private HashMap<ResourceType, Integer> offeredRes;
 	
 	@SuppressWarnings("unused")
 	private class ResourceTrade {
@@ -34,6 +36,7 @@ public class OfferTrade_Params {
 	public OfferTrade_Params(int playerIndex, Map<ResourceType, Integer> resources, int receiver) {
 		super();
 		setPlayerIndex(playerIndex);
+        offeredRes = (HashMap<ResourceType, Integer>) resources;
 		offer = new ResourceTrade(resources);
 		setReceiver(receiver);
 	}
@@ -61,5 +64,7 @@ public class OfferTrade_Params {
 	public void setReceiver(int receiver) {
 		this.receiver = receiver;
 	}
+
+    public HashMap<ResourceType, Integer> getOfferedResources() { return offeredRes; }
 
 }
