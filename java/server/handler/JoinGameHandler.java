@@ -31,7 +31,7 @@ public class JoinGameHandler extends NonMoveHandler {
 		String encode = "catan.game=" + gameId + ";Path=/;";
 		head.add("Set-cookie", encode);
 		
-		if(modelFacade.joinGame(params, cookie[1], new Integer(cookie[2]))) {
+		if(modelFacade.joinGame(params, cookie[0], new Integer(cookie[2]))) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			sendResponseBody(exchange, "Success");
 		} else {
