@@ -1,5 +1,6 @@
 package shared.dto;
 
+import java.util.HashMap;
 import java.util.Map;
 import shared.definitions.ResourceType;
 
@@ -9,6 +10,7 @@ public class DiscardCards_Params {
 	private int playerIndex;
 	@SuppressWarnings("unused")
 	private Resources discardedCards;
+    private HashMap<ResourceType, Integer> resources;
 	
 	@SuppressWarnings("unused")
 	private class Resources {
@@ -32,6 +34,7 @@ public class DiscardCards_Params {
 	public DiscardCards_Params(int playerIndex, Map<ResourceType, Integer> resources) {
 		super();
 		setPlayerIndex(playerIndex);
+        this.resources = (HashMap<ResourceType, Integer>)resources;
 		discardedCards = new Resources(resources);
 	}
 
@@ -50,5 +53,7 @@ public class DiscardCards_Params {
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
 	}
+
+    public HashMap<ResourceType, Integer> getDiscardedCards() { return resources; }
 
 }
