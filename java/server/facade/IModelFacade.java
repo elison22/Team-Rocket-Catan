@@ -1,22 +1,7 @@
 package facade;
 
 
-import shared.dto.AcceptTrade_Params;
-import shared.dto.BuildCity_Params;
-import shared.dto.BuildRoad_Params;
-import shared.dto.BuildSettlement_Params;
-import shared.dto.CreateGame_Params;
-import shared.dto.DiscardCards_Params;
-import shared.dto.JoinGame_Params;
-import shared.dto.MaritimeTrade_Params;
-import shared.dto.Monopoly_Params;
-import shared.dto.OfferTrade_Params;
-import shared.dto.RoadBuilding_Params;
-import shared.dto.RobPlayer_Params;
-import shared.dto.RollNumber_Params;
-import shared.dto.SendChat_Params;
-import shared.dto.Soldier_Params;
-import shared.dto.YearOfPlenty_Params;
+import shared.dto.*;
 
 /**
  *
@@ -47,9 +32,9 @@ public interface IModelFacade {
 
     public String robPlayer(int gameID, RobPlayer_Params robParams);
 
-    public String finishTurn(int gameID, int playerIdx);
+    public String finishTurn(int gameID, FinishTurn_Params params);
 
-    public String buyDevCard(int gameID, int playerIdx);
+    public String buyDevCard(int gameID, BuyDevCard_Params params);
 
     public String doYearOfPlenty(int gameID, YearOfPlenty_Params params);
 
