@@ -10,11 +10,9 @@ public class BuildSettlement_Params {
 	
 	private String type = "buildSettlement";
 	private int playerIndex;
-	@SuppressWarnings("unused")
 	private Vertex vertexLocation;
 	boolean free;
 	
-	@SuppressWarnings("unused")
 	private class Vertex {
 		int x;
 		int y;
