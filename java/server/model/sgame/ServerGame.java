@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import main.Server;
 import model.sboard.ServerBoard;
 import model.sboard.ServerBoardException;
 import model.sboard.ServerConstructable;
@@ -25,6 +26,7 @@ import shared.locations.VertexLocation;
 
 
 public class ServerGame {
+    @SuppressWarnings("unused")
 	private String gameName;
     private int versionNumber;
     private ArrayList<ServerPlayer> playerList;   // holds all the players
@@ -358,6 +360,7 @@ public class ServerGame {
 	 */
 	public boolean doBuyDevCard(int playerIndex) {
 		// canDo should be called prior to this
+        // Answer to above: we're going to call the canDo's in the facade so we can immediately return if it fails
         ServerDevCard chosenCard = cardBank.giveDevCard();
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
 		return true;
@@ -374,27 +377,81 @@ public class ServerGame {
         //What do we use playerIndex for? According to the Swagger page, this is part of the /rollNumber operation
         //but shouldn't we already know whose turn it is from the TurnTracker?
         turnTracker.setNumRolled(numberRolled);
+        if(numberRolled == 7){
+            for(ServerPlayer player : playerList){
+                if(player.getResCount() > 7)
+                    turnTracker.setCurrentState(ServerTurnState.Discarding);
+            }
+        }
+        ArrayList<HexLocation> hexlocs = map.getHexLocsByNum(numberRolled);
+        ResourceType resource = null;
+
+        for(HexLocation location : hexlocs){
+            HexType hexType = map.getHexType(location);
+            switch(hexType){
+                case WATER:
+                    continue;
+                case DESERT:
+                    continue;
+                case BRICK:
+                    resource = ResourceType.BRICK;
+                break;
+                case WHEAT:
+                    resource = ResourceType.WHEAT;
+                    break;
+                case WOOD:
+                    resource = ResourceType.WOOD;
+                    break;
+                case SHEEP:
+                    resource = ResourceType.SHEEP;
+                    break;
+                case ORE:
+                    resource = ResourceType.ORE;
+                    break;
+            }
+            if(resource == null){ continue; }
+
+            ArrayList<ServerConstructable> constructables = map.getAdjacentBuildings(location);
+            for(ServerConstructable constructable : constructables){
+                int amount = 1;
+                if(!constructable.isSettlement())
+                    amount = 2;
+                int owner = constructable.getOwner();
+                ServerPlayer player = playerList.get(owner);
+                for(int i = 0; i < amount; i++){
+                    player.incResource(resource);
+                }
+            }
+        }
+        turnTracker.setCurrentState(ServerTurnState.Playing);
 		return true;
 	}
 
-    public boolean doDiscardCards(int playerIndex, HashMap<Integer, ResourceType> resourceList){
+    public boolean doDiscardCards(int playerIndex, HashMap<ResourceType, Integer> resourceList){
         ServerPlayer playerDiscarding = playerList.get(playerIndex);
-        for(Map.Entry<Integer, ResourceType> entry : resourceList.entrySet()){
-            for(int i = 0; i < entry.getKey(); i++){
-                playerDiscarding.decResource(entry.getValue());
+        for(Map.Entry<ResourceType, Integer> entry : resourceList.entrySet()){
+            for(int i = 0; i < entry.getValue(); i++){
+                playerDiscarding.decResource(entry.getKey());
             }
         }
+        turnTracker.setCurrentState(ServerTurnState.Playing);
         return false;
     }
 	
 	/**
 	 * Completes a maritime trade for the given player with the resources stored in the ServerTradeOffer
 	 * @param playerIndex blah
-	 * @param tradeOffer blah
+	 * @param trade blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doMaritimeTrade(int playerIndex, ServerTradeOffer tradeOffer)
+	public boolean doMaritimeTrade(int playerIndex, ServerMaritimeTrade trade)
 	{
+        ServerPlayer player = playerList.get(playerIndex);
+        int ratio = trade.getRatio();
+        for(int i = 0; i < ratio; i++){
+            player.decResource(trade.getResourceToGive());
+        }
+        player.incResource(trade.getResourceToReceive());
 		return true;
 	}
 
@@ -409,6 +466,24 @@ public class ServerGame {
     {
         ServerPlayer offeringPlayer = playerList.get(offerer);
         ServerPlayer receivingPlayer = playerList.get(receiver);
+        HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
+        for(ResourceType resource : offer.keySet()){
+            int amount = offer.get(resource);
+            if(amount == 0)
+                continue;
+            else if(amount > 0){
+                for(int i = 0; i < amount; i++){
+                    offeringPlayer.decResource(resource);
+                    receivingPlayer.incResource(resource);
+                }
+            }
+            else{
+                for(int i = 0; i > amount; i--){
+                    offeringPlayer.incResource(resource);
+                    receivingPlayer.decResource(resource);
+                }
+            }
+        }
         return true;
     }
 	
@@ -419,10 +494,19 @@ public class ServerGame {
 	 * @param tradeOffer blah
 	 * @return blah
 	 */
-	public boolean sendDomesticTradeOffer(int offerer, int receiver, ServerTradeOffer tradeOffer)
+	public boolean offerDomesticTrade(int offerer, int receiver, ServerTradeOffer tradeOffer)
 	{
+        this.tradeOffer = tradeOffer;
 		return true;
 	}
+
+    public void finishTurn(int playerIndex){
+        if(playerIndex == 3)
+            turnTracker.setCurrentPlayerIndex(0);
+        else
+            turnTracker.setCurrentPlayerIndex(++playerIndex);
+        turnTracker.setCurrentState(ServerTurnState.Rolling);
+    }
 
     public void addPlayer(String player, int playerId, String color) {
         playerList.add(new ServerPlayer(playerList.size(), playerId, player, color));
