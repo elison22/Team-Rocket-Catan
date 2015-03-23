@@ -491,7 +491,7 @@ public class ServerGame {
                     continue;
                 case BRICK:
                     resource = ResourceType.BRICK;
-                break;
+                    break;
                 case WHEAT:
                     resource = ResourceType.WHEAT;
                     break;
@@ -504,8 +504,9 @@ public class ServerGame {
                 case ORE:
                     resource = ResourceType.ORE;
                     break;
+                default:
+                    continue;
             }
-            if(resource == null){ continue; }
 
             ArrayList<ServerConstructable> constructables = map.getAdjacentBuildings(location);
             for(ServerConstructable constructable : constructables){
