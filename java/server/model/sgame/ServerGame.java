@@ -343,8 +343,11 @@ public class ServerGame {
     /**
      *
      */
-    public boolean doSoldier(int playerIndex, int victimIndex, HexLocation loc){
+    public boolean doSoldier(int playerIndex, int victimIndex, HexLocation location){
 
+        if(!doPlaceRobber(playerIndex, victimIndex, location))
+            return false;
+        playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
         return true;
 
     }
@@ -373,17 +376,17 @@ public class ServerGame {
     }
 
 	/**
-	 * Moves the robber and robs a player
-	 * @param robber index of player robbing
-	 * @param robbee index of player being robbed
+	 * Moves the playerIndex and robs a player
+	 * @param playerIndex index of player robbing
+	 * @param victimIndex index of player being robbed
 	 * @param location blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doPlaceRobber(int robber, int robbee, HexLocation location) {
+	public boolean doPlaceRobber(int playerIndex, int victimIndex, HexLocation location) {
         try {
             map.doPlayRobber(location);
-            ResourceType stolenRes = playerList.get(robber).getRandRes();
-            playerList.get(robbee).incResource(stolenRes);
+            ResourceType stolenRes = playerList.get(playerIndex).getRandRes();
+            playerList.get(victimIndex).incResource(stolenRes);
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;

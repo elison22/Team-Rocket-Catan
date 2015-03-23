@@ -298,7 +298,10 @@ public class ServerPlayer {
      * Gives the player a dev card.
      * @param type The dev card type.
      */
-    public void addDevCard(DevCardType type){}
+    public void addDevCard(DevCardType type){
+        bank.buyDevCard(new ServerDevCard(type));
+        if(type == DevCardType.MONUMENT) monumentDevs++;
+    }
 
     /**
      * Takes a dev card from the player. If it's a soldier, it also
@@ -307,6 +310,8 @@ public class ServerPlayer {
      */
     public void playDevCard(DevCardType type){
         bank.playDevCard(new ServerDevCard(type));
+        playedDevCard = true;
+        if(type == DevCardType.SOLDIER) soldierDevs++;
     }
 
     public String getColor()
@@ -340,4 +345,11 @@ public class ServerPlayer {
     public int addPoint() {
         return ++victoryPoints;
     }
+
+    public void endTurn() {
+
+        playedDevCard = false;
+        //other things that happen at the end of a turn
+    }
+
 }
