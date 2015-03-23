@@ -29,17 +29,9 @@ public class BuildSettlement_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		if(game.canBuildInitSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
-			if(game.doBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
+		if(game.doBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir()))), params.isFree()) {
 				game.incVersionNumber();
 				return true;
-			}
-		}
-		else if(game.canBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
-			if(game.doBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
-				game.incVersionNumber();
-				return true;
-			}
 		}
 		return false;
 	}

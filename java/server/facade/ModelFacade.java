@@ -1,12 +1,17 @@
 package facade;
 
 import command.*;
+import model.game.TurnState;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
+import model.sgame.ServerTurnState;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
 import shared.dto.*;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * The ModelFacade will be called by the Command Objects for any operation that deals with 
@@ -314,8 +319,18 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String buildSettlement(int gameID, BuildSettlement_Params params) {
 		ServerGame game = gameManager.getGame(gameID);
-		ICommandObject buildSet = new BuildSettlement_CO(game, params);
-		buildSet.execute();
+		ICommandObject buildSet = null;
+		if(game.getTurnState() == ServerTurnState.FirstRound || game.getTurnState() == ServerTurnState.SecondRound) {
+			if(game.canBuildInitSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
+				buildSet = new BuildSettlement_CO(game, params);
+				if(buildSet.execute())
+					return serializer.serializeGameModel(game);
+			}
+		}else if(game.canBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
+			buildSet = new BuildSettlement_CO(game, params);
+			if(buildSet.execute())
+				return serializer.serializeGameModel(game);
+		}
 		return null;
 	}
 
