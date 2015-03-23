@@ -122,8 +122,9 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String resetGame(int gameID) {
-		// TODO Auto-generated method stub
-		return null;
+		ResetGame_CO command = new ResetGame_CO(gameID, gameManager);
+		command.execute();
+		return serializer.serializeGameModel(gameManager.getGame(gameID));
 	}
 
 	/**
@@ -157,8 +158,13 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String sendChat(int gameID, SendChat_Params chatParams) {
-		// TODO Auto-generated method stub
-		return null;
+		if(chatParams.getPlayerIndex() > 3 || chatParams.getPlayerIndex() < 0)
+			return null;
+		ServerGame game = gameManager.getGame(gameID);
+		SendChat_CO command = new SendChat_CO(gameID, chatParams, gameManager);
+		if(command.execute())
+			return serializer.serializeGameModel(game);
+		else return null;
 	}
 
 	/**

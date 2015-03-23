@@ -37,6 +37,9 @@ public class ServerGame {
     private int winner;
     private ServerTradeOffer tradeOffer;
     private int gameId;
+    private boolean randNumbers;
+    private boolean randTiles;
+    private boolean randPorts;
 
     //**********************************************************
     //**** CONSTRUCTORS ****************************************
@@ -60,6 +63,9 @@ public class ServerGame {
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
     	winner = -1;
+    	this.randNumbers = randNumbers;
+    	this.randPorts = randPorts;
+    	this.randTiles = randTiles;
     }
 
     //**********************************************************
@@ -243,6 +249,39 @@ public class ServerGame {
     //**********************************************************
     //**** DO METHODS ******************************************
     //**********************************************************
+    
+    /**
+     * Resets the entire game to before the initial placement phase
+     * @return 
+     * @return
+     */
+    public boolean resetGame()
+    {
+    	versionNumber = 0;
+    	for(ServerPlayer player : playerList)
+    		player.resetPlayer();
+    	cardBank = new ServerGameBank();
+    	turnTracker = new ServerTurnTracker();
+    	try
+		{
+			map = new ServerBoard(randNumbers, randTiles, randPorts);
+		} catch (ServerBoardException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+    	chat = new ServerChat();
+    	gameHistory = new ServerChat();
+    	winner = -1;
+    	return true;
+    }
+    
+    public boolean doSendChat(String owner, String message)
+    {
+    	chat.sendChat(owner, message);
+    	return true;
+    }
 
 	/**
 	 * Builds a road for a player at the given location

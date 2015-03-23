@@ -1,5 +1,8 @@
 package command;
 
+import model.sgame.ServerGame;
+import shared.dto.SendChat_Params;
+import facade.GameManager;
 import facade.IModelFacade;
 
 /**
@@ -11,17 +14,27 @@ import facade.IModelFacade;
 public class SendChat_CO implements ICommandObject {
 	
 	private int gameId;
+	private SendChat_Params chatParams;
+	private GameManager gameManager;
 	
 	/**
 	 * @param gameId The id of the game where the chat is being sent in.
+	 * @param gameManager 
+	 * @param chatParams 
 	 */
-	public SendChat_CO(int gameId) {
+	public SendChat_CO(int gameId, SendChat_Params chatParams, GameManager gameManager) {
 		this.gameId = gameId;
+		this.chatParams = chatParams;
+		this.gameManager = gameManager;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+		ServerGame game = gameManager.getGame(gameId);
+		String owner = game.getPlayerColorByIndex(chatParams.getPlayerIndex()).name();
+		String message = chatParams.getContent();
+		game.doSendChat(owner, message);
+		return true;
 	}
 
 }
