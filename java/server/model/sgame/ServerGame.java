@@ -313,6 +313,26 @@ public class ServerGame {
             playerList.get(playerIndex).doBuildSettlement(isFree);
             playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.SETTLEMENT);
+            
+            // If the settlement is free, update the player turn
+            if (isFree) {
+            	int currentPlayersTurn = turnTracker.getCurrentPlayerIndex();
+            	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
+            		if (currentPlayersTurn == 3)
+            			turnTracker.setCurrentState(ServerTurnState.SecondRound);
+            		else
+            			currentPlayersTurn++;
+            		turnTracker.setCurrentPlayerIndex(currentPlayersTurn);
+            	}
+            	else if (turnTracker.getCurrentState() == ServerTurnState.SecondRound) {
+            		if (currentPlayersTurn == 0)
+            			turnTracker.setCurrentState(ServerTurnState.Rolling);
+            		else
+            			currentPlayersTurn--;
+            		turnTracker.setCurrentPlayerIndex(currentPlayersTurn);
+            	}
+            }
+            
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;

@@ -2,7 +2,6 @@ package model.strade;
 
 import java.util.HashMap;
 
-import client.domestic.IAcceptTradeOverlay;
 import serializer.json.JsonResourceList;
 import serializer.json.JsonTradeOffer;
 import shared.definitions.ResourceType;

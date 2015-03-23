@@ -17,8 +17,8 @@ public class JsonTurnTracker
 		this.largestArmy = largestArmy;
 	}
 
-	private int		currentTurn;
 	private String	status;
+	private int		currentTurn;
 	private int		longestRoad;
 	private int		largestArmy;
 

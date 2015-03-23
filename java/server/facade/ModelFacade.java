@@ -1,14 +1,12 @@
 package facade;
 
 import command.*;
-import model.game.TurnState;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
-import shared.definitions.ResourceType;
 import shared.dto.*;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;

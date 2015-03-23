@@ -25,21 +25,21 @@ public class JsonPlayer
 		this.victoryPoints = victoryPoints;
 	}
 
-	private int				cities;
-	private String			color;
-	private boolean			discarded;
-	private int				monuments;
-	private String			name;
-	private JsonDevCardList newDevCards;
-	private JsonDevCardList oldDevCards;
-	private int				playerIndex;
-	private boolean			playedDevCard;
-	private int				playerID;
 	private JsonResourceList resources;
+	private JsonDevCardList oldDevCards;
+	private JsonDevCardList newDevCards;
 	private int				roads;
+	private int				cities;
 	private int				settlements;
 	private int				soldiers;
 	private int				victoryPoints;
+	private int				monuments;
+	private boolean			playedDevCard;
+	private boolean			discarded;
+	private int				playerID;
+	private int				playerIndex;
+	private String			name;
+	private String			color;
 
 	public int getCities()
 	{

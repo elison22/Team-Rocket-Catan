@@ -13,10 +13,10 @@ public class JsonResourceList
 	}
 
 	private int	brick;
-	private int	ore;
+	private int	wood;
 	private int	sheep;
 	private int	wheat;
-	private int	wood;
+	private int	ore;
 
 	public int getBrick()
 	{
