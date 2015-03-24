@@ -3,6 +3,8 @@ package facade;
 import java.util.ArrayList;
 import java.util.List;
 
+import command.ICommandObject;
+
 import shared.dto.Game_DTO;
 import shared.dto.Player_DTO;
 import model.sboard.ServerBoardException;
@@ -19,10 +21,12 @@ import model.splayer.ServerPlayer;
 public class GameManager {
 	
 	private ArrayList<ServerGame> games;
+	private ArrayList<ArrayList<ICommandObject>> commandsList;
 	
 	public GameManager()
 	{
 		games = new ArrayList<ServerGame>();
+		commandsList = new ArrayList<ArrayList<ICommandObject>>();
 	}
 	
 	/**
@@ -33,6 +37,16 @@ public class GameManager {
 	public ServerGame getGame(int indexOfGame)
 	{
 		return games.get(indexOfGame);
+	}
+	
+	public ArrayList<ICommandObject> getCommands(int index)
+	{
+		return commandsList.get(index);
+	}
+	
+	public void addCommand(int gameIndex, ICommandObject command)
+	{
+		commandsList.get(gameIndex).add(command);
 	}
 	
 	/**
@@ -101,6 +115,7 @@ public class GameManager {
 	{
 		games.add(new ServerGame(randNumbers, randTiles, randPorts, title));
 		games.get(games.size() - 1).setGameId(games.size() - 1);
+		commandsList.add(new ArrayList<ICommandObject>());
 	}
 	
 	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
