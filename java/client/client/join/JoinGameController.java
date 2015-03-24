@@ -206,9 +206,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if (!getNewGameView().getTitle().isEmpty()) {
 			
 			// Check that the game name is valid (alphanumeric under 25 chars)
-			String namePattern = "^[0-9a-zA-Z]{1,25}$";
+			String namePattern = "^[0-9a-zA-Z ]{1,25}$";
 			if (!getNewGameView().getTitle().matches(namePattern)) {
-				getNewGameView().showDialog("Please use only alphanumeric characters.");
+				getNewGameView().showDialog("Game titles must consist of alphanumeric " + 
+											"characters and be under 25 characters long.");
 				return;
 			}
 			

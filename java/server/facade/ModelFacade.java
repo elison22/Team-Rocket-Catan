@@ -53,7 +53,7 @@ public class ModelFacade implements IModelFacade {
 	public String createGame(CreateGame_Params params) {
 		
 		// Check that the game name is valid (alphanumeric under 25 chars)
-		String namePattern = "^[0-9a-zA-Z]{1,25}$";
+		String namePattern = "^[0-9a-zA-Z ]{1,25}$";
 		if (!params.getName().matches(namePattern))
 			return null;
 		
