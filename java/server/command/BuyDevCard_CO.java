@@ -15,21 +15,20 @@ public class BuyDevCard_CO implements ICommandObject {
 
 	private int gameId;
 	private BuyDevCard_Params params;
-    private GameManager gameManager;
+    private ServerGame game;
 	
 	/**
 	 * @param gameId Id of the game the player is in.
 	 * @param params Parameters for buying a dev card.
 	 */
-	public BuyDevCard_CO(int gameId, BuyDevCard_Params params, GameManager gameManager) {
+	public BuyDevCard_CO(int gameId, BuyDevCard_Params params, ServerGame game) {
 		this.gameId = gameId;
 		this.params = params;
-        this.gameManager = gameManager;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-        ServerGame game = gameManager.getGame(gameId);
         game.doBuyDevCard(params.getPlayerIndex());
 		return true;
 	}

@@ -182,7 +182,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canRollDice(rollNum.getPlayerIndex()))
             return null;
-        ICommandObject command = new RollNumber_CO(gameID, rollNum, gameManager);
+        ICommandObject command = new RollNumber_CO(gameID, rollNum, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -215,7 +215,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canFinishTurn(params.getPlayerIndex()))
             return null;
 
-        ICommandObject command = new FinishTurn_CO(gameID, params, gameManager);
+        ICommandObject command = new FinishTurn_CO(gameID, params, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -235,7 +235,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canBuyDevCard(params.getPlayerIndex()))
             return null;
-        ICommandObject command = new BuyDevCard_CO(gameID, params, gameManager);
+        ICommandObject command = new BuyDevCard_CO(gameID, params, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -392,7 +392,7 @@ public class ModelFacade implements IModelFacade {
                 tradeParams.getOfferedResources());
         if(!game.canOfferTrade(tradeParams.getPlayerIndex(), trade))
             return null;
-        ICommandObject command = new OfferTrade_CO(gameID, tradeParams, gameManager);
+        ICommandObject command = new OfferTrade_CO(gameID, tradeParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -412,7 +412,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canAcceptTrade(acceptParams.getPlayerIndex()))
             return null;
-        ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, gameManager);
+        ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -431,7 +431,7 @@ public class ModelFacade implements IModelFacade {
 	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
         ServerGame game = gameManager.getGame(gameID);
         //The canDo check for this method is in the command object because it was easier that way
-        ICommandObject command = new MaritimeTrade_CO(gameID, tradeParams, gameManager);
+        ICommandObject command = new MaritimeTrade_CO(gameID, tradeParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -452,7 +452,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
             return null;
-        ICommandObject command = new DiscardCards_CO(gameID, cardParams, gameManager);
+        ICommandObject command = new DiscardCards_CO(gameID, cardParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
