@@ -17,7 +17,6 @@ public class BuildSettlement_CO implements ICommandObject {
 	private BuildSettlement_Params params;
 
 	/**
-	 * @param gameId The id of the game where the settlement is to be built.
 	 * @param params Parameters needed to build a settlement.
 	 */
 	public BuildSettlement_CO(ServerGame game,
