@@ -255,8 +255,7 @@ public class ServerGame {
      * @return 
      * @return
      */
-    public boolean resetGame()
-    {
+    public boolean resetGame() {
     	versionNumber = 0;
     	for(ServerPlayer player : playerList)
     		player.resetPlayer();
@@ -277,9 +276,9 @@ public class ServerGame {
     	return true;
     }
     
-    public boolean doSendChat(String owner, String message)
-    {
+    public boolean doSendChat(String owner, String message) {
     	chat.sendChat(owner, message);
+        incVersionNumber();
     	return true;
     }
 
@@ -357,6 +356,27 @@ public class ServerGame {
             e.printStackTrace();
             return false;
         }
+        incVersionNumber();
+        return true;
+    }
+
+    /**
+     * Moves the playerIndex and robs a player
+     * @param playerIndex index of player robbing
+     * @param victimIndex index of player being robbed
+     * @param location blah
+     * @return true if valid and successful, else false
+     */
+    public boolean doPlaceRobber(int playerIndex, int victimIndex, HexLocation location) {
+        try {
+            map.doPlayRobber(location);
+            ResourceType stolenRes = playerList.get(playerIndex).getRandRes();
+            playerList.get(victimIndex).incResource(stolenRes);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
+        incVersionNumber();
         return true;
     }
 
@@ -368,6 +388,7 @@ public class ServerGame {
         if(!doPlaceRobber(playerIndex, victimIndex, location))
             return false;
         playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
+        incVersionNumber();
         return true;
 
     }
@@ -392,27 +413,9 @@ public class ServerGame {
             return false;
         }
         playerList.get(playerIndex).playDevCard(DevCardType.YEAR_OF_PLENTY);
+        incVersionNumber();
         return true;
     }
-
-	/**
-	 * Moves the playerIndex and robs a player
-	 * @param playerIndex index of player robbing
-	 * @param victimIndex index of player being robbed
-	 * @param location blah
-	 * @return true if valid and successful, else false
-	 */
-	public boolean doPlaceRobber(int playerIndex, int victimIndex, HexLocation location) {
-        try {
-            map.doPlayRobber(location);
-            ResourceType stolenRes = playerList.get(playerIndex).getRandRes();
-            playerList.get(victimIndex).incResource(stolenRes);
-        } catch (ServerBoardException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-	}
 
     /***/
     public boolean doMonopoly(int playerIdx, ResourceType resource) {
@@ -422,6 +425,7 @@ public class ServerGame {
                 playerList.get(playerIdx).incResource(resource);
         }
         playerList.get(playerIdx).playDevCard(DevCardType.MONOPOLY);
+        incVersionNumber();
         return true;
     }
 
@@ -429,6 +433,7 @@ public class ServerGame {
     public boolean doMonument(int playerIndex) {
         playerList.get(playerIndex).addPoint();
         playerList.get(playerIndex).playDevCard(DevCardType.MONUMENT);
+        incVersionNumber();
         return true;
     }
 
@@ -445,7 +450,7 @@ public class ServerGame {
             e.printStackTrace();
             return false;
         }
-
+        incVersionNumber();
         return true;
     }
 
@@ -459,6 +464,7 @@ public class ServerGame {
         // Answer to above: we're going to call the canDo's in the facade so we can immediately return if it fails
         ServerDevCard chosenCard = cardBank.giveDevCard();
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
+        incVersionNumber();
 		return true;
 	}
 
@@ -521,6 +527,7 @@ public class ServerGame {
             }
         }
         turnTracker.setCurrentState(ServerTurnState.Playing);
+        incVersionNumber();
 		return true;
 	}
 
@@ -532,6 +539,7 @@ public class ServerGame {
             }
         }
         turnTracker.setCurrentState(ServerTurnState.Playing);
+        incVersionNumber();
         return false;
     }
 	
@@ -549,6 +557,7 @@ public class ServerGame {
             player.decResource(trade.getResourceToGive());
         }
         player.incResource(trade.getResourceToReceive());
+        incVersionNumber();
 		return true;
 	}
 
@@ -583,6 +592,7 @@ public class ServerGame {
                 }
             }
         }
+        incVersionNumber();
         return true;
     }
 	
@@ -596,6 +606,7 @@ public class ServerGame {
 	public boolean offerDomesticTrade(int offerer, int receiver, HashMap<ResourceType, Integer> tradeOffer)
 	{
         this.tradeOffer = new ServerTradeOffer(offerer, receiver, tradeOffer);
+        incVersionNumber();
 		return true;
 	}
 
@@ -605,6 +616,7 @@ public class ServerGame {
         else
             turnTracker.setCurrentPlayerIndex(++playerIndex);
         turnTracker.setCurrentState(ServerTurnState.Rolling);
+        incVersionNumber();
     }
 
     public void addPlayer(String player, int playerId, String color) {
