@@ -30,10 +30,10 @@ public class BuildCity_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        if(game.doBuildCity(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
-            return true;
-        }
-		return false;
+        return game.doBuildCity( params.getPlayerIndex(), 
+        						 new VertexLocation( new HexLocation( params.getVertexX(), 
+        								 							  params.getVertexY()), 
+        								 			 VertexDirection.convert(params.getVertexDir())));
 	}
 
 }

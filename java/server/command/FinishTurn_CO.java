@@ -30,8 +30,7 @@ public class FinishTurn_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        game.finishTurn(params.getPlayerIndex());
-		return true;
+        return game.finishTurn(params.getPlayerIndex());
 	}
 
 }

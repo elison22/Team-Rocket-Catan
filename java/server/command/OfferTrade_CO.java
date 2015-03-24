@@ -31,8 +31,7 @@ public class OfferTrade_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        game.offerDomesticTrade(params.getPlayerIndex(), params.getReceiver(), params.getOfferedResources());
-		return false;
+        return game.offerDomesticTrade(params.getPlayerIndex(), params.getReceiver(), params.getOfferedResources());
 	}
 
 }

@@ -33,8 +33,7 @@ public class SendChat_CO implements ICommandObject {
 		ServerGame game = gameManager.getGame(gameId);
 		String owner = game.getPlayerColorByIndex(chatParams.getPlayerIndex()).name();
 		String message = chatParams.getContent();
-		game.doSendChat(owner, message);
-		return true;
+		return game.doSendChat(owner, message);
 	}
 
 }

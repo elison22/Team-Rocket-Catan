@@ -29,8 +29,7 @@ public class BuyDevCard_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        game.doBuyDevCard(params.getPlayerIndex());
-		return true;
+        return game.doBuyDevCard(params.getPlayerIndex());
 	}
 
 }

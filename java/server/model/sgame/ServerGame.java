@@ -650,7 +650,7 @@ public class ServerGame {
 		return true;
 	}
 
-    public void finishTurn(int playerIndex){
+    public boolean finishTurn(int playerIndex){
     	
     	// If in the first round, increment turn order normally
     	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
@@ -680,6 +680,7 @@ public class ServerGame {
     	}
         
         incVersionNumber();
+        return true;
     }
 
     public void addPlayer(String player, int playerId, String color) {

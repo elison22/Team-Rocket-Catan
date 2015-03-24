@@ -28,9 +28,7 @@ public class ResetGame_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		ServerGame game = manager.getGame(gameId);
-		if(game.resetGame())
-			return true;
-		else return false;
+		return game.resetGame();
 	}
 
 }

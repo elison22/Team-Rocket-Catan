@@ -30,8 +30,7 @@ public class AcceptTrade_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        game.doDomesticTrade(params.getPlayerIndex(), params.isWillAccept());
-		return true;
+        return game.doDomesticTrade(params.getPlayerIndex(), params.isWillAccept());
 	}
 
 }

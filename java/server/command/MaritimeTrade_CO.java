@@ -41,8 +41,7 @@ public class MaritimeTrade_CO implements ICommandObject {
         ServerMaritimeTrade maritimeTrade = new ServerMaritimeTrade(input, output, params.getRatio());
         if(!game.canMaritimeTrade(params.getPlayerIndex(), maritimeTrade))
             return false;
-        game.doMaritimeTrade(params.getPlayerIndex(), maritimeTrade);
-		return true;
+        return game.doMaritimeTrade(params.getPlayerIndex(), maritimeTrade);
 	}
 
     public ResourceType convertString(String res) {
