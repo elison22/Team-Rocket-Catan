@@ -382,7 +382,15 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String buildCity(int gameID, BuildCity_Params params) {
-		// TODO Auto-generated method stub
+        ServerGame game = gameManager.getGame(gameID);
+        ICommandObject command = null;
+        if(game.canBuildCity(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))){
+            command = new BuildCity_CO(params, game);
+            if(command.execute()) {
+                gameManager.addCommand(gameID, command);
+                return serializer.serializeGameModel(game);
+            }
+        }
 		return null;
 	}
 

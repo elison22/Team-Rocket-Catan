@@ -1,7 +1,11 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.BuildCity_Params;
 import facade.IModelFacade;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * @author Chad
@@ -11,22 +15,24 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class BuildCity_CO implements ICommandObject {
 	
-	private int gameId;
 	private BuildCity_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param gameId The id of the game where the city is to be built.
+	 * @param game The game.
 	 * @param params Parameters needed to build a city.
 	 */
-	public BuildCity_CO(int gameId,
-			BuildCity_Params params) {
+	public BuildCity_CO(BuildCity_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
+        if(game.doBuildCity(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
+            return true;
+        }
 		return false;
 	}
 
