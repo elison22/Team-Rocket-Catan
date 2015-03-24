@@ -126,7 +126,7 @@ public class MovesHandler implements HttpHandler {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			sendResponseBody(exchange, jsonString);
 		} else if(jsonString == null) {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			sendResponseBody(exchange, "Internal Error!");
 		}
 		exchange.close();

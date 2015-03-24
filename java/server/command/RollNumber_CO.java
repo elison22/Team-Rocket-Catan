@@ -15,21 +15,20 @@ public class RollNumber_CO implements ICommandObject {
 	
 	private int gameId;
 	private RollNumber_Params params;
-    private GameManager gameManager;
+    private ServerGame game;
 
 	/**
 	 * @param gameId Id of the game where the dice roll is happening.
 	 * @param params needed for rolling a number.
 	 */
-	public RollNumber_CO(int gameId, RollNumber_Params params, GameManager gameManager) {
+	public RollNumber_CO(int gameId, RollNumber_Params params, ServerGame game) {
 		this.gameId = gameId;
 		this.params = params;
-        this.gameManager = gameManager;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-        ServerGame game = gameManager.getGame(gameId);
         game.doRoll(params.getPlayerIndex(), params.getNumber());
 		return true;
 	}

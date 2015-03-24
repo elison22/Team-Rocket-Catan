@@ -17,23 +17,22 @@ public class MaritimeTrade_CO implements ICommandObject {
 	
 	private int gameId;
 	private MaritimeTrade_Params params;
-    private GameManager gameManager;
+    private ServerGame game;
 
 	/**
 	 * @param gameId Id of the game where the player is making a maritime trade.
 	 * @param params Parameters needed for a player to make a maritime trade.
 	 */
 	public MaritimeTrade_CO(int gameId,
-			MaritimeTrade_Params params, GameManager gameManager) {
+			MaritimeTrade_Params params, ServerGame game) {
 		super();
 		this.gameId = gameId;
 		this.params = params;
-        this.gameManager = gameManager;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-        ServerGame game = gameManager.getGame(gameId);
         ResourceType input = convertString(params.getInputResource());
         ResourceType output = convertString(params.getOutputResource());
         if(input == null || output == null)

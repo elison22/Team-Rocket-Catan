@@ -15,23 +15,22 @@ public class OfferTrade_CO implements ICommandObject {
 	
 	private int gameId;
 	private OfferTrade_Params params;
-    private GameManager gameManager;
+    private ServerGame game;
 
 	/**
 	 * @param gameId Id of the game where the trade is to be offered.
 	 * @param params Parameters needed to offer a trade.
 	 */
 	public OfferTrade_CO(int gameId,
-			OfferTrade_Params params, GameManager gameManager) {
+			OfferTrade_Params params, ServerGame game) {
 		super();
 		this.gameId = gameId;
 		this.params = params;
-        this.gameManager = gameManager;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-        ServerGame game = gameManager.getGame(gameId);
         game.offerDomesticTrade(params.getPlayerIndex(), params.getReceiver(), params.getOfferedResources());
 		return false;
 	}

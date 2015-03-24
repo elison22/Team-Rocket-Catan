@@ -14,23 +14,22 @@ import facade.IModelFacade;
 public class AcceptTrade_CO implements ICommandObject {
 	private int gameId;
 	private AcceptTrade_Params params;
-    private GameManager gameManager;
+    private ServerGame game;
 
 	/**
 	 * @param gameId Id of the game where the trade is to be accepted (or not).
 	 * @param params Parameters needed for a player to accept a trade.
 	 */
 	public AcceptTrade_CO(int gameId,
-			AcceptTrade_Params params, GameManager gameManager) {
+			AcceptTrade_Params params, ServerGame game) {
 		super();
 		this.gameId = gameId;
 		this.params = params;
-        this.gameManager = gameManager;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-        ServerGame game = gameManager.getGame(gameId);
         game.doDomesticTrade(params.getPlayerIndex(), params.isWillAccept());
 		return true;
 	}

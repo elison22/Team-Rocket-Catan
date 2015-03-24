@@ -1,5 +1,7 @@
 package facade;
 
+import java.util.ArrayList;
+
 import command.*;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
@@ -120,7 +122,7 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String resetGame(int gameID) {
-		ResetGame_CO command = new ResetGame_CO(gameID, gameManager);
+		ICommandObject command = new ResetGame_CO(gameID, gameManager);
 		command.execute();
 		return serializer.serializeGameModel(gameManager.getGame(gameID));
 	}
@@ -132,8 +134,9 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String getGameCommands(int gameID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<ICommandObject> commandsList = gameManager.getCommands(gameID);
+		return serializer.serializeCommands(commandsList);
 	}
 
 	/**
@@ -159,9 +162,12 @@ public class ModelFacade implements IModelFacade {
 		if(chatParams.getPlayerIndex() > 3 || chatParams.getPlayerIndex() < 0)
 			return null;
 		ServerGame game = gameManager.getGame(gameID);
-		SendChat_CO command = new SendChat_CO(gameID, chatParams, gameManager);
+		ICommandObject command = new SendChat_CO(gameID, chatParams, gameManager);
 		if(command.execute())
+		{
+			gameManager.addCommand(gameID, command);
 			return serializer.serializeGameModel(game);
+		}
 		else return null;
 	}
 
@@ -176,9 +182,12 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canRollDice(rollNum.getPlayerIndex()))
             return null;
-        RollNumber_CO command = new RollNumber_CO(gameID, rollNum, gameManager);
+        ICommandObject command = new RollNumber_CO(gameID, rollNum, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 
@@ -213,9 +222,12 @@ public class ModelFacade implements IModelFacade {
         if(!game.canFinishTurn(params.getPlayerIndex()))
             return null;
 
-        FinishTurn_CO command = new FinishTurn_CO(gameID, params, gameManager);
+        ICommandObject command = new FinishTurn_CO(gameID, params, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 
@@ -230,9 +242,12 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canBuyDevCard(params.getPlayerIndex()))
             return null;
-        BuyDevCard_CO command = new BuyDevCard_CO(gameID, params, gameManager);
+        ICommandObject command = new BuyDevCard_CO(gameID, params, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 
@@ -322,7 +337,10 @@ public class ModelFacade implements IModelFacade {
 			
 			// Execute and return new model
 			if (command.execute())
+			{
+	        	gameManager.addCommand(gameID, command);
 				return serializer.serializeGameModel(game);
+			}
 		}
 		
 		// If any of the above failed, return null
@@ -348,7 +366,10 @@ public class ModelFacade implements IModelFacade {
 		}else if(game.canBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
 			buildSet = new BuildSettlement_CO(game, params);
 			if(buildSet.execute())
+			{
+	        	gameManager.addCommand(gameID, buildSet);
 				return serializer.serializeGameModel(game);
+			}
 		}
 		return null;
 	}
@@ -378,9 +399,12 @@ public class ModelFacade implements IModelFacade {
                 tradeParams.getOfferedResources());
         if(!game.canOfferTrade(tradeParams.getPlayerIndex(), trade))
             return null;
-        OfferTrade_CO command = new OfferTrade_CO(gameID, tradeParams, gameManager);
+        ICommandObject command = new OfferTrade_CO(gameID, tradeParams, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 
@@ -395,9 +419,12 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canAcceptTrade(acceptParams.getPlayerIndex()))
             return null;
-        AcceptTrade_CO command = new AcceptTrade_CO(gameID, acceptParams, gameManager);
+        ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 
@@ -411,9 +438,12 @@ public class ModelFacade implements IModelFacade {
 	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
         ServerGame game = gameManager.getGame(gameID);
         //The canDo check for this method is in the command object because it was easier that way
-        MaritimeTrade_CO command = new MaritimeTrade_CO(gameID, tradeParams, gameManager);
+        ICommandObject command = new MaritimeTrade_CO(gameID, tradeParams, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 
@@ -429,9 +459,12 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
             return null;
-        DiscardCards_CO command = new DiscardCards_CO(gameID, cardParams, gameManager);
+        ICommandObject command = new DiscardCards_CO(gameID, cardParams, game);
         if(command.execute())
+        {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 		return null;
 	}
 	

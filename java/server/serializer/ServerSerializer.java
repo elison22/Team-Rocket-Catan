@@ -40,6 +40,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import com.google.gson.Gson;
+import command.ICommandObject;
 
 /**
  * @author Chad
@@ -88,6 +89,11 @@ public class ServerSerializer {
 	 */
 	public String serializeCookie(JsonPlayer player) {
 		return null;
+	}
+	
+	public String serializeCommands(ArrayList<ICommandObject> commands)
+	{
+		return gson.toJson(commands);
 	}
 	
 	/**************************************************************************
