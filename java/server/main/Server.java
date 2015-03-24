@@ -69,25 +69,7 @@ public class Server {
         
         // moves
         server.createContext("/moves/", new MovesHandler(modelFacade));
-        /*
-        server.createContext("/moves/sendChat", new SendChatHandler(modelFacade));					// POST
-        server.createContext("/moves/rollNumber", new RollHandler(modelFacade));					// POST
-        server.createContext("/moves/robPlayer", new RobPlayerHandler(modelFacade));				// POST
-        server.createContext("/moves/finishTurn", new FinishTurnHandler(modelFacade));				// POST
-        server.createContext("/moves/buyDevCard", new BuyDevCardHandler(modelFacade));				// POST
-        server.createContext("/moves/Year_of_Plenty", new YearOfPlentyHandler(modelFacade));		// POST
-        server.createContext("/moves/Road_Building", new RoadBuildingHandler(modelFacade));			// POST
-        server.createContext("/moves/Soldier", new SoldierHandler(modelFacade));					// POST
-        server.createContext("/moves/Monopoly", new MonopolyHandler(modelFacade));					// POST	
-        server.createContext("/moves/Monument", new MonumentHandler(modelFacade));					// POST
-        server.createContext("/moves/buildRoad", new BuildRoadHandler(modelFacade));				// POST
-        server.createContext("/moves/buildSettlement", new BuildSettlementHandler(modelFacade));	// POST
-        server.createContext("/moves/buildCity", new BuildCityHandler(modelFacade));				// POST
-        server.createContext("/moves/offerTrade", new OfferTradeHandler(modelFacade));				// POST
-        server.createContext("/moves/acceptTrade", new AcceptTradeHandler(modelFacade));			// POST
-        server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(modelFacade));		// POST
-        server.createContext("/moves/discardCards", new DiscardCardsHandler(modelFacade));			// POST
-*/
+
         // swagger
         server.createContext("/docs/api/data", new SwaggerHandler.JSONAppender(""));
         server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));    
