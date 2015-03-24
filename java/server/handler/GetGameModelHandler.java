@@ -23,7 +23,7 @@ public class GetGameModelHandler extends MovesHandler {
 		
 		if(new Integer(userVersionId) == modelFacade.getVersionId(new Integer(cookieItems[3]))) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			sendResponseBody(exchange, "true");
+			sendResponseBody(exchange, "\"true\"\n");
 		} else {
 			String gameModel = modelFacade.getGameModel(new Integer(cookieItems[3]));
 			
