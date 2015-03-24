@@ -10,10 +10,10 @@ public class JsonEdgeLocation
 		this.direction = direction;
 	}
 
+	private String	direction;
 	private int		x;
 	private int		y;
-	private String	direction;
-
+	
 	public int getX()
 	{
 		return x;

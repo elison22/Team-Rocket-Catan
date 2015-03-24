@@ -10,16 +10,16 @@ public class JsonHex
 		number = 0;
 	}
 
-	public JsonHex(JsonHexLocation location, String resource, int number)
+	public JsonHex(JsonHexLocation location, String resource, Integer number)
 	{
 		this.location = location;
 		this.resource = resource;
 		this.number = number;
 	}
 
-	private JsonHexLocation location;
 	private String		resource;
-	private int			number;
+	private JsonHexLocation location;
+	private Integer			number;
 
 	public JsonHexLocation getLocation()
 	{
@@ -33,6 +33,6 @@ public class JsonHex
 
 	public int getNumber()
 	{
-		return number;
+		return number == null ? 0 : number;
 	}
 }

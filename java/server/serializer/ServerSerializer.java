@@ -32,14 +32,18 @@ import serializer.json.JsonTradeOffer;
 import serializer.json.JsonTurnTracker;
 import serializer.json.JsonVertexLocation;
 import serializer.json.JsonVertexObject;
+import shared.definitions.HexType;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.dto.Game_DTO;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 import com.google.gson.Gson;
+
 import command.ICommandObject;
 
 /**
@@ -151,9 +155,20 @@ public class ServerSerializer {
 			HexLocation hexLocation = entry.getKey();
 			ServerHexTile serverHexTile = entry.getValue();
 			
-			jsonHexes[i] = new JsonHex(new JsonHexLocation(hexLocation.getX(), hexLocation.getY()),
-									   serverHexTile.getType().toString(),
-									   serverHexTile.getDiceNum());
+			// For desert tiles:
+			if (serverHexTile.getType() == HexType.DESERT) {
+				jsonHexes[i] = new JsonHex(new JsonHexLocation(hexLocation.getX(), hexLocation.getY()),
+						   				   null,
+						   				   null);
+			}
+			
+			// For everything else:
+			else {
+				jsonHexes[i] = new JsonHex(new JsonHexLocation(hexLocation.getX(), hexLocation.getY()),
+						   				   serverHexTile.getType().toString().toLowerCase(),
+						   				   serverHexTile.getDiceNum());
+			}
+			
 			++i;
 		}
 		return jsonHexes;
@@ -197,7 +212,7 @@ public class ServerSerializer {
 	        Map.Entry<EdgeLocation, ServerConstructable> pair = (Entry<EdgeLocation, ServerConstructable>)it.next();
 	        EdgeLocation edgeLoc = pair.getKey();
 	        HexLocation hex = edgeLoc.getHexLoc();
-	        String dir = edgeLoc.getDir().toString();
+	        String dir = EdgeDirection.acronym(edgeLoc.getDir());
 	        JsonEdgeLocation jEdgeLoc = new JsonEdgeLocation(hex.getX(), hex.getY(), dir);
 	        int owner = pair.getValue().getOwner();
 	        roads.add(new JsonRoad(owner, jEdgeLoc));
@@ -215,7 +230,7 @@ public class ServerSerializer {
             if(!pair.getValue().isSettlement()) continue;
 	        VertexLocation vertLoc = pair.getKey();
 	        HexLocation hex = vertLoc.getHexLoc();
-	        String dir = vertLoc.getDir().toString();
+	        String dir = VertexDirection.acronym(vertLoc.getDir());
 	        JsonVertexLocation jEdgeLoc = new JsonVertexLocation(hex.getX(), hex.getY(), dir);
 	        int owner = pair.getValue().getOwner();
 	        settlements.add(new JsonVertexObject(owner, jEdgeLoc));
@@ -233,7 +248,7 @@ public class ServerSerializer {
             if(pair.getValue().isSettlement()) continue;
 	        VertexLocation vertLoc = pair.getKey();
 	        HexLocation hex = vertLoc.getHexLoc();
-	        String dir = vertLoc.getDir().toString();
+	        String dir = VertexDirection.acronym(vertLoc.getDir());
 	        JsonVertexLocation jEdgeLoc = new JsonVertexLocation(hex.getX(), hex.getY(), dir);
 	        int owner = pair.getValue().getOwner();
 	        cities.add(new JsonVertexObject(owner, jEdgeLoc));
