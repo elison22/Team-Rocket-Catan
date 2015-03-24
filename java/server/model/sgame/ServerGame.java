@@ -351,13 +351,20 @@ public class ServerGame {
      */
     public boolean doPlaceRobber(int playerIndex, int victimIndex, HexLocation location) {
         try {
+        	// Place robber
             map.doPlayRobber(location);
+            
+            // Steal resources
             ResourceType stolenRes = playerList.get(playerIndex).getRandRes();
             playerList.get(victimIndex).incResource(stolenRes);
+            
+            // Set state to playing
+            turnTracker.setCurrentState(ServerTurnState.Playing);
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
         }
+        
         incVersionNumber();
         return true;
     }
@@ -458,71 +465,122 @@ public class ServerGame {
 	 */
 	public boolean doRoll(int playerIndex, int numberRolled)
 	{
-        //What do we use playerIndex for? According to the Swagger page, this is part of the /rollNumber operation
-        //but shouldn't we already know whose turn it is from the TurnTracker?
         turnTracker.setNumRolled(numberRolled);
+        
+        // If the number rolled is a 7, begin discard phase
         if(numberRolled == 7){
-            for(ServerPlayer player : playerList){
+        	
+        	// Keep track of which players need to discard
+        	ArrayList<Integer> playersToDiscard = new ArrayList<Integer>();
+        	
+        	// Figure out which players have more than 7 resources
+            for(ServerPlayer player : playerList) {
                 if(player.getResCount() > 7)
-                    turnTracker.setCurrentState(ServerTurnState.Discarding);
+                    playersToDiscard.add(player.getPlayerIdx());
             }
-        }
-        ArrayList<HexLocation> hexlocs = map.getHexLocsByNum(numberRolled);
-        ResourceType resource = null;
-
-        for(HexLocation location : hexlocs){
-            HexType hexType = map.getHexType(location);
-            switch(hexType){
-                case WATER:
-                    continue;
-                case DESERT:
-                    continue;
-                case BRICK:
-                    resource = ResourceType.BRICK;
-                    break;
-                case WHEAT:
-                    resource = ResourceType.WHEAT;
-                    break;
-                case WOOD:
-                    resource = ResourceType.WOOD;
-                    break;
-                case SHEEP:
-                    resource = ResourceType.SHEEP;
-                    break;
-                case ORE:
-                    resource = ResourceType.ORE;
-                    break;
-                default:
-                    continue;
+            
+            // If there are any players who need to discard, change to the
+            // discarding phase and store the players
+            if (!playersToDiscard.isEmpty()) {
+            	turnTracker.setPlayersToDiscard(playersToDiscard);
+            	turnTracker.setCurrentState(ServerTurnState.Discarding);
             }
+            
+            // If no players need to discard, enter robbing phase
+            else {
+            	turnTracker.setCurrentState(ServerTurnState.Robbing);
+            }
+        } 
+        
+        // Otherwise distribute resources as normal and reset playing state
+        else {
+        	
+        	// Retrieve hexes whose chits match the dice roll
+        	ArrayList<HexLocation> hexlocs = map.getHexLocsByNum(numberRolled);
+            ResourceType resource = null;
 
-            ArrayList<ServerConstructable> constructables = map.getAdjacentBuildings(location);
-            for(ServerConstructable constructable : constructables){
-                int amount = 1;
-                if(!constructable.isSettlement())
-                    amount = 2;
-                int owner = constructable.getOwner();
-                ServerPlayer player = playerList.get(owner);
-                for(int i = 0; i < amount; i++){
-                    player.incResource(resource);
+            // For each hex matching the dice roll, distribute its resource to
+            // players who have buildings next to it
+            for (HexLocation location : hexlocs) {
+                HexType hexType = map.getHexType(location);
+                switch(hexType){
+                    case WATER:
+                        continue;
+                    case DESERT:
+                        continue;
+                    case BRICK:
+                        resource = ResourceType.BRICK;
+                        break;
+                    case WHEAT:
+                        resource = ResourceType.WHEAT;
+                        break;
+                    case WOOD:
+                        resource = ResourceType.WOOD;
+                        break;
+                    case SHEEP:
+                        resource = ResourceType.SHEEP;
+                        break;
+                    case ORE:
+                        resource = ResourceType.ORE;
+                        break;
+                    default:
+                        continue;
+                }
+
+                // Give resources to players who have a city or settlement next
+                // to the hex
+                ArrayList<ServerConstructable> constructables = map.getAdjacentBuildings(location);
+                for(ServerConstructable constructable : constructables){
+                    int amount = 1;
+                    if(!constructable.isSettlement())
+                        amount = 2;
+                    int owner = constructable.getOwner();
+                    ServerPlayer player = playerList.get(owner);
+                    for(int i = 0; i < amount; i++){
+                        player.incResource(resource);
+                    }
                 }
             }
+            
+            // Set turn state to playing
+            turnTracker.setCurrentState(ServerTurnState.Playing);
         }
-        turnTracker.setCurrentState(ServerTurnState.Playing);
+        
         incVersionNumber();
 		return true;
 	}
 
     public boolean doDiscardCards(int playerIndex, HashMap<ResourceType, Integer> resourceList){
+    	
+    	// Discard the given resources for the given player
         ServerPlayer playerDiscarding = playerList.get(playerIndex);
         for(Map.Entry<ResourceType, Integer> entry : resourceList.entrySet()){
             for(int i = 0; i < entry.getValue(); i++){
                 playerDiscarding.decResource(entry.getKey());
             }
         }
-        turnTracker.setCurrentState(ServerTurnState.Playing);
+        
+        // Remove player from the toDiscard list in the turntracker
+        ArrayList<Integer> playersToDiscard = turnTracker.getPlayersToDiscard();
+        for (int i = 0; i < playersToDiscard.size(); ++i) {
+        	
+        	// Find the player who has discarded and remove them from the list
+        	if (playersToDiscard.get(i) == playerDiscarding.getPlayerIdx()) {
+        		playersToDiscard.remove(i);
+        		
+        		// Update playersToDiscardList
+                turnTracker.setPlayersToDiscard(playersToDiscard);
+        		break;
+        	}
+        }
+        
+        // If everyone who needs to discard has done so, proceed to robbing
+        // state, otherwise stay in discarding state
+        if (turnTracker.getPlayersToDiscard().size() == 0)
+        	turnTracker.setCurrentState(ServerTurnState.Robbing);
+        
         incVersionNumber();
-        return false;
+        return true;
     }
 	
 	/**
@@ -603,7 +661,7 @@ public class ServerGame {
     		turnTracker.setCurrentPlayerIndex(playerIndex);
     	}
     	
-    	// If in the second round, decremenet turn count
+    	// If in the second round, decrement turn count
     	else if (turnTracker.getCurrentState() == ServerTurnState.SecondRound) {
     		if (playerIndex == 0)
     			turnTracker.setCurrentState(ServerTurnState.Rolling);

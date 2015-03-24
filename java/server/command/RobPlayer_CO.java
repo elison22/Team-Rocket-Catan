@@ -27,9 +27,7 @@ public class RobPlayer_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-
-        game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation());
-        return false;
+        return game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation());
 	}
 
 }

@@ -7,10 +7,8 @@ public class RobPlayer_Params {
 	private String type = "robPlayer";
 	private int playerIndex;
 	private int victimIndex;
-	@SuppressWarnings("unused")
 	private RobberLocation location;
 	
-	@SuppressWarnings("unused")
 	private class RobberLocation {
 		private int x;
 		private int y;

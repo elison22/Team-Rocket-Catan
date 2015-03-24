@@ -20,7 +20,8 @@ public class ServerUnitTests {
 				"test.game.JoinGameTest",
 				"test.user.UserManagerTest",
 				"test.command.FinishTurnTest",
-				"test.command.RollNumberTest"
+				"test.command.RollNumberTest",
+				"test.command.DiscardTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);

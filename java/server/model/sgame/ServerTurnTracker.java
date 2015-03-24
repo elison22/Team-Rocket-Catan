@@ -1,5 +1,7 @@
 package model.sgame;
 
+import java.util.ArrayList;
+
 import model.sgame.ServerTurnState;
 import serializer.json.JsonTurnTracker;
 
@@ -30,6 +32,9 @@ public class ServerTurnTracker
      * The number rolled by the player
      */
     private int numRolled;
+    
+    // The indices of the players who still need to discard
+    private ArrayList<Integer> playersToDiscard;
 
     /**
      * Constructor
@@ -114,7 +119,15 @@ public class ServerTurnTracker
         return currentState;
     }
 
-    public int getNumRolled() { return numRolled; }
+    public ArrayList<Integer> getPlayersToDiscard() {
+		return playersToDiscard;
+	}
+
+	public void setPlayersToDiscard(ArrayList<Integer> playersToDiscard) {
+		this.playersToDiscard = playersToDiscard;
+	}
+
+	public int getNumRolled() { return numRolled; }
     
     public boolean canPlayerBuild(int playerIndex) {
     	if(currentPlayerIndex == playerIndex) {
@@ -159,7 +172,7 @@ public class ServerTurnTracker
     }
     
     public boolean canPlayerDiscard(int playerIndex) {
-    	if(currentPlayerIndex == playerIndex) {
+    	if(playersToDiscard.contains(new Integer(playerIndex))) {
     		if(currentState == ServerTurnState.Discarding)
     			return true;
     	}

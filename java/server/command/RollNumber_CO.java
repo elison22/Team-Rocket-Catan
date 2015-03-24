@@ -10,6 +10,7 @@ import facade.IModelFacade;
  *
  * Does everything needed for a player to roll a given dice number.
  */
+
 @SuppressWarnings("unused")
 public class RollNumber_CO implements ICommandObject {
 	
@@ -29,8 +30,7 @@ public class RollNumber_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        game.doRoll(params.getPlayerIndex(), params.getNumber());
-		return true;
+        return game.doRoll(params.getPlayerIndex(), params.getNumber());
 	}
 
 }

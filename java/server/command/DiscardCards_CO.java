@@ -32,8 +32,7 @@ public class DiscardCards_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        game.doDiscardCards(params.getPlayerIndex(), params.getDiscardedCards());
-		return true;
+        return game.doDiscardCards(params.getPlayerIndex(), params.getDiscardedCards());
 	}
 
 }
