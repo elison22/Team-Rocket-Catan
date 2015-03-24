@@ -2,7 +2,6 @@ package test.command;
 
 import facade.IModelFacade;
 import facade.ModelFacade;
-import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +28,6 @@ public class FinishTurnTest {
         modelFacade.joinGame(new JoinGame_Params(0, "green"), "test2", 1);
         modelFacade.joinGame(new JoinGame_Params(0, "puce"), "test3", 2);
         modelFacade.joinGame(new JoinGame_Params(0, "blue"), "test4", 3);
-        ServerGame game = modelFacade.getGame(0);
         modelFacade.buildRoad(0, new BuildRoad_Params(0, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.North), true));
         modelFacade.buildSettlement(0, new BuildSettlement_Params(0, new VertexLocation(new HexLocation(1, 1), VertexDirection.NorthEast), true));
         modelFacade.buildRoad(0, new BuildRoad_Params(1, new EdgeLocation(new HexLocation(-2, -1), EdgeDirection.SouthEast), true));

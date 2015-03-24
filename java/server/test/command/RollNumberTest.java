@@ -2,8 +2,6 @@ package test.command;
 
 import facade.IModelFacade;
 import facade.ModelFacade;
-import model.game.TurnState;
-import model.sboard.ServerConstructable;
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
 import org.junit.Before;

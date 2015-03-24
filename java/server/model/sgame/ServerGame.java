@@ -314,29 +314,15 @@ public class ServerGame {
             cardBank.buyPiece(PieceType.SETTLEMENT);
             
             // If the settlement is free, update the player turn
-            if (isFree) {
-            	int currentPlayersTurn = turnTracker.getCurrentPlayerIndex();
-            	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
-            		if (currentPlayersTurn == 3)
-            			turnTracker.setCurrentState(ServerTurnState.SecondRound);
-            		else
-            			currentPlayersTurn++;
-            		turnTracker.setCurrentPlayerIndex(currentPlayersTurn);
-            	}
-            	else if (turnTracker.getCurrentState() == ServerTurnState.SecondRound) {
-            		if (currentPlayersTurn == 0)
-            			turnTracker.setCurrentState(ServerTurnState.Rolling);
-            		else
-            			currentPlayersTurn--;
-            		turnTracker.setCurrentPlayerIndex(currentPlayersTurn);
-            	}
-            }
+            if (isFree) 
+            	finishTurn(playerIndex);
             
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
         }
-        incVersionNumber();
+        
+        
         return true;
     }
 
@@ -611,11 +597,34 @@ public class ServerGame {
 	}
 
     public void finishTurn(int playerIndex){
-//        if(playerIndex == 3)
-//            turnTracker.setCurrentPlayerIndex(0);
-//        else
-//            turnTracker.setCurrentPlayerIndex(++playerIndex);
-//        turnTracker.setCurrentState(ServerTurnState.Rolling);
+    	
+    	// If in the first round, increment turn order normally
+    	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
+    		if (playerIndex == 3)
+    			turnTracker.setCurrentState(ServerTurnState.SecondRound);
+    		else
+    			++playerIndex;
+    		turnTracker.setCurrentPlayerIndex(playerIndex);
+    	}
+    	
+    	// If in the second round, decremenet turn count
+    	else if (turnTracker.getCurrentState() == ServerTurnState.SecondRound) {
+    		if (playerIndex == 0)
+    			turnTracker.setCurrentState(ServerTurnState.Rolling);
+    		else
+    			--playerIndex;
+    		turnTracker.setCurrentPlayerIndex(playerIndex);
+    	}
+    	
+    	// If in that playing state, turn order increases normally
+    	else if (turnTracker.getCurrentState() == ServerTurnState.Playing) {
+    		if(playerIndex == 3)
+                turnTracker.setCurrentPlayerIndex(0);
+            else
+                turnTracker.setCurrentPlayerIndex(++playerIndex);
+            turnTracker.setCurrentState(ServerTurnState.Rolling);
+    	}
+        
         incVersionNumber();
     }
 

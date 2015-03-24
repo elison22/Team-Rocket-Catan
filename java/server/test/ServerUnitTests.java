@@ -18,7 +18,9 @@ public class ServerUnitTests {
 				"test.game.CreateGameTest",
 				"test.game.GetModelTest",
 				"test.game.JoinGameTest",
-				"test.user.UserManagerTest"
+				"test.user.UserManagerTest",
+				"test.command.FinishTurnTest",
+				"test.command.RollNumberTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);
