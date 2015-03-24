@@ -28,8 +28,18 @@ public class BuildSettlement_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		if(game.doBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())), params.isFree())) {
-				return true;
+		if(game.doBuildSettlement(params.getPlayerIndex(), 
+								  new VertexLocation( new HexLocation( params.getVertexX(), 
+																	   params.getVertexY()), 
+																	   VertexDirection.convert( params.getVertexDir())),
+								  params.isFree())) {
+			
+			
+			// If the settlement is free, end the turn
+			if (params.isFree())
+				game.finishTurn(params.getPlayerIndex());
+			
+			return true;
 		}
 		return false;
 	}

@@ -313,10 +313,6 @@ public class ServerGame {
             playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.SETTLEMENT);
             
-            // If the settlement is free, update the player turn
-            if (isFree) 
-            	finishTurn(playerIndex);
-            
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
