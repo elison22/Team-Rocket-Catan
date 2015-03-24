@@ -53,7 +53,11 @@ public class RobPlayer_Params {
 	public void setVictimIndex(int victimIndex) {
 		this.victimIndex = victimIndex;
 	}
-	
+
+    public HexLocation getTargetLocation() {
+        return new HexLocation(location.x, location.y);
+    }
+
 	private void initLocation(HexLocation loc) {
 		int x = loc.getX();
 		int y = loc.getY();

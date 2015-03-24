@@ -190,7 +190,14 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String robPlayer(int gameID, RobPlayer_Params robParams) {
-		// TODO Auto-generated method stub
+
+        ServerGame game = gameManager.getGame(gameID);
+        if(!game.canPlaceRobber(robParams.getPlayerIndex(), robParams.getTargetLocation()))
+            return null;
+        RobPlayer_CO command = new RobPlayer_CO(robParams, game);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
 		return null;
 	}
 

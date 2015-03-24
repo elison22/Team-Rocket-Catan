@@ -1,5 +1,6 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.RobPlayer_Params;
 import facade.IModelFacade;
 
@@ -11,23 +12,24 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class RobPlayer_CO implements ICommandObject {
 	
-	private int gameId;
+	private ServerGame game;
 	private RobPlayer_Params params;
 
 	/**
-	 * @param gameId Id of the game where the robbing will occur.
+	 * @param game
 	 * @param params Parameters need for a player to rob another player.
 	 */
-	public RobPlayer_CO(int gameId,
-			RobPlayer_Params params) {
+	public RobPlayer_CO(RobPlayer_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
+		this.game = game;
 		this.params = params;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+
+        game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation());
+        return false;
 	}
 
 }

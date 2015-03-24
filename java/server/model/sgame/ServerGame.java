@@ -674,11 +674,15 @@ public class ServerGame {
      */
     public boolean canPlaceRobber(int playerId, HexLocation loc) {
         try {
-            return map.canPlayRobber(loc);
+            if(!map.canPlayRobber(loc))
+                return false;
+            if(!turnTracker.canPlayerRob(playerId))
+                return false;
         } catch (ServerBoardException e) {
             e.printStackTrace();
+            return false;
         }
-		return false;
+		return true;
 	}
     
     /**
