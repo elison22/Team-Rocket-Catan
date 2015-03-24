@@ -611,11 +611,11 @@ public class ServerGame {
 	}
 
     public void finishTurn(int playerIndex){
-        if(playerIndex == 3)
-            turnTracker.setCurrentPlayerIndex(0);
-        else
-            turnTracker.setCurrentPlayerIndex(++playerIndex);
-        turnTracker.setCurrentState(ServerTurnState.Rolling);
+//        if(playerIndex == 3)
+//            turnTracker.setCurrentPlayerIndex(0);
+//        else
+//            turnTracker.setCurrentPlayerIndex(++playerIndex);
+//        turnTracker.setCurrentState(ServerTurnState.Rolling);
         incVersionNumber();
     }
 

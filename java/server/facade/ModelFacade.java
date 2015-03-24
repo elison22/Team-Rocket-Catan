@@ -203,7 +203,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canPlaceRobber(robParams.getPlayerIndex(), robParams.getTargetLocation()))
             return null;
-        RobPlayer_CO command = new RobPlayer_CO(robParams, game);
+        ICommandObject command = new RobPlayer_CO(robParams, game);
         if(command.execute())
             return serializer.serializeGameModel(game);
 
@@ -356,7 +356,7 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String buildSettlement(int gameID, BuildSettlement_Params params) {
 		ServerGame game = gameManager.getGame(gameID);
-		ICommandObject buildSet = null;
+		ICommandObject buildSet;
 		if(game.getTurnState() == ServerTurnState.FirstRound || game.getTurnState() == ServerTurnState.SecondRound) {
 			if(game.canBuildInitSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
 				buildSet = new BuildSettlement_CO(game, params);

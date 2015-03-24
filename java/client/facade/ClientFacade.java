@@ -444,7 +444,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 		try {
 			//updateGameModel(proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
 			game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
-			if(!freebie)
+//			if(!freebie)
 				updated();
 		} catch (ServerException | BoardException e) {
 			return false;
