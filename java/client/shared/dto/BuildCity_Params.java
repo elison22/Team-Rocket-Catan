@@ -46,8 +46,20 @@ public class BuildCity_Params {
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
 	}
-	
-	private void initVertex(VertexLocation loc) {
+
+    public int getVertexX() {
+        return vertexLocation.x;
+    }
+
+    public int getVertexY() {
+        return vertexLocation.y;
+    }
+
+    public String getVertexDir() {
+        return vertexLocation.direction;
+    }
+
+    private void initVertex(VertexLocation loc) {
 		int x = loc.getHexLoc().getX();
 		int y = loc.getHexLoc().getY();
 		String dir = setDirection(loc.getDir());
