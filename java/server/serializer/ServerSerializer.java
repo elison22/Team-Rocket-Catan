@@ -206,6 +206,7 @@ public class ServerSerializer {
 		
 		while (it.hasNext()) {
 	        Map.Entry<VertexLocation, ServerConstructable> pair = (Entry<VertexLocation, ServerConstructable>)it.next();
+            if(!pair.getValue().isSettlement()) continue;
 	        VertexLocation vertLoc = pair.getKey();
 	        HexLocation hex = vertLoc.getHexLoc();
 	        String dir = vertLoc.getDir().toString();
@@ -223,6 +224,7 @@ public class ServerSerializer {
 		
 		while (it.hasNext()) {
 	        Map.Entry<VertexLocation, ServerConstructable> pair = (Entry<VertexLocation, ServerConstructable>)it.next();
+            if(pair.getValue().isSettlement()) continue;
 	        VertexLocation vertLoc = pair.getKey();
 	        HexLocation hex = vertLoc.getHexLoc();
 	        String dir = vertLoc.getDir().toString();
