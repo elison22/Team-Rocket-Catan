@@ -18,7 +18,7 @@ public class YearOfPlenty_CO implements ICommandObject {
 	/**
 	 * @param params Parameters needed to play a Year of Plenty card.
 	 */
-	public YearOfPlenty_CO(YearOfPlenty_Params params, ServerGame game) {
+	public YearOfPlenty_CO(ServerGame game, YearOfPlenty_Params params) {
 		this.params = params;
         this.game = game;
 	}

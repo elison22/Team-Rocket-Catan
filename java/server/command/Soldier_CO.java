@@ -17,7 +17,7 @@ public class Soldier_CO implements ICommandObject {
 	/**
 	 * @param params Parameters needed to play the soldier card.
 	 */
-	public Soldier_CO(Soldier_Params params, ServerGame game) {
+	public Soldier_CO(ServerGame game, Soldier_Params params) {
 		super();
 		this.params = params;
         this.game = game;

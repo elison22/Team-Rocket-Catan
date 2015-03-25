@@ -18,7 +18,7 @@ public class Monopoly_CO implements ICommandObject {
 	/**
 	 * @param params Parameters needed for a player to play the monopoly card.
 	 */
-	public Monopoly_CO(Monopoly_Params params, ServerGame game) {
+	public Monopoly_CO(ServerGame game, Monopoly_Params params) {
 		super();
 		this.params = params;
         this.game = game;

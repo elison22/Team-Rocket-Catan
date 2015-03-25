@@ -18,7 +18,7 @@ public class RoadBuilding_CO implements ICommandObject {
 	/**
 	 * @param params The Parameters needed to play the road building card.
 	 */
-	public RoadBuilding_CO(RoadBuilding_Params params, ServerGame game) {
+	public RoadBuilding_CO(ServerGame game, RoadBuilding_Params params) {
 		super();
 		this.params = params;
         this.game = game;
