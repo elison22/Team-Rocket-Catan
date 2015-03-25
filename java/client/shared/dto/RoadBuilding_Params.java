@@ -50,7 +50,15 @@ public class RoadBuilding_Params {
 		this.playerIndex = playerIndex;
 	}
 
-	private void initLocations(EdgeLocation loc1, EdgeLocation loc2) {
+	public EdgeLocation getRoad1() {
+        return new EdgeLocation(new HexLocation(spot1.x, spot1.y), EdgeDirection.convert(spot1.direction));
+    }
+
+    public EdgeLocation getRoad2() {
+        return new EdgeLocation(new HexLocation(spot2.x, spot2.y), EdgeDirection.convert(spot2.direction));
+    }
+
+    private void initLocations(EdgeLocation loc1, EdgeLocation loc2) {
 		int x = loc1.getHexLoc().getX();
 		int y = loc1.getHexLoc().getY();
 		String dir = setDirection(loc1.getDir());
@@ -81,10 +89,7 @@ public class RoadBuilding_Params {
         		return null;
 		}
 	}
-	
-	public static void main(String[] args) {
-		RoadBuilding_Params p = new RoadBuilding_Params(0, new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthEast), new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthEast));
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(p));
-	}
+
+
+
 }

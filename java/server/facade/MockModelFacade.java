@@ -229,11 +229,11 @@ public class MockModelFacade implements IModelFacade
 	/**
 	 * Executes the effects of playing a monument dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
+     * @param params blah
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doMonument(int gameID, int playerIdx) {
+	public String doMonument(int gameID, Monument_Params params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
