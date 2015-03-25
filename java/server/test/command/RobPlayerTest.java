@@ -1,8 +1,12 @@
 package test.command;
 
 import static org.junit.Assert.*;
+
+import java.util.Map;
+
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
+import model.splayer.ServerPlayer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +47,7 @@ public class RobPlayerTest {
         assertTrue(modelFacade.joinGame(new JoinGame_Params(0, "yellow"), "test3", 2));
         assertTrue(modelFacade.joinGame(new JoinGame_Params(0, "puce"), "test4", 3));
         
-		// Set up inital raods/settlements for all players
+		// Set up initial roads/settlements for all players
         assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(0, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.North), true)));
         assertNotNull(modelFacade.buildSettlement(0, new BuildSettlement_Params(0, new VertexLocation(new HexLocation(-1, 0), VertexDirection.NorthWest), true)));
 
@@ -69,6 +73,13 @@ public class RobPlayerTest {
         assertNotNull(modelFacade.buildSettlement(0, new BuildSettlement_Params(0, new VertexLocation(new HexLocation(1, -1), VertexDirection.East), true)));
         
         ServerGame game = modelFacade.getGame(0);
+        
+        // Reset all player's resources to zero
+        for (ServerPlayer player : game.getPlayerList()) {
+        	for (Map.Entry<ResourceType, Integer> entry : player.getBank().getResCards().entrySet()) {
+        		player.getBank().getResCards().put(entry.getKey(), 0);
+        	}
+        }
         
         // Roll a 6 to give player[3] 1 wood then end the turn
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 6)));
