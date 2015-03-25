@@ -349,6 +349,7 @@ public class ServerPlayer {
     public void endTurn() {
 
         playedDevCard = false;
+        bank.moveNewDevsToOld();
         //other things that happen at the end of a turn
     }
 

@@ -452,8 +452,7 @@ public class ServerGame {
 	 * @return true if valid and successful, else false
 	 */
 	public boolean doBuyDevCard(int playerIndex) {
-		// canDo should be called prior to this
-        // Answer to above: we're going to call the canDo's in the facade so we can immediately return if it fails
+
         ServerDevCard chosenCard = cardBank.giveDevCard();
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
         incVersionNumber();
@@ -655,7 +654,9 @@ public class ServerGame {
 	}
 
     public boolean finishTurn(int playerIndex){
-    	
+
+
+        playerList.get(playerIndex).endTurn();
     	// If in the first round, increment turn order normally
     	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
     		if (playerIndex == 3)
@@ -682,7 +683,6 @@ public class ServerGame {
                 turnTracker.setCurrentPlayerIndex(++playerIndex);
             turnTracker.setCurrentState(ServerTurnState.Rolling);
     	}
-        
         incVersionNumber();
         return true;
     }
