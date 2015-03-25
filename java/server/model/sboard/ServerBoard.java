@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
+import model.board.HexTile;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -769,6 +770,41 @@ public class ServerBoard {
             adjBuildings.add(buildings.get(vloc));
 
         return adjBuildings;
+    }
+
+    public ArrayList<HexType> getAdjacentHexTypes(VertexLocation loc) {
+
+        ArrayList<HexType> toReturn = new ArrayList<HexType>();
+
+        //normalizing it makes everything easier
+        loc = loc.getNormalizedLocation();
+        HexLocation tempHex = loc.getHexLoc();
+
+        //check the hex south of this vertex
+        if(tiles.containsKey(tempHex) && tiles.get(tempHex).getType() != HexType.DESERT)
+            toReturn.add(tiles.get(tempHex).getType());
+
+        //check the hex north of this vertex
+        tempHex = tempHex.getNeighborLoc(EdgeDirection.North);
+        if(tiles.containsKey(tempHex) && tiles.get(tempHex).getType() != HexType.DESERT)
+            toReturn.add(tiles.get(tempHex).getType());
+
+        //check the third hex, which depends on whether loc is NW or NE
+        if(loc.getDir() == VertexDirection.NorthWest) {
+            //look to the left
+            tempHex.getNeighborLoc(EdgeDirection.SouthWest);
+            if(tiles.containsKey(tempHex) && tiles.get(tempHex).getType() != HexType.DESERT)
+                toReturn.add(tiles.get(tempHex).getType());
+        }
+        if(loc.getDir() == VertexDirection.NorthEast) {
+            //look to the right
+            tempHex.getNeighborLoc(EdgeDirection.SouthEast);
+            if(tiles.containsKey(tempHex) && tiles.get(tempHex).getType() != HexType.DESERT)
+                toReturn.add(tiles.get(tempHex).getType());
+        }
+
+        return toReturn;
+
     }
 
 }
