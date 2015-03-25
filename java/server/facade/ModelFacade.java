@@ -9,6 +9,7 @@ import model.sgame.ServerTurnState;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.dto.*;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -182,7 +183,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canRollDice(rollNum.getPlayerIndex()))
             return null;
-        ICommandObject command = new RollNumber_CO(gameID, rollNum, game);
+        ICommandObject command = new RollNumber_CO(rollNum, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -208,7 +209,7 @@ public class ModelFacade implements IModelFacade {
         
         // Check that the victim has resources to be stolen
         if ( robParams.getVictimIndex() > -1 && !game.canRobPlayer(robParams.getVictimIndex())) 
-        	return null;
+        	return null;    //TODO test if this is a problem
         
         ICommandObject command = new RobPlayer_CO(robParams, game);
         if(command.execute())
@@ -229,7 +230,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canFinishTurn(params.getPlayerIndex()))
             return null;
 
-        ICommandObject command = new FinishTurn_CO(gameID, params, game);
+        ICommandObject command = new FinishTurn_CO(params, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -249,7 +250,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canBuyDevCard(params.getPlayerIndex()))
             return null;
-        ICommandObject command = new BuyDevCard_CO(gameID, params, game);
+        ICommandObject command = new BuyDevCard_CO(params, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -267,12 +268,16 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String doYearOfPlenty(int gameID, YearOfPlenty_Params params) {
 
-//        ServerGame game = gameManager.getGame(gameID);
-//        game.doYearOfPlenty(
-//                params.getPlayerIndex(),
-//                ResourceType.convert(params.getResource1()),
-//                ResourceType.convert(params.getResource2())
-//        );
+        // Retrieve the right game
+        ServerGame game = gameManager.getGame(gameID);
+
+        // check available resources and player turn
+        if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.YEAR_OF_PLENTY))
+            return null;
+
+        ICommandObject command = new YearOfPlenty_CO(game, params);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 
 		return null;
 	}
@@ -285,6 +290,17 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doRoadBuilding(int gameID, RoadBuilding_Params roadParams) {
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if there are roads available and the player has the card
+        if(!game.canPlayDevCard(roadParams.getPlayerIndex(),DevCardType.ROAD_BUILD))
+            return null;
+
+        ICommandObject command = new RoadBuilding_CO(game, roadParams);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
 		return null;
 	}
 
@@ -296,8 +312,22 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doSoldier(int gameID, Soldier_Params params) {
-		// TODO Auto-generated method stub
-		return null;
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if the player has the card
+        if(!game.canPlayDevCard(params.getPlayerIndex(),DevCardType.SOLDIER))   //TODO review this
+            return null;
+
+        //check if the robber would be in a valid spot
+//        if(!game.canPlaceRobber(params.getPlayerIndex(), params.getLocation())) //TODO work on this
+//            return null;
+
+        ICommandObject command = new Soldier_CO(game, params);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
+        return null;
 	}
 
 	/**
@@ -308,19 +338,38 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doMonopoly(int gameID, Monopoly_Params params) {
-		// TODO Auto-generated method stub
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if there are roads available
+        if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.MONOPOLY))
+            return null;
+
+        ICommandObject command = new Monopoly_CO(game, params);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
 		return null;
 	}
 
 	/**
 	 * Executes the effects of playing a monument dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doMonument(int gameID, int playerIdx) {
-		// TODO Auto-generated method stub
+	public String doMonument(int gameID, Monument_Params params) {
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if they have the monument card
+        if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.MONUMENT))
+            return null;
+
+        ICommandObject command = new Monument_CO(game, params);
+        if(command.execute())
+            return  serializer.serializeGameModel(game);
+
 		return null;
 	}
 
@@ -433,10 +482,13 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String acceptTrade(int gameID, AcceptTrade_Params acceptParams) {
         ServerGame game = gameManager.getGame(gameID);
-        if(!game.canAcceptTrade(acceptParams.getPlayerIndex()))
+        
+        // If the client tried to accept a trade that they weren't supposed to
+        // be able to
+        if(acceptParams.isWillAccept() && !game.canAcceptTrade(acceptParams.getPlayerIndex()))
             return null;
         
-        ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, game);
+        ICommandObject command = new AcceptTrade_CO(acceptParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -455,7 +507,7 @@ public class ModelFacade implements IModelFacade {
 	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
         ServerGame game = gameManager.getGame(gameID);
         //The canDo check for this method is in the command object because it was easier that way
-        ICommandObject command = new MaritimeTrade_CO(gameID, tradeParams, game);
+        ICommandObject command = new MaritimeTrade_CO(tradeParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -476,7 +528,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
             return null;
-        ICommandObject command = new DiscardCards_CO(gameID, cardParams, game);
+        ICommandObject command = new DiscardCards_CO(cardParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);

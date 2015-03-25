@@ -150,7 +150,7 @@ public class ServerPlayer {
      * @return return whether a trade can be offered or not
      */
     public boolean canOfferTrade(int playerIdx, HashMap<ResourceType,Integer> offeredRes){
-        return bank.hasResCards(offeredRes);
+        return bank.hasResCards(offeredRes, false);
     }
 
     /**
@@ -161,7 +161,7 @@ public class ServerPlayer {
      * @return return whether a trade was accepted or not
      */
     public boolean canAcceptTrade(int playerIdx, HashMap<ResourceType,Integer> desiredRes){
-        return bank.hasResCards(desiredRes);
+        return bank.hasResCards(desiredRes, true);
     }
 
     /**
@@ -218,7 +218,7 @@ public class ServerPlayer {
     }
 
     public boolean canDiscardCards(HashMap<ResourceType, Integer> cards) {
-        bank.hasResCards(cards);
+        bank.hasResCards(cards, false);
         return true;
     }
 
@@ -291,6 +291,7 @@ public class ServerPlayer {
      */
     public void doBuildCity(){
         remainingCities--;
+        remainingSettlements++;
         bank.buyPiece(PieceType.CITY);
     }
 
@@ -349,6 +350,7 @@ public class ServerPlayer {
     public void endTurn() {
 
         playedDevCard = false;
+        bank.moveNewDevsToOld();
         //other things that happen at the end of a turn
     }
 

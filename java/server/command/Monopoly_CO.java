@@ -1,7 +1,8 @@
 package command;
 
+import model.sgame.ServerGame;
+import shared.definitions.ResourceType;
 import shared.dto.Monopoly_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
@@ -11,24 +12,24 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class Monopoly_CO implements ICommandObject {
 	
-	private int gameId;
 	private Monopoly_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param modelFacade The implementation of IModelFacde to be used.
-	 * @param gameId Id of the game where the monopoly card is to be played.
 	 * @param params Parameters needed for a player to play the monopoly card.
 	 */
-	public Monopoly_CO(int gameId,
-			Monopoly_Params params) {
+	public Monopoly_CO(ServerGame game, Monopoly_Params params) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+		return game.doMonopoly(
+                params.getPlayerIndex(),
+                ResourceType.convert(params.getResource())
+        );
 	}
 
 }

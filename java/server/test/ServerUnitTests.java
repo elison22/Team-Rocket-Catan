@@ -22,7 +22,8 @@ public class ServerUnitTests {
 				"test.command.FinishTurnTest",
 				"test.command.RollNumberTest",
 				"test.command.DiscardTest",
-				"test.command.RobPlayerTest"
+				"test.command.RobPlayerTest",
+				"test.command.OfferAndAcceptTradeTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);

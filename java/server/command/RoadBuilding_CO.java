@@ -1,7 +1,7 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.RoadBuilding_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
@@ -12,23 +12,25 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class RoadBuilding_CO implements ICommandObject {
 	
-	private int gameId;
 	private RoadBuilding_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param gameId The id of the game where the card is to be played.
 	 * @param params The Parameters needed to play the road building card.
 	 */
-	public RoadBuilding_CO(int gameId,
-			RoadBuilding_Params params) {
+	public RoadBuilding_CO(ServerGame game, RoadBuilding_Params params) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+		return game.doRoadBuilding(
+                params.getPlayerIndex(),
+                params.getRoad1(),
+                params.getRoad2()
+        );
 	}
 
 }

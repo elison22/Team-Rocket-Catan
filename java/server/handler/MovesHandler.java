@@ -89,7 +89,7 @@ public class MovesHandler implements HttpHandler {
 				break;
 			case "Monument":
 				Monument_Params monumentParams = gson.fromJson(stringBuild.toString(), Monument_Params.class);
-				jsonString = modelFacade.doMonument(new Integer(cookieItems[3]), monumentParams.getPlayerIndex());
+				jsonString = modelFacade.doMonument(new Integer(cookieItems[3]), monumentParams);
 				break;
 			case "buildRoad":
 				BuildRoad_Params buildRoadParams = gson.fromJson(stringBuild.toString(), BuildRoad_Params.class);

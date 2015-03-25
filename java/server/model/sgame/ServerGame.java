@@ -266,7 +266,6 @@ public class ServerGame {
 			map = new ServerBoard(randNumbers, randTiles, randPorts);
 		} catch (ServerBoardException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -316,6 +315,10 @@ public class ServerGame {
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
+        }
+
+        //Distribute resources for second settlement placed in setup rounds
+        if(isFree && turnTracker.getCurrentState() == ServerTurnState.SecondRound){
         }
         
         
@@ -402,8 +405,8 @@ public class ServerGame {
                 cardBank.receiveResourceCard(res1);
                 return false;
             }
-            return false;
         }
+        else return false;
         playerList.get(playerIndex).playDevCard(DevCardType.YEAR_OF_PLENTY);
         incVersionNumber();
         return true;
@@ -452,9 +455,10 @@ public class ServerGame {
 	 * @return true if valid and successful, else false
 	 */
 	public boolean doBuyDevCard(int playerIndex) {
-		// canDo should be called prior to this
-        // Answer to above: we're going to call the canDo's in the facade so we can immediately return if it fails
+
         ServerDevCard chosenCard = cardBank.giveDevCard();
+
+        // adds a random dev card to the player's hand which also decrements the necessary res cards used to buy it
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
         incVersionNumber();
 		return true;
@@ -611,28 +615,32 @@ public class ServerGame {
      */
     public boolean doDomesticTrade(int receiver, boolean willAccept)
     {
-        if(!willAccept) {
-            tradeOffer = null;
-            return false;
-        }
-        
-        ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
-        ServerPlayer receivingPlayer = playerList.get(receiver);
-        HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
-        for ( ResourceType resource : offer.keySet() ) {
-            int amount = offer.get(resource);
-            if ( amount == 0 )
-                continue;
-            else if ( amount > 0 ){
-                for ( int i = 0; i < amount; i++ ) {
-                    offeringPlayer.decResource(resource);
-                    receivingPlayer.incResource(resource);
+        if (willAccept) {
+        	ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
+            ServerPlayer receivingPlayer = playerList.get(receiver);
+            HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
+            
+            for ( ResourceType resource : offer.keySet() ) {
+                int amount = offer.get(resource);
+                
+                // If amount is greater than zero, then increase the resource
+                // for the offering player and decrease for the accepting 
+                // player
+                if ( amount > 0 ) {
+                    for ( int i = 0; i < amount; i++ ) {
+                        offeringPlayer.decResource(resource);
+                        receivingPlayer.incResource(resource);
+                    }
                 }
-            }
-            else {
-                for ( int i = 0; i > amount; i-- ) {
-                    offeringPlayer.incResource(resource);
-                    receivingPlayer.decResource(resource);
+                
+                // If amount is less than zero, then decrease the resource
+                // for the offering player and increase for the accepting 
+                // player
+                else if (amount < 0) {
+                    for ( int i = amount; i < 0; i++ ) {
+                        offeringPlayer.incResource(resource);
+                        receivingPlayer.decResource(resource);
+                    }
                 }
             }
         }
@@ -657,7 +665,9 @@ public class ServerGame {
 	}
 
     public boolean finishTurn(int playerIndex){
-    	
+
+
+        playerList.get(playerIndex).endTurn();
     	// If in the first round, increment turn order normally
     	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
     		if (playerIndex == 3)
@@ -684,7 +694,6 @@ public class ServerGame {
                 turnTracker.setCurrentPlayerIndex(++playerIndex);
             turnTracker.setCurrentState(ServerTurnState.Rolling);
     	}
-        
         incVersionNumber();
         return true;
     }
@@ -953,11 +962,10 @@ public class ServerGame {
      */
     public boolean canAcceptTrade(int playerId) {
         ServerTradeOffer trade = tradeOffer;
-    	if(turnTracker.canPlayerBuild(playerId)) {
-            if (playerList.get(playerId).canAcceptTrade(playerId, trade.getResources())){
-    			return true;
-			}
-    	}
+        if (playerList.get(playerId).canAcceptTrade(playerId, trade.getResources())){
+        	return true;
+		}
+    	
     	return false;
     }
     

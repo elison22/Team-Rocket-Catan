@@ -17,7 +17,6 @@ public class OfferTrade_CO implements ICommandObject {
     private ServerGame game;
 
 	/**
-	 * @param gameId Id of the game where the trade is to be offered.
 	 * @param params Parameters needed to offer a trade.
 	 */
 	public OfferTrade_CO(OfferTrade_Params params, ServerGame game) {
