@@ -292,9 +292,15 @@ public class ServerGame {
             map.doBuildRoad(location, playerIndex);
             playerList.get(playerIndex).doBuildRoad(isFree);
             cardBank.buyPiece(PieceType.ROAD);
+            
         } catch (ServerBoardException e) {
             return false;
         }
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " built a road");
+        
         incVersionNumber();
         return true;
 	}
@@ -311,7 +317,7 @@ public class ServerGame {
             playerList.get(playerIndex).doBuildSettlement(isFree);
             playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.SETTLEMENT);
-            
+         
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
@@ -321,6 +327,9 @@ public class ServerGame {
         if(isFree && turnTracker.getCurrentState() == ServerTurnState.SecondRound){
         }
         
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " built a settlement");
         
         return true;
     }
@@ -337,6 +346,10 @@ public class ServerGame {
             playerList.get(playerIndex).doBuildCity();
             playerList.get(playerIndex).addPoint();
             cardBank.buyPiece(PieceType.CITY);
+            
+            // Update game history
+            String name = playerList.get(playerIndex).getName();
+            gameHistory.sendChat(name, name + " built a city");
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
@@ -362,6 +375,15 @@ public class ServerGame {
             	// Steal resources
                 ResourceType stolenRes = playerList.get(victimIndex).getRandRes();
                 playerList.get(playerIndex).incResource(stolenRes);
+                
+                // Update game history
+                String name = playerList.get(playerIndex).getName();
+                String victim = playerList.get(victimIndex).getName();
+                gameHistory.sendChat(name, name + " moved the robber and robbed " + victim);
+            } else {
+            	// Update game history
+                String name = playerList.get(playerIndex).getName();
+                gameHistory.sendChat(name, name + " moved the robber but couldn't rob anyone!");
             }
             
             // Set state to playing
@@ -408,18 +430,28 @@ public class ServerGame {
         }
         else return false;
         playerList.get(playerIndex).playDevCard(DevCardType.YEAR_OF_PLENTY);
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " played a year of plenty card");
+        
         incVersionNumber();
         return true;
     }
 
     /***/
-    public boolean doMonopoly(int playerIdx, ResourceType resource) {
+    public boolean doMonopoly(int playerIndex, ResourceType resource) {
         for(int i = 0; i < 4; i++) {
-            if(i == playerIdx) continue;
+            if(i == playerIndex) continue;
             while(playerList.get(i).decResource(resource))
-                playerList.get(playerIdx).incResource(resource);
+                playerList.get(playerIndex).incResource(resource);
         }
-        playerList.get(playerIdx).playDevCard(DevCardType.MONOPOLY);
+        playerList.get(playerIndex).playDevCard(DevCardType.MONOPOLY);
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " played a monopoly card");
+        
         incVersionNumber();
         return true;
     }
@@ -428,23 +460,33 @@ public class ServerGame {
     public boolean doMonument(int playerIndex) {
         playerList.get(playerIndex).addPoint();
         playerList.get(playerIndex).playDevCard(DevCardType.MONUMENT);
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " played a monument card");
+        
         incVersionNumber();
         return true;
     }
 
     /***/
-    public boolean doRoadBuilding(int playerIdx, EdgeLocation road1, EdgeLocation road2) {
+    public boolean doRoadBuilding(int playerIndex, EdgeLocation road1, EdgeLocation road2) {
 
         try {
-            map.doBuildRoad(road1, playerIdx);
-            map.doBuildRoad(road2, playerIdx);
-            playerList.get(playerIdx).doBuildRoad(true);
-            playerList.get(playerIdx).doBuildRoad(true);
-            playerList.get(playerIdx).playDevCard(DevCardType.ROAD_BUILD);
+            map.doBuildRoad(road1, playerIndex);
+            map.doBuildRoad(road2, playerIndex);
+            playerList.get(playerIndex).doBuildRoad(true);
+            playerList.get(playerIndex).doBuildRoad(true);
+            playerList.get(playerIndex).playDevCard(DevCardType.ROAD_BUILD);
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
         }
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " played a road building card");
+        
         incVersionNumber();
         return true;
     }
@@ -460,6 +502,11 @@ public class ServerGame {
 
         // adds a random dev card to the player's hand which also decrements the necessary res cards used to buy it
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " bought a dev card");
+        
         incVersionNumber();
 		return true;
 	}
@@ -473,6 +520,10 @@ public class ServerGame {
 	public boolean doRoll(int playerIndex, int numberRolled)
 	{
         turnTracker.setNumRolled(numberRolled);
+        
+        // Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + " rolled a " + numberRolled);
         
         // If the number rolled is a 7, begin discard phase
         if(numberRolled == 7){
@@ -666,6 +717,9 @@ public class ServerGame {
 
     public boolean finishTurn(int playerIndex){
 
+    	// Update game history
+        String name = playerList.get(playerIndex).getName();
+        gameHistory.sendChat(name, name + "'s turn just ended");
 
         playerList.get(playerIndex).endTurn();
     	// If in the first round, increment turn order normally
@@ -694,6 +748,7 @@ public class ServerGame {
                 turnTracker.setCurrentPlayerIndex(++playerIndex);
             turnTracker.setCurrentState(ServerTurnState.Rolling);
     	}
+    	
         incVersionNumber();
         return true;
     }
