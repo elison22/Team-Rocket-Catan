@@ -183,7 +183,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canRollDice(rollNum.getPlayerIndex()))
             return null;
-        ICommandObject command = new RollNumber_CO(gameID, rollNum, game);
+        ICommandObject command = new RollNumber_CO(rollNum, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -230,7 +230,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canFinishTurn(params.getPlayerIndex()))
             return null;
 
-        ICommandObject command = new FinishTurn_CO(gameID, params, game);
+        ICommandObject command = new FinishTurn_CO(params, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -250,7 +250,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canBuyDevCard(params.getPlayerIndex()))
             return null;
-        ICommandObject command = new BuyDevCard_CO(gameID, params, game);
+        ICommandObject command = new BuyDevCard_CO(params, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -268,6 +268,7 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String doYearOfPlenty(int gameID, YearOfPlenty_Params params) {
 
+        // Retrieve the right game
         ServerGame game = gameManager.getGame(gameID);
 
         // check available resources and player turn
@@ -318,10 +319,6 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(params.getPlayerIndex(),DevCardType.SOLDIER))   //TODO review this
             return null;
 
-        // Check that the victim has resources to be stolen
-        if (params.getVictimIndex() > -1 && !game.canRobPlayer(params.getVictimIndex()))
-            return null;    //TODO check if this is a problem
-
         //check if the robber would be in a valid spot
         if(!game.canPlaceRobber(params.getPlayerIndex(), params.getLocation())) //TODO work on this
             return null;
@@ -358,7 +355,6 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Executes the effects of playing a monument dev card
      * @param gameID The ID of the game that has been requested
-     * @param playerIdx Who's playing this dev card
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
@@ -492,7 +488,7 @@ public class ModelFacade implements IModelFacade {
         if(acceptParams.isWillAccept() && !game.canAcceptTrade(acceptParams.getPlayerIndex()))
             return null;
         
-        ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, game);
+        ICommandObject command = new AcceptTrade_CO(acceptParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -511,7 +507,7 @@ public class ModelFacade implements IModelFacade {
 	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
         ServerGame game = gameManager.getGame(gameID);
         //The canDo check for this method is in the command object because it was easier that way
-        ICommandObject command = new MaritimeTrade_CO(gameID, tradeParams, game);
+        ICommandObject command = new MaritimeTrade_CO(tradeParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -532,7 +528,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
             return null;
-        ICommandObject command = new DiscardCards_CO(gameID, cardParams, game);
+        ICommandObject command = new DiscardCards_CO(cardParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);

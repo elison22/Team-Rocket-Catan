@@ -11,17 +11,16 @@ import shared.dto.Monument_Params;
 @SuppressWarnings("unused")
 public class Monument_CO implements ICommandObject {
 	
-	private ServerGame game;
 	private Monument_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param game The id of the game where the card is to be played.
 	 * @param params Parameters needed to play the monument card.
 	 */
 	public Monument_CO(ServerGame game, Monument_Params params) {
 		super();
-		this.game = game;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override

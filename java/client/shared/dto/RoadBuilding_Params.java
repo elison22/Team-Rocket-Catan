@@ -1,7 +1,5 @@
 package shared.dto;
 
-import com.google.gson.Gson;
-
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;

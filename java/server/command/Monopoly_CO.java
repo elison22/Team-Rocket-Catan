@@ -12,18 +12,16 @@ import shared.dto.Monopoly_Params;
 @SuppressWarnings("unused")
 public class Monopoly_CO implements ICommandObject {
 	
-	private ServerGame game;
 	private Monopoly_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param game Id of the game where the monopoly card is to be played.
 	 * @param params Parameters needed for a player to play the monopoly card.
 	 */
-	public Monopoly_CO(ServerGame game,
-			Monopoly_Params params) {
+	public Monopoly_CO(Monopoly_Params params, ServerGame game) {
 		super();
-		this.game = game;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override

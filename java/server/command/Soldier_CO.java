@@ -11,17 +11,16 @@ import shared.dto.Soldier_Params;
 @SuppressWarnings("unused")
 public class Soldier_CO implements ICommandObject {
 	
-	private ServerGame game;
 	private Soldier_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param game The id of the game where the card is to be played.
 	 * @param params Parameters needed to play the soldier card.
 	 */
-	public Soldier_CO(ServerGame game, Soldier_Params params) {
+	public Soldier_CO(Soldier_Params params, ServerGame game) {
 		super();
-		this.game = game;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override

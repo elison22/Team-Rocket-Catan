@@ -12,18 +12,16 @@ import shared.dto.RoadBuilding_Params;
 @SuppressWarnings("unused")
 public class RoadBuilding_CO implements ICommandObject {
 	
-	private ServerGame game;
 	private RoadBuilding_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param game The id of the game where the card is to be played.
 	 * @param params The Parameters needed to play the road building card.
 	 */
-	public RoadBuilding_CO(ServerGame game,
-			RoadBuilding_Params params) {
+	public RoadBuilding_CO(RoadBuilding_Params params, ServerGame game) {
 		super();
-		this.game = game;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override

@@ -15,18 +15,14 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class MaritimeTrade_CO implements ICommandObject {
 	
-	private int gameId;
 	private MaritimeTrade_Params params;
     private ServerGame game;
 
 	/**
-	 * @param gameId Id of the game where the player is making a maritime trade.
 	 * @param params Parameters needed for a player to make a maritime trade.
 	 */
-	public MaritimeTrade_CO(int gameId,
-			MaritimeTrade_Params params, ServerGame game) {
+	public MaritimeTrade_CO(MaritimeTrade_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
         this.game = game;
 	}

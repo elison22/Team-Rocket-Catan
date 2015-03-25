@@ -14,16 +14,13 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class RollNumber_CO implements ICommandObject {
 	
-	private int gameId;
 	private RollNumber_Params params;
     private ServerGame game;
 
 	/**
-	 * @param gameId Id of the game where the dice roll is happening.
 	 * @param params needed for rolling a number.
 	 */
-	public RollNumber_CO(int gameId, RollNumber_Params params, ServerGame game) {
-		this.gameId = gameId;
+	public RollNumber_CO(RollNumber_Params params, ServerGame game) {
 		this.params = params;
         this.game = game;
 	}
