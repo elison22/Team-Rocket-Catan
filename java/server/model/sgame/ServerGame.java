@@ -275,8 +275,8 @@ public class ServerGame {
     	return true;
     }
     
-    public boolean doSendChat(String owner, String message) {
-    	chat.sendChat(owner, message);
+    public boolean doSendChat(int playerIndex, String message) {
+    	chat.sendChat(playerList.get(playerIndex).getName(), message);
         incVersionNumber();
     	return true;
     }

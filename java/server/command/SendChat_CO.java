@@ -31,9 +31,8 @@ public class SendChat_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		ServerGame game = gameManager.getGame(gameId);
-		String owner = game.getPlayerColorByIndex(chatParams.getPlayerIndex()).name();
 		String message = chatParams.getContent();
-		return game.doSendChat(owner, message);
+		return game.doSendChat(chatParams.getPlayerIndex(), message);
 	}
 
 }

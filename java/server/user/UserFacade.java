@@ -36,4 +36,9 @@ public class UserFacade implements IUserFacade {
 	public String getUserID(String username) {
 		return new Integer(userManager.getUser(username).getId()).toString();
 	}
+
+	@Override
+	public boolean hasUser(String username) {
+		return userManager.hasUser(username);
+	}
 }
