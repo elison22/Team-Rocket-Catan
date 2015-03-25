@@ -15,6 +15,7 @@ public class Soldier_CO implements ICommandObject {
 	private Soldier_Params params;
     private ServerGame game;
     private ResourceType stolenResource;
+    private boolean beenCalled;
 
 	/**
 	 * @param params Parameters needed to play the soldier card.
@@ -24,6 +25,7 @@ public class Soldier_CO implements ICommandObject {
 		this.params = params;
         this.game = game;
         this.stolenResource = null;
+        beenCalled = false;
 	}
 	
 	public void setGame(ServerGame game)
@@ -34,10 +36,9 @@ public class Soldier_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 
-        stolenResource = game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), stolenResource);
-        if(stolenResource != null)
-        	return true;
-        else return false;
+        stolenResource = game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), stolenResource, beenCalled);
+        beenCalled = true;
+        return true;
 	}
 
 }

@@ -16,6 +16,7 @@ public class RobPlayer_CO implements ICommandObject {
 	private ServerGame game;
 	private RobPlayer_Params params;
 	private ResourceType stolenResource;
+	private boolean beenCalled;
 
 	/**
 	 * @param game
@@ -26,6 +27,7 @@ public class RobPlayer_CO implements ICommandObject {
 		this.game = game;
 		this.params = params;
 		stolenResource = null;
+		beenCalled = false;
 	}
 	
 	public void setGame(ServerGame game)
@@ -35,10 +37,9 @@ public class RobPlayer_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        stolenResource = game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation(), stolenResource);
-        if(stolenResource != null)
-        	return true;
-        else return false;
+        stolenResource = game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation(), stolenResource, beenCalled);
+        beenCalled = true;
+    	return true;
 	}
 
 }

@@ -355,8 +355,8 @@ public class ServerGame {
      * @param location blah
      * @return true if valid and successful, else false
      */
-    public ResourceType doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, ResourceType resource) {
-    	if(resource != null)
+    public ResourceType doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, ResourceType resource, boolean beenCalled) {
+    	if(beenCalled)
     	{
     		try {
             	// Place robber
@@ -403,8 +403,8 @@ public class ServerGame {
     /**
      *
      */
-    public ResourceType doSoldier(int playerIndex, int victimIndex, HexLocation location, ResourceType stolenResource){
-    	ResourceType resource = doPlaceRobber(playerIndex, victimIndex, location, stolenResource);
+    public ResourceType doSoldier(int playerIndex, int victimIndex, HexLocation location, ResourceType stolenResource, boolean beenCalled){
+    	ResourceType resource = doPlaceRobber(playerIndex, victimIndex, location, stolenResource, beenCalled);
         if(resource == null)
             return null;
         playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
@@ -658,8 +658,8 @@ public class ServerGame {
                 // player
                 if ( amount > 0 ) {
                     for ( int i = 0; i < amount; i++ ) {
-                        offeringPlayer.incResource(resource);
-                        receivingPlayer.decResource(resource);
+                        offeringPlayer.decResource(resource);
+                        receivingPlayer.incResource(resource);
                     }
                 }
                 
@@ -668,8 +668,8 @@ public class ServerGame {
                 // player
                 else if (amount < 0) {
                     for ( int i = amount; i < 0; i++ ) {
-                        offeringPlayer.decResource(resource);
-                        receivingPlayer.incResource(resource);
+                        offeringPlayer.incResource(resource);
+                        receivingPlayer.decResource(resource);
                     }
                 }
             }
