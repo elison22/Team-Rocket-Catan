@@ -13,9 +13,10 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class SendChat_CO implements ICommandObject {
 	
-	private ServerGame game;
+	private int gameId;
 	private SendChat_Params chatParams;
 	private GameManager gameManager;
+	private ServerGame game;
 	
 	/**
 	 * @param gameId The id of the game where the chat is being sent in.
@@ -23,21 +24,20 @@ public class SendChat_CO implements ICommandObject {
 	 * @param chatParams 
 	 */
 	public SendChat_CO(ServerGame game, SendChat_Params chatParams, GameManager gameManager) {
-		this.game = game;
 		this.chatParams = chatParams;
-		this.gameManager = gameManager;
-	}
-	
-	public void setGame(ServerGame game)
-	{
 		this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-		String owner = game.getPlayerColorByIndex(chatParams.getPlayerIndex()).name();
 		String message = chatParams.getContent();
-		return game.doSendChat(owner, message);
+		return game.doSendChat(chatParams.getPlayerIndex(), message);
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
+		
 	}
 
 }

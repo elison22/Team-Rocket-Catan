@@ -31,6 +31,7 @@ public abstract class UserHandler implements HttpHandler {
 	}
 	
 	public void sendInfo(HttpExchange exchange, String action) throws IOException {
+		Headers head = null;
 		
 		// Prepare to read the RequestBody inputStream
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
@@ -41,13 +42,68 @@ public abstract class UserHandler implements HttpHandler {
 		while ((request = bufferedReader.readLine()) != null)
 			stringBuilder.append(request);
 		
+		// if illegal # of parameters through swagger
+		if(stringBuilder.toString().split(",").length != 2) {	
+			head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			head.add("Set-cookie", "catan.user=invalid" + ";Path=/;");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid request");
+			exchange.close();
+			return;
+		}
+		
+		String[] values = stringBuilder.toString().split(",");
+		
+		if(values[0].length() < 17) {
+			head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			head.add("Set-cookie", "catan.user=invalid" + ";Path=/;");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid request");
+			exchange.close();
+			return;
+		}
+		
 		// Create parameter object
 		Login_Params params = gson.fromJson(stringBuilder.toString(), Login_Params.class);
 		
+		// if trying to log in w/ unregistered username
+		if(!userFacade.hasUser(params.getUser()) && action.equals("login")) {
+			head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			head.add("Set-cookie", "catan.user=invalid" + ";Path=/;");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid request:\n username doesn't exist");
+			exchange.close();
+			return;
+		}
+		
+		// if username is null through swagger
+		if(params.getUser() == null || params.getPassword() == null) {
+			head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			head.add("Set-cookie", "catan.user=invalid" + ";Path=/;");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid request:\n username must be 3-7 alphanumeric characters\n password must be 5-25 alphanumeric characters");
+			exchange.close();
+			return;
+		}
+		
+		// if trying to register with userName that is already taken
+		if(userFacade.hasUser(params.getUser()) && action.equals("register")) {
+			head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			head.add("Set-cookie", "catan.user=invalid" + ";Path=/;");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Username already taken");
+			exchange.close();
+			return;
+		}
+		
+		head = exchange.getResponseHeaders();
+		head.set("Content-Type", "text/html");
 		if (execute(action, params)) {
-			Headers head = exchange.getResponseHeaders();
-			head.set("Content-Type", "text/plain");
-			
 			//Prepare Cookies
 			String encode = "{\"authentication\":" + "\"" + (new Long(System.currentTimeMillis())).toString() 
 						  + "\",\"name\":\"" + params.getUser() + "\",\"password\":\"" + params.getPassword() 
@@ -59,16 +115,21 @@ public abstract class UserHandler implements HttpHandler {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			
 			// write response body
-			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
-			os.write(new String("Success"));
-			os.close();
+			sendResponseBody(exchange, "Success");
 			
 		} else {
 			// Login failed? HTTP_BAD_REQUEST
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid request:\n username must be 3-7 alphanumeric characters\n password must be 5-25 alphanumeric characters");
 		}
-		
+	
 		exchange.close();
+	}
+	
+	public void sendResponseBody(HttpExchange exchange, String message) throws IOException {
+		OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
+		os.write(message);
+		os.close();
 	}
 	
 	public boolean execute(String action, Login_Params params) {
