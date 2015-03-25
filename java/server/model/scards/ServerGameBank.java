@@ -51,6 +51,8 @@ public class ServerGameBank extends ServerCardBank {
             devCards.add(new ServerDevCard(DevCardType.SOLDIER));
         for(int i = 0; i < jsonDevCards.getYearOfPlenty(); i++)
             devCards.add(new ServerDevCard(DevCardType.YEAR_OF_PLENTY));
+        
+        rand = new Random();
     }
 
     public void initDevCards(){

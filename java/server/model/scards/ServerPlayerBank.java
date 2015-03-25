@@ -8,6 +8,7 @@ import shared.definitions.ResourceType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @author Hayden
@@ -28,6 +29,8 @@ public class ServerPlayerBank extends ServerCardBank {
         this.resCards.put(ResourceType.WHEAT, 0);
         this.resCards.put(ResourceType.SHEEP, 0);
         this.resCards.put(ResourceType.ORE, 0);
+        
+        rand = new Random();
     }
 
     public ServerPlayerBank(JsonResourceList resources, JsonDevCardList oldDevs, JsonDevCardList newDevs){
@@ -42,6 +45,8 @@ public class ServerPlayerBank extends ServerCardBank {
         this.oldDevs.clear();
         setDevCards(oldDevs, this.oldDevs);
         setDevCards(newDevs, this.newDevs);
+        
+        rand = new Random();
     }
 
     public void setDevCards(JsonDevCardList jsonDevCards, ArrayList<ServerDevCard> devCardList){
@@ -202,13 +207,25 @@ public class ServerPlayerBank extends ServerCardBank {
 
     public ResourceType removeRandRes() {
         int deckSize = getResCount();
-        int chosenCardIndex = rand.nextInt() % deckSize;
+        
+        // Pick a random card
+        int chosenCardIndex = rand.nextInt(deckSize) + 1;
+        
+        // Retrieve the resource that corresponds to the randomly chosen card
         ResourceType chosenRes = null;
         for(ResourceType res : resCards.keySet()) {
+        	
+        	// Subtract the amount of each resource in the player's bank from 
+        	// the randomly chosen card. When chosenCardIndex is <= 0, then 
+        	// that is the resource that was randomly chosen
             chosenCardIndex -= resCards.get(res);
-            if(chosenCardIndex <= 0)
+            if(chosenCardIndex <= 0) {
                 chosenRes = res;
+                break;
+            }
         }
+        
+        // Decrement resource that was randomly picked
         resCards.put(chosenRes, resCards.get(chosenRes) - 1);
         return chosenRes;
     }

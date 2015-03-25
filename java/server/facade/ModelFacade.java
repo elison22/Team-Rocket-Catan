@@ -201,8 +201,15 @@ public class ModelFacade implements IModelFacade {
 	public String robPlayer(int gameID, RobPlayer_Params robParams) {
 
         ServerGame game = gameManager.getGame(gameID);
+        
+        // Check that the robber is being placed in a valid location
         if(!game.canPlaceRobber(robParams.getPlayerIndex(), robParams.getTargetLocation()))
             return null;
+        
+        // Check that the victim has resources to be stolen
+        if (!game.canRobPlayer(robParams.getVictimIndex())) 
+        	return null;
+        
         ICommandObject command = new RobPlayer_CO(robParams, game);
         if(command.execute())
             return serializer.serializeGameModel(game);

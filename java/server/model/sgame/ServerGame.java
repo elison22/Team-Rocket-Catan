@@ -355,8 +355,8 @@ public class ServerGame {
             map.doPlayRobber(location);
             
             // Steal resources
-            ResourceType stolenRes = playerList.get(playerIndex).getRandRes();
-            playerList.get(victimIndex).incResource(stolenRes);
+            ResourceType stolenRes = playerList.get(victimIndex).getRandRes();
+            playerList.get(playerIndex).incResource(stolenRes);
             
             // Set state to playing
             turnTracker.setCurrentState(ServerTurnState.Playing);
@@ -748,6 +748,18 @@ public class ServerGame {
         }
 		return true;
 	}
+    
+    /** Checks that the given victim index has any resources to be stolen
+     * 
+     * @param victimIdx The index of the victim
+     * @return True if the victim has any resources, false otherwise
+     */
+    public boolean canRobPlayer(int victimIdx) {
+    	ServerPlayer victim = playerList.get(victimIdx);
+    	if (victim.getResCount() > 0)
+    		return true;
+    	return false;
+    }
     
     /**
      * Checks the game state and index of who's turn it is to see if player can roll
