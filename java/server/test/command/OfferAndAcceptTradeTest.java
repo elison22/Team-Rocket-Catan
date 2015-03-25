@@ -3,8 +3,10 @@ package test.command;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import model.sgame.ServerGame;
+import model.splayer.ServerPlayer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -65,6 +67,13 @@ public class OfferAndAcceptTradeTest {
         assertNotNull(modelFacade.buildSettlement(0, new BuildSettlement_Params(0, new VertexLocation(new HexLocation(1, -1), VertexDirection.East), true)));
         
         ServerGame game = modelFacade.getGame(0);
+        
+        // Reset all player's resources to zero
+    	for (ServerPlayer player : game.getPlayerList()) {
+        	for (Map.Entry<ResourceType, Integer> entry : player.getBank().getResCards().entrySet()) {
+        		player.getBank().getResCards().put(entry.getKey(), 0);
+        	}
+        }
         
         // Roll dice to get 2 wood for player[1] and finish turn
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 3)));

@@ -3,6 +3,7 @@ package test.command;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
@@ -73,6 +74,15 @@ public class DiscardTest {
         assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(0, new EdgeLocation(new HexLocation(1, -1), EdgeDirection.NorthEast), true)));
         assertNotNull(modelFacade.buildSettlement(0, new BuildSettlement_Params(0, new VertexLocation(new HexLocation(1, -1), VertexDirection.East), true)));
         
+        ServerGame game = modelFacade.getGame(0);
+        
+        // Reset all player's resources to zero
+        for (ServerPlayer player : game.getPlayerList()) {
+        	for (Map.Entry<ResourceType, Integer> entry : player.getBank().getResCards().entrySet()) {
+        		player.getBank().getResCards().put(entry.getKey(), 0);
+        	}
+        }
+        
         // Roll dice to give all players over 7 resources
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 9)));
         assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(0)));
@@ -94,7 +104,6 @@ public class DiscardTest {
         // Green: 4 Sheep 4 Ore, Purple: 4 Sheep 4 Ore, Yellow: 8 Sheep 4 Ore, Puce: 8 Sheep
         
         // Confirm that the players have the above resources
-        ServerGame game = modelFacade.getGame(0);
         for (ServerPlayer player : game.getPlayerList()) {
         	HashMap<ResourceType, Integer> resources = player.getBank().getResCards();
         	
