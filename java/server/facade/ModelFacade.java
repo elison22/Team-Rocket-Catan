@@ -320,8 +320,8 @@ public class ModelFacade implements IModelFacade {
             return null;
 
         //check if the robber would be in a valid spot
-        if(!game.canPlaceRobber(params.getPlayerIndex(), params.getLocation())) //TODO work on this
-            return null;
+//        if(!game.canPlaceRobber(params.getPlayerIndex(), params.getLocation())) //TODO work on this
+//            return null;
 
         ICommandObject command = new Soldier_CO(game, params);
         if(command.execute())
