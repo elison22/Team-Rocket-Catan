@@ -623,15 +623,21 @@ public class ServerGame {
             
             for ( ResourceType resource : offer.keySet() ) {
                 int amount = offer.get(resource);
-                if ( amount == 0 )
-                    continue;
-                else if ( amount > 0 ){
+                
+                // If amount is greater than zero, then increase the resource
+                // for the offering player and decrease for the accepting 
+                // player
+                if ( amount > 0 ) {
                     for ( int i = 0; i < amount; i++ ) {
                         offeringPlayer.incResource(resource);
                         receivingPlayer.decResource(resource);
                     }
                 }
-                else {
+                
+                // If amount is less than zero, then decrease the resource
+                // for the offering player and increase for the accepting 
+                // player
+                else if (amount < 0) {
                     for ( int i = amount; i < 0; i++ ) {
                         offeringPlayer.decResource(resource);
                         receivingPlayer.incResource(resource);

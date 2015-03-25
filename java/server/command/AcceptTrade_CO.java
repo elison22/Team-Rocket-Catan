@@ -1,16 +1,13 @@
 package command;
 
-import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.AcceptTrade_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  *
  * Makes all necessary calls for a player to accept a trade.
  */
-@SuppressWarnings("unused")
 public class AcceptTrade_CO implements ICommandObject {
 
 	private AcceptTrade_Params params;
