@@ -207,7 +207,7 @@ public class ModelFacade implements IModelFacade {
             return null;
         
         // Check that the victim has resources to be stolen
-        if (!game.canRobPlayer(robParams.getVictimIndex())) 
+        if ( robParams.getVictimIndex() > -1 && !game.canRobPlayer(robParams.getVictimIndex())) 
         	return null;
         
         ICommandObject command = new RobPlayer_CO(robParams, game);
@@ -414,7 +414,8 @@ public class ModelFacade implements IModelFacade {
                 tradeParams.getOfferedResources());
         if(!game.canOfferTrade(tradeParams.getPlayerIndex(), trade))
             return null;
-        ICommandObject command = new OfferTrade_CO(gameID, tradeParams, game);
+        
+        ICommandObject command = new OfferTrade_CO(tradeParams, game);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -434,6 +435,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canAcceptTrade(acceptParams.getPlayerIndex()))
             return null;
+        
         ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, game);
         if(command.execute())
         {

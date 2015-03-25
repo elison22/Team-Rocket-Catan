@@ -354,9 +354,12 @@ public class ServerGame {
         	// Place robber
             map.doPlayRobber(location);
             
-            // Steal resources
-            ResourceType stolenRes = playerList.get(victimIndex).getRandRes();
-            playerList.get(playerIndex).incResource(stolenRes);
+            // Only steal if there actually is a victim
+            if (victimIndex > -1) {
+            	// Steal resources
+                ResourceType stolenRes = playerList.get(victimIndex).getRandRes();
+                playerList.get(playerIndex).incResource(stolenRes);
+            }
             
             // Set state to playing
             turnTracker.setCurrentState(ServerTurnState.Playing);
@@ -612,26 +615,29 @@ public class ServerGame {
             tradeOffer = null;
             return false;
         }
+        
         ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
         ServerPlayer receivingPlayer = playerList.get(receiver);
         HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
-        for(ResourceType resource : offer.keySet()){
+        for ( ResourceType resource : offer.keySet() ) {
             int amount = offer.get(resource);
-            if(amount == 0)
+            if ( amount == 0 )
                 continue;
-            else if(amount > 0){
-                for(int i = 0; i < amount; i++){
+            else if ( amount > 0 ){
+                for ( int i = 0; i < amount; i++ ) {
                     offeringPlayer.decResource(resource);
                     receivingPlayer.incResource(resource);
                 }
             }
-            else{
-                for(int i = 0; i > amount; i--){
+            else {
+                for ( int i = 0; i > amount; i-- ) {
                     offeringPlayer.incResource(resource);
                     receivingPlayer.decResource(resource);
                 }
             }
         }
+        
+        tradeOffer = null;
         incVersionNumber();
         return true;
     }

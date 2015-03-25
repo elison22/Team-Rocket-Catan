@@ -108,6 +108,10 @@ public class RobPlayerTest {
         // Attempt to steal from player[0] who has no resources
         assertTrue(game.getPlayerList().get(0).getBank().getResCount() == 0);
         assertNull(modelFacade.robPlayer(0, new RobPlayer_Params(2, 0, new HexLocation(2, -2))));
+        
+        // Place robber where no victims are available and check the turn state
+        assertNotNull(modelFacade.robPlayer(0, new RobPlayer_Params(2, -1, new HexLocation(2, 0))));
+        assertTrue(game.getTurnState() == ServerTurnState.Playing);
 	}
 
 }

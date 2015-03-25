@@ -13,7 +13,6 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class OfferTrade_CO implements ICommandObject {
 	
-	private int gameId;
 	private OfferTrade_Params params;
     private ServerGame game;
 
@@ -21,10 +20,8 @@ public class OfferTrade_CO implements ICommandObject {
 	 * @param gameId Id of the game where the trade is to be offered.
 	 * @param params Parameters needed to offer a trade.
 	 */
-	public OfferTrade_CO(int gameId,
-			OfferTrade_Params params, ServerGame game) {
+	public OfferTrade_CO(OfferTrade_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
         this.game = game;
 	}
