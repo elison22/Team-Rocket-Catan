@@ -406,8 +406,8 @@ public class ServerGame {
                 cardBank.receiveResourceCard(res1);
                 return false;
             }
-            return false;
         }
+        else return false;
         playerList.get(playerIndex).playDevCard(DevCardType.YEAR_OF_PLENTY);
         incVersionNumber();
         return true;
