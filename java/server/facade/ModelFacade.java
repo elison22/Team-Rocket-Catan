@@ -57,14 +57,18 @@ public class ModelFacade implements IModelFacade {
 		String namePattern = "^[0-9a-zA-Z ]{1,25}$";
 		if (!params.getName().matches(namePattern))
 			return null;
-		
+		ICommandObject command = null;
 		try {
-			gameManager.createGame(params.getRandomNumbers(), params.getRandomTiles(), params.getRandomPorts(), params.getName());
-		} catch (ServerBoardException e) {
-			return null;
+			command = new CreateGame_CO(gameManager, params.getRandomNumbers(), params.getRandomTiles(), params.getRandomPorts(), params.getName());
+		} catch (ServerBoardException e1) {
+			e1.printStackTrace();
 		}
-		
-		return serializer.serializeNewGame(gameManager.getNewestGame());
+		if(command.execute())
+		{
+			gameManager.addCommand(gameManager.getNewestGameId(), command);
+			return serializer.serializeNewGame(gameManager.getNewestGame());
+		}
+		else return null;
 	}
 
 	/**
@@ -147,8 +151,13 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON of the game model after the commands are executed
 	 */
 	@Override
-	public String executeGameCommands(int gameID, String gameCommands) {
-		// TODO Auto-generated method stub
+	public String executeGameCommands(int gameID, ArrayList<ICommandObject> commandsList) {
+		ServerGame game = gameManager.getGame(gameID);
+		for(ICommandObject command : commandsList)
+		{
+			command.setGame(game);
+			command.execute();
+		}
 		return null;
 	}
 
@@ -163,7 +172,7 @@ public class ModelFacade implements IModelFacade {
 		if(chatParams.getPlayerIndex() > 3 || chatParams.getPlayerIndex() < 0)
 			return null;
 		ServerGame game = gameManager.getGame(gameID);
-		ICommandObject command = new SendChat_CO(gameID, chatParams, gameManager);
+		ICommandObject command = new SendChat_CO(game, chatParams, gameManager);
 		if(command.execute())
 		{
 			gameManager.addCommand(gameID, command);

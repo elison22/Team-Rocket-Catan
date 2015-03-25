@@ -1,5 +1,6 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.Login_Params;
 import user.IUserFacade;
 import user.model.UserManager;
@@ -30,6 +31,12 @@ public class Login_CO implements ICommandObject {
 		if (userManager.hasUser(params.getUser()))
 			return userManager.checkPassword(params.getUser(), params.getPassword());
 		return false;
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -21,6 +21,11 @@ public class AcceptTrade_CO implements ICommandObject {
 		this.params = params;
         this.game = game;
 	}
+	
+	public void setGame(ServerGame game)
+	{
+		this.game = game;
+	}
 
 	@Override
 	public boolean execute() {

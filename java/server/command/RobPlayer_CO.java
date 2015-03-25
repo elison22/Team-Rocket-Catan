@@ -1,6 +1,7 @@
 package command;
 
 import model.sgame.ServerGame;
+import shared.definitions.ResourceType;
 import shared.dto.RobPlayer_Params;
 import facade.IModelFacade;
 
@@ -14,6 +15,7 @@ public class RobPlayer_CO implements ICommandObject {
 	
 	private ServerGame game;
 	private RobPlayer_Params params;
+	private ResourceType stolenResource;
 
 	/**
 	 * @param game
@@ -23,11 +25,20 @@ public class RobPlayer_CO implements ICommandObject {
 		super();
 		this.game = game;
 		this.params = params;
+		stolenResource = null;
+	}
+	
+	public void setGame(ServerGame game)
+	{
+		this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-        return game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation());
+        stolenResource = game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation(), stolenResource);
+        if(stolenResource != null)
+        	return true;
+        else return false;
 	}
 
 }

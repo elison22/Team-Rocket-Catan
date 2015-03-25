@@ -13,22 +13,25 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class ResetGame_CO implements ICommandObject {
 	
-	private int gameId;
-	private GameManager manager;
+	private ServerGame game;
 	
 	/**
 	 * @param gameId The id of the game to be reset. This will be sent as a 
 	 * query parameter from the client.
 	 */
 	public ResetGame_CO(int gameId, GameManager manager) {
-		this.gameId = gameId;
-		this.manager = manager;
+		this.game = manager.getGame(gameId);
 	}
 
 	@Override
 	public boolean execute() {
-		ServerGame game = manager.getGame(gameId);
 		return game.resetGame();
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

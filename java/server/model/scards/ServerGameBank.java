@@ -113,6 +113,21 @@ public class ServerGameBank extends ServerCardBank {
         devCards.remove(chosenCardIndex);
         return chosenCard;
     }
+    
+    
+    public ServerDevCard giveDevCard(DevCardType type){
+    	ServerDevCard card = null;
+    	for(int i = 0; i < devCards.size(); i++)
+    	{
+    		if(devCards.get(i).getType() == type)
+    		{
+    			card = devCards.get(i);
+    			devCards.remove(i);
+    			i = devCards.size();
+    		}
+    	}
+    	return card;
+    }
 
     public void buyPiece(PieceType type) {
 

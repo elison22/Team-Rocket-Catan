@@ -1,5 +1,6 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.SaveGame_Params;
 
 /**
@@ -22,6 +23,12 @@ public class SaveGame_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		return false;
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
