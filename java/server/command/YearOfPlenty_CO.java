@@ -1,5 +1,7 @@
 package command;
 
+import model.sgame.ServerGame;
+import shared.definitions.ResourceType;
 import shared.dto.YearOfPlenty_Params;
 import facade.IModelFacade;
 
@@ -11,22 +13,25 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class YearOfPlenty_CO implements ICommandObject {
 
-	private int gameId;
+	private ServerGame game;
 	private YearOfPlenty_Params params;
 	
 	/**
-	 * @param modelFacade The implementation of IModelFacde to be used.
-	 * @param gameId Id of the game to play a year of plenty card.
+	 * @param game blah
 	 * @param params Parameters needed to play a Year of Plenty card.
 	 */
-	public YearOfPlenty_CO(int gameId, YearOfPlenty_Params params) {
-		this.gameId = gameId;
+	public YearOfPlenty_CO(ServerGame game, YearOfPlenty_Params params) {
+		this.game = game;
 		this.params = params;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+		return game.doYearOfPlenty(
+                params.getPlayerIndex(),
+                ResourceType.convert(params.getResource1()),
+                ResourceType.convert(params.getResource2())
+        );
 	}
 
 }

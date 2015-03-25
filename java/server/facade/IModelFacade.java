@@ -45,7 +45,7 @@ public interface IModelFacade {
 
     public String doMonopoly(int gameID, Monopoly_Params params);
 
-    public String doMonument(int gameID, int playerIdx);
+    public String doMonument(int gameID, Monument_Params params);
 
     public String buildRoad(int gameID, BuildRoad_Params roadParams);
 

@@ -9,6 +9,7 @@ import model.sgame.ServerTurnState;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.dto.*;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -208,7 +209,7 @@ public class ModelFacade implements IModelFacade {
         
         // Check that the victim has resources to be stolen
         if ( robParams.getVictimIndex() > -1 && !game.canRobPlayer(robParams.getVictimIndex())) 
-        	return null;
+        	return null;    //TODO test if this is a problem
         
         ICommandObject command = new RobPlayer_CO(robParams, game);
         if(command.execute())
@@ -267,12 +268,15 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String doYearOfPlenty(int gameID, YearOfPlenty_Params params) {
 
-//        ServerGame game = gameManager.getGame(gameID);
-//        game.doYearOfPlenty(
-//                params.getPlayerIndex(),
-//                ResourceType.convert(params.getResource1()),
-//                ResourceType.convert(params.getResource2())
-//        );
+        ServerGame game = gameManager.getGame(gameID);
+
+        // check available resources and player turn
+        if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.YEAR_OF_PLENTY))
+            return null;
+
+        ICommandObject command = new YearOfPlenty_CO(game, params);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
 
 		return null;
 	}
@@ -285,6 +289,17 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doRoadBuilding(int gameID, RoadBuilding_Params roadParams) {
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if there are roads available and the player has the card
+        if(!game.canPlayDevCard(roadParams.getPlayerIndex(),DevCardType.ROAD_BUILD))
+            return null;
+
+        ICommandObject command = new RoadBuilding_CO(game, roadParams);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
 		return null;
 	}
 
@@ -296,8 +311,26 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doSoldier(int gameID, Soldier_Params params) {
-		// TODO Auto-generated method stub
-		return null;
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if the player has the card
+        if(!game.canPlayDevCard(params.getPlayerIndex(),DevCardType.SOLDIER))   //TODO review this
+            return null;
+
+        // Check that the victim has resources to be stolen
+        if (params.getVictimIndex() > -1 && !game.canRobPlayer(params.getVictimIndex()))
+            return null;    //TODO check if this is a problem
+
+        //check if the robber would be in a valid spot
+        if(!game.canPlaceRobber(params.getPlayerIndex(), params.getLocation())) //TODO work on this
+            return null;
+
+        ICommandObject command = new Soldier_CO(game, params);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
+        return null;
 	}
 
 	/**
@@ -308,7 +341,17 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String doMonopoly(int gameID, Monopoly_Params params) {
-		// TODO Auto-generated method stub
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if there are roads available
+        if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.MONOPOLY))
+            return null;
+
+        ICommandObject command = new Monopoly_CO(game, params);
+        if(command.execute())
+            return serializer.serializeGameModel(game);
+
 		return null;
 	}
 
@@ -319,8 +362,18 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String doMonument(int gameID, int playerIdx) {
-		// TODO Auto-generated method stub
+	public String doMonument(int gameID, Monument_Params params) {
+
+        ServerGame game = gameManager.getGame(gameID);
+
+        //check if they have the monument card
+        if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.MONUMENT))
+            return null;
+
+        ICommandObject command = new Monument_CO(game, params);
+        if(command.execute())
+            return  serializer.serializeGameModel(game);
+
 		return null;
 	}
 
