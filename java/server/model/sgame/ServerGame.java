@@ -317,6 +317,10 @@ public class ServerGame {
             e.printStackTrace();
             return false;
         }
+
+        //Distribute resources for second settlement placed in setup rounds
+        if(isFree && turnTracker.getCurrentState() == ServerTurnState.SecondRound){
+        }
         
         
         return true;
@@ -454,6 +458,8 @@ public class ServerGame {
 	public boolean doBuyDevCard(int playerIndex) {
 
         ServerDevCard chosenCard = cardBank.giveDevCard();
+
+        // adds a random dev card to the player's hand which also decrements the necessary res cards used to buy it
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
         incVersionNumber();
 		return true;

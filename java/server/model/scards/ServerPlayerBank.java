@@ -72,15 +72,24 @@ public class ServerPlayerBank extends ServerCardBank {
      * to the player's list of development cards
      */
     public void buyDevCard(ServerDevCard card){
-        resCards.put(ResourceType.ORE, resCards.get(ResourceType.BRICK) - 1);
+        resCards.put(ResourceType.ORE, resCards.get(ResourceType.ORE) - 1);
         resCards.put(ResourceType.SHEEP, resCards.get(ResourceType.SHEEP) - 1);
         resCards.put(ResourceType.WHEAT, resCards.get(ResourceType.WHEAT) - 1);
         newDevs.add(card);
     }
 
     public void playDevCard(ServerDevCard card) {
-        newDevs.remove(card);
-        oldDevs.add(card);
+        // dev cards will always be removed from oldDevs
+        oldDevs.remove(card);
+    }
+
+    public void moveNewDevsToOld() {
+        if(newDevs != null && oldDevs != null) {
+            for (ServerDevCard devCard : newDevs) {
+                oldDevs.add(devCard);
+            }
+            newDevs.clear();
+        }
     }
 
     public boolean canAffordDevCard() {

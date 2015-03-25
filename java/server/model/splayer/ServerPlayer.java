@@ -291,6 +291,7 @@ public class ServerPlayer {
      */
     public void doBuildCity(){
         remainingCities--;
+        remainingSettlements++;
         bank.buyPiece(PieceType.CITY);
     }
 
