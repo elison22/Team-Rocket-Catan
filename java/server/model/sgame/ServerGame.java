@@ -315,7 +315,10 @@ public class ServerGame {
         try {
             map.doBuildSettlement(location, playerIndex);
             playerList.get(playerIndex).doBuildSettlement(isFree);
-            playerList.get(playerIndex).addPoint();
+            
+            if (playerList.get(playerIndex).addPoint() >= 10)
+            	winner = playerIndex;
+            
             cardBank.buyPiece(PieceType.SETTLEMENT);
          
         } catch (ServerBoardException e) {
@@ -344,7 +347,10 @@ public class ServerGame {
         try {
             map.doBuildCity(location, playerIndex);
             playerList.get(playerIndex).doBuildCity();
-            playerList.get(playerIndex).addPoint();
+            
+            if (playerList.get(playerIndex).addPoint() >= 10)
+            	winner = playerIndex;
+            
             cardBank.buyPiece(PieceType.CITY);
             
             // Update game history
@@ -458,7 +464,10 @@ public class ServerGame {
 
     /***/
     public boolean doMonument(int playerIndex) {
-        playerList.get(playerIndex).addPoint();
+    	
+    	 if (playerList.get(playerIndex).addPoint() >= 10)
+         	winner = playerIndex;
+    	 
         playerList.get(playerIndex).playDevCard(DevCardType.MONUMENT);
         
         // Update game history
