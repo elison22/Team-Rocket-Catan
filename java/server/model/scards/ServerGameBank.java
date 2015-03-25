@@ -108,7 +108,7 @@ public class ServerGameBank extends ServerCardBank {
      */
     public ServerDevCard giveDevCard(){
         int deckSize = devCards.size();
-        int chosenCardIndex = rand.nextInt() % deckSize;
+        int chosenCardIndex = rand.nextInt(deckSize);
         ServerDevCard chosenCard = devCards.get(chosenCardIndex);
         devCards.remove(chosenCardIndex);
         return chosenCard;

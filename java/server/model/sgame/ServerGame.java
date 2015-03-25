@@ -526,8 +526,7 @@ public class ServerGame {
 	 * @param numberRolled blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doRoll(int playerIndex, int numberRolled)
-	{
+	public boolean doRoll(int playerIndex, int numberRolled) {
         turnTracker.setNumRolled(numberRolled);
         
         // Update game history
@@ -656,8 +655,7 @@ public class ServerGame {
 	 * @param trade blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doMaritimeTrade(int playerIndex, ServerMaritimeTrade trade)
-	{
+	public boolean doMaritimeTrade(int playerIndex, ServerMaritimeTrade trade) {
         ServerPlayer player = playerList.get(playerIndex);
         int ratio = trade.getRatio();
         for(int i = 0; i < ratio; i++){
@@ -673,8 +671,7 @@ public class ServerGame {
      * @param receiver blah
      * @return blah
      */
-    public boolean doDomesticTrade(int receiver, boolean willAccept)
-    {
+    public boolean doDomesticTrade(int receiver, boolean willAccept) {
         if (willAccept) {
         	ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
             ServerPlayer receivingPlayer = playerList.get(receiver);
