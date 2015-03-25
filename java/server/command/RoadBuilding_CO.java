@@ -1,7 +1,10 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.RoadBuilding_Params;
 import facade.IModelFacade;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
 /**
  * @author Chad
@@ -12,22 +15,23 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class RoadBuilding_CO implements ICommandObject {
 	
-	private int gameId;
 	private RoadBuilding_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param gameId The id of the game where the card is to be played.
 	 * @param params The Parameters needed to play the road building card.
 	 */
-	public RoadBuilding_CO(int gameId,
-			RoadBuilding_Params params) {
+	public RoadBuilding_CO(RoadBuilding_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
+        if(game.doRoadBuilding(params.getPlayerIndex(), params.getEdgeLocationRoad1(), params.getEdgeLocationRoad2())){
+            return true;
+        }
 		return false;
 	}
 

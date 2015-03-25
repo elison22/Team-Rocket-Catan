@@ -12,6 +12,8 @@ public class RoadBuilding_Params {
 	int playerIndex;
 	RoadLocation spot1;
 	RoadLocation spot2;
+    EdgeLocation road1;
+    EdgeLocation road2;
 	
 	@SuppressWarnings("unused")
 	private class RoadLocation {
@@ -32,6 +34,8 @@ public class RoadBuilding_Params {
 	public RoadBuilding_Params(int playerIndex, EdgeLocation loc1, EdgeLocation loc2) {
 		setPlayerIndex(playerIndex);
 		initLocations(loc1, loc2);
+        this.road1 = loc1;
+        this.road2 = loc2;
 	}
 
 	public String getType() {
@@ -49,6 +53,12 @@ public class RoadBuilding_Params {
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
 	}
+
+    public EdgeLocation getEdgeLocationRoad1() {
+        return this.road1;
+    }
+
+    public EdgeLocation getEdgeLocationRoad2() { return this.road2; }
 
 	private void initLocations(EdgeLocation loc1, EdgeLocation loc2) {
 		int x = loc1.getHexLoc().getX();

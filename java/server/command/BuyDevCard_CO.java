@@ -13,16 +13,13 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class BuyDevCard_CO implements ICommandObject {
 
-	private int gameId;
 	private BuyDevCard_Params params;
     private ServerGame game;
 	
 	/**
-	 * @param gameId Id of the game the player is in.
 	 * @param params Parameters for buying a dev card.
 	 */
-	public BuyDevCard_CO(int gameId, BuyDevCard_Params params, ServerGame game) {
-		this.gameId = gameId;
+	public BuyDevCard_CO(BuyDevCard_Params params, ServerGame game) {
 		this.params = params;
         this.game = game;
 	}

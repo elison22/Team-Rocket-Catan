@@ -14,16 +14,13 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class FinishTurn_CO implements ICommandObject {
 	
-	private int gameId;
 	private FinishTurn_Params params;
     private ServerGame game;
 
 	/**
-	 * @param gameId Id of the game where the turn is ending.
 	 * @param params Parameters needed to finish a player's turn.
 	 */
-	public FinishTurn_CO(int gameId, FinishTurn_Params params, ServerGame game) {
-		this.gameId = gameId;
+	public FinishTurn_CO(FinishTurn_Params params, ServerGame game) {
 		this.params = params;
         this.game = game;
 	}

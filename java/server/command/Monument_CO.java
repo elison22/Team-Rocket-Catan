@@ -1,5 +1,6 @@
 package command;
 
+import model.sgame.ServerGame;
 import shared.dto.Monument_Params;
 import facade.IModelFacade;
 
@@ -11,22 +12,24 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class Monument_CO implements ICommandObject {
 	
-	private int gameId;
 	private Monument_Params params;
+    private ServerGame game;
 
 	/**
-	 * @param gameId The id of the game where the card is to be played.
 	 * @param params Parameters needed to play the monument card.
 	 */
-	public Monument_CO(int gameId, Monument_Params params) {
+	public Monument_CO(Monument_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
+        this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-		return false;
+        if(game.doMonument(params.getPlayerIndex())) {
+            return true;
+        }
+        return false;
 	}
 
 }

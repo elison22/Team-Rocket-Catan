@@ -12,18 +12,15 @@ import facade.IModelFacade;
  */
 @SuppressWarnings("unused")
 public class AcceptTrade_CO implements ICommandObject {
-	private int gameId;
+
 	private AcceptTrade_Params params;
     private ServerGame game;
 
 	/**
-	 * @param gameId Id of the game where the trade is to be accepted (or not).
 	 * @param params Parameters needed for a player to accept a trade.
 	 */
-	public AcceptTrade_CO(int gameId,
-			AcceptTrade_Params params, ServerGame game) {
+	public AcceptTrade_CO(AcceptTrade_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
         this.game = game;
 	}

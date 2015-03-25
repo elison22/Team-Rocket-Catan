@@ -14,18 +14,14 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class DiscardCards_CO implements ICommandObject {
 	
-	private int gameId;
 	private DiscardCards_Params params;
     private ServerGame game;
 
 	/**
-	 * @param gameId Id of the game where the payer must discard cards;
 	 * @param params Parameters needed for discarding cards.
 	 */
-	public DiscardCards_CO(int gameId,
-			DiscardCards_Params params, ServerGame game) {
+	public DiscardCards_CO(DiscardCards_Params params, ServerGame game) {
 		super();
-		this.gameId = gameId;
 		this.params = params;
         this.game = game;
 	}
