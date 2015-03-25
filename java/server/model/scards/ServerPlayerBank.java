@@ -126,9 +126,10 @@ public class ServerPlayerBank extends ServerCardBank {
         return newDevs;
     }
 
-    public boolean hasResCards(HashMap<ResourceType, Integer> resources){
+    public boolean hasResCards(HashMap<ResourceType, Integer> resources, boolean isReceiver){
+        int inverseFactor = isReceiver ? -1 : 1;
         for (ResourceType key : resources.keySet()){
-            if(resources.get(key) > this.resCards.get(key)){
+            if((inverseFactor * resources.get(key)) > this.resCards.get(key)){
                 return false;
             }
         }

@@ -266,7 +266,6 @@ public class ServerGame {
 			map = new ServerBoard(randNumbers, randTiles, randPorts);
 		} catch (ServerBoardException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -629,8 +628,8 @@ public class ServerGame {
                 // player
                 if ( amount > 0 ) {
                     for ( int i = 0; i < amount; i++ ) {
-                        offeringPlayer.incResource(resource);
-                        receivingPlayer.decResource(resource);
+                        offeringPlayer.decResource(resource);
+                        receivingPlayer.incResource(resource);
                     }
                 }
                 
@@ -639,8 +638,8 @@ public class ServerGame {
                 // player
                 else if (amount < 0) {
                     for ( int i = amount; i < 0; i++ ) {
-                        offeringPlayer.decResource(resource);
-                        receivingPlayer.incResource(resource);
+                        offeringPlayer.incResource(resource);
+                        receivingPlayer.decResource(resource);
                     }
                 }
             }
