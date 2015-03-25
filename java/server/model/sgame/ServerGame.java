@@ -318,7 +318,10 @@ public class ServerGame {
         try {
             map.doBuildSettlement(location, playerIndex);
             playerList.get(playerIndex).doBuildSettlement(isFree);
-            playerList.get(playerIndex).addPoint();
+            
+            if (playerList.get(playerIndex).addPoint() >= 10)
+            	winner = playerIndex;
+            
             cardBank.buyPiece(PieceType.SETTLEMENT);
          
         } catch (ServerBoardException e) {
@@ -328,6 +331,29 @@ public class ServerGame {
 
         //Distribute resources for second settlement placed in setup rounds
         if(isFree && turnTracker.getCurrentState() == ServerTurnState.SecondRound){
+            ServerPlayer player = playerList.get(playerIndex);
+            ArrayList<HexType> adjHexes = map.getAdjacentHexTypes(location);
+            for(HexType type : adjHexes){
+                switch(type){
+                    case BRICK:
+                        player.incResource(ResourceType.BRICK);
+                        break;
+                    case WOOD:
+                        player.incResource(ResourceType.WOOD);
+                        break;
+                    case WHEAT:
+                        player.incResource(ResourceType.WHEAT);
+                        break;
+                    case ORE:
+                        player.incResource(ResourceType.ORE);
+                        break;
+                    case SHEEP:
+                        player.incResource(ResourceType.SHEEP);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         
         // Update game history
@@ -347,7 +373,10 @@ public class ServerGame {
         try {
             map.doBuildCity(location, playerIndex);
             playerList.get(playerIndex).doBuildCity();
-            playerList.get(playerIndex).addPoint();
+            
+            if (playerList.get(playerIndex).addPoint() >= 10)
+            	winner = playerIndex;
+            
             cardBank.buyPiece(PieceType.CITY);
             
             // Update game history
@@ -483,7 +512,10 @@ public class ServerGame {
 
     /***/
     public boolean doMonument(int playerIndex) {
-        playerList.get(playerIndex).addPoint();
+    	
+    	 if (playerList.get(playerIndex).addPoint() >= 10)
+         	winner = playerIndex;
+    	 
         playerList.get(playerIndex).playDevCard(DevCardType.MONUMENT);
         
         // Update game history
