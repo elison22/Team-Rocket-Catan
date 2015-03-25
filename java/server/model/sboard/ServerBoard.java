@@ -792,13 +792,13 @@ public class ServerBoard {
         //check the third hex, which depends on whether loc is NW or NE
         if(loc.getDir() == VertexDirection.NorthWest) {
             //look to the left
-            tempHex.getNeighborLoc(EdgeDirection.SouthWest);
+            tempHex = tempHex.getNeighborLoc(EdgeDirection.SouthWest);
             if(tiles.containsKey(tempHex) && tiles.get(tempHex).getType() != HexType.DESERT)
                 toReturn.add(tiles.get(tempHex).getType());
         }
         if(loc.getDir() == VertexDirection.NorthEast) {
             //look to the right
-            tempHex.getNeighborLoc(EdgeDirection.SouthEast);
+            tempHex = tempHex.getNeighborLoc(EdgeDirection.SouthEast);
             if(tiles.containsKey(tempHex) && tiles.get(tempHex).getType() != HexType.DESERT)
                 toReturn.add(tiles.get(tempHex).getType());
         }

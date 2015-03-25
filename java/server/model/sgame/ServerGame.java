@@ -328,6 +328,29 @@ public class ServerGame {
 
         //Distribute resources for second settlement placed in setup rounds
         if(isFree && turnTracker.getCurrentState() == ServerTurnState.SecondRound){
+            ServerPlayer player = playerList.get(playerIndex);
+            ArrayList<HexType> adjHexes = map.getAdjacentHexTypes(location);
+            for(HexType type : adjHexes){
+                switch(type){
+                    case BRICK:
+                        player.incResource(ResourceType.BRICK);
+                        break;
+                    case WOOD:
+                        player.incResource(ResourceType.WOOD);
+                        break;
+                    case WHEAT:
+                        player.incResource(ResourceType.WHEAT);
+                        break;
+                    case ORE:
+                        player.incResource(ResourceType.ORE);
+                        break;
+                    case SHEEP:
+                        player.incResource(ResourceType.SHEEP);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         
         // Update game history
