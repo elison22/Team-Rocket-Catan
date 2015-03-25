@@ -80,7 +80,13 @@ public class ServerPlayerBank extends ServerCardBank {
 
     public void playDevCard(ServerDevCard card) {
         // dev cards will always be removed from oldDevs
-        oldDevs.remove(card);
+        for(ServerDevCard devCard : oldDevs){
+            if(devCard.getType() == card.getType()){
+                oldDevs.remove(devCard);
+                break;
+            }
+        }
+//        oldDevs.remove(card);
     }
 
     public void moveNewDevsToOld() {
