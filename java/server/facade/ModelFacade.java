@@ -433,7 +433,10 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String acceptTrade(int gameID, AcceptTrade_Params acceptParams) {
         ServerGame game = gameManager.getGame(gameID);
-        if(!game.canAcceptTrade(acceptParams.getPlayerIndex()))
+        
+        // If the client tried to accept a trade that they weren't supposed to
+        // be able to
+        if(acceptParams.isWillAccept() && !game.canAcceptTrade(acceptParams.getPlayerIndex()))
             return null;
         
         ICommandObject command = new AcceptTrade_CO(gameID, acceptParams, game);

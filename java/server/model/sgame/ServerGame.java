@@ -611,28 +611,26 @@ public class ServerGame {
      */
     public boolean doDomesticTrade(int receiver, boolean willAccept)
     {
-        if(!willAccept) {
-            tradeOffer = null;
-            return false;
-        }
-        
-        ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
-        ServerPlayer receivingPlayer = playerList.get(receiver);
-        HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
-        for ( ResourceType resource : offer.keySet() ) {
-            int amount = offer.get(resource);
-            if ( amount == 0 )
-                continue;
-            else if ( amount > 0 ){
-                for ( int i = 0; i < amount; i++ ) {
-                    offeringPlayer.decResource(resource);
-                    receivingPlayer.incResource(resource);
+        if (willAccept) {
+        	ServerPlayer offeringPlayer = playerList.get(tradeOffer.getSender());
+            ServerPlayer receivingPlayer = playerList.get(receiver);
+            HashMap<ResourceType, Integer> offer = tradeOffer.getResources();
+            
+            for ( ResourceType resource : offer.keySet() ) {
+                int amount = offer.get(resource);
+                if ( amount == 0 )
+                    continue;
+                else if ( amount > 0 ){
+                    for ( int i = 0; i < amount; i++ ) {
+                        offeringPlayer.incResource(resource);
+                        receivingPlayer.decResource(resource);
+                    }
                 }
-            }
-            else {
-                for ( int i = 0; i > amount; i-- ) {
-                    offeringPlayer.incResource(resource);
-                    receivingPlayer.decResource(resource);
+                else {
+                    for ( int i = amount; i < 0; i++ ) {
+                        offeringPlayer.decResource(resource);
+                        receivingPlayer.incResource(resource);
+                    }
                 }
             }
         }
@@ -953,11 +951,10 @@ public class ServerGame {
      */
     public boolean canAcceptTrade(int playerId) {
         ServerTradeOffer trade = tradeOffer;
-    	if(turnTracker.canPlayerBuild(playerId)) {
-            if (playerList.get(playerId).canAcceptTrade(playerId, trade.getResources())){
-    			return true;
-			}
-    	}
+        if (playerList.get(playerId).canAcceptTrade(playerId, trade.getResources())){
+        	return true;
+		}
+    	
     	return false;
     }
     
