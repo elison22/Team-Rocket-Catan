@@ -59,7 +59,7 @@ public class Server {
         server.createContext("/game/model", new GetGameModelHandler(modelFacade));					// GET
         server.createContext("/game/reset", new ResetGameHandler(modelFacade));						// POST
         server.createContext("/game/commands", new GetGameCommandsHandler(modelFacade, userFacade));			// GET
-        server.createContext("/game/commands", new DoGameCommandsHandler(modelFacade));				// POST
+        server.createContext("/game/commands", new DoGameCommandsHandler(modelFacade, userFacade));				// POST
         server.createContext("/games/list", new GetGamesHandler(modelFacade));						// GET
         server.createContext("/games/create", new CreateGameHandler(modelFacade));					// POST
         server.createContext("/games/join", new JoinGameHandler(modelFacade, userFacade));						// POST
