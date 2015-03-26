@@ -375,7 +375,7 @@ public class ServerBoard {
         if (owner < -1 || owner > 3) throw new ServerBoardException("Param owner must be in the range 0 to 3.");
         if (location == null) throw new ServerBoardException("Param location cannot be null.");
         if (roads.get(location.getNormalizedLocation()) != null) return false;
-        if (hasNeighborBuilding(location, owner)) return false;
+        if (hasNeighborBuilding(location, -1)) return false;
         if (!hasNeighborBuilding(location.getClockwiseVertex())) return true;
         if (!hasNeighborBuilding(location.getCounterClockwiseVertex())) return true;
         return false;
