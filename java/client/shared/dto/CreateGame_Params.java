@@ -18,7 +18,7 @@ public class CreateGame_Params {
 
 	public CreateGame_Params() {}
 	
-	public CreateGame_Params(Boolean randomNumbers, Boolean randomTiles,
+	public CreateGame_Params( Boolean randomTiles, Boolean randomNumbers,
 			Boolean randomPorts, String name) {
 		setRandomTiles(randomTiles);
 		setRandomNumbers(randomNumbers);
