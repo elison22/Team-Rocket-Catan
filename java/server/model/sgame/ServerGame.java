@@ -1138,7 +1138,7 @@ public class ServerGame {
     	if (turnTracker.getLongestRoadPlayerIndex() < 0) {
     		
     		// If the player that just built a road should have longest road
-    		if (playerList.get(playerIndex).getRemainingRoads() >= 5) {
+    		if (playerList.get(playerIndex).getRemainingRoads() <= 10) {
     			turnTracker.setLongestRoadPlayerIndex(playerIndex);
     			if (playerList.get(playerIndex).addPoints(2) >= 10)
     				winner = playerIndex;
