@@ -43,7 +43,7 @@ public class Serializer {
 	 * @param json String received from the server that needs to be made into Java object(s)
 	 * @throws BoardException 
 	 */
-	public GameModel deSerializeFromServer(GameModel game, String json) throws BoardException
+	public GameModel deSerializeFromFile(GameModel game, String json) throws BoardException
 	{
 		JsonClientModel newModel = gson.fromJson(json, JsonClientModel.class);
 		ArrayList<Player> newPlayers = new ArrayList<Player>();

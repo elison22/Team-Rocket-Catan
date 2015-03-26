@@ -21,7 +21,7 @@ public interface IModelFacade {
 
     public boolean saveGame(int gameID, String fileName);
 
-    public String loadGame(String fileName);
+    public boolean loadGame(String fileName);
 
     public String getGameModel(int gameID);
 

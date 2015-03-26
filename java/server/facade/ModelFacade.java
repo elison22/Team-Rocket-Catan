@@ -2,11 +2,14 @@ package facade;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import command.*;
-import main.FileUtils;
+import model.board.BoardException;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
@@ -116,9 +119,24 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON string with the state of the saved game
 	 */
 	@Override
-	public String loadGame(String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean loadGame(String fileName) {
+		ServerGame loadedGame;
+		try {
+			File file = new File(fileName + ".txt");
+			byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+			loadedGame = serializer.deSerializeFromServer(new String(encoded, "UTF-8"));
+			gameManager.addGame(loadedGame);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (BoardException e) {
+			e.printStackTrace();
+			return false;
+		} catch (ServerBoardException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	/**

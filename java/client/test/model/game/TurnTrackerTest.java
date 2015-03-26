@@ -41,7 +41,7 @@ public class TurnTrackerTest {
         builder = new StringBuilder();
         while(stream.hasNext()) builder.append(stream.next());
         json = builder.toString();
-        testGame = testSerializer.deSerializeFromServer(testGame, json);
+        testGame = testSerializer.deSerializeFromFile(testGame, json);
         turnTracker = testGame.getTurnTracker();
         stream.close();
     }

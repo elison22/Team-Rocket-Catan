@@ -160,4 +160,13 @@ public class GameManager {
 	public int getVersionId(int gameId) {
 		return games.get(gameId).getVersionNumber();
 	}
+	
+	public void addGame(ServerGame game) {
+		
+		// Pad gamesList if the game id is higher than the gamesList size
+		while (games.size() <= game.getGameId())
+			games.add(null);
+		
+		games.set(game.getGameId(), game);
+	}
 }

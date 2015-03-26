@@ -50,7 +50,7 @@ public class PlayerTest {
         builder = new StringBuilder();
         while(stream.hasNext()) builder.append(stream.next());
         json = builder.toString();
-        testGameModel = testSerializer.deSerializeFromServer(testGameModel, json);
+        testGameModel = testSerializer.deSerializeFromFile(testGameModel, json);
         stream.close();
     }
 

@@ -70,7 +70,7 @@ public class ClientFacade extends Observable implements IClientFacade {
     {
     	try 
     	{
-			game = serializer.deSerializeFromServer(game, json);
+			game = serializer.deSerializeFromFile(game, json);
 			
 			if (playerIndex < 0)
 				updatePlayerIndex();
@@ -415,7 +415,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean doBuildRoad(EdgeLocation location, boolean freebie) {
 		try {
 			//updateGameModel(proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
-			game = serializer.deSerializeFromServer(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
+			game = serializer.deSerializeFromFile(game, proxy.buildRoad(new BuildRoad_Params(playerIndex, location, freebie)));
 			if(!freebie)
 				updated();
 		} catch (ServerException | BoardException e) {
@@ -443,7 +443,7 @@ public class ClientFacade extends Observable implements IClientFacade {
 	public boolean doBuildSettlement(VertexLocation location, boolean freebie) {
 		try {
 			//updateGameModel(proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
-			game = serializer.deSerializeFromServer(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
+			game = serializer.deSerializeFromFile(game, proxy.buildSettlement(new BuildSettlement_Params(playerIndex, location, freebie)));
 //			if(!freebie)
 				updated();
 		} catch (ServerException | BoardException e) {

@@ -72,9 +72,9 @@ public class MockModelFacade implements IModelFacade
 	 * @return returns a JSON string with the state of the saved game
 	 */
 	@Override
-	public String loadGame(String fileName) {
+	public boolean loadGame(String fileName) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	/**

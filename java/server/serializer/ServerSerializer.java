@@ -7,10 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import model.board.BoardException;
 import model.sboard.ServerBoard;
+import model.sboard.ServerBoardException;
 import model.sboard.ServerConstructable;
 import model.sboard.ServerHexTile;
 import model.scards.ServerDevCard;
+import model.scards.ServerGameBank;
+import model.schat.ServerChat;
 import model.schat.ServerMessage;
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnTracker;
@@ -98,6 +102,40 @@ public class ServerSerializer {
 	public String serializeCommands(ArrayList<ICommandObject> commands)
 	{
 		return gson.toJson(commands);
+	}
+	
+	public ServerGame deSerializeFromServer(String json) throws BoardException, ServerBoardException
+	{
+		JsonClientModel newModel = gson.fromJson(json, JsonClientModel.class);
+		ArrayList<ServerPlayer> newPlayers = new ArrayList<ServerPlayer>();
+		for(JsonPlayer player : newModel.getPlayers())
+		{
+			if (player != null)
+				newPlayers.add(new ServerPlayer(player));
+		}
+		ServerGameBank newBank = new ServerGameBank(newModel.getBank(), newModel.getDevCards());
+		ServerTurnTracker newTracker = new ServerTurnTracker(newModel.getTurnTracker());
+		ServerBoard newBoard = new ServerBoard(newModel.getMap());
+		ServerChat newChat = new ServerChat(newModel.getChat());
+		ServerChat newGameHistory = new ServerChat(newModel.getLog());
+		
+		ServerTradeOffer tradeOffer = null;
+		if(newModel.getTradeOffer() != null) 
+			tradeOffer = new ServerTradeOffer(newModel.getTradeOffer());
+			
+		ServerGame game = new ServerGame();
+		
+		game.setTradeOffer(tradeOffer);
+		game.setChat(newChat);
+		game.setGameHistory(newGameHistory);
+		game.setMap(newBoard);
+		game.setTurnTracker(newTracker);
+		game.setWinner(newModel.getWinner());
+		game.setVersionNumber(newModel.getVersion());
+		game.setCardBank(newBank);
+		game.setPlayerList(newPlayers);
+				
+		return game;
 	}
 	
 	/**************************************************************************

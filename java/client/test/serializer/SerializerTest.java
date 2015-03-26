@@ -40,7 +40,7 @@ public class SerializerTest
 			jsonScanner.close();
 			serializer = new Serializer();
 			newModel = new GameModel();
-			newModel = serializer.deSerializeFromServer(newModel, json);
+			newModel = serializer.deSerializeFromFile(newModel, json);
 		}
 		catch (Exception e)
 		{
@@ -130,7 +130,7 @@ public class SerializerTest
 		json = jsonScanner.next();
 		jsonScanner.close();
 		newModel = new GameModel();
-		newModel = serializer.deSerializeFromServer(newModel, json);
+		newModel = serializer.deSerializeFromFile(newModel, json);
 		//Manually builds test board
 		Board testBoard = new Board(false, false, false);
 		testBoard.doBuildRoad(new EdgeLocation(new HexLocation(0, 1), EdgeDirection.South), 0);
@@ -172,7 +172,7 @@ public class SerializerTest
 		json = jsonScanner.next();
 		jsonScanner.close();
 		newModel = new GameModel();
-		newModel = serializer.deSerializeFromServer(newModel, json);
+		newModel = serializer.deSerializeFromFile(newModel, json);
 		assertTrue(newModel.getChat().getChatMessages().size() == 1);
 		System.out.println("\"" + newModel.getChat().getChatMessages().get(0).getMessage() + "\"");
 		System.out.println(" - " + newModel.getChat().getChatMessages().get(0).getOwner());
