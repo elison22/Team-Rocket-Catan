@@ -21,7 +21,6 @@ public class LoadGameHandler extends MovesHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		Headers head = null;
 		StringBuilder string = handleRequestBody(exchange);
-//System.out.println(string);
 
 		if(!string.toString().equals("")) {
 			String[] values = string.toString().split(",");

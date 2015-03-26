@@ -24,7 +24,6 @@ public class JoinGameHandler extends NonMoveHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-System.out.println("1");
 		String[] cookie = decodeCookie(exchange);
 		StringBuilder stringBuild = handleRequestBody(exchange);
 		JoinGame_Params params = gson.fromJson(stringBuild.toString(), JoinGame_Params.class);
