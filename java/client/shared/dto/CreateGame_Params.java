@@ -11,8 +11,9 @@ package shared.dto;
 
 public class CreateGame_Params {
 	
-	private Boolean randomNumbers;
+	
 	private Boolean randomTiles;
+	private Boolean randomNumbers;
 	private Boolean randomPorts;
 	private String name;
 
