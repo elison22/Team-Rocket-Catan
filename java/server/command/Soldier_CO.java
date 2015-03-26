@@ -1,5 +1,6 @@
 package command;
 
+import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import shared.definitions.ResourceType;
 import shared.dto.Soldier_Params;
@@ -36,7 +37,12 @@ public class Soldier_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 
-        stolenResource = game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), stolenResource, beenCalled);
+        try {
+            stolenResource = game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), stolenResource, beenCalled);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
         beenCalled = true;
         return true;
 	}
