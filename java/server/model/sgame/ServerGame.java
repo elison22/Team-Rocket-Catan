@@ -666,7 +666,8 @@ public class ServerGame {
 	}
 
     public boolean doDiscardCards(int playerIndex, HashMap<ResourceType, Integer> resourceList){
-    	
+    	ServerPlayer player = playerList.get(playerIndex);
+        player.setDiscarded();
     	// Discard the given resources for the given player
         ServerPlayer playerDiscarding = playerList.get(playerIndex);
         for(Map.Entry<ResourceType, Integer> entry : resourceList.entrySet()){

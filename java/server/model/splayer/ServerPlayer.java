@@ -245,9 +245,15 @@ public class ServerPlayer {
 	}
 
 	public boolean canDiscardCards(HashMap<ResourceType, Integer> cards) {
-		bank.hasResCards(cards, false);
-		return true;
+        if(discarded == false) {
+            bank.hasResCards(cards, false);
+        }
+        return true;
 	}
+
+    public void setDiscarded() {
+        this.discarded = true;
+    }
 
 	public boolean canBuildRoad() {
 		if (remainingRoads > 13) {
@@ -388,6 +394,7 @@ public class ServerPlayer {
 	public void endTurn() {
 
 		playedDevCard = false;
+        discarded = false;
 		bank.moveNewDevsToOld();
 		// other things that happen at the end of a turn
 	}
