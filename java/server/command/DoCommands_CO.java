@@ -1,5 +1,8 @@
 package command;
 
+import java.util.ArrayList;
+
+import model.sgame.ServerGame;
 import facade.IModelFacade;
 
 /**
@@ -12,14 +15,14 @@ import facade.IModelFacade;
 @SuppressWarnings("unused")
 public class DoCommands_CO implements ICommandObject {
 	
-	private ICommandObject[] commands;
+	private ArrayList<ICommandObject> commands;
 	private int gameId;
 	
 	/**
 	 * @param commands An array of ICommandObjects.
 	 * @param gameId The id of the game to execute the given commands in.
 	 */
-	public DoCommands_CO(ICommandObject[] commands, int gameId) {
+	public DoCommands_CO(ArrayList<ICommandObject> commands, int gameId) {
 		this.commands = commands;
 		this.gameId = gameId;
 	}
@@ -27,6 +30,12 @@ public class DoCommands_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		return false;
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package command;
 
+import model.sgame.ServerGame;
 import facade.GameManager;
 import facade.IModelFacade;
 
@@ -22,5 +23,11 @@ public class ListGames_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		return false;
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		// TODO Auto-generated method stub
+		
 	}
 }

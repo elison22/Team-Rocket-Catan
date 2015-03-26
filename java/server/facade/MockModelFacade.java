@@ -1,5 +1,9 @@
 package facade;
 
+import java.util.ArrayList;
+
+import command.ICommandObject;
+
 import model.sgame.ServerGame;
 import shared.dto.*;
 
@@ -113,7 +117,7 @@ public class MockModelFacade implements IModelFacade
 	 * @return returns a JSON of the game model after the commands are executed
 	 */
 	@Override
-	public String executeGameCommands(int gameID, String gameCommands) {
+	public String executeGameCommands(int gameID, ArrayList<ICommandObject> commandsList) {
 		// TODO Auto-generated method stub
 		return null;
 	}

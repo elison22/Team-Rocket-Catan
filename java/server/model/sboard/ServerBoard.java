@@ -37,7 +37,15 @@ public class ServerBoard {
     private HashMap<EdgeLocation, PortType> portTypes = new HashMap<EdgeLocation, PortType>();
     /** The HexLocation that represents the robber */
     private HexLocation robber;
-
+    
+    public ServerBoard(ServerBoard original)
+    {
+    	this.tiles = original.getTiles();
+    	this.robber = new HexLocation(original.getRobberLoc().getX(), original.getRobberLoc().getY());
+    	this.ports = original.getPorts();
+    	this.portTypes = original.getPortTypes();
+    }
+    
     /**
      * Creates a new Board object with HexTile objects for the whole board including
      * diceNums, and actual HexLocations. It also initializes the robbers location to
@@ -722,6 +730,13 @@ public class ServerBoard {
     public HashMap<EdgeLocation, ServerConstructable> getRoadPieces() {
         return roads;
     }
+    
+    public HashMap<VertexLocation, PortType> getPorts()
+    {
+    	return ports;
+    }
+    
+    
 
     public HashSet<PortType> getPlayerPorts(int index) {
 
@@ -771,6 +786,7 @@ public class ServerBoard {
 
         return adjBuildings;
     }
+
 
     public ArrayList<HexType> getAdjacentHexTypes(VertexLocation loc) {
 

@@ -1,6 +1,7 @@
 package command;
 
 import model.sgame.ServerGame;
+import shared.definitions.ResourceType;
 import shared.dto.Soldier_Params;
 
 /**
@@ -13,6 +14,8 @@ public class Soldier_CO implements ICommandObject {
 	
 	private Soldier_Params params;
     private ServerGame game;
+    private ResourceType stolenResource;
+    private boolean beenCalled;
 
 	/**
 	 * @param params Parameters needed to play the soldier card.
@@ -21,16 +24,21 @@ public class Soldier_CO implements ICommandObject {
 		super();
 		this.params = params;
         this.game = game;
+        this.stolenResource = null;
+        beenCalled = false;
+	}
+	
+	public void setGame(ServerGame game)
+	{
+		this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
 
-        return game.doSoldier(
-                params.getPlayerIndex(),
-                params.getVictimIndex(),
-                params.getLocation()
-        );
+        stolenResource = game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), stolenResource, beenCalled);
+        beenCalled = true;
+        return true;
 	}
 
 }
