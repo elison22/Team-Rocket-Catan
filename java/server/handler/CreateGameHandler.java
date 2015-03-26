@@ -88,11 +88,6 @@ public class CreateGameHandler extends NonMoveHandler {
 		}
 
 		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);		
-		System.out.println(gameParams.getRandomTiles());
-		System.out.println(gameParams.getRandomNumbers());
-		System.out.println(gameParams.getRandomPorts());
-		System.out.println(gameParams.getName());
-		
 		String jsonString = modelFacade.createGame(gameParams);
 		Headers head = exchange.getResponseHeaders();
 		
