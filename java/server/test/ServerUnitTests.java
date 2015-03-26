@@ -23,7 +23,9 @@ public class ServerUnitTests {
 				"test.command.RollNumberTest",
 				"test.command.DiscardTest",
 				"test.command.RobPlayerTest",
-				"test.command.OfferAndAcceptTradeTest"
+				"test.command.OfferAndAcceptTradeTest",
+				"test.command.SendChatTest",
+				"test.command.LongestRoadTest"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);
