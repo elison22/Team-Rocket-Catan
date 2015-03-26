@@ -86,6 +86,9 @@ public class GameManager {
 		
 		for (ServerGame game : games) {
 			
+			if (game == null)
+				continue;
+			
 			List<Player_DTO> playerList = new ArrayList<Player_DTO>();
 			
 			// Retrieve the players who have joined the game
