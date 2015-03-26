@@ -461,6 +461,7 @@ public class ServerGame {
         if(resource == null)
             return null;
         playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
+        calculateLargestArmy(playerIndex);
         incVersionNumber();
         return resource;
 
@@ -1158,5 +1159,28 @@ public class ServerGame {
     			
     		}
     	}
+    }
+
+    private void calculateLargestArmy(int playerIndex) {
+
+        if(playerList.get(playerIndex).getSoldierDevs() < 3)
+            return;
+
+        if(turnTracker.getLargestArmyPlayerIndex() == playerIndex)
+            return;
+
+        // nobody has the longest road yet
+        if(turnTracker.getLargestArmyPlayerIndex() < 0) {
+            playerList.get(playerIndex).addPoints(2);
+            turnTracker.setLargestArmyPlayerIndex(playerIndex);
+        }
+        // somebody has it
+        // the current player will replace the old player
+        else if(playerList.get(playerIndex).getSoldierDevs() > playerList.get(turnTracker.getLargestArmyPlayerIndex()).getSoldierDevs()) {
+            playerList.get(playerIndex).addPoints(2);
+            playerList.get(turnTracker.getLargestArmyPlayerIndex()).addPoints(-2);
+            turnTracker.setLargestArmyPlayerIndex(playerIndex);
+        }
+
     }
 }
