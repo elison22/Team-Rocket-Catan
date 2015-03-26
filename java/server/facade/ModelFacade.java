@@ -1,8 +1,12 @@
 package facade;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import command.*;
+import main.FileUtils;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
@@ -95,8 +99,15 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public boolean saveGame(int gameID, String fileName) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			PrintWriter out = new PrintWriter(fileName + ".txt");
+			out.println(serializer.serializeGameModel(gameManager.getGame(gameID)));
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	/**
