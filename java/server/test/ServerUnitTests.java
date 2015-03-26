@@ -30,5 +30,4 @@ public class ServerUnitTests {
 
 		org.junit.runner.JUnitCore.main(testClasses);
 	}
-
 }
