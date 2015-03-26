@@ -399,7 +399,7 @@ public class ServerGame {
      * @param location blah
      * @return true if valid and successful, else false
      */
-    public ResourceType doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, ResourceType resource, boolean beenCalled) {
+    public ResourceType doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, ResourceType resource, boolean beenCalled) throws ServerBoardException {
     	if(beenCalled)
     	{
     		try {
@@ -422,32 +422,27 @@ public class ServerGame {
     		return resource;
     	}
     	ResourceType stolenRes = null;
-        try {
-        	// Place robber
-            map.doPlayRobber(location);
-            
-            // Only steal if there actually is a victim
-            if (victimIndex > -1) {
-            	// Steal resources
-                stolenRes = playerList.get(victimIndex).getRandRes();
-                playerList.get(playerIndex).incResource(stolenRes);
-                
-                // Update game history
-                String name = playerList.get(playerIndex).getName();
-                String victim = playerList.get(victimIndex).getName();
-                gameHistory.sendChat(name, name + " moved the robber and robbed " + victim);
-            } else {
-            	// Update game history
-                String name = playerList.get(playerIndex).getName();
-                gameHistory.sendChat(name, name + " moved the robber but couldn't rob anyone!");
-            }
-            
-            // Set state to playing
-            turnTracker.setCurrentState(ServerTurnState.Playing);
-        } catch (ServerBoardException e) {
-            e.printStackTrace();
-            return null;
+        // Place robber
+        map.doPlayRobber(location);
+
+        // Only steal if there actually is a victim
+        if (victimIndex > -1) {
+            // Steal resources
+            stolenRes = playerList.get(victimIndex).getRandRes();
+            playerList.get(playerIndex).incResource(stolenRes);
+
+            // Update game history
+            String name = playerList.get(playerIndex).getName();
+            String victim = playerList.get(victimIndex).getName();
+            gameHistory.sendChat(name, name + " moved the robber and robbed " + victim);
+        } else {
+            // Update game history
+            String name = playerList.get(playerIndex).getName();
+            gameHistory.sendChat(name, name + " moved the robber but couldn't rob anyone!");
         }
+
+        // Set state to playing
+        turnTracker.setCurrentState(ServerTurnState.Playing);
         
         incVersionNumber();
         return stolenRes;
@@ -456,11 +451,10 @@ public class ServerGame {
     /**
      *
      */
-    public ResourceType doSoldier(int playerIndex, int victimIndex, HexLocation location, ResourceType stolenResource, boolean beenCalled){
+    public ResourceType doSoldier(int playerIndex, int victimIndex, HexLocation location, ResourceType stolenResource, boolean beenCalled) throws ServerBoardException {
     	ResourceType resource = doPlaceRobber(playerIndex, victimIndex, location, stolenResource, beenCalled);
-        if(resource == null)
-            return null;
         playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
+        calculateLargestArmy(playerIndex);
         incVersionNumber();
         return resource;
 
@@ -1159,5 +1153,28 @@ public class ServerGame {
     			
     		}
     	}
+    }
+
+    private void calculateLargestArmy(int playerIndex) {
+
+        if(playerList.get(playerIndex).getSoldierDevs() < 3)
+            return;
+
+        if(turnTracker.getLargestArmyPlayerIndex() == playerIndex)
+            return;
+
+        // nobody has the longest road yet
+        if(turnTracker.getLargestArmyPlayerIndex() < 0) {
+            playerList.get(playerIndex).addPoints(2);
+            turnTracker.setLargestArmyPlayerIndex(playerIndex);
+        }
+        // somebody has it
+        // the current player will replace the old player
+        else if(playerList.get(playerIndex).getSoldierDevs() > playerList.get(turnTracker.getLargestArmyPlayerIndex()).getSoldierDevs()) {
+            playerList.get(playerIndex).addPoints(2);
+            playerList.get(turnTracker.getLargestArmyPlayerIndex()).addPoints(-2);
+            turnTracker.setLargestArmyPlayerIndex(playerIndex);
+        }
+
     }
 }

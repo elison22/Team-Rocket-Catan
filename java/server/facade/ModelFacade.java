@@ -328,10 +328,6 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(params.getPlayerIndex(),DevCardType.SOLDIER))   //TODO review this
             return null;
 
-        //check if the robber would be in a valid spot
-//        if(!game.canPlaceRobber(params.getPlayerIndex(), params.getLocation())) //TODO work on this
-//            return null;
-
         ICommandObject command = new Soldier_CO(game, params);
         if(command.execute())
             return serializer.serializeGameModel(game);

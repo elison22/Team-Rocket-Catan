@@ -1,5 +1,6 @@
 package command;
 
+import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import shared.definitions.ResourceType;
 import shared.dto.RobPlayer_Params;
@@ -37,7 +38,12 @@ public class RobPlayer_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        stolenResource = game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation(), stolenResource, beenCalled);
+        try {
+            stolenResource = game.doPlaceRobber(params.getPlayerIndex(), params.getVictimIndex(), params.getTargetLocation(), stolenResource, beenCalled);
+        } catch (ServerBoardException e) {
+            e.printStackTrace();
+            return false;
+        }
         beenCalled = true;
     	return true;
 	}

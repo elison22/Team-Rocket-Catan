@@ -47,7 +47,7 @@ public class CreateGameHandler extends NonMoveHandler {
 		
 		// make sure each of 4 params have a value
 
-	/*	String tiles = values[0].replaceAll("\\s+","");
+		String tiles = values[0].replaceAll("\\s+","");
 		tiles = tiles.replaceAll("\"","");
 		tiles = tiles.substring(13, tiles.length());
 		String nums = values[1].replaceAll("\\s+","");
@@ -85,7 +85,7 @@ public class CreateGameHandler extends NonMoveHandler {
 			sendResponseBody(exchange, "Invalid request\n boolean values must be either \"true\" or \"false\"\n game name can't be null");
 			exchange.close();
 			return;
-		}*/
+		}
 
 		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);		
 		String jsonString = modelFacade.createGame(gameParams);
