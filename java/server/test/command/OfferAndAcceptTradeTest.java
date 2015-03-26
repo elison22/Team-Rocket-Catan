@@ -87,8 +87,8 @@ public class OfferAndAcceptTradeTest {
         tradeOffer.put(ResourceType.BRICK, 1);
         tradeOffer.put(ResourceType.ORE, 0);
         tradeOffer.put(ResourceType.SHEEP, 0);
-        tradeOffer.put(ResourceType.WHEAT, 0);
-        tradeOffer.put(ResourceType.WOOD, -1);
+        tradeOffer.put(ResourceType.WHEAT, -1);
+        tradeOffer.put(ResourceType.WOOD, 0);
         assertNotNull(modelFacade.offerTrade(0, new OfferTrade_Params(1, tradeOffer, 3)));
         
         // Check that the trade got offered
@@ -104,11 +104,11 @@ public class OfferAndAcceptTradeTest {
         assertNull(game.getTradeOffer());
         
         // Now offer a trade that player[3] can accept
-        tradeOffer.put(ResourceType.BRICK, -1); // Resources for player[1] to give
+        tradeOffer.put(ResourceType.BRICK, 1); // Resources for player[1] to give
         tradeOffer.put(ResourceType.ORE, 0);
         tradeOffer.put(ResourceType.SHEEP, 0);
         tradeOffer.put(ResourceType.WHEAT, 0);
-        tradeOffer.put(ResourceType.WOOD, 1); // Resource for player[1] to receive
+        tradeOffer.put(ResourceType.WOOD, -1); // Resource for player[1] to receive
         assertNotNull(modelFacade.offerTrade(0, new OfferTrade_Params(1, tradeOffer, 3)));
         
         // Check that the trade got offered

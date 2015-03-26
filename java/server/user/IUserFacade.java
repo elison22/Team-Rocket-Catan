@@ -33,4 +33,6 @@ public interface IUserFacade {
 	public boolean register(Login_Params params);
 	
 	public String getUserID(String username);
+	
+	public boolean hasUser(String username);
 }

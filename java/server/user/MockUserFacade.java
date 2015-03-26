@@ -28,4 +28,10 @@ public class MockUserFacade implements IUserFacade {
 		return null;
 	}
 
+	@Override
+	public boolean hasUser(String username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
