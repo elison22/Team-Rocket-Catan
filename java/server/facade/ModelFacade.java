@@ -176,7 +176,7 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Executes a list of commands on a game to put it in a desired state
 	 * @param gameID The ID of the game that has been requested
-	 * @param gameCommands A JSON string of commands to run on the game
+	 * @param commandsList A JSON string of commands to run on the game
 	 * @return returns a JSON of the game model after the commands are executed
 	 */
 	@Override
