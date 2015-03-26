@@ -44,6 +44,7 @@ public class ResetGameHandler extends MovesHandler {
 			os.write(jsonString);
 			os.close();
 		} else {
+			head.set("Content-Type", "text/html");
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
 			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
 			os.write("Unable to reset");
