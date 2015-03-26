@@ -296,6 +296,8 @@ public class ServerGame {
             playerList.get(playerIndex).doBuildRoad(isFree);
             cardBank.buyPiece(PieceType.ROAD);
             
+            calculateLongestRoad(playerIndex);
+            
         } catch (ServerBoardException e) {
             return false;
         }
@@ -1129,6 +1131,32 @@ public class ServerGame {
         }
     	return false;
     }
-
-
+    
+    private void calculateLongestRoad(int playerIndex) {
+    	
+    	// If no player has the longest road yet
+    	if (turnTracker.getLongestRoadPlayerIndex() < 0) {
+    		
+    		// If the player that just built a road should have longest road
+    		if (playerList.get(playerIndex).getRemainingRoads() >= 5) {
+    			turnTracker.setLargestArmyPlayerIndex(playerIndex);
+    			if (playerList.get(playerIndex).addPoints(2) >= 10)
+    				winner = playerIndex;
+    		}
+    	} 
+    	
+    	// Otherwise find out if the player that just built a road has fewer
+    	// remaining roads than the current longest road player
+    	else {
+    		if (playerList.get(playerIndex).getRemainingRoads() < playerList.get(turnTracker.getLongestRoadPlayerIndex()).getRemainingRoads()) {
+    			
+    			// Swap longest road card
+    			playerList.get(turnTracker.getLongestRoadPlayerIndex()).addPoints(-2);
+    			turnTracker.setLongestRoadPlayerIndex(playerIndex);
+    			if (playerList.get(playerIndex).addPoints(2) >= 10)
+    				winner = playerIndex;
+    			
+    		}
+    	}
+    }
 }
