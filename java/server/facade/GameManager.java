@@ -118,6 +118,13 @@ public class GameManager {
 		commandsList.add(new ArrayList<ICommandObject>());
 	}
 	
+	public void createGame(ServerGame game)
+	{
+		games.add(game);
+		games.get(games.size() - 1).setGameId(games.size() - 1);
+		commandsList.add(new ArrayList<ICommandObject>());
+	}
+	
 	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
 		ServerGame game = games.get(gameId);
 		

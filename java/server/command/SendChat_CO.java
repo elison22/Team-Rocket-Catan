@@ -16,23 +16,28 @@ public class SendChat_CO implements ICommandObject {
 	private int gameId;
 	private SendChat_Params chatParams;
 	private GameManager gameManager;
+	private ServerGame game;
 	
 	/**
 	 * @param gameId The id of the game where the chat is being sent in.
 	 * @param gameManager 
 	 * @param chatParams 
 	 */
-	public SendChat_CO(int gameId, SendChat_Params chatParams, GameManager gameManager) {
-		this.gameId = gameId;
+	public SendChat_CO(ServerGame game, SendChat_Params chatParams, GameManager gameManager) {
 		this.chatParams = chatParams;
-		this.gameManager = gameManager;
+		this.game = game;
 	}
 
 	@Override
 	public boolean execute() {
-		ServerGame game = gameManager.getGame(gameId);
 		String message = chatParams.getContent();
 		return game.doSendChat(chatParams.getPlayerIndex(), message);
+	}
+
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
+		
 	}
 
 }

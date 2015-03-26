@@ -1,18 +1,22 @@
 package test.command;
 
 import static org.junit.Assert.*;
+
+import java.util.HashMap;
+
 import model.sgame.ServerGame;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import shared.definitions.ResourceType;
+import shared.dto.AcceptTrade_Params;
 import shared.dto.BuildRoad_Params;
 import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
 import shared.dto.FinishTurn_Params;
 import shared.dto.JoinGame_Params;
-import shared.dto.MaritimeTrade_Params;
+import shared.dto.OfferTrade_Params;
 import shared.dto.RollNumber_Params;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
@@ -22,7 +26,7 @@ import shared.locations.VertexLocation;
 import facade.IModelFacade;
 import facade.ModelFacade;
 
-public class MaritimeTradeTest {
+public class LongestRoadTest {
 	
 	IModelFacade modelFacade;
 
@@ -69,57 +73,50 @@ public class MaritimeTradeTest {
         
         ServerGame game = modelFacade.getGame(0);
         
-        // Roll 11's to get player[3] more than 4 wheat
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 11)));
+        // Roll 8's to get 5 brick for player[0]
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 8)));
         assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(0)));
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 11)));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 8)));
         assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(1)));
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(2, 11)));
-
-        // Attempt to do a 2 wheat for 1 sheep trade for player[3], should fail
-        assertNull(modelFacade.maritimeTrade(0, new MaritimeTrade_Params(2, 2, "wheat", "sheep")));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(2, 8)));
+        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(2)));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(3, 8)));
+        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(3)));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 8)));
+        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(0)));
         
-        // Attempt to do a 3 wheat for 1 sheep trade for player[3], should fail
-        assertNull(modelFacade.maritimeTrade(0, new MaritimeTrade_Params(2, 3, "wheat", "sheep")));
-        
-        // Attempt to do a 3 wheat for 1 sheep trade for player[3] and compare
-        // before and after values
-        int wheatBefore = game.getPlayerList().get(2).getBank().getResCards().get(ResourceType.WHEAT);
-        int sheepBefore = game.getPlayerList().get(2).getBank().getResCards().get(ResourceType.SHEEP);
-        assertTrue(wheatBefore >= 4);
-        assertNotNull(modelFacade.maritimeTrade(0, new MaritimeTrade_Params(2, 4, "wheat", "sheep")));
-        assertTrue(game.getPlayerList().get(2).getBank().getResCards().get(ResourceType.WHEAT) == wheatBefore - 4);
-        assertTrue(game.getPlayerList().get(2).getBank().getResCards().get(ResourceType.SHEEP) == sheepBefore + 1);
-        
-        // Attempt to do a maritime trade that the player can't afford
-        assertTrue(game.getPlayerList().get(2).getBank().getResCards().get(ResourceType.ORE) < 4);
-        assertNull(modelFacade.maritimeTrade(0, new MaritimeTrade_Params(2, 4, "ore", "sheep")));
-        
-        // Progress to player[0]'s turn while rolling 6's to get wood
+        // Roll 6's to get 5 wood for player[8]
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 6)));
+        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(1)));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(2, 6)));
         assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(2)));
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(3, 6)));
         assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(3)));
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 6)));
-        
-        // Attempt a 2 wood for 1 ore trade and compare values
-        int woodBefore = game.getPlayerList().get(0).getBank().getResCards().get(ResourceType.WOOD);
-        assertNotNull(modelFacade.maritimeTrade(0, new MaritimeTrade_Params(0, 2, "wood", "ore")));
-        assertTrue(game.getPlayerList().get(0).getBank().getResCards().get(ResourceType.WOOD) == woodBefore - 2);
-        assertTrue(game.getPlayerList().get(0).getBank().getResCards().get(ResourceType.ORE) == 1);
-        
-        // Progress to player[3]'s turn while rolling 4's
         assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(0)));
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 4)));
-        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(1)));
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(2, 4)));
-        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(2)));
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(3, 4)));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 6)));
         
-        // Attempt a 3 wood for 1 ore and compare values
-        woodBefore = game.getPlayerList().get(3).getBank().getResCards().get(ResourceType.WOOD);
-        assertNotNull(modelFacade.maritimeTrade(0, new MaritimeTrade_Params(3, 3, "wood", "ore")));
-        assertTrue(game.getPlayerList().get(3).getBank().getResCards().get(ResourceType.WOOD) == woodBefore - 3);
-        assertTrue(game.getPlayerList().get(3).getBank().getResCards().get(ResourceType.ORE) == 1);
+        // Retrieve player[0]'s wood and bricks
+        HashMap<ResourceType, Integer> tradeOffer = new HashMap<ResourceType, Integer>();
+        tradeOffer.put(ResourceType.BRICK, -5);
+        tradeOffer.put(ResourceType.ORE, 1);
+        tradeOffer.put(ResourceType.SHEEP, 0);
+        tradeOffer.put(ResourceType.WHEAT, 0);
+        tradeOffer.put(ResourceType.WOOD, -5);
+        assertNotNull(modelFacade.offerTrade(0, new OfferTrade_Params(1, tradeOffer, 0)));
+        assertNotNull(modelFacade.acceptTrade(0, new AcceptTrade_Params(0, true)));
+        
+        // Build 4 roads to get longest road
+        assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(1, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.South), false)));
+        assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(1, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.SouthEast), false)));
+        assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(1, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.NorthEast), false)));
+        assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(1, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.North), false)));
+        
+        // Check that the player has longest road
+        assertTrue(game.getTurnTracker().getLongestRoadPlayerIndex() == 1);
+        
+        // Check that the player was rewarded victory points
+        assertTrue(game.getPlayerList().get(1).getVictoryPoints() == 4);
 	}
 
 }

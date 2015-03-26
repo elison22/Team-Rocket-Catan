@@ -37,9 +37,7 @@ public class ServerGame {
     private int winner;
     private ServerTradeOffer tradeOffer;
     private int gameId;
-    private boolean randNumbers;
-    private boolean randTiles;
-    private boolean randPorts;
+    private ServerBoard originalBoard;
 
     //**********************************************************
     //**** CONSTRUCTORS ****************************************
@@ -49,6 +47,7 @@ public class ServerGame {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
         map = new ServerBoard(false, false, false);
+    	originalBoard = map;
         versionNumber = 0;
     	winner = -1;
     }
@@ -60,12 +59,23 @@ public class ServerGame {
     	cardBank = new ServerGameBank();
     	turnTracker = new ServerTurnTracker();
     	map = new ServerBoard(randNumbers, randTiles, randPorts);
+    	originalBoard = new ServerBoard(map);
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
     	winner = -1;
-    	this.randNumbers = randNumbers;
-    	this.randPorts = randPorts;
-    	this.randTiles = randTiles;
+    }
+    
+    public ServerGame(ServerBoard board, String title) {
+    	this.gameName = title;
+    	versionNumber = 0;
+    	playerList = new ArrayList<ServerPlayer>();
+    	cardBank = new ServerGameBank();
+    	turnTracker = new ServerTurnTracker();
+    	map = board;
+    	originalBoard = new ServerBoard(map);
+    	chat = new ServerChat();
+    	gameHistory = new ServerChat();
+    	winner = -1;
     }
 
     //**********************************************************
@@ -261,14 +271,7 @@ public class ServerGame {
     		player.resetPlayer();
     	cardBank = new ServerGameBank();
     	turnTracker = new ServerTurnTracker();
-    	try
-		{
-			map = new ServerBoard(randNumbers, randTiles, randPorts);
-		} catch (ServerBoardException e)
-		{
-			e.printStackTrace();
-			return false;
-		}
+    	map = new ServerBoard(originalBoard);
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
     	winner = -1;
@@ -396,7 +399,29 @@ public class ServerGame {
      * @param location blah
      * @return true if valid and successful, else false
      */
-    public boolean doPlaceRobber(int playerIndex, int victimIndex, HexLocation location) {
+    public ResourceType doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, ResourceType resource, boolean beenCalled) {
+    	if(beenCalled)
+    	{
+    		try {
+            	// Place robber
+                map.doPlayRobber(location);
+                
+                // Only steal if there actually is a victim
+                if (victimIndex > -1) {
+                	// Steal resources
+                    playerList.get(victimIndex).decResource(resource);
+                    playerList.get(playerIndex).incResource(resource);
+                }
+                
+                // Set state to playing
+                turnTracker.setCurrentState(ServerTurnState.Playing);
+            } catch (ServerBoardException e) {
+                e.printStackTrace();
+                return null;
+            }
+    		return resource;
+    	}
+    	ResourceType stolenRes = null;
         try {
         	// Place robber
             map.doPlayRobber(location);
@@ -404,7 +429,7 @@ public class ServerGame {
             // Only steal if there actually is a victim
             if (victimIndex > -1) {
             	// Steal resources
-                ResourceType stolenRes = playerList.get(victimIndex).getRandRes();
+                stolenRes = playerList.get(victimIndex).getRandRes();
                 playerList.get(playerIndex).incResource(stolenRes);
                 
                 // Update game history
@@ -421,23 +446,23 @@ public class ServerGame {
             turnTracker.setCurrentState(ServerTurnState.Playing);
         } catch (ServerBoardException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
         
         incVersionNumber();
-        return true;
+        return stolenRes;
     }
 
     /**
      *
      */
-    public boolean doSoldier(int playerIndex, int victimIndex, HexLocation location){
-
-        if(!doPlaceRobber(playerIndex, victimIndex, location))
-            return false;
+    public ResourceType doSoldier(int playerIndex, int victimIndex, HexLocation location, ResourceType stolenResource, boolean beenCalled){
+    	ResourceType resource = doPlaceRobber(playerIndex, victimIndex, location, stolenResource, beenCalled);
+        if(resource == null)
+            return null;
         playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
         incVersionNumber();
-        return true;
+        return resource;
 
     }
 
@@ -530,9 +555,14 @@ public class ServerGame {
 	 * @param playerIndex blah
 	 * @return true if valid and successful, else false
 	 */
-	public boolean doBuyDevCard(int playerIndex) {
-
-        ServerDevCard chosenCard = cardBank.giveDevCard();
+	public DevCardType doBuyDevCard(int playerIndex, DevCardType devCardType) {
+        ServerDevCard chosenCard;
+		if(devCardType != null)
+		{
+			chosenCard = cardBank.giveDevCard(devCardType);
+			
+		}
+		else chosenCard = cardBank.giveDevCard();
 
         // adds a random dev card to the player's hand which also decrements the necessary res cards used to buy it
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
@@ -542,7 +572,7 @@ public class ServerGame {
         gameHistory.sendChat(name, name + " bought a dev card");
         
         incVersionNumber();
-		return true;
+		return chosenCard.getType();
 	}
 
 	/**
@@ -1109,7 +1139,7 @@ public class ServerGame {
     		
     		// If the player that just built a road should have longest road
     		if (playerList.get(playerIndex).getRemainingRoads() >= 5) {
-    			turnTracker.setLargestArmyPlayerIndex(playerIndex);
+    			turnTracker.setLongestRoadPlayerIndex(playerIndex);
     			if (playerList.get(playerIndex).addPoints(2) >= 10)
     				winner = playerIndex;
     		}
@@ -1118,6 +1148,7 @@ public class ServerGame {
     	// Otherwise find out if the player that just built a road has fewer
     	// remaining roads than the current longest road player
     	else {
+    		
     		if (playerList.get(playerIndex).getRemainingRoads() < playerList.get(turnTracker.getLongestRoadPlayerIndex()).getRemainingRoads()) {
     			
     			// Swap longest road card

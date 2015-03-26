@@ -25,6 +25,11 @@ public class BuildSettlement_CO implements ICommandObject {
 		this.game = game;
 		this.params = params;
 	}
+	
+	public void setGame(ServerGame game)
+	{
+		this.game = game;
+	}
 
 	@Override
 	public boolean execute() {
