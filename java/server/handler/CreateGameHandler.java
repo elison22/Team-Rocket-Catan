@@ -59,8 +59,6 @@ public class CreateGameHandler extends NonMoveHandler {
 		String name = values[3].replaceAll("\\s+","");
 		name = name.replaceAll("\"", "");
 		name = name.substring(5, name.length() - 1);
-		
-System.out.println(tiles + ", " + nums + ", " + ports + ", " + name);
 
 		// if game name is invalid length
 		if(name.length() < 1 || name.length() > 25) {
