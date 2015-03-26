@@ -62,7 +62,7 @@ public class Server {
         server.createContext("/game/commands", new DoGameCommandsHandler(modelFacade));				// POST
         server.createContext("/games/list", new GetGamesHandler(modelFacade));						// GET
         server.createContext("/games/create", new CreateGameHandler(modelFacade));					// POST
-        server.createContext("/games/join", new JoinGameHandler(modelFacade));						// POST
+        server.createContext("/games/join", new JoinGameHandler(modelFacade, userFacade));						// POST
         server.createContext("/games/save", new SaveGameHandler(modelFacade));						// POST
         server.createContext("/games/load", new LoadGameHandler(modelFacade));						// POST
         server.createContext("/util/changeLogLevel", new ChangeLogHandler(modelFacade));			// POST
