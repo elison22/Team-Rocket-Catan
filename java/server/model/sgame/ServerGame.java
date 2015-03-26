@@ -1109,7 +1109,7 @@ public class ServerGame {
     		
     		// If the player that just built a road should have longest road
     		if (playerList.get(playerIndex).getRemainingRoads() >= 5) {
-    			turnTracker.setLargestArmyPlayerIndex(playerIndex);
+    			turnTracker.setLongestRoadPlayerIndex(playerIndex);
     			if (playerList.get(playerIndex).addPoints(2) >= 10)
     				winner = playerIndex;
     		}
@@ -1118,6 +1118,7 @@ public class ServerGame {
     	// Otherwise find out if the player that just built a road has fewer
     	// remaining roads than the current longest road player
     	else {
+    		
     		if (playerList.get(playerIndex).getRemainingRoads() < playerList.get(turnTracker.getLongestRoadPlayerIndex()).getRemainingRoads()) {
     			
     			// Swap longest road card
