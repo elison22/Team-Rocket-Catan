@@ -9,7 +9,6 @@ import shared.dto.YearOfPlenty_Params;
  *
  * Makes all necessary calls to play a Year of Plenty card.
  */
-@SuppressWarnings("unused")
 public class YearOfPlenty_CO implements ICommandObject {
 
 	private YearOfPlenty_Params params;

@@ -1,17 +1,13 @@
 package command;
 
-import facade.GameManager;
-import main.Server;
 import model.sgame.ServerGame;
 import shared.dto.FinishTurn_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  *
  * Tells the model to end the given player's turn.
  */
-@SuppressWarnings("unused")
 public class FinishTurn_CO implements ICommandObject {
 	
 	private FinishTurn_Params params;

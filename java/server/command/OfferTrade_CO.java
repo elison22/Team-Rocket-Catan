@@ -1,16 +1,13 @@
 package command;
 
-import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.OfferTrade_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  *
  * Makes all necessary calls for a player to offer a trade.
  */
-@SuppressWarnings("unused")
 public class OfferTrade_CO implements ICommandObject {
 	
 	private OfferTrade_Params params;

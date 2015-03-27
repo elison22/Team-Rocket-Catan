@@ -8,7 +8,6 @@ import shared.dto.Monument_Params;
  *
  * Makes all necessary calls for a player to play the monument dev card.
  */
-@SuppressWarnings("unused")
 public class Monument_CO implements ICommandObject {
 	
 	private Monument_Params params;

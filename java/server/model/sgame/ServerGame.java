@@ -46,32 +46,18 @@ public class ServerGame {
     public ServerGame() throws ServerBoardException {
     	aiList = new ArrayList<String>();
     	aiList.add("LARGEST_ARMY");
-        map = new ServerBoard(false, false, false);
     	originalBoard = map;
         versionNumber = 0;
     	winner = -1;
     }
 
-    public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title) throws ServerBoardException {
+    public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title, int seed) throws ServerBoardException {
     	this.gameName = title;
     	versionNumber = 0;
     	playerList = new ArrayList<ServerPlayer>();
     	cardBank = new ServerGameBank();
     	turnTracker = new ServerTurnTracker();
-    	map = new ServerBoard(randNumbers, randTiles, randPorts);
-    	originalBoard = new ServerBoard(map);
-    	chat = new ServerChat();
-    	gameHistory = new ServerChat();
-    	winner = -1;
-    }
-    
-    public ServerGame(ServerBoard board, String title) {
-    	this.gameName = title;
-    	versionNumber = 0;
-    	playerList = new ArrayList<ServerPlayer>();
-    	cardBank = new ServerGameBank();
-    	turnTracker = new ServerTurnTracker();
-    	map = board;
+    	map = new ServerBoard(randNumbers, randTiles, randPorts, seed);
     	originalBoard = new ServerBoard(map);
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
@@ -397,38 +383,16 @@ public class ServerGame {
      * @param playerIndex index of player robbing
      * @param victimIndex index of player being robbed
      * @param location blah
+     * @param seed This is the seed that should be used when generating random
+     * numbers
      * @return true if valid and successful, else false
      */
-    public ResourceType doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, ResourceType resource, boolean beenCalled) throws ServerBoardException {
-    	if(beenCalled)
-    	{
-    		try {
-            	// Place robber
-                map.doPlayRobber(location);
-                
-                // Only steal if there actually is a victim
-                if (victimIndex > -1) {
-                	// Steal resources
-                    playerList.get(victimIndex).decResource(resource);
-                    playerList.get(playerIndex).incResource(resource);
-                }
-                
-                // Set state to playing
-                turnTracker.setCurrentState(ServerTurnState.Playing);
-            } catch (ServerBoardException e) {
-                e.printStackTrace();
-                return null;
-            }
-    		return resource;
-    	}
-    	ResourceType stolenRes = null;
-        // Place robber
-        map.doPlayRobber(location);
+    public boolean doPlaceRobber(int playerIndex, int victimIndex, HexLocation location, int seed) throws ServerBoardException {
 
         // Only steal if there actually is a victim
         if (victimIndex > -1) {
             // Steal resources
-            stolenRes = playerList.get(victimIndex).getRandRes();
+            ResourceType stolenRes = playerList.get(victimIndex).getRandRes(seed);
             playerList.get(playerIndex).incResource(stolenRes);
 
             // Update game history
@@ -445,19 +409,23 @@ public class ServerGame {
         turnTracker.setCurrentState(ServerTurnState.Playing);
         
         incVersionNumber();
-        return stolenRes;
+        return true;
     }
 
     /**
      *
      */
-    public ResourceType doSoldier(int playerIndex, int victimIndex, HexLocation location, ResourceType stolenResource, boolean beenCalled) throws ServerBoardException {
-    	ResourceType resource = doPlaceRobber(playerIndex, victimIndex, location, stolenResource, beenCalled);
+    public boolean doSoldier(int playerIndex, int victimIndex, HexLocation location, int seed) throws ServerBoardException {
+    	
+    	// Move robber and rob victim
+    	doPlaceRobber(playerIndex, victimIndex, location, seed);
+    	
+    	// Set a soldier card to played
         playerList.get(playerIndex).playDevCard(DevCardType.SOLDIER);
         calculateLargestArmy(playerIndex);
+        
         incVersionNumber();
-        return resource;
-
+        return true;
     }
 
     /**
@@ -549,14 +517,10 @@ public class ServerGame {
 	 * @param playerIndex blah
 	 * @return true if valid and successful, else false
 	 */
-	public DevCardType doBuyDevCard(int playerIndex, DevCardType devCardType) {
-        ServerDevCard chosenCard;
-		if(devCardType != null)
-		{
-			chosenCard = cardBank.giveDevCard(devCardType);
-			
-		}
-		else chosenCard = cardBank.giveDevCard();
+	public boolean doBuyDevCard(int playerIndex, int seed) {
+		
+		// Draw a random dev card
+        ServerDevCard chosenCard = cardBank.giveDevCard(seed);
 
         // adds a random dev card to the player's hand which also decrements the necessary res cards used to buy it
         playerList.get(playerIndex).addDevCard(chosenCard.getType());
@@ -566,7 +530,7 @@ public class ServerGame {
         gameHistory.sendChat(name, name + " bought a dev card");
         
         incVersionNumber();
-		return chosenCard.getType();
+		return true;
 	}
 
 	/**

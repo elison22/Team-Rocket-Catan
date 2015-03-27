@@ -9,7 +9,6 @@ import shared.dto.RoadBuilding_Params;
  * Makes all necessary calls on the model for a player to play the
  * road building dev card.
  */
-@SuppressWarnings("unused")
 public class RoadBuilding_CO implements ICommandObject {
 	
 	private RoadBuilding_Params params;

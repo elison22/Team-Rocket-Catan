@@ -29,8 +29,6 @@ public class ServerPlayerBank extends ServerCardBank {
         this.resCards.put(ResourceType.WHEAT, 0);
         this.resCards.put(ResourceType.SHEEP, 0);
         this.resCards.put(ResourceType.ORE, 0);
-        
-        rand = new Random();
     }
 
     public ServerPlayerBank(JsonResourceList resources, JsonDevCardList oldDevs, JsonDevCardList newDevs){
@@ -45,8 +43,6 @@ public class ServerPlayerBank extends ServerCardBank {
         this.oldDevs.clear();
         setDevCards(oldDevs, this.oldDevs);
         setDevCards(newDevs, this.newDevs);
-        
-        rand = new Random();
     }
 
     public void setDevCards(JsonDevCardList jsonDevCards, ArrayList<ServerDevCard> devCardList){
@@ -221,7 +217,9 @@ public class ServerPlayerBank extends ServerCardBank {
         }
     }
 
-    public ResourceType removeRandRes() {
+    public ResourceType removeRandRes(int seed) {
+    	rand = new Random(seed);
+    	
         int deckSize = getResCount();
         
         // Pick a random card

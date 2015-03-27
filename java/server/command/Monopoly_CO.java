@@ -9,7 +9,6 @@ import shared.dto.Monopoly_Params;
  *
  * Makes all necessary calls for a player to play the monopoly card.
  */
-@SuppressWarnings("unused")
 public class Monopoly_CO implements ICommandObject {
 	
 	private Monopoly_Params params;

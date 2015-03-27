@@ -1,18 +1,15 @@
 package command;
 
-import facade.GameManager;
 import model.sgame.ServerGame;
 import model.strade.ServerMaritimeTrade;
 import shared.definitions.ResourceType;
 import shared.dto.MaritimeTrade_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  *
  * Makes all necessary calls for a player to make a maritime trade.
  */
-@SuppressWarnings("unused")
 public class MaritimeTrade_CO implements ICommandObject {
 	
 	private MaritimeTrade_Params params;

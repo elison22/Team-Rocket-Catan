@@ -2,14 +2,12 @@ package command;
 
 import model.sgame.ServerGame;
 import shared.dto.BuildRoad_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  * 
  * Makes all necessary calls for a player to build a road.
  */
-@SuppressWarnings("unused")
 public class BuildRoad_CO implements ICommandObject {
 	
 	private BuildRoad_Params params;

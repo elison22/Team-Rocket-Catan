@@ -2,7 +2,6 @@ package command;
 
 import model.sgame.ServerGame;
 import shared.dto.BuildCity_Params;
-import facade.IModelFacade;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -12,7 +11,6 @@ import shared.locations.VertexLocation;
  *
  * Makes all necessary calls for a player to build a City.
  */
-@SuppressWarnings("unused")
 public class BuildCity_CO implements ICommandObject {
 	
 	private BuildCity_Params params;

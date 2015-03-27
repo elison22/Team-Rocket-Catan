@@ -2,7 +2,6 @@ package command;
 
 import model.sgame.ServerGame;
 import shared.dto.Login_Params;
-import user.IUserFacade;
 import user.model.UserManager;
 
 /**
@@ -11,7 +10,6 @@ import user.model.UserManager;
  * Makes all necessary calls to log a user in.
  */
 
-@SuppressWarnings("unused")
 public class Login_CO implements ICommandObject {
 	
 	private UserManager userManager;
@@ -34,9 +32,6 @@ public class Login_CO implements ICommandObject {
 	}
 
 	@Override
-	public void setGame(ServerGame game) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setGame(ServerGame game) {}
 
 }

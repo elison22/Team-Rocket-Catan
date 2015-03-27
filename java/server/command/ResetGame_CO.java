@@ -2,7 +2,6 @@ package command;
 
 import model.sgame.ServerGame;
 import facade.GameManager;
-import facade.IModelFacade;
 
 /**
  * @author Chad
@@ -10,7 +9,6 @@ import facade.IModelFacade;
  * This class makes all the necessary calls to reset a joined game to the
  * initial placement phase.
  */
-@SuppressWarnings("unused")
 public class ResetGame_CO implements ICommandObject {
 	
 	private ServerGame game;

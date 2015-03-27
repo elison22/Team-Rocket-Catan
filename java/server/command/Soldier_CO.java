@@ -1,8 +1,9 @@
 package command;
 
+import java.util.Random;
+
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
-import shared.definitions.ResourceType;
 import shared.dto.Soldier_Params;
 
 /**
@@ -10,13 +11,11 @@ import shared.dto.Soldier_Params;
  *
  * Makes all necessary calls for a player to play the soldier card.
  */
-@SuppressWarnings("unused")
 public class Soldier_CO implements ICommandObject {
 	
 	private Soldier_Params params;
     private ServerGame game;
-    private ResourceType stolenResource;
-    private boolean beenCalled;
+    private Integer seed;
 
 	/**
 	 * @param params Parameters needed to play the soldier card.
@@ -25,8 +24,6 @@ public class Soldier_CO implements ICommandObject {
 		super();
 		this.params = params;
         this.game = game;
-        this.stolenResource = null;
-        beenCalled = false;
 	}
 	
 	public void setGame(ServerGame game)
@@ -38,13 +35,18 @@ public class Soldier_CO implements ICommandObject {
 	public boolean execute() {
 
         try {
-            stolenResource = game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), stolenResource, beenCalled);
+        	// If a seed hasn't been generated already
+        	if (seed == null) {
+        		// Generate and remember a random seed
+        		Random random = new Random();
+        		seed = random.nextInt();
+        	}
+        	
+            return game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), seed);
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
         }
-        beenCalled = true;
-        return true;
 	}
 
 }

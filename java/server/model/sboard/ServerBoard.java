@@ -60,11 +60,9 @@ public class ServerBoard {
      * @param randomPortTypes Whether of not the port types should be randomized.
      * @throws ServerBoardException Thrown only when there's a problem with the code that initializes this object.
      */
-    public ServerBoard(boolean randomTileTypes, boolean randomDiceNums, boolean randomPortTypes) throws ServerBoardException {
+    public ServerBoard(boolean randomTileTypes, boolean randomDiceNums, boolean randomPortTypes, int seed) throws ServerBoardException {
 
-        Random typeRand = new Random();
-        Random numRand = new Random();
-        Random portRand = new Random();
+        Random rand = new Random(seed);
         int typeIndex = 0;
         int numIndex = 0;
         int portIndex = 0;
@@ -139,7 +137,7 @@ public class ServerBoard {
             for (int j = yStart; j >= yEnd; j--) {
                 HexLocation newLoc = new HexLocation(i, j);
                 ServerHexTile newTile;
-                if (randomTileTypes) typeIndex = typeRand.nextInt(hexTypeArray.size());
+                if (randomTileTypes) typeIndex = rand.nextInt(hexTypeArray.size());
                 newTile = new ServerHexTile(hexTypeArray.get(typeIndex));
                 hexTypeArray.remove(typeIndex);
                 if (newTile.getType() == HexType.DESERT) {
@@ -147,7 +145,7 @@ public class ServerBoard {
                     robber = newLoc;
                     continue;
                 }
-                if (randomDiceNums) numIndex = numRand.nextInt(numArray.size());
+                if (randomDiceNums) numIndex = rand.nextInt(numArray.size());
                 newTile.setDiceNum(numArray.get(numIndex));
                 numArray.remove(numIndex);
                 tiles.put(newLoc, newTile);
@@ -157,7 +155,7 @@ public class ServerBoard {
         }
 
         for (EdgeLocation location : portLocArray) {
-            if (randomPortTypes) portIndex = portRand.nextInt(portTypeArray.size());
+            if (randomPortTypes) portIndex = rand.nextInt(portTypeArray.size());
             portTypes.put(location.getNormalizedLocation(), portTypeArray.get(portIndex));
             buildPortPair(location, portTypeArray.get(portIndex));
             portTypeArray.remove(portIndex);

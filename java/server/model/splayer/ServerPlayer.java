@@ -378,8 +378,8 @@ public class ServerPlayer {
 		return discarded;
 	}
 
-	public ResourceType getRandRes() {
-		return bank.removeRandRes();
+	public ResourceType getRandRes(int seed) {
+		return bank.removeRandRes(seed);
 	}
 
 	public int addPoint() {

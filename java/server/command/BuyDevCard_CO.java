@@ -1,5 +1,7 @@
 package command;
 
+import java.util.Random;
+
 import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.definitions.DevCardType;
@@ -16,7 +18,7 @@ public class BuyDevCard_CO implements ICommandObject {
 
 	private BuyDevCard_Params params;
     private ServerGame game;
-    private DevCardType devCardType;
+    private Integer seed;
 	
 	/**
 	 * @param params Parameters for buying a dev card.
@@ -24,7 +26,6 @@ public class BuyDevCard_CO implements ICommandObject {
 	public BuyDevCard_CO(BuyDevCard_Params params, ServerGame game) {
 		this.params = params;
         this.game = game;
-        devCardType = null;
 	}
 	
 	public void setGame(ServerGame game)
@@ -34,8 +35,14 @@ public class BuyDevCard_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        devCardType = game.doBuyDevCard(params.getPlayerIndex(), devCardType);
-        return true;
+		// If a seed hasn't been generated already
+    	if (seed == null) {
+    		// Generate and remember a random seed
+    		Random random = new Random();
+    		seed = random.nextInt();
+    	}
+		
+        return game.doBuyDevCard(params.getPlayerIndex(), seed);
 	}
 
 }

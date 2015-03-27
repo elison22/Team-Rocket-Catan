@@ -104,9 +104,12 @@ public class ServerGameBank extends ServerCardBank {
 
     /**
      * Randomly selects a development card from the list.
+     * @param seed The seed to be used when getting a random devCard
      * @return DevCard object to be placed in the PlayerBank
      */
-    public ServerDevCard giveDevCard(){
+    public ServerDevCard giveDevCard(int seed){
+    	rand = new Random(seed);
+    	
         int deckSize = devCards.size();
         int chosenCardIndex = rand.nextInt(deckSize);
         ServerDevCard chosenCard = devCards.get(chosenCardIndex);
