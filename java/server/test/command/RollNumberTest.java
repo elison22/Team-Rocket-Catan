@@ -72,6 +72,16 @@ public class RollNumberTest {
 
         // Check if the player can roll correctly
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 6)));
+        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(0)));
+        
+        // Check that a player can't roll invalid dice values
+        assertNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 13)));
+        assertNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 1)));
+        assertNull(modelFacade.rollNumber(0, new RollNumber_Params(1, -15)));
+        assertNull(modelFacade.rollNumber(0, new RollNumber_Params(1, Integer.MIN_VALUE)));
+        assertNull(modelFacade.rollNumber(0, new RollNumber_Params(1, Integer.MAX_VALUE)));
+        
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 12)));
     }
 
 

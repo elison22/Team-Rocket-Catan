@@ -30,7 +30,9 @@ public class RollNumber_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        return game.doRoll(params.getPlayerIndex(), params.getNumber());
+		if (params.getNumber() >= 2 && params.getNumber() <= 12)
+			return game.doRoll(params.getPlayerIndex(), params.getNumber());
+		return false;
 	}
 
 	@Override
