@@ -2,7 +2,6 @@ package handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Arrays;
 
 import user.IUserFacade;
 

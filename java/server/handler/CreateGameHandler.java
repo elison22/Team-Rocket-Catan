@@ -46,7 +46,6 @@ public class CreateGameHandler extends NonMoveHandler {
 		}
 		
 		// make sure each of 4 params have a value
-
 		String tiles = values[0].replaceAll("\\s+","");
 		tiles = tiles.replaceAll("\"","");
 		tiles = tiles.substring(13, tiles.length());

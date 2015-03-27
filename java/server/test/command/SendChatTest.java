@@ -1,10 +1,8 @@
 package test.command;
 
 import static org.junit.Assert.*;
-import model.schat.ServerMessage;
 import model.sgame.ServerGame;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 

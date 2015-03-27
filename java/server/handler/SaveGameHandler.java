@@ -2,8 +2,6 @@ package handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URLDecoder;
-import java.util.List;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
