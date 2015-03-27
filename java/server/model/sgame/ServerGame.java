@@ -874,12 +874,27 @@ public class ServerGame {
     }
     
     /**
-     * Checks with turn state, player, and board to see if road can be built in certain location 
+     * Checks with turn state, player, and board to see if road can be built in 
+     * certain location 
      * @param playerIndex index of player wanting to build road
      * @param location	where the player wants to place road
      * @return	true if player can place road at location
      */
     public boolean canBuildRoad(int playerIndex, EdgeLocation location) {
+    	
+    	// Check if it's the first phase and the player hasn't already built a 
+    	// road
+    	if (turnTracker.getCurrentState() == ServerTurnState.FirstRound) {
+    		if (playerList.get(playerIndex).getRemainingRoads() < 15)
+    			return false;
+    	}
+    	
+    	// Check if it's the second phase and the player hasn't already built
+    	// a 2nd road
+    	else if (turnTracker.getCurrentState() == ServerTurnState.SecondRound) {
+    		if (playerList.get(playerIndex).getRemainingRoads() < 14)
+    			return false;
+    	}
 
         try {
     	    if(!turnTracker.canPlayerBuildRoadSettlement(playerIndex))     //check the turn

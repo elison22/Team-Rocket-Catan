@@ -43,8 +43,11 @@ public class BuildRoadTest {
 		// Make sure the model is in the right turn state
 		assertTrue(game.getTurnState() == ServerTurnState.FirstRound);
 		
-		// Try Building a road
+		// Try building a road
 		assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(0, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South), true)));
+		
+		// Try building another road
+		assertNull(modelFacade.buildRoad(0, new BuildRoad_Params(0, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.South), true)));
 		
 		// Check that there is a road on the southern edge of hex 0,0 that belongs to player 0
 		ServerConstructable road = game.getMap().getRoadPieces().get(new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South).getNormalizedLocation());
