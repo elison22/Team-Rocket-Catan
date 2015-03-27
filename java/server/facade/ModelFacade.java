@@ -463,8 +463,10 @@ public class ModelFacade implements IModelFacade {
 		if(game.getTurnState() == ServerTurnState.FirstRound || game.getTurnState() == ServerTurnState.SecondRound) {
 			if(game.canBuildInitSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
 				buildSet = new BuildSettlement_CO(game, params);
-				if(buildSet.execute())
+				if(buildSet.execute()) {
+					gameManager.addCommand(gameID, buildSet);
 					return serializer.serializeGameModel(game);
+				}
 			}
 		}else if(game.canBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
 			buildSet = new BuildSettlement_CO(game, params);
@@ -598,5 +600,9 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public ServerGame getGame(int gameId) {
 		return gameManager.getGame(gameId);
+	}
+	
+	public GameManager getGameManager() {
+		return gameManager;
 	}
 }
