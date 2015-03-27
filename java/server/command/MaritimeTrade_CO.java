@@ -13,7 +13,7 @@ import shared.dto.MaritimeTrade_Params;
 public class MaritimeTrade_CO implements ICommandObject {
 	
 	private MaritimeTrade_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed for a player to make a maritime trade.

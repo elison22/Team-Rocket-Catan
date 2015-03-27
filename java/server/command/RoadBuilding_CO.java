@@ -12,7 +12,7 @@ import shared.dto.RoadBuilding_Params;
 public class RoadBuilding_CO implements ICommandObject {
 	
 	private RoadBuilding_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params The Parameters needed to play the road building card.

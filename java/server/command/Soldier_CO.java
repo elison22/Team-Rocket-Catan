@@ -14,7 +14,7 @@ import shared.dto.Soldier_Params;
 public class Soldier_CO implements ICommandObject {
 	
 	private Soldier_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
     private Integer seed;
 
 	/**

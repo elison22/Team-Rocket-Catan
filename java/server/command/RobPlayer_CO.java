@@ -13,8 +13,8 @@ import shared.dto.RobPlayer_Params;
  */
 public class RobPlayer_CO implements ICommandObject {
 	
-	private ServerGame game;
 	private RobPlayer_Params params;
+	transient private ServerGame game;
 	
 	// The seed to be used when generating random numbers
 	private Integer seed;

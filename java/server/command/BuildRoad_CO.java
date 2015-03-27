@@ -11,7 +11,7 @@ import shared.dto.BuildRoad_Params;
 public class BuildRoad_CO implements ICommandObject {
 	
 	private BuildRoad_Params params;
-	private ServerGame game;
+	transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed for a player to build a road.

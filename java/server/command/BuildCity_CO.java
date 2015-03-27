@@ -14,7 +14,7 @@ import shared.locations.VertexLocation;
 public class BuildCity_CO implements ICommandObject {
 	
 	private BuildCity_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param game The game.

@@ -12,7 +12,7 @@ import shared.dto.YearOfPlenty_Params;
 public class YearOfPlenty_CO implements ICommandObject {
 
 	private YearOfPlenty_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 	
 	/**
 	 * @param params Parameters needed to play a Year of Plenty card.

@@ -2,28 +2,23 @@ package command;
 
 import model.sgame.ServerGame;
 import shared.dto.SendChat_Params;
-import facade.GameManager;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  *
  * Takes care of everything needed to send a chat.
  */
-@SuppressWarnings("unused")
 public class SendChat_CO implements ICommandObject {
 	
-	private int gameId;
 	private SendChat_Params chatParams;
-	private GameManager gameManager;
-	private ServerGame game;
+	transient private ServerGame game;
 	
 	/**
 	 * @param gameId The id of the game where the chat is being sent in.
 	 * @param gameManager 
 	 * @param chatParams 
 	 */
-	public SendChat_CO(ServerGame game, SendChat_Params chatParams, GameManager gameManager) {
+	public SendChat_CO(ServerGame game, SendChat_Params chatParams) {
 		this.chatParams = chatParams;
 		this.game = game;
 	}

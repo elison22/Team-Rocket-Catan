@@ -11,7 +11,7 @@ import shared.dto.AcceptTrade_Params;
 public class AcceptTrade_CO implements ICommandObject {
 
 	private AcceptTrade_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed for a player to accept a trade.

@@ -11,7 +11,7 @@ import facade.GameManager;
  */
 public class ResetGame_CO implements ICommandObject {
 	
-	private ServerGame game;
+	transient private ServerGame game;
 	
 	/**
 	 * @param gameId The id of the game to be reset. This will be sent as a 

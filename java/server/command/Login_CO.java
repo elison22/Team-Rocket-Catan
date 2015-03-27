@@ -12,8 +12,8 @@ import user.model.UserManager;
 
 public class Login_CO implements ICommandObject {
 	
-	private UserManager userManager;
 	private Login_Params params;
+	private UserManager userManager;
 
 	/**
 	 * @param params Parameters needed to log a user in.

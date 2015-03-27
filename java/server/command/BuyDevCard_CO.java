@@ -17,7 +17,7 @@ import facade.IModelFacade;
 public class BuyDevCard_CO implements ICommandObject {
 
 	private BuyDevCard_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
     private Integer seed;
 	
 	/**

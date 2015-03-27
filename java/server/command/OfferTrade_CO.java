@@ -11,7 +11,7 @@ import shared.dto.OfferTrade_Params;
 public class OfferTrade_CO implements ICommandObject {
 	
 	private OfferTrade_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed to offer a trade.

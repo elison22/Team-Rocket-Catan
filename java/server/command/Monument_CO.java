@@ -11,7 +11,7 @@ import shared.dto.Monument_Params;
 public class Monument_CO implements ICommandObject {
 	
 	private Monument_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed to play the monument card.

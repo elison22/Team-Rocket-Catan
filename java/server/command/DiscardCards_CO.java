@@ -11,7 +11,7 @@ import shared.dto.DiscardCards_Params;
 public class DiscardCards_CO implements ICommandObject {
 	
 	private DiscardCards_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed for discarding cards.

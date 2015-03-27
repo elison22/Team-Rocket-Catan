@@ -12,7 +12,7 @@ import shared.dto.Monopoly_Params;
 public class Monopoly_CO implements ICommandObject {
 	
 	private Monopoly_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed for a player to play the monopoly card.

@@ -15,7 +15,6 @@ import model.sgame.ServerGame;
 import model.sgame.ServerTurnState;
 import model.strade.ServerDomesticTrade;
 import serializer.ServerSerializer;
-import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.dto.*;
 import shared.locations.HexLocation;
@@ -87,11 +86,14 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public boolean joinGame(JoinGame_Params params, String player, int playerId) {
-		// Verify the color is valid
-		if (CatanColor.convert(params.getColor()) == null)
-			return false;
-		else
-		    return gameManager.addPlayerToGame(params.getId(), player, playerId, params.getColor());
+		
+		ICommandObject command = new JoinGame_CO(params, player, playerId, gameManager);
+		if (command.execute()) {
+			gameManager.addCommand(params.getId(), command);
+			return true;
+		}
+			
+		return false;
 	}
 
 	/**
@@ -201,7 +203,7 @@ public class ModelFacade implements IModelFacade {
 		if(chatParams.getPlayerIndex() > 3 || chatParams.getPlayerIndex() < 0)
 			return null;
 		ServerGame game = gameManager.getGame(gameID);
-		ICommandObject command = new SendChat_CO(game, chatParams, gameManager);
+		ICommandObject command = new SendChat_CO(game, chatParams);
 		if(command.execute())
 		{
 			gameManager.addCommand(gameID, command);

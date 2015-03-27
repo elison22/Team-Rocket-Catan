@@ -11,7 +11,7 @@ import shared.dto.FinishTurn_Params;
 public class FinishTurn_CO implements ICommandObject {
 	
 	private FinishTurn_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed to finish a player's turn.

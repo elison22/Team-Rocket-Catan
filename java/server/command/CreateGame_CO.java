@@ -3,27 +3,26 @@ package command;
 import java.util.Random;
 
 import facade.GameManager;
-import model.sboard.ServerBoard;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 
 public class CreateGame_CO implements ICommandObject {
 	
-	GameManager manager;
-	ServerBoard board;
+	
 	private String title;
 	private boolean randTiles;
 	private boolean randNumbers;
 	private boolean randPorts;
+	transient private GameManager gameManager;
 	private Integer seed;
 
-	public CreateGame_CO(GameManager manager, boolean randNumbers, boolean randTiles, boolean randPorts, String title) 
+	public CreateGame_CO(GameManager gameManager, boolean randNumbers, boolean randTiles, boolean randPorts, String title) 
 			throws ServerBoardException
 	{
 		this.randNumbers = randNumbers;
 		this.randPorts = randPorts;
 		this.randTiles = randTiles;		
-		this.manager = manager;
+		this.gameManager = gameManager;
 		this.title = title;
 	}
 	
@@ -41,12 +40,16 @@ public class CreateGame_CO implements ICommandObject {
         		seed = random.nextInt();
         	}
 			
-			manager.createGame(randNumbers, randTiles, randPorts, title, seed);
+			gameManager.createGame(randNumbers, randTiles, randPorts, title, seed);
 			return true;
 		} catch (ServerBoardException e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void setGameManager(GameManager gameManager) {
+		this.gameManager = gameManager;
 	}
 
 }

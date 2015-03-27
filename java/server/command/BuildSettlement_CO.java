@@ -13,8 +13,8 @@ import shared.locations.VertexLocation;
  */
 public class BuildSettlement_CO implements ICommandObject {
 	
-	private ServerGame game;
 	private BuildSettlement_Params params;
+	transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed to build a settlement.

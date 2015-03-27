@@ -12,7 +12,7 @@ import shared.dto.RollNumber_Params;
 public class RollNumber_CO implements ICommandObject {
 	
 	private RollNumber_Params params;
-    private ServerGame game;
+    transient private ServerGame game;
 
 	/**
 	 * @param params needed for rolling a number.
