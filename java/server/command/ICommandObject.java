@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 
 /**@author Chad
@@ -11,9 +12,10 @@ public interface ICommandObject {
 	
 	public void setGame(ServerGame game);
 	
+	public void setGameManager(GameManager gameManager);
+	
 	
 	/**Performs the main function of the command object. 
-	 * @return TODO
 	 * 
 	 */
 	public boolean execute();

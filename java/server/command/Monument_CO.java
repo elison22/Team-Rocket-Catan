@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.Monument_Params;
 
@@ -31,5 +32,8 @@ public class Monument_CO implements ICommandObject {
 	public boolean execute() {
 		return game.doMonument(params.getPlayerIndex());
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

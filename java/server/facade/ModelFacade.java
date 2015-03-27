@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import command.*;
 import model.board.BoardException;
@@ -171,7 +170,7 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public String getGameCommands(int gameID) {
 		
-		ArrayList<ICommandObject> commandsList = gameManager.getCommands(gameID);
+		ICommandObject[] commandsList = gameManager.getCommands(gameID);
 		return serializer.serializeCommands(commandsList);
 	}
 
@@ -182,11 +181,11 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON of the game model after the commands are executed
 	 */
 	@Override
-	public String executeGameCommands(int gameID, ArrayList<ICommandObject> commandsList) {
-		ServerGame game = gameManager.getGame(gameID);
+	public String executeGameCommands(ICommandObject[] commandsList) {
 		for(ICommandObject command : commandsList)
 		{
-			command.setGame(game);
+			command.setGameManager(gameManager);
+			command.setGame(gameManager.getGame(getCreatedGameId()));
 			command.execute();
 		}
 		return null;
@@ -252,8 +251,10 @@ public class ModelFacade implements IModelFacade {
         	return null;    //TODO test if this is a problem
         
         ICommandObject command = new RobPlayer_CO(robParams, game);
-        if(command.execute())
+        if(command.execute()) {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 
 		return null;
 	}
@@ -316,8 +317,10 @@ public class ModelFacade implements IModelFacade {
             return null;
 
         ICommandObject command = new YearOfPlenty_CO(game, params);
-        if(command.execute())
+        if(command.execute()) {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 
 		return null;
 	}
@@ -338,8 +341,10 @@ public class ModelFacade implements IModelFacade {
             return null;
 
         ICommandObject command = new RoadBuilding_CO(game, roadParams);
-        if(command.execute())
+        if(command.execute()) {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 
 		return null;
 	}
@@ -360,8 +365,10 @@ public class ModelFacade implements IModelFacade {
             return null;
 
         ICommandObject command = new Soldier_CO(game, params);
-        if(command.execute())
+        if(command.execute()) {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 
         return null;
 	}
@@ -382,8 +389,10 @@ public class ModelFacade implements IModelFacade {
             return null;
 
         ICommandObject command = new Monopoly_CO(game, params);
-        if(command.execute())
+        if(command.execute()) {
+        	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
+        }
 
 		return null;
 	}
@@ -403,8 +412,10 @@ public class ModelFacade implements IModelFacade {
             return null;
 
         ICommandObject command = new Monument_CO(game, params);
-        if(command.execute())
-            return  serializer.serializeGameModel(game);
+        if(command.execute()) {
+        	gameManager.addCommand(gameID, command);
+            return serializer.serializeGameModel(game);
+        }
 
 		return null;
 	}

@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.BuildRoad_Params;
 
@@ -32,5 +33,8 @@ public class BuildRoad_CO implements ICommandObject {
 	public boolean execute() {
 		return game.doBuildRoad(params.getPlayerIndex(), params.getLocation(), params.isFree());
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

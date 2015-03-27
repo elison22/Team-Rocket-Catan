@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.BuildSettlement_Params;
 import shared.locations.HexLocation;
@@ -48,5 +49,8 @@ public class BuildSettlement_CO implements ICommandObject {
 		}
 		return false;
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

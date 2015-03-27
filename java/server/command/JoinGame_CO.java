@@ -31,6 +31,7 @@ public class JoinGame_CO implements ICommandObject {
 			return gameManager.addPlayerToGame(params.getId(), player, playerId, params.getColor());
 	}
 	
+	@Override
 	public void setGameManager(GameManager gameManager) {
 		this.gameManager = gameManager;
 	}

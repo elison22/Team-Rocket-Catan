@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.Login_Params;
 import user.model.UserManager;
@@ -36,8 +37,8 @@ public class Register_CO implements ICommandObject {
 	}
 
 	@Override
-	public void setGame(ServerGame game) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setGame(ServerGame game) {}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 }

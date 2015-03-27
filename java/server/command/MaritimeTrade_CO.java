@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import model.strade.ServerMaritimeTrade;
 import shared.definitions.ResourceType;
@@ -58,5 +59,8 @@ public class MaritimeTrade_CO implements ICommandObject {
         }
         return null;
     }
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

@@ -1,8 +1,5 @@
 package facade;
 
-
-import java.util.ArrayList;
-
 import command.ICommandObject;
 
 import model.sgame.ServerGame;
@@ -29,7 +26,7 @@ public interface IModelFacade {
 
     public String getGameCommands(int gameID);
 
-    public String executeGameCommands(int gameID, ArrayList<ICommandObject> commandsList);
+    public String executeGameCommands(ICommandObject[] commandsList);
 
     public String sendChat(int gameID, SendChat_Params chatParams);
 

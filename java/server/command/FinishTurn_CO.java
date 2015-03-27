@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.FinishTurn_Params;
 
@@ -30,5 +31,8 @@ public class FinishTurn_CO implements ICommandObject {
 	public boolean execute() {
         return game.finishTurn(params.getPlayerIndex());
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

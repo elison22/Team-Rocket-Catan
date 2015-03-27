@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.SendChat_Params;
 
@@ -34,5 +35,8 @@ public class SendChat_CO implements ICommandObject {
 		this.game = game;
 		
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.AcceptTrade_Params;
 
@@ -31,5 +32,8 @@ public class AcceptTrade_CO implements ICommandObject {
 	public boolean execute() {
         return game.doDomesticTrade(params.getPlayerIndex(), params.isWillAccept());
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

@@ -48,6 +48,7 @@ public class CreateGame_CO implements ICommandObject {
 		}
 	}
 	
+	@Override
 	public void setGameManager(GameManager gameManager) {
 		this.gameManager = gameManager;
 	}

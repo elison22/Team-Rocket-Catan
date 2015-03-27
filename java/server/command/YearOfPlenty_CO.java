@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.definitions.ResourceType;
 import shared.dto.YearOfPlenty_Params;
@@ -35,5 +36,8 @@ public class YearOfPlenty_CO implements ICommandObject {
                 ResourceType.convert(params.getResource2())
         );
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

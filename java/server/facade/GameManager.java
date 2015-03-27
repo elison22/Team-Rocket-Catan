@@ -39,9 +39,10 @@ public class GameManager {
 		return games.get(indexOfGame);
 	}
 	
-	public ArrayList<ICommandObject> getCommands(int index)
+	public ICommandObject[] getCommands(int index)
 	{
-		return commandsList.get(index);
+		ArrayList<ICommandObject> temp = commandsList.get(index);
+		return temp.toArray(new ICommandObject[temp.size()]);
 	}
 	
 	public void addCommand(int gameIndex, ICommandObject command)

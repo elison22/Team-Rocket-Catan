@@ -4,16 +4,13 @@ import java.util.Random;
 
 import facade.GameManager;
 import model.sgame.ServerGame;
-import shared.definitions.DevCardType;
 import shared.dto.BuyDevCard_Params;
-import facade.IModelFacade;
 
 /**
  * @author Chad
  *
  * Makes all needed calls for a player to buy a dev card.
  */
-@SuppressWarnings("unused")
 public class BuyDevCard_CO implements ICommandObject {
 
 	private BuyDevCard_Params params;
@@ -44,5 +41,8 @@ public class BuyDevCard_CO implements ICommandObject {
 		
         return game.doBuyDevCard(params.getPlayerIndex(), seed);
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

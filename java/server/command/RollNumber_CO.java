@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.RollNumber_Params;
 
@@ -31,4 +32,7 @@ public class RollNumber_CO implements ICommandObject {
 	public boolean execute() {
         return game.doRoll(params.getPlayerIndex(), params.getNumber());
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 }

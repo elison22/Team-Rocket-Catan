@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.BuildCity_Params;
 import shared.locations.HexLocation;
@@ -38,5 +39,8 @@ public class BuildCity_CO implements ICommandObject {
         								 							  params.getVertexY()), 
         								 			 VertexDirection.convert(params.getVertexDir())));
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

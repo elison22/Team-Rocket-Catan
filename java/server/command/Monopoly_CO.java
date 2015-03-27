@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.definitions.ResourceType;
 import shared.dto.Monopoly_Params;
@@ -35,5 +36,8 @@ public class Monopoly_CO implements ICommandObject {
                 ResourceType.convert(params.getResource())
         );
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

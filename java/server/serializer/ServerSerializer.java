@@ -99,7 +99,7 @@ public class ServerSerializer {
 		return null;
 	}
 	
-	public String serializeCommands(ArrayList<ICommandObject> commands)
+	public String serializeCommands(ICommandObject[] commands)
 	{
 		return gson.toJson(commands);
 	}

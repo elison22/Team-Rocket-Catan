@@ -2,6 +2,7 @@ package command;
 
 import java.util.Random;
 
+import facade.GameManager;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import shared.dto.RobPlayer_Params;
@@ -51,5 +52,8 @@ public class RobPlayer_CO implements ICommandObject {
             return false;
         }
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

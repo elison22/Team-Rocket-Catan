@@ -2,11 +2,8 @@ package handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 
 import user.IUserFacade;
-
-import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import command.ICommandObject;
@@ -39,8 +36,8 @@ public class DoGameCommandsHandler extends MovesHandler {
 			StringBuilder jsonString = handleRequestBody(exchange);
 			head = exchange.getResponseHeaders();
 			head.set("Content-Type", "application/json");
-			ArrayList<ICommandObject> objects = (ArrayList<ICommandObject>) gson.fromJson(jsonString.toString(), new TypeToken<ArrayList<ICommandObject>> (){}.getType());
-			String string = modelFacade.executeGameCommands(new Integer(cookies[3]), objects);
+			ICommandObject[] objects = gson.fromJson(jsonString.toString(), ICommandObject[].class);
+			String string = modelFacade.executeGameCommands(objects);
 			
 			String commands = modelFacade.getGameCommands(new Integer(cookies[3]));
 			if(commands != null) {

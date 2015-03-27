@@ -1,5 +1,6 @@
 package command;
 
+import facade.GameManager;
 import model.sgame.ServerGame;
 import shared.dto.DiscardCards_Params;
 
@@ -31,5 +32,8 @@ public class DiscardCards_CO implements ICommandObject {
 	public boolean execute() {
         return game.doDiscardCards(params.getPlayerIndex(), params.getDiscardedCards());
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

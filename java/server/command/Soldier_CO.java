@@ -2,6 +2,7 @@ package command;
 
 import java.util.Random;
 
+import facade.GameManager;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import shared.dto.Soldier_Params;
@@ -48,5 +49,8 @@ public class Soldier_CO implements ICommandObject {
             return false;
         }
 	}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }

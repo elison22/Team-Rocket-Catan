@@ -27,9 +27,9 @@ public class ResetGame_CO implements ICommandObject {
 	}
 
 	@Override
-	public void setGame(ServerGame game) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setGame(ServerGame game) {}
+
+	@Override
+	public void setGameManager(GameManager gameManager) {}
 
 }
