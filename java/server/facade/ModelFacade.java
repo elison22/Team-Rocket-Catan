@@ -186,9 +186,16 @@ public class ModelFacade implements IModelFacade {
 		{
 			command.setGameManager(gameManager);
 			command.setGame(gameManager.getGame(getCreatedGameId()));
-			command.execute();
+			
+			// If something doesn't work, stop and return the game after the
+			// commands that did actually work
+			if (!command.execute())
+				return serializer.serializeGameModel(gameManager.getGame(getCreatedGameId()));
+			
+			// If the command worked, add it to the commandList
+			gameManager.addCommand(getCreatedGameId(), command);
 		}
-		return null;
+		return serializer.serializeGameModel(gameManager.getGame(getCreatedGameId()));
 	}
 
 	/**
