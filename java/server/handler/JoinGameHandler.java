@@ -45,8 +45,8 @@ System.out.println("bad");
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			sendResponseBody(exchange, "Success");
 		} else {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-			sendResponseBody(exchange, "Internal Error!");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid Input");
 		}
 		exchange.close();
 	}
