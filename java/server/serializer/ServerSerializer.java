@@ -125,9 +125,15 @@ public class ServerSerializer {
 	}
 	
 	public ICommandObject[] deSerializeCommands(String commandsJson) throws Exception {
+		// Deserialize to the CommandWrappers class. From here we will be able
+		// to determine which explicit command object to build
 		CommandWrapper[] commandWrappers = gson.fromJson(commandsJson, CommandWrapper[].class);
+		
+		// The array of the explicit commands
 		ICommandObject[] commands = new ICommandObject[commandWrappers.length];
 		
+		// Determine what type of command it is and build it while adding it
+		// to the commands array.
 		int i = 0;
 		for (CommandWrapper command : commandWrappers) {
 			switch (command.getType()) {
