@@ -13,8 +13,9 @@ import user.model.UserManager;
 
 public class Register_CO implements ICommandObject {
 	
+	private String type;
 	private UserManager userManager;
-	private Login_Params params; // Parameters needed are the same as Login_CO.
+	private Login_Params loginParams; // Parameters needed are the same as Login_CO.
 
 	/**
 	 * @param params Parameters needed to register a new user. They are the
@@ -22,15 +23,16 @@ public class Register_CO implements ICommandObject {
 	 */
 	public Register_CO(UserManager userManager, Login_Params params) {
 		super();
+		type = "Register";
 		this.userManager = userManager;
-		this.params = params;
+		this.loginParams = params;
 	}
 
 	@Override
 	public boolean execute() {
 		
-		if (!userManager.hasUser(params.getUser())) {
-			return userManager.createNewUser(params.getUser(), params.getPassword());
+		if (!userManager.hasUser(loginParams.getUser())) {
+			return userManager.createNewUser(loginParams.getUser(), loginParams.getPassword());
 		}
 		
 		return false;
@@ -41,4 +43,12 @@ public class Register_CO implements ICommandObject {
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

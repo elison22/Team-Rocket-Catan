@@ -13,7 +13,8 @@ import user.model.UserManager;
 
 public class Login_CO implements ICommandObject {
 	
-	private Login_Params params;
+	private String type;
+	private Login_Params loginParams;
 	private UserManager userManager;
 
 	/**
@@ -21,14 +22,15 @@ public class Login_CO implements ICommandObject {
 	 */
 	public Login_CO(UserManager userManager, Login_Params params) {
 		super();
+		type = "Login";
 		this.userManager = userManager;
-		this.params = params;
+		this.loginParams = params;
 	}
 
 	@Override
 	public boolean execute() {
-		if (userManager.hasUser(params.getUser()))
-			return userManager.checkPassword(params.getUser(), params.getPassword());
+		if (userManager.hasUser(loginParams.getUser()))
+			return userManager.checkPassword(loginParams.getUser(), loginParams.getPassword());
 		return false;
 	}
 
@@ -37,5 +39,13 @@ public class Login_CO implements ICommandObject {
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

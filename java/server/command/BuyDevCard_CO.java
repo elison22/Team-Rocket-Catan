@@ -13,16 +13,19 @@ import shared.dto.BuyDevCard_Params;
  */
 public class BuyDevCard_CO implements ICommandObject {
 
-	private BuyDevCard_Params params;
+	private String type;
+	private BuyDevCard_Params buyDevCardParams;
     transient private ServerGame game;
     private Integer seed;
 	
 	/**
 	 * @param params Parameters for buying a dev card.
 	 */
-	public BuyDevCard_CO(BuyDevCard_Params params, ServerGame game) {
-		this.params = params;
+	public BuyDevCard_CO(BuyDevCard_Params params, ServerGame game, Integer seed) {
+		this.type = "BuyDevCard";
+		this.buyDevCardParams = params;
         this.game = game;
+        this.seed = seed;
 	}
 	
 	public void setGame(ServerGame game)
@@ -39,10 +42,25 @@ public class BuyDevCard_CO implements ICommandObject {
     		seed = random.nextInt();
     	}
 		
-        return game.doBuyDevCard(params.getPlayerIndex(), seed);
+        return game.doBuyDevCard(buyDevCardParams.getPlayerIndex(), seed);
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Integer getSeed() {
+		return seed;
+	}
+
+	public void setSeed(Integer seed) {
+		this.seed = seed;
+	}
 }

@@ -11,7 +11,8 @@ import shared.dto.AcceptTrade_Params;
  */
 public class AcceptTrade_CO implements ICommandObject {
 
-	private AcceptTrade_Params params;
+	private String type;
+	private AcceptTrade_Params acceptTradeParams;
     transient private ServerGame game;
 
 	/**
@@ -19,7 +20,8 @@ public class AcceptTrade_CO implements ICommandObject {
 	 */
 	public AcceptTrade_CO(AcceptTrade_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		this.type = "AcceptTrade";
+		this.acceptTradeParams = params;
         this.game = game;
 	}
 	
@@ -30,10 +32,18 @@ public class AcceptTrade_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        return game.doDomesticTrade(params.getPlayerIndex(), params.isWillAccept());
+        return game.doDomesticTrade(acceptTradeParams.getPlayerIndex(), acceptTradeParams.isWillAccept());
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

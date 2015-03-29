@@ -11,7 +11,8 @@ import shared.dto.DiscardCards_Params;
  */
 public class DiscardCards_CO implements ICommandObject {
 	
-	private DiscardCards_Params params;
+	private String type;
+	private DiscardCards_Params discardCardsParams;
     transient private ServerGame game;
 
 	/**
@@ -19,7 +20,8 @@ public class DiscardCards_CO implements ICommandObject {
 	 */
 	public DiscardCards_CO(DiscardCards_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		this.type = "DiscardCards";
+		this.discardCardsParams = params;
         this.game = game;
 	}
 	
@@ -30,10 +32,18 @@ public class DiscardCards_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        return game.doDiscardCards(params.getPlayerIndex(), params.getDiscardedCards());
+        return game.doDiscardCards(discardCardsParams.getPlayerIndex(), discardCardsParams.getDiscardedCards());
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

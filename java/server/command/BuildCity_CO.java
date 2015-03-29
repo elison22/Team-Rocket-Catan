@@ -14,7 +14,8 @@ import shared.locations.VertexLocation;
  */
 public class BuildCity_CO implements ICommandObject {
 	
-	private BuildCity_Params params;
+	private String type;
+	private BuildCity_Params buildCityParams;
     transient private ServerGame game;
 
 	/**
@@ -23,7 +24,8 @@ public class BuildCity_CO implements ICommandObject {
 	 */
 	public BuildCity_CO(BuildCity_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		this.type = "BuildCity";
+		this.buildCityParams = params;
         this.game = game;
 	}
 	
@@ -34,13 +36,20 @@ public class BuildCity_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        return game.doBuildCity( params.getPlayerIndex(), 
-        						 new VertexLocation( new HexLocation( params.getVertexX(), 
-        								 							  params.getVertexY()), 
-        								 			 VertexDirection.convert(params.getVertexDir())));
+        return game.doBuildCity( buildCityParams.getPlayerIndex(), 
+        						 new VertexLocation( new HexLocation( buildCityParams.getVertexX(), 
+        								 							  buildCityParams.getVertexY()), 
+        								 			 VertexDirection.convert(buildCityParams.getVertexDir())));
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

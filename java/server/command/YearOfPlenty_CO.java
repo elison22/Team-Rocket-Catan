@@ -12,14 +12,16 @@ import shared.dto.YearOfPlenty_Params;
  */
 public class YearOfPlenty_CO implements ICommandObject {
 
-	private YearOfPlenty_Params params;
+	private String type;
+	private YearOfPlenty_Params yearOfPlentyParams;
     transient private ServerGame game;
 	
 	/**
 	 * @param params Parameters needed to play a Year of Plenty card.
 	 */
-	public YearOfPlenty_CO(ServerGame game, YearOfPlenty_Params params) {
-		this.params = params;
+	public YearOfPlenty_CO(YearOfPlenty_Params params, ServerGame game) {
+		this.type = "YearOfPlenty";
+		this.yearOfPlentyParams = params;
         this.game = game;
 	}
 	
@@ -31,13 +33,21 @@ public class YearOfPlenty_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		return game.doYearOfPlenty(
-                params.getPlayerIndex(),
-                ResourceType.convert(params.getResource1()),
-                ResourceType.convert(params.getResource2())
+                yearOfPlentyParams.getPlayerIndex(),
+                ResourceType.convert(yearOfPlentyParams.getResource1()),
+                ResourceType.convert(yearOfPlentyParams.getResource2())
         );
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

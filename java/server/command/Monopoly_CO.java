@@ -12,15 +12,17 @@ import shared.dto.Monopoly_Params;
  */
 public class Monopoly_CO implements ICommandObject {
 	
-	private Monopoly_Params params;
+	private String type;
+	private Monopoly_Params monopolyParams;
     transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed for a player to play the monopoly card.
 	 */
-	public Monopoly_CO(ServerGame game, Monopoly_Params params) {
+	public Monopoly_CO(Monopoly_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		this.type = "Monopoly";
+		this.monopolyParams = params;
         this.game = game;
 	}
 	
@@ -32,12 +34,20 @@ public class Monopoly_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		return game.doMonopoly(
-                params.getPlayerIndex(),
-                ResourceType.convert(params.getResource())
+                monopolyParams.getPlayerIndex(),
+                ResourceType.convert(monopolyParams.getResource())
         );
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

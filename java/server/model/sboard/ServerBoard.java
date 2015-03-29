@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
-import model.board.HexTile;
 import serializer.json.JsonHex;
 import serializer.json.JsonMap;
 import serializer.json.JsonPort;

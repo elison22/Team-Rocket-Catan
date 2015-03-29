@@ -11,7 +11,8 @@ import shared.dto.BuildRoad_Params;
  */
 public class BuildRoad_CO implements ICommandObject {
 	
-	private BuildRoad_Params params;
+	private String type;
+	private BuildRoad_Params buildRoadParams;
 	transient private ServerGame game;
 
 	/**
@@ -20,7 +21,8 @@ public class BuildRoad_CO implements ICommandObject {
 	 */
 	public BuildRoad_CO(BuildRoad_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		type = "BuildRoad";
+		this.buildRoadParams = params;
 		this.game = game;
 	}
 	
@@ -31,10 +33,18 @@ public class BuildRoad_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		return game.doBuildRoad(params.getPlayerIndex(), params.getLocation(), params.isFree());
+		return game.doBuildRoad(buildRoadParams.getPlayerIndex(), buildRoadParams.getLocation(), buildRoadParams.isFree());
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

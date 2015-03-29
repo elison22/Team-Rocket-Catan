@@ -326,7 +326,7 @@ public class MockModelFacade implements IModelFacade
 	}
 
 	@Override
-	public int getCreatedGameId() {
+	public Integer getCreatedGameId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

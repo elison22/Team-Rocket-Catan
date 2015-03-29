@@ -8,6 +8,9 @@ public class JoinGame_Params {
 	 * 'blue', 'yellow', 'puce', 'brown', 'white', 'purple', 'orange']
 	 */
 	private String color;
+	
+	private String player;
+	private int playerId;
 
 	public JoinGame_Params() {}
 
@@ -32,7 +35,20 @@ public class JoinGame_Params {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-	
 
+	public String getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(String player) {
+		this.player = player;
+	}
+
+	public int getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
 }

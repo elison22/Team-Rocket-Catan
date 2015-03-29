@@ -7,15 +7,13 @@ import model.sgame.ServerGame;
 
 public class JoinGame_CO implements ICommandObject {
 	
-	private JoinGame_Params params;
-	private String player;
-	private int playerId;
+	private String type;
+	private JoinGame_Params joinGameParams;
 	transient private GameManager gameManager;
 	
-	public JoinGame_CO(JoinGame_Params params, String player, int playerId, GameManager gameManager) {
-		this.params = params;
-		this.player = player;
-		this.playerId = playerId;
+	public JoinGame_CO(JoinGame_Params params, GameManager gameManager) {
+		this.type = "JoinGame";
+		this.joinGameParams = params;
 		this.gameManager = gameManager;
 	}
 
@@ -25,15 +23,26 @@ public class JoinGame_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		// Verify the color is valid
-		if (CatanColor.convert(params.getColor()) == null)
+		if (CatanColor.convert(joinGameParams.getColor()) == null)
 			return false;
 		else
-			return gameManager.addPlayerToGame(params.getId(), player, playerId, params.getColor());
+			return gameManager.addPlayerToGame(joinGameParams.getId(), 
+											   joinGameParams.getPlayer(), 
+											   joinGameParams.getPlayerId(), 
+											   joinGameParams.getColor());
 	}
 	
 	@Override
 	public void setGameManager(GameManager gameManager) {
 		this.gameManager = gameManager;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

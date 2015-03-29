@@ -9,7 +9,6 @@ import model.sgame.ServerGame;
  */
 public interface ICommandObject {
 	
-	
 	public void setGame(ServerGame game);
 	
 	public void setGameManager(GameManager gameManager);

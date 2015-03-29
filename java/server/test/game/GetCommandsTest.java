@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import command.ICommandObject;
+
 import facade.GameManager;
 import facade.ModelFacade;
+import serializer.ServerSerializer;
 import shared.dto.BuildRoad_Params;
 import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
@@ -27,7 +30,7 @@ public class GetCommandsTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
 		// Create a game
         assertNotNull(modelFacade.createGame(new CreateGame_Params(false, false, false, "RollNumberTest")));
 
@@ -68,6 +71,17 @@ public class GetCommandsTest {
         
         // Make sure that the facade is storing game commands
         assertNotNull(modelFacade.getGameCommands(0));
+        
+        ServerSerializer ser = new ServerSerializer();
+        ICommandObject[] commands = ser.deSerializeCommands(modelFacade.getGameCommands(0));
+        assertNotNull(commands);
+        assertTrue(commands.length == gameManager.getCommands(0).length);
+        
+        modelFacade = new ModelFacade();
+        
+        modelFacade.executeGameCommands(commands);
+        gameManager = modelFacade.getGameManager();
+        assertTrue(gameManager.getCommands(0).length == 21);
 	}
 
 }
