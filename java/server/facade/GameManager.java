@@ -123,8 +123,11 @@ public class GameManager {
 	}
 	
 	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
+        if(games.size() <= gameId){
+            return false;
+        }
 		ServerGame game = games.get(gameId);
-		
+
 		// Make sure the player hasn't already joined the game or
 		// the color isn't already taken
 		for (ServerPlayer gamePlayer : game.getPlayerList()) {
