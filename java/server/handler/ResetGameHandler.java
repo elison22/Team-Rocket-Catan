@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.List;
 
 import com.sun.net.httpserver.Headers;
@@ -23,25 +24,29 @@ public class ResetGameHandler extends NonMoveHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		Headers head = exchange.getRequestHeaders();
+		///////////////////////////
 		List<String> cookies = head.get("Cookie");
 		String cookieHeader = cookies.get(0);
 		
 		String headerValue = cookieHeader.substring(11);
 		String value = URLDecoder.decode(headerValue, "UTF-8");
 		String[] values = value.split(",");
+		if(values.length < 4) {
+			head.set("Content-Type", "text/html");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
+			os.write("Invalid Request");
+			os.close();
+			exchange.close();
+			return;
+		}
 		
-		String[] idGame = values[3].split(";");
-		
-		String[] cookieItems = new String[4];
-		cookieItems[0] = values[1].substring(8, values[1].length() - 1);
-		cookieItems[1] = values[2].substring(12, values[2].length() - 1);
-		cookieItems[2] = idGame[0].substring(11, idGame[0].length() - 1);
-
-		String jsonString = modelFacade.resetGame(new Integer(cookieItems[2]));
+		String[] val = values[0].split(";");
+		String game = val[0];
+		Integer gameId = new Integer(game);
+		String jsonString = modelFacade.resetGame(new Integer(gameId));
 		System.out.println("JSON String: ");
 		System.out.println(jsonString);
-		
-		head.set("Content-Type", "application/json");
 		
 		if(jsonString != null) {
 			System.out.println("JSON string not null");
@@ -51,9 +56,9 @@ public class ResetGameHandler extends NonMoveHandler {
 			os.close();
 		} else {
 			head.set("Content-Type", "text/html");
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
-			os.write("Unable to reset");
+			os.write("You gone done messed up paatna");
 			os.close();
 		}
 		exchange.close();

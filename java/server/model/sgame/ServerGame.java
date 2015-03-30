@@ -1152,17 +1152,22 @@ public class ServerGame {
         if(turnTracker.getLargestArmyPlayerIndex() == playerIndex)
             return;
 
-        // nobody has the longest road yet
+        // nobody has the largest army yet
         if(turnTracker.getLargestArmyPlayerIndex() < 0) {
-            playerList.get(playerIndex).addPoints(2);
             turnTracker.setLargestArmyPlayerIndex(playerIndex);
+            playerList.get(playerIndex).addPoints(2);
+            if (playerList.get(playerIndex).addPoints(2) >= 10)
+				winner = playerIndex;
         }
         // somebody has it
         // the current player will replace the old player
         else if(playerList.get(playerIndex).getSoldierDevs() > playerList.get(turnTracker.getLargestArmyPlayerIndex()).getSoldierDevs()) {
+        	turnTracker.setLargestArmyPlayerIndex(playerIndex);
             playerList.get(playerIndex).addPoints(2);
             playerList.get(turnTracker.getLargestArmyPlayerIndex()).addPoints(-2);
-            turnTracker.setLargestArmyPlayerIndex(playerIndex);
+            if (playerList.get(playerIndex).addPoints(2) >= 10)
+				winner = playerIndex;
+            
         }
 
     }
