@@ -38,10 +38,13 @@ public class ResetGameHandler extends NonMoveHandler {
 		cookieItems[2] = idGame[0].substring(11, idGame[0].length() - 1);
 
 		String jsonString = modelFacade.resetGame(new Integer(cookieItems[2]));
+		System.out.println("JSON String: ");
+		System.out.println(jsonString);
 		
 		head.set("Content-Type", "application/json");
 		
 		if(jsonString != null) {
+			System.out.println("JSON string not null");
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
 			os.write(jsonString);
