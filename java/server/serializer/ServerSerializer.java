@@ -153,7 +153,7 @@ public class ServerSerializer {
 			case "BuildSettlement":
 				commands[i] = new BuildSettlement_CO(command.getBuildSettlementParams(), null);
 				break;
-			case "BuydevCard":
+			case "BuyDevCard":
 				commands[i] = new BuyDevCard_CO(command.getBuyDevCardParams(), null, command.getSeed());
 				break;
 			case "CreateGame":
@@ -199,7 +199,7 @@ public class ServerSerializer {
 				commands[i] = new YearOfPlenty_CO(command.getYearOfPlentyParams(), null);
 				break;
 			default:
-				throw new Exception("No case found!");
+				throw new Exception("No case found for: \n" + gson.toJson(command));
 			}
 			++i;
 		}

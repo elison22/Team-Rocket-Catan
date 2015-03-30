@@ -3,12 +3,13 @@ package handler;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+import serializer.ServerSerializer;
 import user.IUserFacade;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import command.ICommandObject;
 
+import command.ICommandObject;
 import facade.IModelFacade;
 
 public class GetGameCommandsHandler extends NonMoveHandler {
@@ -60,32 +61,31 @@ public class GetGameCommandsHandler extends NonMoveHandler {
 				sendResponseBody(exchange, "user must be logged in and in game");
 			}
 		} else if(method.equals("POST")) {
-			if(userFacade.hasUser(cookies[0])) {
-				StringBuilder jsonString = handleRequestBody(exchange);
-				head = exchange.getResponseHeaders();
-				head.set("Content-Type", "application/json");
-				ICommandObject[] objects = gson.fromJson(jsonString.toString(), ICommandObject[].class);
-				String string = modelFacade.executeGameCommands(objects);
-				
-				String commands = modelFacade.getGameCommands(new Integer(cookies[3]));
-				if(commands != null) {
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-					sendResponseBody(exchange, commands);
-					sendResponseBody(exchange, string);
-				} else {
-					head = exchange.getResponseHeaders();
-					head.set("Content-Type", "text/html");
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-					sendResponseBody(exchange, "user must be logged in and in game");
-				}
+
+			StringBuilder jsonString = handleRequestBody(exchange);
+			head = exchange.getResponseHeaders();
+			head.set("Content-Type", "application/json");
+
+			ICommandObject[] objects = null;
+			String string = null;
+			try {
+				objects = new ServerSerializer().deSerializeCommands(jsonString.toString());
+				string = modelFacade.executeGameCommands(objects);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			if(objects != null) {
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				sendResponseBody(exchange, string);
 			} else {
 				head = exchange.getResponseHeaders();
 				head.set("Content-Type", "text/html");
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				sendResponseBody(exchange, "user must be logged in and in game");
+				sendResponseBody(exchange, "Invalid format");
 			}
-		}
 			
+		}
 		exchange.close();
 	}
 
