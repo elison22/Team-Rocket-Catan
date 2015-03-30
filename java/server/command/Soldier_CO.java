@@ -14,17 +14,20 @@ import shared.dto.Soldier_Params;
  */
 public class Soldier_CO implements ICommandObject {
 	
-	private Soldier_Params params;
+	private String type;
+	private Soldier_Params soldierParams;
     transient private ServerGame game;
     private Integer seed;
 
 	/**
 	 * @param params Parameters needed to play the soldier card.
 	 */
-	public Soldier_CO(ServerGame game, Soldier_Params params) {
+	public Soldier_CO(Soldier_Params params, ServerGame game, Integer seed) {
 		super();
-		this.params = params;
+		this.type = "Soldier";
+		this.soldierParams = params;
         this.game = game;
+        this.seed = seed;
 	}
 	
 	public void setGame(ServerGame game)
@@ -43,7 +46,7 @@ public class Soldier_CO implements ICommandObject {
         		seed = random.nextInt();
         	}
         	
-            return game.doSoldier(params.getPlayerIndex(), params.getVictimIndex(), params.getLocation(), seed);
+            return game.doSoldier(soldierParams.getPlayerIndex(), soldierParams.getVictimIndex(), soldierParams.getLocation(), seed);
         } catch (ServerBoardException e) {
             e.printStackTrace();
             return false;
@@ -52,5 +55,13 @@ public class Soldier_CO implements ICommandObject {
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

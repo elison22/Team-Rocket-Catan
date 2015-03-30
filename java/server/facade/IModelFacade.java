@@ -1,7 +1,6 @@
 package facade;
 
 import command.ICommandObject;
-
 import model.sgame.ServerGame;
 import shared.dto.*;
 
@@ -62,9 +61,9 @@ public interface IModelFacade {
 
     public String discardCards(int gameID, DiscardCards_Params cardParams);
 
-	int getCreatedGameId();
+	public Integer getCreatedGameId();
 	
 	public int getVersionId(int gameId);
 
-	ServerGame getGame(int gameId);
+	public ServerGame getGame(int gameId);
 }

@@ -11,6 +11,7 @@ import shared.dto.SendChat_Params;
  */
 public class SendChat_CO implements ICommandObject {
 	
+	private String type;
 	private SendChat_Params chatParams;
 	transient private ServerGame game;
 	
@@ -19,7 +20,8 @@ public class SendChat_CO implements ICommandObject {
 	 * @param gameManager 
 	 * @param chatParams 
 	 */
-	public SendChat_CO(ServerGame game, SendChat_Params chatParams) {
+	public SendChat_CO(SendChat_Params chatParams, ServerGame game) {
+		this.type = "SendChat";
 		this.chatParams = chatParams;
 		this.game = game;
 	}
@@ -38,5 +40,13 @@ public class SendChat_CO implements ICommandObject {
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

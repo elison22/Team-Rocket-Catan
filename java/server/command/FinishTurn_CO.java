@@ -11,14 +11,16 @@ import shared.dto.FinishTurn_Params;
  */
 public class FinishTurn_CO implements ICommandObject {
 	
-	private FinishTurn_Params params;
+	private String type;
+	private FinishTurn_Params finishTurnParams;
     transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed to finish a player's turn.
 	 */
 	public FinishTurn_CO(FinishTurn_Params params, ServerGame game) {
-		this.params = params;
+		type = "FinishTurn";
+		this.finishTurnParams = params;
         this.game = game;
 	}
 	
@@ -29,10 +31,18 @@ public class FinishTurn_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        return game.finishTurn(params.getPlayerIndex());
+        return game.finishTurn(finishTurnParams.getPlayerIndex());
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

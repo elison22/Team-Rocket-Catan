@@ -11,7 +11,8 @@ import shared.dto.OfferTrade_Params;
  */
 public class OfferTrade_CO implements ICommandObject {
 	
-	private OfferTrade_Params params;
+	private String type;
+	private OfferTrade_Params offerTradeParams;
     transient private ServerGame game;
 
 	/**
@@ -19,7 +20,8 @@ public class OfferTrade_CO implements ICommandObject {
 	 */
 	public OfferTrade_CO(OfferTrade_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		this.type = "OfferTrade";
+		this.offerTradeParams = params;
         this.game = game;
 	}
 	
@@ -30,10 +32,18 @@ public class OfferTrade_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        return game.offerDomesticTrade(params.getPlayerIndex(), params.getReceiver(), params.getOfferedResources());
+        return game.offerDomesticTrade(offerTradeParams.getPlayerIndex(), offerTradeParams.getReceiver(), offerTradeParams.getOfferedResources());
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

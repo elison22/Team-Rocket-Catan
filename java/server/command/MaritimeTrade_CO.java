@@ -13,7 +13,8 @@ import shared.dto.MaritimeTrade_Params;
  */
 public class MaritimeTrade_CO implements ICommandObject {
 	
-	private MaritimeTrade_Params params;
+	private String type;
+	private MaritimeTrade_Params maritimeTradeParams;
     transient private ServerGame game;
 
 	/**
@@ -21,7 +22,8 @@ public class MaritimeTrade_CO implements ICommandObject {
 	 */
 	public MaritimeTrade_CO(MaritimeTrade_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		type = "MaritimeTrade";
+		this.maritimeTradeParams = params;
         this.game = game;
 	}
 	
@@ -32,15 +34,15 @@ public class MaritimeTrade_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-        ResourceType input = convertString(params.getInputResource());
-        ResourceType output = convertString(params.getOutputResource());
+        ResourceType input = convertString(maritimeTradeParams.getInputResource());
+        ResourceType output = convertString(maritimeTradeParams.getOutputResource());
         if(input == null || output == null)
             return false;
 
-        ServerMaritimeTrade maritimeTrade = new ServerMaritimeTrade(input, output, params.getRatio());
-        if(!game.canMaritimeTrade(params.getPlayerIndex(), maritimeTrade))
+        ServerMaritimeTrade maritimeTrade = new ServerMaritimeTrade(input, output, maritimeTradeParams.getRatio());
+        if(!game.canMaritimeTrade(maritimeTradeParams.getPlayerIndex(), maritimeTrade))
             return false;
-        return game.doMaritimeTrade(params.getPlayerIndex(), maritimeTrade);
+        return game.doMaritimeTrade(maritimeTradeParams.getPlayerIndex(), maritimeTrade);
 	}
 
     public ResourceType convertString(String res) {
@@ -62,5 +64,13 @@ public class MaritimeTrade_CO implements ICommandObject {
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

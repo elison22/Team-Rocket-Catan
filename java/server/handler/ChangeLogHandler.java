@@ -15,6 +15,7 @@ import facade.IModelFacade;
 
 public class ChangeLogHandler implements HttpHandler {
 	
+	@SuppressWarnings("unused")
 	private IModelFacade modelFacade;
 	private String logLevel;
 	private ArrayList<String> legalLevels;

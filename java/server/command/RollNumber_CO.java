@@ -12,14 +12,16 @@ import shared.dto.RollNumber_Params;
 
 public class RollNumber_CO implements ICommandObject {
 	
-	private RollNumber_Params params;
+	private String type;
+	private RollNumber_Params rollNumberParams;
     transient private ServerGame game;
 
 	/**
 	 * @param params needed for rolling a number.
 	 */
 	public RollNumber_CO(RollNumber_Params params, ServerGame game) {
-		this.params = params;
+		type = "RollNumber";
+		this.rollNumberParams = params;
         this.game = game;
 	}
 	
@@ -30,11 +32,19 @@ public class RollNumber_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		if (params.getNumber() >= 2 && params.getNumber() <= 12)
-			return game.doRoll(params.getPlayerIndex(), params.getNumber());
+		if (rollNumberParams.getNumber() >= 2 && rollNumberParams.getNumber() <= 12)
+			return game.doRoll(rollNumberParams.getPlayerIndex(), rollNumberParams.getNumber());
 		return false;
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

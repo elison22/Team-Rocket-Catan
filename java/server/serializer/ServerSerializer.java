@@ -48,7 +48,27 @@ import shared.locations.VertexLocation;
 
 import com.google.gson.Gson;
 
+import command.AcceptTrade_CO;
+import command.BuildCity_CO;
+import command.BuildRoad_CO;
+import command.BuildSettlement_CO;
+import command.BuyDevCard_CO;
+import command.CommandWrapper;
+import command.CreateGame_CO;
+import command.DiscardCards_CO;
+import command.FinishTurn_CO;
 import command.ICommandObject;
+import command.JoinGame_CO;
+import command.MaritimeTrade_CO;
+import command.Monopoly_CO;
+import command.Monument_CO;
+import command.OfferTrade_CO;
+import command.RoadBuilding_CO;
+import command.RobPlayer_CO;
+import command.RollNumber_CO;
+import command.SendChat_CO;
+import command.Soldier_CO;
+import command.YearOfPlenty_CO;
 
 /**
  * @author Chad
@@ -99,9 +119,91 @@ public class ServerSerializer {
 		return null;
 	}
 	
+	public String serializeCommand(ICommandObject command) {
+		return gson.toJson(command);
+	}
+	
 	public String serializeCommands(ICommandObject[] commands)
 	{
 		return gson.toJson(commands);
+	}
+	
+	public ICommandObject[] deSerializeCommands(String commandsJson) throws Exception {
+		// Deserialize to the CommandWrappers class. From here we will be able
+		// to determine which explicit command object to build
+		CommandWrapper[] commandWrappers = gson.fromJson(commandsJson, CommandWrapper[].class);
+		
+		// The array of the explicit commands
+		ICommandObject[] commands = new ICommandObject[commandWrappers.length];
+		
+		// Determine what type of command it is and build it while adding it
+		// to the commands array.
+		int i = 0;
+		for (CommandWrapper command : commandWrappers) {
+			switch (command.getType()) {
+			case "AcceptTrade":
+				commands[i] = new AcceptTrade_CO(command.getAcceptTradeParams(), null);
+				break;
+			case "BuildCity":
+				commands[i] = new BuildCity_CO(command.getBuildCityParams(), null);
+				break;
+			case "BuildRoad":
+				commands[i] = new BuildRoad_CO(command.getBuildRoadParams(), null);
+				break;
+			case "BuildSettlement":
+				commands[i] = new BuildSettlement_CO(command.getBuildSettlementParams(), null);
+				break;
+			case "BuydevCard":
+				commands[i] = new BuyDevCard_CO(command.getBuyDevCardParams(), null, command.getSeed());
+				break;
+			case "CreateGame":
+				commands[i] = new CreateGame_CO(command.getCreateGameParams(), null, command.getSeed());
+				break;
+			case "DiscardCards":
+				commands[i] = new DiscardCards_CO(command.getDiscardCardsParams(), null);
+				break;
+			case "FinishTurn":
+				commands[i] = new FinishTurn_CO(command.getFinishTurnParams(), null);
+				break;
+			case "JoinGame":
+				commands[i] = new JoinGame_CO(command.getJoinGameParams(), null);
+				break;
+			case "MaritimeTrade":
+				commands[i] = new MaritimeTrade_CO(command.getMaritimeTradeParams(), null);
+				break;
+			case "Monopoly":
+				commands[i] = new Monopoly_CO(command.getMonopolyParams(), null);
+				break;
+			case "Monument":
+				commands[i] = new Monument_CO(command.getMonumentParams(), null);
+				break;
+			case "OfferTrade":
+				commands[i] = new OfferTrade_CO(command.getOfferTradeParams(), null);
+				break;
+			case "RoadBuilding":
+				commands[i] = new RoadBuilding_CO(command.getRoadBuildingParams(), null);
+				break;
+			case "RobPlayer":
+				commands[i] = new RobPlayer_CO(command.getRobPlayerParams(), null, command.getSeed());
+				break;
+			case "RollNumber":
+				commands[i] = new RollNumber_CO(command.getRollNumberParams(), null);
+				break;
+			case "SendChat":
+				commands[i] = new SendChat_CO(command.getChatParams(), null);
+				break;
+			case "Soldier":
+				commands[i] = new Soldier_CO(command.getSoldierParams(), null, command.getSeed());
+				break;
+			case "YearOfPlenty":
+				commands[i] = new YearOfPlenty_CO(command.getYearOfPlentyParams(), null);
+				break;
+			default:
+				throw new Exception("No case found!");
+			}
+			++i;
+		}
+		return commands;
 	}
 	
 	public ServerGame deSerializeFromServer(String json) throws BoardException, ServerBoardException

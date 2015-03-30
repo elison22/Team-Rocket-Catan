@@ -62,12 +62,8 @@ public class ModelFacade implements IModelFacade {
 		String namePattern = "^[0-9a-zA-Z ]{1,25}$";
 		if (!params.getName().matches(namePattern))
 			return null;
-		ICommandObject command = null;
-		try {
-			command = new CreateGame_CO(gameManager, params.getRandomNumbers(), params.getRandomTiles(), params.getRandomPorts(), params.getName());
-		} catch (ServerBoardException e1) {
-			e1.printStackTrace();
-		}
+		
+		ICommandObject command = new CreateGame_CO(params, gameManager, null);
 		if(command.execute())
 		{
 			gameManager.addCommand(gameManager.getNewestGameId(), command);
@@ -85,8 +81,10 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public boolean joinGame(JoinGame_Params params, String player, int playerId) {
+		params.setPlayer(player);
+		params.setPlayerId(playerId);
 		
-		ICommandObject command = new JoinGame_CO(params, player, playerId, gameManager);
+		ICommandObject command = new JoinGame_CO(params, gameManager);
 		if (command.execute()) {
 			gameManager.addCommand(params.getId(), command);
 			return true;
@@ -185,12 +183,13 @@ public class ModelFacade implements IModelFacade {
 		for(ICommandObject command : commandsList)
 		{
 			command.setGameManager(gameManager);
-			command.setGame(gameManager.getGame(getCreatedGameId()));
+			if (getCreatedGameId() != null)
+				command.setGame(gameManager.getGame(getCreatedGameId()));
 			
 			// If something doesn't work, stop and return the game after the
 			// commands that did actually work
 			if (!command.execute())
-				return serializer.serializeGameModel(gameManager.getGame(getCreatedGameId()));
+				return "Failed to execute: " + serializer.serializeCommand(command);
 			
 			// If the command worked, add it to the commandList
 			gameManager.addCommand(getCreatedGameId(), command);
@@ -209,7 +208,7 @@ public class ModelFacade implements IModelFacade {
 		if(chatParams.getPlayerIndex() > 3 || chatParams.getPlayerIndex() < 0)
 			return null;
 		ServerGame game = gameManager.getGame(gameID);
-		ICommandObject command = new SendChat_CO(game, chatParams);
+		ICommandObject command = new SendChat_CO(chatParams, game);
 		if(command.execute())
 		{
 			gameManager.addCommand(gameID, command);
@@ -257,7 +256,7 @@ public class ModelFacade implements IModelFacade {
         if ( robParams.getVictimIndex() > -1 && !game.canRobPlayer(robParams.getVictimIndex())) 
         	return null;    //TODO test if this is a problem
         
-        ICommandObject command = new RobPlayer_CO(robParams, game);
+        ICommandObject command = new RobPlayer_CO(robParams, game, null);
         if(command.execute()) {
         	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
@@ -298,7 +297,7 @@ public class ModelFacade implements IModelFacade {
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canBuyDevCard(params.getPlayerIndex()))
             return null;
-        ICommandObject command = new BuyDevCard_CO(params, game);
+        ICommandObject command = new BuyDevCard_CO(params, game, null);
         if(command.execute())
         {
         	gameManager.addCommand(gameID, command);
@@ -323,7 +322,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.YEAR_OF_PLENTY))
             return null;
 
-        ICommandObject command = new YearOfPlenty_CO(game, params);
+        ICommandObject command = new YearOfPlenty_CO(params, game);
         if(command.execute()) {
         	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
@@ -347,7 +346,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(roadParams.getPlayerIndex(),DevCardType.ROAD_BUILD))
             return null;
 
-        ICommandObject command = new RoadBuilding_CO(game, roadParams);
+        ICommandObject command = new RoadBuilding_CO(roadParams, game);
         if(command.execute()) {
         	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
@@ -371,7 +370,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(params.getPlayerIndex(),DevCardType.SOLDIER))   //TODO review this
             return null;
 
-        ICommandObject command = new Soldier_CO(game, params);
+        ICommandObject command = new Soldier_CO(params, game, null);
         if(command.execute()) {
         	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
@@ -395,7 +394,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.MONOPOLY))
             return null;
 
-        ICommandObject command = new Monopoly_CO(game, params);
+        ICommandObject command = new Monopoly_CO(params, game);
         if(command.execute()) {
         	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
@@ -418,7 +417,7 @@ public class ModelFacade implements IModelFacade {
         if(!game.canPlayDevCard(params.getPlayerIndex(), DevCardType.MONUMENT))
             return null;
 
-        ICommandObject command = new Monument_CO(game, params);
+        ICommandObject command = new Monument_CO(params, game);
         if(command.execute()) {
         	gameManager.addCommand(gameID, command);
             return serializer.serializeGameModel(game);
@@ -469,14 +468,14 @@ public class ModelFacade implements IModelFacade {
 		ICommandObject buildSet;
 		if(game.getTurnState() == ServerTurnState.FirstRound || game.getTurnState() == ServerTurnState.SecondRound) {
 			if(game.canBuildInitSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
-				buildSet = new BuildSettlement_CO(game, params);
+				buildSet = new BuildSettlement_CO(params, game);
 				if(buildSet.execute()) {
 					gameManager.addCommand(gameID, buildSet);
 					return serializer.serializeGameModel(game);
 				}
 			}
 		}else if(game.canBuildSettlement(params.getPlayerIndex(), new VertexLocation(new HexLocation(params.getVertexX(), params.getVertexY()), VertexDirection.convert(params.getVertexDir())))) {
-			buildSet = new BuildSettlement_CO(game, params);
+			buildSet = new BuildSettlement_CO(params, game);
 			if(buildSet.execute())
 			{
 	        	gameManager.addCommand(gameID, buildSet);
@@ -594,8 +593,8 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	@Override
-	public int getCreatedGameId() {
-		return gameManager.getNewestGameId();
+	public Integer getCreatedGameId() {
+		return gameManager.getNewestGameId() < 0 ? null : gameManager.getNewestGameId();
 	}
 
 	@Override

@@ -11,15 +11,17 @@ import shared.dto.Monument_Params;
  */
 public class Monument_CO implements ICommandObject {
 	
-	private Monument_Params params;
+	private String type;
+	private Monument_Params monumentParams;
     transient private ServerGame game;
 
 	/**
 	 * @param params Parameters needed to play the monument card.
 	 */
-	public Monument_CO(ServerGame game, Monument_Params params) {
+	public Monument_CO(Monument_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		this.type = "Monument";
+		this.monumentParams = params;
         this.game = game;
 	}
 	
@@ -30,10 +32,18 @@ public class Monument_CO implements ICommandObject {
 
 	@Override
 	public boolean execute() {
-		return game.doMonument(params.getPlayerIndex());
+		return game.doMonument(monumentParams.getPlayerIndex());
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

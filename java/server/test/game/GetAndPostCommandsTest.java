@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import command.ICommandObject;
+
 import facade.GameManager;
 import facade.ModelFacade;
+import serializer.ServerSerializer;
 import shared.dto.BuildRoad_Params;
 import shared.dto.BuildSettlement_Params;
 import shared.dto.CreateGame_Params;
@@ -17,7 +20,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
-public class GetCommandsTest {
+public class GetAndPostCommandsTest {
 
 	ModelFacade modelFacade;
 	
@@ -27,7 +30,7 @@ public class GetCommandsTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
 		// Create a game
         assertNotNull(modelFacade.createGame(new CreateGame_Params(false, false, false, "RollNumberTest")));
 
@@ -68,6 +71,30 @@ public class GetCommandsTest {
         
         // Make sure that the facade is storing game commands
         assertNotNull(modelFacade.getGameCommands(0));
+        
+        // Attempt to deserialize the commands
+        ServerSerializer ser = new ServerSerializer();
+        ICommandObject[] commands = ser.deSerializeCommands(modelFacade.getGameCommands(0));
+        assertNotNull(commands);
+        
+        // Make sure the deserialized list contains the same number of commands
+        assertTrue(commands.length == gameManager.getCommands(0).length);
+        
+        // Save the current model
+        String model1 = modelFacade.getGameModel(0);
+        
+        // Reset the facade
+        modelFacade = new ModelFacade();
+        
+        // Execute the deserialized commands
+        modelFacade.executeGameCommands(commands);
+        
+        // Make sure they all executed
+        gameManager = modelFacade.getGameManager();
+        assertTrue(gameManager.getCommands(0).length == 21);
+        
+        // Retrieve the new model and compare it to the old
+        String model2 = modelFacade.getGameModel(0);
+        assertTrue(model1.equals(model2));
 	}
-
 }

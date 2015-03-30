@@ -2,28 +2,24 @@ package command;
 
 import java.util.Random;
 
+import shared.dto.CreateGame_Params;
 import facade.GameManager;
 import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 
 public class CreateGame_CO implements ICommandObject {
 	
-	
-	private String title;
-	private boolean randTiles;
-	private boolean randNumbers;
-	private boolean randPorts;
+	private String type;
+	private CreateGame_Params createGameParams;
 	transient private GameManager gameManager;
 	private Integer seed;
 
-	public CreateGame_CO(GameManager gameManager, boolean randNumbers, boolean randTiles, boolean randPorts, String title) 
-			throws ServerBoardException
+	public CreateGame_CO(CreateGame_Params params, GameManager gameManager, Integer seed) 
 	{
-		this.randNumbers = randNumbers;
-		this.randPorts = randPorts;
-		this.randTiles = randTiles;		
+		this.type = "CreateGame";
+		this.createGameParams = params;
 		this.gameManager = gameManager;
-		this.title = title;
+		this.seed = seed;
 	}
 	
 	@Override
@@ -40,7 +36,11 @@ public class CreateGame_CO implements ICommandObject {
         		seed = random.nextInt();
         	}
 			
-			gameManager.createGame(randNumbers, randTiles, randPorts, title, seed);
+			gameManager.createGame(createGameParams.getRandomNumbers(), 
+								   createGameParams.getRandomTiles(), 
+								   createGameParams.getRandomPorts(), 
+								   createGameParams.getName(), seed);
+			
 			return true;
 		} catch (ServerBoardException e) {
 			e.printStackTrace();
@@ -51,6 +51,14 @@ public class CreateGame_CO implements ICommandObject {
 	@Override
 	public void setGameManager(GameManager gameManager) {
 		this.gameManager = gameManager;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

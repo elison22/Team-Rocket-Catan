@@ -122,20 +122,25 @@ public class GameManager {
 		commandsList.add(new ArrayList<ICommandObject>());
 	}
 	
-	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
-		ServerGame game = games.get(gameId);
+	public boolean addPlayerToGame(int gameId, String playerName, int playerId, String color) {
 		
+		// Check that the gameId is valid
+        if (games.size() <= gameId) {
+            return false;
+        }
+        
+		ServerGame game = games.get(gameId);
+
 		// Make sure the player hasn't already joined the game or
 		// the color isn't already taken
 		for (ServerPlayer gamePlayer : game.getPlayerList()) {
 
 			// If the player is already in the game, don't re-add them, just 
-			// change their color
-			if (gamePlayer.getPlayerID() == playerId) {
-				game.updatePlayerColor(gamePlayer.getPlayerIdx(), color);
+			// change their color and update their id
+			if (gamePlayer.getName().equals(playerName)) {
+				game.updatePlayerInfo(gamePlayer.getPlayerIdx(), playerId, color);
 				return true;
 			}
-				
 
 			// If the color has already been taken, don't let them join
 			if (gamePlayer.getColor().equalsIgnoreCase(color))
@@ -146,12 +151,10 @@ public class GameManager {
 
 			// Game is full
 			return false;
-
 		}
 
-		game.addPlayer(player, playerId, color);
+		game.addPlayer(playerName, playerId, color);
 		return true;
-
 	}
 	
 	public int getVersionId(int gameId) {

@@ -12,15 +12,17 @@ import shared.dto.RoadBuilding_Params;
  */
 public class RoadBuilding_CO implements ICommandObject {
 	
-	private RoadBuilding_Params params;
+	private String type;
+	private RoadBuilding_Params roadBuildingParams;
     transient private ServerGame game;
 
 	/**
 	 * @param params The Parameters needed to play the road building card.
 	 */
-	public RoadBuilding_CO(ServerGame game, RoadBuilding_Params params) {
+	public RoadBuilding_CO(RoadBuilding_Params params, ServerGame game) {
 		super();
-		this.params = params;
+		type = "RoadBuilding";
+		this.roadBuildingParams = params;
         this.game = game;
 	}
 	
@@ -32,13 +34,21 @@ public class RoadBuilding_CO implements ICommandObject {
 	@Override
 	public boolean execute() {
 		return game.doRoadBuilding(
-                params.getPlayerIndex(),
-                params.getRoad1(),
-                params.getRoad2()
+                roadBuildingParams.getPlayerIndex(),
+                roadBuildingParams.getRoad1(),
+                roadBuildingParams.getRoad2()
         );
 	}
 
 	@Override
 	public void setGameManager(GameManager gameManager) {}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }
