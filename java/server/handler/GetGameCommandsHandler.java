@@ -7,6 +7,7 @@ import user.IUserFacade;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import command.ICommandObject;
 
 import facade.IModelFacade;
 
@@ -34,25 +35,55 @@ public class GetGameCommandsHandler extends NonMoveHandler {
 			return;
 		}
 		
-		if(userFacade.hasUser(cookies[0])) {
-			head = exchange.getResponseHeaders();
-			head.set("Content-Type", "application/json");
-			String commands = modelFacade.getGameCommands(new Integer(cookies[3]));
-			if(commands != null) {
-				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				sendResponseBody(exchange, commands);
+		String method = exchange.getRequestMethod();
+		if(method.equals("GET")) {
+		
+			if(userFacade.hasUser(cookies[0])) {
+				head = exchange.getResponseHeaders();
+				head.set("Content-Type", "application/json");
+				String commands = modelFacade.getGameCommands(new Integer(cookies[3]));
+				if(commands != null) {
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+					sendResponseBody(exchange, commands);
+				} else {
+					head = exchange.getResponseHeaders();
+					head.set("Content-Type", "text/html");
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+					sendResponseBody(exchange, "user must be logged in and in game");
+				}
 			} else {
 				head = exchange.getResponseHeaders();
 				head.set("Content-Type", "text/html");
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				sendResponseBody(exchange, "user must be logged in and in game");
 			}
-		} else {
-			head = exchange.getResponseHeaders();
-			head.set("Content-Type", "text/html");
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-			sendResponseBody(exchange, "user must be logged in and in game");
+		} else if(method.equals("POST")) {
+			if(userFacade.hasUser(cookies[0])) {
+				StringBuilder jsonString = handleRequestBody(exchange);
+				head = exchange.getResponseHeaders();
+				head.set("Content-Type", "application/json");
+				ICommandObject[] objects = gson.fromJson(jsonString.toString(), ICommandObject[].class);
+				String string = modelFacade.executeGameCommands(objects);
+				
+				String commands = modelFacade.getGameCommands(new Integer(cookies[3]));
+				if(commands != null) {
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+					sendResponseBody(exchange, commands);
+					sendResponseBody(exchange, string);
+				} else {
+					head = exchange.getResponseHeaders();
+					head.set("Content-Type", "text/html");
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+					sendResponseBody(exchange, "user must be logged in and in game");
+				}
+			} else {
+				head = exchange.getResponseHeaders();
+				head.set("Content-Type", "text/html");
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+				sendResponseBody(exchange, "user must be logged in and in game");
+			}
 		}
+			
 		exchange.close();
 	}
 

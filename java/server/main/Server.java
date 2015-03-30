@@ -68,7 +68,7 @@ public class Server {
         server.createContext("/util/changeLogLevel", new ChangeLogHandler(modelFacade));			// POST
         
         // moves
-        server.createContext("/moves/", new MovesHandler(modelFacade));
+        server.createContext("/moves/", new MovesHandler(modelFacade, userFacade));
 
         // swagger
         server.createContext("/docs/api/data", new SwaggerHandler.JSONAppender(""));
