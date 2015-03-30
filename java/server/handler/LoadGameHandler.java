@@ -2,13 +2,9 @@ package handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Arrays;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-
-import command.ICommandObject;
 import facade.IModelFacade;
 
 public class LoadGameHandler extends MovesHandler {

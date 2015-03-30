@@ -189,7 +189,7 @@ public class ModelFacade implements IModelFacade {
 			// If something doesn't work, stop and return the game after the
 			// commands that did actually work
 			if (!command.execute())
-				return serializer.serializeGameModel(gameManager.getGame(getCreatedGameId()));
+				return "Failed to execute: " + serializer.serializeCommand(command);
 			
 			// If the command worked, add it to the commandList
 			gameManager.addCommand(getCreatedGameId(), command);

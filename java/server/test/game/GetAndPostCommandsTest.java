@@ -97,5 +97,4 @@ public class GetAndPostCommandsTest {
         String model2 = modelFacade.getGameModel(0);
         assertTrue(model1.equals(model2));
 	}
-
 }

@@ -119,6 +119,10 @@ public class ServerSerializer {
 		return null;
 	}
 	
+	public String serializeCommand(ICommandObject command) {
+		return gson.toJson(command);
+	}
+	
 	public String serializeCommands(ICommandObject[] commands)
 	{
 		return gson.toJson(commands);
