@@ -123,9 +123,12 @@ public class GameManager {
 	}
 	
 	public boolean addPlayerToGame(int gameId, String playerName, int playerId, String color) {
+		
+		// Check that the gameId is valid
         if (games.size() <= gameId) {
             return false;
         }
+        
 		ServerGame game = games.get(gameId);
 
 		// Make sure the player hasn't already joined the game or
@@ -138,7 +141,6 @@ public class GameManager {
 				game.updatePlayerInfo(gamePlayer.getPlayerIdx(), playerId, color);
 				return true;
 			}
-				
 
 			// If the color has already been taken, don't let them join
 			if (gamePlayer.getColor().equalsIgnoreCase(color))
@@ -149,12 +151,10 @@ public class GameManager {
 
 			// Game is full
 			return false;
-
 		}
 
 		game.addPlayer(playerName, playerId, color);
 		return true;
-
 	}
 	
 	public int getVersionId(int gameId) {
