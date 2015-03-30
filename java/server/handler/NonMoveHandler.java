@@ -65,8 +65,9 @@ public abstract class NonMoveHandler implements HttpHandler {
 		os.close();
 	}
 	
-	public void setGameCookie(HttpExchange exchange) {
-		
+	public void setResponseCookie(HttpExchange exchange, String gameId) {
+		Headers head = exchange.getResponseHeaders();
+		head.set("Content-Type", "application/json");
+		head.add("Set-cookie", "catan.game=" + gameId + ";Path=/;");
 	}
-
 }

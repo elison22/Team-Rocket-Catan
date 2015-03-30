@@ -15,7 +15,7 @@ public class DoGameCommandsHandler extends MovesHandler {
 	private IUserFacade userFacade;
 	
 	public DoGameCommandsHandler(IModelFacade modelFacade, IUserFacade userFacade) {
-		super(modelFacade);
+		super(modelFacade, userFacade);
 		this.userFacade = userFacade;
 	}
 

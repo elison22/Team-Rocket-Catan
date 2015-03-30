@@ -11,10 +11,13 @@ import com.sun.net.httpserver.HttpExchange;
 
 import facade.IModelFacade;
 
-public class ResetGameHandler extends MovesHandler {
+public class ResetGameHandler extends NonMoveHandler {
+	
+	private IModelFacade modelFacade;
 	
 	public ResetGameHandler(IModelFacade modelFacade) {
-		super(modelFacade);
+		this.modelFacade = modelFacade;
+	//	super(modelFacade);
 	}
 
 	@Override

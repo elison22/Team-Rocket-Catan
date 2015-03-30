@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.List;
 
 import shared.dto.AcceptTrade_Params;
@@ -25,6 +26,7 @@ import shared.dto.RollNumber_Params;
 import shared.dto.SendChat_Params;
 import shared.dto.Soldier_Params;
 import shared.dto.YearOfPlenty_Params;
+import user.IUserFacade;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
@@ -37,19 +39,30 @@ public class MovesHandler implements HttpHandler {
 
 	protected Gson gson;
 	protected IModelFacade modelFacade;
+	protected IUserFacade userFacade;
 	
-	public MovesHandler(IModelFacade facade) {
+	public MovesHandler(IModelFacade facade, IUserFacade userFacade) {
 		gson = new Gson();
 		modelFacade = facade;
+		this.userFacade = userFacade;
 	}
 	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
+System.out.println("1");
 		String[] cookieItems = decodeCookie(exchange);
+System.out.println("2");
 		StringBuilder stringBuild = handleRequestBody(exchange);
 		String jsonString = null;
 		String path = exchange.getRequestURI().getPath();
 		path = path.substring(7);
+		
+		System.out.println(Arrays.toString(cookieItems));
+		
+	//	if(!userFacade.hasUser(username)) {
+			
+	//	}
+		
 		switch (path) {
 			case "sendChat":
 				SendChat_Params chatParams = gson.fromJson(stringBuild.toString(), SendChat_Params.class);
@@ -145,6 +158,7 @@ public class MovesHandler implements HttpHandler {
 		String[] idGame = values[3].split(";");
 		
 		String[] cookieItems = new String[4];
+System.out.println(Arrays.toString(cookieItems));
 		cookieItems[0] = values[1].substring(8, values[1].length() - 1);
 		cookieItems[1] = values[2].substring(12, values[2].length() - 1);
 		cookieItems[2] = idGame[0].substring(11, idGame[0].length() - 1);

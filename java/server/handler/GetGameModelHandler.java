@@ -7,10 +7,13 @@ import com.sun.net.httpserver.HttpExchange;
 
 import facade.IModelFacade;
 
-public class GetGameModelHandler extends MovesHandler {
+public class GetGameModelHandler extends NonMoveHandler {
+	
+	private IModelFacade modelFacade;
 	
 	public GetGameModelHandler(IModelFacade modelFacade) {
-		super(modelFacade);
+		this.modelFacade = modelFacade;
+//		super(modelFacade);
 	}
 
 	@Override
