@@ -26,18 +26,20 @@ public class GetGameCommandsHandler extends NonMoveHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		String[] cookies = decodeCookie(exchange);
 		Headers head = null;
-		if(cookies.length != 4) {
-			head = exchange.getResponseHeaders();
-			head.set("Content-Type", "text/html");
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-			sendResponseBody(exchange, "user must be logged in and in game");
-			exchange.close();
-			return;
-		}
+		
 		
 		String method = exchange.getRequestMethod();
 		if(method.equals("GET")) {
-		
+			
+			if(cookies.length != 4) {
+				head = exchange.getResponseHeaders();
+				head.set("Content-Type", "text/html");
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+				sendResponseBody(exchange, "user must be logged in and in game");
+				exchange.close();
+				return;
+			}
+			
 			if(userFacade.hasUser(cookies[0])) {
 				head = exchange.getResponseHeaders();
 				head.set("Content-Type", "application/json");
