@@ -158,8 +158,6 @@ public class ModelFacade implements IModelFacade {
 		ICommandObject command = new ResetGame_CO(gameID, gameManager);
 		command.execute();
 		String jsonGameModel = serializer.serializeGameModel(gameManager.getGame(gameID));
-		System.out.println("GameModel: ");
-		System.out.println(jsonGameModel);
 		return jsonGameModel;
 	}
 

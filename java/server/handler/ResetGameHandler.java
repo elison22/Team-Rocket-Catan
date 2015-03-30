@@ -45,8 +45,6 @@ public class ResetGameHandler extends NonMoveHandler {
 		String game = val[0];
 		Integer gameId = new Integer(game);
 		String jsonString = modelFacade.resetGame(new Integer(gameId));
-		System.out.println("JSON String: ");
-		System.out.println(jsonString);
 		
 		if(jsonString != null) {
 			System.out.println("JSON string not null");
@@ -63,5 +61,4 @@ public class ResetGameHandler extends NonMoveHandler {
 		}
 		exchange.close();
 	}
-
 }
