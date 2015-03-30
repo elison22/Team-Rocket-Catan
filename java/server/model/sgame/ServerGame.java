@@ -777,8 +777,17 @@ public class ServerGame {
         playerList.add(new ServerPlayer(playerList.size(), playerId, player, color));
     }
     
-    public void updatePlayerColor(int playerIndex, String color) {
+    
+    /**Updates a players info when they rejoin a game. This includes the color
+     * and in some cases the playerId.
+     * 
+     * @param playerIndex The index of ther player to be updated
+     * @param playerId The new playerId to use
+     * @param color The new color for the player to be assigned to
+     */
+    public void updatePlayerInfo(int playerIndex, int playerId, String color) {
     	playerList.get(playerIndex).setColor(color);
+    	playerList.get(playerIndex).setPlayerID(playerId);
     }
 
     //**********************************************************

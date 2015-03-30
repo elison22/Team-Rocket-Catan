@@ -369,6 +369,10 @@ public class ServerPlayer {
 	public int getPlayerID() {
 		return playerID;
 	}
+	
+	public void setPlayerID(int playerId) {
+		this.playerID = playerId;
+	}
 
 	public int getResCount() {
 		return bank.getResCount();

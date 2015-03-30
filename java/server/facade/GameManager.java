@@ -122,8 +122,8 @@ public class GameManager {
 		commandsList.add(new ArrayList<ICommandObject>());
 	}
 	
-	public boolean addPlayerToGame(int gameId, String player, int playerId, String color) {
-        if(games.size() <= gameId){
+	public boolean addPlayerToGame(int gameId, String playerName, int playerId, String color) {
+        if (games.size() <= gameId) {
             return false;
         }
 		ServerGame game = games.get(gameId);
@@ -133,9 +133,9 @@ public class GameManager {
 		for (ServerPlayer gamePlayer : game.getPlayerList()) {
 
 			// If the player is already in the game, don't re-add them, just 
-			// change their color
-			if (gamePlayer.getPlayerID() == playerId) {
-				game.updatePlayerColor(gamePlayer.getPlayerIdx(), color);
+			// change their color and update their id
+			if (gamePlayer.getName().equals(playerName)) {
+				game.updatePlayerInfo(gamePlayer.getPlayerIdx(), playerId, color);
 				return true;
 			}
 				
@@ -152,7 +152,7 @@ public class GameManager {
 
 		}
 
-		game.addPlayer(player, playerId, color);
+		game.addPlayer(playerName, playerId, color);
 		return true;
 
 	}
