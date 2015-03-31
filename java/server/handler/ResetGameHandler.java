@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
-import java.util.Arrays;
 import java.util.List;
 
 import com.sun.net.httpserver.Headers;
@@ -18,13 +17,11 @@ public class ResetGameHandler extends NonMoveHandler {
 	
 	public ResetGameHandler(IModelFacade modelFacade) {
 		this.modelFacade = modelFacade;
-	//	super(modelFacade);
 	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		Headers head = exchange.getRequestHeaders();
-		///////////////////////////
 		List<String> cookies = head.get("Cookie");
 		String cookieHeader = cookies.get(0);
 		
