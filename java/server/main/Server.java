@@ -18,11 +18,13 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import user.IUserFacade;
+import user.MockUserFacade;
 import user.UserFacade;
 
 import com.sun.net.httpserver.HttpServer;
 
 import facade.IModelFacade;
+import facade.MockModelFacade;
 import facade.ModelFacade;
 
 public class Server {
@@ -36,10 +38,18 @@ public class Server {
         return;
     }
     
-    private void run(Integer port) {
+    private void run(Integer port, boolean mock) {
+    	IModelFacade modelFacade = null;
+    	IUserFacade userFacade = null;
     	
-    	IModelFacade modelFacade = new ModelFacade();
-    	IUserFacade userFacade = new UserFacade();
+    	if(mock) {
+    		modelFacade = new MockModelFacade();
+    		userFacade = new MockUserFacade();
+    	} else {
+    		modelFacade = new ModelFacade();
+    		userFacade = new UserFacade();
+    	}
+    	
     	
     	try {
             if (port == null)
@@ -77,10 +87,17 @@ public class Server {
 
 	public static void main(String[] args) {
 		Integer i = null;
-		if(args.length > 0)
-			i = new Integer(args[0]);
+		boolean mock = false;
+
+		for(int j = 0; j < args.length; j++) {
+			String item = args[j];
+			if(item.toLowerCase().equals("mock"))
+				mock = true;
+			else
+				i = new Integer(item);
+		}
 		
-        new Server().run(i);
+        new Server().run(i, mock);
 	}
 
 }
