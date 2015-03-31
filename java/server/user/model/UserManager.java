@@ -1,6 +1,5 @@
 package user.model;
 
-import java.util.HashSet;
 import java.util.Hashtable;
 
 /**
@@ -10,7 +9,6 @@ import java.util.Hashtable;
  * stores each user in a hashset based on the username, so username uniqueness
  * is verified before adding any new users.
  */
-@SuppressWarnings("unused")
 public class UserManager {
 
 	private Hashtable<String, User> users;
