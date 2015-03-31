@@ -130,30 +130,33 @@ public class GameManager {
         }
         
 		ServerGame game = games.get(gameId);
+		
+		// These variables are used if a player has already joined a game
+		boolean alreadyInGame = false;
+		int playerIndex = -1;
 
 		// Make sure the player hasn't already joined the game or
 		// the color isn't already taken
 		for (ServerPlayer gamePlayer : game.getPlayerList()) {
+			
+			// If the color has already been taken, don't let them join
+			if (gamePlayer.getColor().equalsIgnoreCase(color) && !gamePlayer.getName().equals(playerName))
+				return false;
 
 			// If the player is already in the game, don't re-add them, just 
 			// change their color and update their id
 			if (gamePlayer.getName().equals(playerName)) {
-				game.updatePlayerInfo(gamePlayer.getPlayerIdx(), playerId, color);
-				return true;
-			}
-
-			// If the color has already been taken, don't let them join
-			if (gamePlayer.getColor().equalsIgnoreCase(color))
-				return false;
+				alreadyInGame = true;
+				playerIndex = gamePlayer.getPlayerIdx();
+			}			
 		}
-		
-		if (game.getPlayerList().size() >= 4) {
 
-			// Game is full
+		if (alreadyInGame)
+			game.updatePlayerInfo(playerIndex, playerId, color);
+		else if (game.getPlayerList().size() < 4)
+			game.addPlayer(playerName, playerId, color);
+		else 
 			return false;
-		}
-
-		game.addPlayer(playerName, playerId, color);
 		return true;
 	}
 	

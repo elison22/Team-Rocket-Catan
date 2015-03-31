@@ -336,6 +336,11 @@ public class MockModelFacade implements IModelFacade
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public boolean verifyTurn(int gameId, int playerId) {
+		return false;
+	}
 
 	@Override
 	public ServerGame getGame(int gameId) {

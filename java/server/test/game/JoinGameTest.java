@@ -62,6 +62,9 @@ public class JoinGameTest {
 		assertTrue(facade.joinGame(new JoinGame_Params(0, "green"), "TestUser2", 17));
 		assertTrue(facade.joinGame(new JoinGame_Params(0, "blue"), "TestUser1", 16));
 		assertTrue(facade.joinGame(new JoinGame_Params(0, "white"), "TestUser", 15));
+		
+		// Try re-joining with an already taken color
+		assertFalse(facade.joinGame(new JoinGame_Params(0, "brown"), "TestUser", 15));
 	}
 
 }

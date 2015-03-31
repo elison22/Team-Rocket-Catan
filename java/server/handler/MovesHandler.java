@@ -58,8 +58,11 @@ public class MovesHandler implements HttpHandler {
 		String path = exchange.getRequestURI().getPath();
 		path = path.substring(7);
 
-		// If cookies are valid and the username is registered
-		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1])) {
+		// If cookies are valid and the username is registered and it's 
+		// actually the given player's turn
+		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1]) && 
+										  modelFacade.verifyTurn(new Integer(cookieItems[3]),
+												  				 new Integer(cookieItems[2]))) {
 
 			switch (path) {
 				case "sendChat":

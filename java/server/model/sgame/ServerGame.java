@@ -1179,4 +1179,21 @@ public class ServerGame {
         }
 
     }
+
+	/** Verify that it is the player's turn using the given playerId
+	 * @param playerId The id of the player whose turn is to be checked
+	 * @return True if it's their turn, false if otherwise
+	 */
+	public boolean verifyTurn(int playerId) {
+		int playerIndex = -1;
+		
+		for (ServerPlayer player : playerList) {
+			if (player.getPlayerID() == playerId) {
+				playerIndex = player.getPlayerIdx();
+				break;
+			}
+		}
+		
+		return ( turnTracker.getCurrentPlayerIndex() == playerIndex );
+	}
 }

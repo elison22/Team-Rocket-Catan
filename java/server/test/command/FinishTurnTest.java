@@ -3,14 +3,13 @@ package test.command;
 import facade.IModelFacade;
 import facade.ModelFacade;
 import model.sgame.ServerTurnState;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import shared.dto.*;
 import shared.locations.*;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Student on 3/23/2015.
@@ -89,5 +88,10 @@ public class FinishTurnTest {
 
         // After turn ends, the game state should be Rolling
         assertTrue(modelFacade.getGame(0).getTurnState() == ServerTurnState.Rolling);
+        
+        // Check that another player can't finish the current player's turn
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 6)));
+        assertFalse(modelFacade.verifyTurn(0, 1));
+        assertTrue(modelFacade.verifyTurn(0,  0));
     }
 }

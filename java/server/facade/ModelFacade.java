@@ -619,6 +619,12 @@ public class ModelFacade implements IModelFacade {
 		return gameManager.getVersionId(gameId);
 	}
 	
+	@Override
+	public boolean verifyTurn(int gameId, int playerId) {
+		ServerGame game = gameManager.getGame(gameId);
+		return game.verifyTurn(playerId);
+	}
+	
 	// FOR TESTING
 	@Override
 	public ServerGame getGame(int gameId) {
