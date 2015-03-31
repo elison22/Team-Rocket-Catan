@@ -70,6 +70,17 @@ public class CreateGameHandler extends NonMoveHandler {
 		String name = values[3].replaceAll("\\s+","");
 		name = name.replaceAll("\"", "");
 		name = name.substring(5, name.length() - 1);
+	
+		if(name.toLowerCase().equals("null")) {
+			Headers head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			String encode = "catan.game=" + "-1" + ";Path=/;";
+			head.add("Set-cookie", encode);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "Invalid request\n game name can't be null");
+			exchange.close();
+			return;
+		}
 
 		// if game name is invalid length
 		if(name.length() < 1 || name.length() > 25) {
@@ -98,7 +109,7 @@ public class CreateGameHandler extends NonMoveHandler {
 			return;
 		}
 
-		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);		
+		CreateGame_Params gameParams = gson.fromJson(stringBuild.toString(), CreateGame_Params.class);	
 		String jsonString = modelFacade.createGame(gameParams);
 		Headers head = exchange.getResponseHeaders();
 		
