@@ -4,7 +4,7 @@ public class JsonClientModel {
 
 	public JsonClientModel(JsonResourceList bank, JsonMessageList chat, JsonMessageList log,
                            JsonMap map, JsonPlayer[] players, JsonTradeOffer tradeOffer, JsonDevCardList deck,
-                           JsonTurnTracker turnTracker, int version, int winner)
+                           JsonTurnTracker turnTracker, int version, int winner, String name)
 	{
 		this.bank = bank;
 		this.chat = chat;
@@ -16,6 +16,7 @@ public class JsonClientModel {
 		this.version = version;
 		this.winner = winner;
 		this.deck = deck;
+		this.name = name;
 	}
 
 	private JsonDevCardList 	deck;
@@ -28,6 +29,7 @@ public class JsonClientModel {
 	private JsonTradeOffer 		tradeOffer;
 	private int					version;
 	private int					winner;
+	private String				name;
 
 	public JsonResourceList getBank()
 	{
@@ -77,6 +79,10 @@ public class JsonClientModel {
 	public JsonDevCardList getDevCards()
 	{
 		return deck;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

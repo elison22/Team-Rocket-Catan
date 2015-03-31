@@ -1,9 +1,10 @@
 package facade;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -101,17 +102,22 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public boolean saveGame(int gameID, String fileName) {
-		try {
-			PrintWriter out = new PrintWriter(fileName + ".txt");
+		try {System.out.println(gameID + " - " + fileName);
+			BufferedWriter out = new BufferedWriter(new FileWriter(fileName + ".txt"));
 			String serial = serializer.serializeGameModel(gameManager.getGame(gameID));
+			
+			System.out.println(serial == null);
 			if(serial != null) {
-				out.println(serial);
+				out.write(serial);
 				out.close();
 			} else {
 				out.close();
 				return false;
 			}
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -164,8 +170,6 @@ public class ModelFacade implements IModelFacade {
 		ICommandObject command = new ResetGame_CO(gameID, gameManager);
 		command.execute();
 		String jsonGameModel = serializer.serializeGameModel(gameManager.getGame(gameID));
-		System.out.println("GameModel: ");
-		System.out.println(jsonGameModel);
 		return jsonGameModel;
 	}
 

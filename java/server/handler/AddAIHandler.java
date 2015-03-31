@@ -1,18 +1,13 @@
 package handler;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import shared.definitions.ResourceType;
 import shared.dto.JoinGame_Params;
 import shared.dto.Login_Params;
 import user.IUserFacade;

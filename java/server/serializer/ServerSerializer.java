@@ -236,6 +236,7 @@ public class ServerSerializer {
 		game.setVersionNumber(newModel.getVersion());
 		game.setCardBank(newBank);
 		game.setPlayerList(newPlayers);
+		game.setGameName(newModel.getName());
 				
 		return game;
 	}
@@ -255,7 +256,8 @@ public class ServerSerializer {
 								   convertDevCardList(serverModel.getDevBank()),
 								   convertTurnTracker(serverModel.getTurnTracker()),
 								   serverModel.getVersionNumber(),
-								   serverModel.getWinner());
+								   serverModel.getWinner(),
+								   serverModel.getGameName());
 	}
 	
 	private JsonResourceList convertResourceList(Map<ResourceType, Integer> resourceMap) {

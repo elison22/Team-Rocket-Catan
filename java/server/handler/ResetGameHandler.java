@@ -44,7 +44,6 @@ public class ResetGameHandler extends NonMoveHandler {
 		String jsonString = modelFacade.resetGame(new Integer(gameId));
 		
 		if(jsonString != null) {
-			System.out.println("JSON string not null");
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter os = new OutputStreamWriter(exchange.getResponseBody());
 			os.write(jsonString);

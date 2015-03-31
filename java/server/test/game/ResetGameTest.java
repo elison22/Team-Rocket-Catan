@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.HashMap;
 
-import model.sgame.ServerGame;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,7 +68,7 @@ public class ResetGameTest {
         assertNotNull(modelFacade.buildRoad(0, new BuildRoad_Params(0, new EdgeLocation(new HexLocation(-2, 1), EdgeDirection.SouthWest), true)));
         assertNotNull(modelFacade.buildSettlement(0, new BuildSettlement_Params(0, new VertexLocation(new HexLocation(-2, 1), VertexDirection.SouthWest), true)));
         
-        ServerGame game = modelFacade.getGame(0);
+        //ServerGame game = modelFacade.getGame(0);
         
         // Roll 8's to get 5 brick for player[0]
         assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 8)));
