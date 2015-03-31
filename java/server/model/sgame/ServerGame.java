@@ -1115,6 +1115,14 @@ public class ServerGame {
     	return false;
     }
     
+    public boolean canSendChat(int playerIndex) {
+    	
+    	// If playerIndex is out of bounds of the playerList
+    	if (playerIndex < 0 || playerList.size() <= playerIndex)
+    		return false;
+    	return true;
+    }
+    
     private void calculateLongestRoad(int playerIndex) {
     	
     	// If no player has the longest road yet

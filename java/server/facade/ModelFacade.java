@@ -218,16 +218,20 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public String sendChat(int gameID, SendChat_Params chatParams) {
-		if(chatParams.getPlayerIndex() > 3 || chatParams.getPlayerIndex() < 0)
-			return null;
 		ServerGame game = gameManager.getGame(gameID);
-		ICommandObject command = new SendChat_CO(chatParams, game);
-		if(command.execute())
-		{
-			gameManager.addCommand(gameID, command);
-			return serializer.serializeGameModel(game);
+		
+		// Check that a player with that index is in the game, or that the index
+		// is valid
+		if (game.canSendChat(chatParams.getPlayerIndex())) {
+			ICommandObject command = new SendChat_CO(chatParams, game);
+			if(command.execute())
+			{
+				gameManager.addCommand(gameID, command);
+				return serializer.serializeGameModel(game);
+			}
 		}
-		else return null;
+		
+		return null;
 	}
 
 	/**
