@@ -102,9 +102,16 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public boolean saveGame(int gameID, String fileName) {
 		try {
+
 			PrintWriter out = new PrintWriter(fileName + ".txt");
-			out.println(serializer.serializeGameModel(gameManager.getGame(gameID)));
-			out.close();
+			String serial = serializer.serializeGameModel(gameManager.getGame(gameID));
+			if(serial != null) {
+				out.println(serial);
+				out.close();
+			} else {
+				out.close();
+				return false;
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
