@@ -2,12 +2,7 @@ package handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Arrays;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -16,12 +11,9 @@ import facade.IModelFacade;
 public class SaveGameHandler extends NonMoveHandler {
 	
 	private IModelFacade modelFacade;
-	private Gson gson;
 	
 	public SaveGameHandler(IModelFacade modelFacade) {
 		this.modelFacade = modelFacade;
-		gson = new Gson();
-	//	super(modelFacade);
 	}
 
 	@Override
