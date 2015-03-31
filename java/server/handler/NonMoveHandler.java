@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -39,9 +40,13 @@ public abstract class NonMoveHandler implements HttpHandler {
 		String[] idGame = values[3].split(";");
 		
 		String[] cookieItems = new String[4];
+		// Retrieve username
 		cookieItems[0] = values[1].substring(8, values[1].length() - 1);
+		// Retrieve password
 		cookieItems[1] = values[2].substring(12, values[2].length() - 1);
+		// Retrieve userID
 		cookieItems[2] = idGame[0].substring(11, idGame[0].length() - 1);
+		// If it exists, retrieve the gameID
 		if(idGame.length == 2)
 			cookieItems[3] = idGame[1].substring(12, idGame[1].length());
 		

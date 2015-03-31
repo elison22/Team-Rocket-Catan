@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import shared.dto.CreateGame_Params;
+import user.IUserFacade;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -13,14 +14,25 @@ import facade.IModelFacade;
 public class CreateGameHandler extends NonMoveHandler {
 	
 	private IModelFacade modelFacade;
+	private IUserFacade userFacade;
 	
-	public CreateGameHandler(IModelFacade modelFacade) {
+	public CreateGameHandler(IModelFacade modelFacade, IUserFacade userFacade) {
 		this.modelFacade = modelFacade;
+		this.userFacade = userFacade;
 	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		StringBuilder stringBuild = handleRequestBody(exchange);
+		
+		// If the given username isn't registered, return a 400
+		String[] cookie = decodeCookie(exchange);
+		if(!userFacade.hasUser(cookie[0])) {
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			sendResponseBody(exchange, "User is not registered");
+			exchange.close();
+			return;
+		}
 		
 		if(stringBuild.length() == 0) {
 			Headers head = exchange.getResponseHeaders();

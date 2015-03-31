@@ -25,8 +25,9 @@ public class UserManager {
 	 * @return True if found, false if otherwise.
 	 */
 	public boolean hasUser(String username) {
-		if (!validateUsername(username))
+		if (username == null)
 			return false;
+		
 		return users.containsKey(username);
 	}
 	
