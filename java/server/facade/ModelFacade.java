@@ -102,11 +102,16 @@ public class ModelFacade implements IModelFacade {
 	 */
 	@Override
 	public boolean saveGame(int gameID, String fileName) {
-		try {System.out.println(gameID + " - " + fileName);
-			BufferedWriter out = new BufferedWriter(new FileWriter(fileName + ".txt"));
-			String serial = serializer.serializeGameModel(gameManager.getGame(gameID));
+		try {
+			ServerGame game = gameManager.getGame(gameID);
+			String serial = null;
+			if(game != null)
+				serial = serializer.serializeGameModel(game);
+			else 
+				return false;
 			
-			System.out.println(serial == null);
+			BufferedWriter out = new BufferedWriter(new FileWriter(fileName + ".txt"));
+			
 			if(serial != null) {
 				out.write(serial);
 				out.close();

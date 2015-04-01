@@ -32,7 +32,7 @@ public class SaveGameHandler extends NonMoveHandler {
 				exchange.close();
 				return;
 			}
-			
+	
 			String[] game = values[0].split(":");
 			String[] file = values[1].split(":");
 			if(game.length != 2 || file.length != 2) {

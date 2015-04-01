@@ -36,6 +36,8 @@ public class GameManager {
 	 */
 	public ServerGame getGame(int indexOfGame)
 	{
+		if(indexOfGame < 0 || indexOfGame > games.size() - 1)
+			return null;
 		return games.get(indexOfGame);
 	}
 	
