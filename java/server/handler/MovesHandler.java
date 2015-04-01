@@ -60,121 +60,131 @@ public class MovesHandler implements HttpHandler {
 
 		// If cookies are valid and the username is registered and it's 
 		// actually the given player's turn
-		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1]) && 
-										  modelFacade.verifyTurn(new Integer(cookieItems[3]),
-												  				 new Integer(cookieItems[2]))) {
-
-			switch (path) {
-				case "sendChat":
-					SendChat_Params chatParams = gson.fromJson(
-							stringBuild.toString(), SendChat_Params.class);
-					jsonString = modelFacade.sendChat(new Integer(
-							cookieItems[3]), chatParams);
-					break;
-				case "rollNumber":
-					RollNumber_Params numParams = gson.fromJson(
-							stringBuild.toString(), RollNumber_Params.class);
-					jsonString = modelFacade.rollNumber(new Integer(
-							cookieItems[3]), numParams);
-					break;
-				case "robPlayer":
-					RobPlayer_Params robParams = gson.fromJson(
-							stringBuild.toString(), RobPlayer_Params.class);
-					jsonString = modelFacade.robPlayer(new Integer(
-							cookieItems[3]), robParams);
-					break;
-				case "finishTurn":
-					FinishTurn_Params finishTurnParams = gson.fromJson(
-							stringBuild.toString(), FinishTurn_Params.class);
-					jsonString = modelFacade.finishTurn(new Integer(
-							cookieItems[3]), finishTurnParams);
-					break;
-				case "buyDevCard":
-					BuyDevCard_Params devCarParams = gson.fromJson(
-							stringBuild.toString(), BuyDevCard_Params.class);
-					jsonString = modelFacade.buyDevCard(new Integer(
-							cookieItems[3]), devCarParams);
-					break;
-				case "Year_of_Plenty":
-					YearOfPlenty_Params Params = gson.fromJson(
-							stringBuild.toString(), YearOfPlenty_Params.class);
-					jsonString = modelFacade.doYearOfPlenty(new Integer(
-							cookieItems[3]), Params);
-					break;
-				case "Road_Building":
-					RoadBuilding_Params roadParams = gson.fromJson(
-							stringBuild.toString(), RoadBuilding_Params.class);
-					jsonString = modelFacade.doRoadBuilding(new Integer(
-							cookieItems[3]), roadParams);
-					break;
-				case "Soldier":
-					Soldier_Params soldierParams = gson.fromJson(
-							stringBuild.toString(), Soldier_Params.class);
-					jsonString = modelFacade.doSoldier(new Integer(
-							cookieItems[3]), soldierParams);
-					break;
-				case "Monopoly":
-					Monopoly_Params monopolyParams = gson.fromJson(
-							stringBuild.toString(), Monopoly_Params.class);
-					jsonString = modelFacade.doMonopoly(new Integer(
-							cookieItems[3]), monopolyParams);
-					break;
-				case "Monument":
-					Monument_Params monumentParams = gson.fromJson(
-							stringBuild.toString(), Monument_Params.class);
-					jsonString = modelFacade.doMonument(new Integer(
-							cookieItems[3]), monumentParams);
-					break;
-				case "buildRoad":
-					BuildRoad_Params buildRoadParams = gson.fromJson(
-							stringBuild.toString(), BuildRoad_Params.class);
-					jsonString = modelFacade.buildRoad(new Integer(
-							cookieItems[3]), buildRoadParams);
-					break;
-				case "buildSettlement":
-					BuildSettlement_Params settlementParams = gson.fromJson(
-							stringBuild.toString(),
-							BuildSettlement_Params.class);
-					jsonString = modelFacade.buildSettlement(new Integer(
-							cookieItems[3]), settlementParams);
-					break;
-				case "buildCity":
-					BuildCity_Params cityParams = gson.fromJson(
-							stringBuild.toString(), BuildCity_Params.class);
-					jsonString = modelFacade.buildCity(new Integer(
-							cookieItems[3]), cityParams);
-					break;
-				case "offerTrade":
-					OfferTrade_Params tradeParams = gson.fromJson(
-							stringBuild.toString(), OfferTrade_Params.class);
-					jsonString = modelFacade.offerTrade(new Integer(
-							cookieItems[3]), tradeParams);
-					break;
-				case "acceptTrade":
-					AcceptTrade_Params acceptParams = gson.fromJson(
-							stringBuild.toString(), AcceptTrade_Params.class);
-					jsonString = modelFacade.acceptTrade(new Integer(
-							cookieItems[3]), acceptParams);
-					break;
-				case "maritimeTrade":
-					MaritimeTrade_Params marTradeParams = gson.fromJson(
-							stringBuild.toString(), MaritimeTrade_Params.class);
-					jsonString = modelFacade.maritimeTrade(new Integer(
-							cookieItems[3]), marTradeParams);
-					break;
-				case "discardCards":
-					DiscardCards_Params discardParams = gson.fromJson(
-							stringBuild.toString(), DiscardCards_Params.class);
-					jsonString = modelFacade.discardCards(new Integer(
-							cookieItems[3]), discardParams);
-					break;
+		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1])) {
+			if (modelFacade.verifyTurn(new Integer(cookieItems[3]), new Integer(cookieItems[2]))) {
+				switch (path) {
+					case "sendChat":
+						SendChat_Params chatParams = gson.fromJson(
+								stringBuild.toString(), SendChat_Params.class);
+						jsonString = modelFacade.sendChat(new Integer(
+								cookieItems[3]), chatParams);
+						break;
+					case "rollNumber":
+						RollNumber_Params numParams = gson.fromJson(
+								stringBuild.toString(), RollNumber_Params.class);
+						jsonString = modelFacade.rollNumber(new Integer(
+								cookieItems[3]), numParams);
+						break;
+					case "robPlayer":
+						RobPlayer_Params robParams = gson.fromJson(
+								stringBuild.toString(), RobPlayer_Params.class);
+						jsonString = modelFacade.robPlayer(new Integer(
+								cookieItems[3]), robParams);
+						break;
+					case "finishTurn":
+						FinishTurn_Params finishTurnParams = gson.fromJson(
+								stringBuild.toString(), FinishTurn_Params.class);
+						jsonString = modelFacade.finishTurn(new Integer(
+								cookieItems[3]), finishTurnParams);
+						break;
+					case "buyDevCard":
+						BuyDevCard_Params devCarParams = gson.fromJson(
+								stringBuild.toString(), BuyDevCard_Params.class);
+						jsonString = modelFacade.buyDevCard(new Integer(
+								cookieItems[3]), devCarParams);
+						break;
+					case "Year_of_Plenty":
+						YearOfPlenty_Params Params = gson.fromJson(
+								stringBuild.toString(), YearOfPlenty_Params.class);
+						jsonString = modelFacade.doYearOfPlenty(new Integer(
+								cookieItems[3]), Params);
+						break;
+					case "Road_Building":
+						RoadBuilding_Params roadParams = gson.fromJson(
+								stringBuild.toString(), RoadBuilding_Params.class);
+						jsonString = modelFacade.doRoadBuilding(new Integer(
+								cookieItems[3]), roadParams);
+						break;
+					case "Soldier":
+						Soldier_Params soldierParams = gson.fromJson(
+								stringBuild.toString(), Soldier_Params.class);
+						jsonString = modelFacade.doSoldier(new Integer(
+								cookieItems[3]), soldierParams);
+						break;
+					case "Monopoly":
+						Monopoly_Params monopolyParams = gson.fromJson(
+								stringBuild.toString(), Monopoly_Params.class);
+						jsonString = modelFacade.doMonopoly(new Integer(
+								cookieItems[3]), monopolyParams);
+						break;
+					case "Monument":
+						Monument_Params monumentParams = gson.fromJson(
+								stringBuild.toString(), Monument_Params.class);
+						jsonString = modelFacade.doMonument(new Integer(
+								cookieItems[3]), monumentParams);
+						break;
+					case "buildRoad":
+						BuildRoad_Params buildRoadParams = gson.fromJson(
+								stringBuild.toString(), BuildRoad_Params.class);
+						jsonString = modelFacade.buildRoad(new Integer(
+								cookieItems[3]), buildRoadParams);
+						break;
+					case "buildSettlement":
+						BuildSettlement_Params settlementParams = gson.fromJson(
+								stringBuild.toString(),
+								BuildSettlement_Params.class);
+						jsonString = modelFacade.buildSettlement(new Integer(
+								cookieItems[3]), settlementParams);
+						break;
+					case "buildCity":
+						BuildCity_Params cityParams = gson.fromJson(
+								stringBuild.toString(), BuildCity_Params.class);
+						jsonString = modelFacade.buildCity(new Integer(
+								cookieItems[3]), cityParams);
+						break;
+					case "offerTrade":
+						OfferTrade_Params tradeParams = gson.fromJson(
+								stringBuild.toString(), OfferTrade_Params.class);
+						jsonString = modelFacade.offerTrade(new Integer(
+								cookieItems[3]), tradeParams);
+						break;
+					case "acceptTrade":
+						AcceptTrade_Params acceptParams = gson.fromJson(
+								stringBuild.toString(), AcceptTrade_Params.class);
+						jsonString = modelFacade.acceptTrade(new Integer(
+								cookieItems[3]), acceptParams);
+						break;
+					case "maritimeTrade":
+						MaritimeTrade_Params marTradeParams = gson.fromJson(
+								stringBuild.toString(), MaritimeTrade_Params.class);
+						jsonString = modelFacade.maritimeTrade(new Integer(
+								cookieItems[3]), marTradeParams);
+						break;
+					case "discardCards":
+						DiscardCards_Params discardParams = gson.fromJson(
+								stringBuild.toString(), DiscardCards_Params.class);
+						jsonString = modelFacade.discardCards(new Integer(
+								cookieItems[3]), discardParams);
+						break;
+				}
+				
+			} else if (path.equals("sendChat")) {
+				SendChat_Params chatParams = gson.fromJson(
+						stringBuild.toString(), SendChat_Params.class);
+				jsonString = modelFacade.sendChat(new Integer(
+						cookieItems[3]), chatParams);
+			} else if (path.equals("acceptTrade")) {
+				AcceptTrade_Params acceptParams = gson.fromJson(
+						stringBuild.toString(), AcceptTrade_Params.class);
+				jsonString = modelFacade.acceptTrade(new Integer(
+						cookieItems[3]), acceptParams);
+			} else if (path.equals("discardCards")) {
+				DiscardCards_Params discardParams = gson.fromJson(
+						stringBuild.toString(), DiscardCards_Params.class);
+				jsonString = modelFacade.discardCards(new Integer(
+						cookieItems[3]), discardParams);
 			}
-		} else if (path.equals("sendChat")) {
-			SendChat_Params chatParams = gson.fromJson(
-					stringBuild.toString(), SendChat_Params.class);
-			jsonString = modelFacade.sendChat(new Integer(
-					cookieItems[3]), chatParams);
-		}
+		} 
 		// If cookies are invalid or username failed, return 400 response code
 		else {
 			exchange.getResponseHeaders().set("Content-Type", "text/html");
