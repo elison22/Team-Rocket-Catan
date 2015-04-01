@@ -65,6 +65,12 @@ public class MovesHandler implements HttpHandler {
 												  				 new Integer(cookieItems[2]))) {
 
 			switch (path) {
+				case "sendChat":
+					SendChat_Params chatParams = gson.fromJson(
+							stringBuild.toString(), SendChat_Params.class);
+					jsonString = modelFacade.sendChat(new Integer(
+							cookieItems[3]), chatParams);
+					break;
 				case "rollNumber":
 					RollNumber_Params numParams = gson.fromJson(
 							stringBuild.toString(), RollNumber_Params.class);
