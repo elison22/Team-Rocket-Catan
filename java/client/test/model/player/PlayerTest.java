@@ -45,7 +45,7 @@ public class PlayerTest {
     }
 
     public void initializeModel(String filename) throws BoardException, FileNotFoundException {
-        file = new File(System.getProperty("user.dir") + "/java/src/test/JunitJsonFiles/" + filename);
+        file = new File(System.getProperty("user.dir") + "/java/client/test/JunitJsonFiles/" + filename);
         stream = new Scanner(file);
         builder = new StringBuilder();
         while(stream.hasNext()) builder.append(stream.next());
