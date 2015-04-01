@@ -405,6 +405,10 @@ public class ServerGame {
             gameHistory.sendChat(name, name + " moved the robber but couldn't rob anyone!");
         }
 
+        if(map.getRobberLoc() != location){
+            map.doPlayRobber(location);
+        }
+
         // Set state to playing
         turnTracker.setCurrentState(ServerTurnState.Playing);
         
