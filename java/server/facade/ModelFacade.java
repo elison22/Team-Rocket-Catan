@@ -601,10 +601,10 @@ public class ModelFacade implements IModelFacade {
 	 * @return returns a JSON string of the resulting game model
 	 */
 	@Override
-	public String discardCards(int gameID, DiscardCards_Params cardParams) {
+	public String discardCards(int gameID, DiscardCards_Params cardParams) {System.out.println(cardParams.toString());
         ServerGame game = gameManager.getGame(gameID);
         if(!game.canDiscardCards(cardParams.getPlayerIndex(), cardParams.getDiscardedCards()))
-            return null;
+            {System.out.println("FAILED!!!!!");return null;}
         ICommandObject command = new DiscardCards_CO(cardParams, game);
         if(command.execute())
         {

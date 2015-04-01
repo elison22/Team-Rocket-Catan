@@ -8,11 +8,8 @@ public class DiscardCards_Params {
 	
 	private String type = "discardCards";
 	private int playerIndex;
-	@SuppressWarnings("unused")
 	private Resources discardedCards;
-    private HashMap<ResourceType, Integer> resources;
 	
-	@SuppressWarnings("unused")
 	private class Resources {
 		int brick;
 		int ore;
@@ -27,6 +24,12 @@ public class DiscardCards_Params {
 			wheat = resources.get(ResourceType.WHEAT);
 			wood = resources.get(ResourceType.WOOD);
 		}
+
+		@Override
+		public String toString() {
+			return "Resources [brick=" + brick + ", ore=" + ore + ", sheep="
+					+ sheep + ", wheat=" + wheat + ", wood=" + wood + "]";
+		}
 	}
 
 	public DiscardCards_Params() {}
@@ -34,7 +37,6 @@ public class DiscardCards_Params {
 	public DiscardCards_Params(int playerIndex, Map<ResourceType, Integer> resources) {
 		super();
 		setPlayerIndex(playerIndex);
-        this.resources = (HashMap<ResourceType, Integer>)resources;
 		discardedCards = new Resources(resources);
 	}
 
@@ -54,6 +56,20 @@ public class DiscardCards_Params {
 		this.playerIndex = playerIndex;
 	}
 
-    public HashMap<ResourceType, Integer> getDiscardedCards() { return resources; }
+    public HashMap<ResourceType, Integer> getDiscardedCards() { 
+    	HashMap<ResourceType, Integer> discardCardsMap = new HashMap<ResourceType, Integer>();
+    	discardCardsMap.put(ResourceType.BRICK, discardedCards.brick);
+    	discardCardsMap.put(ResourceType.ORE, discardedCards.ore);
+    	discardCardsMap.put(ResourceType.SHEEP, discardedCards.sheep);
+    	discardCardsMap.put(ResourceType.WHEAT, discardedCards.wheat);
+    	discardCardsMap.put(ResourceType.WOOD, discardedCards.wood);
+    	return discardCardsMap; 
+    }
+
+	@Override
+	public String toString() {
+		return "DiscardCards_Params [type=" + type + ", playerIndex="
+				+ playerIndex + ", discardedCards=" + discardedCards + "]";
+	}
 
 }
