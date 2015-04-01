@@ -61,6 +61,9 @@ public class MovesHandler implements HttpHandler {
 		// If cookies are valid and the username is registered and it's 
 		// actually the given player's turn
 		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1])) {
+			// Verify that the user sending the move request is the user who
+			// can legally make the move (i.e. prevent another player from 
+			// ending the current player's turn, etc)
 			if (modelFacade.verifyTurn(new Integer(cookieItems[3]), new Integer(cookieItems[2]))) {
 				switch (path) {
 					case "sendChat":
@@ -167,8 +170,9 @@ public class MovesHandler implements HttpHandler {
 								cookieItems[3]), discardParams);
 						break;
 				}
-				
-			} else if (path.equals("sendChat")) {
+			} 
+			// The following moves are legal even if it's not the player's turn
+			else if (path.equals("sendChat")) {
 				SendChat_Params chatParams = gson.fromJson(
 						stringBuild.toString(), SendChat_Params.class);
 				jsonString = modelFacade.sendChat(new Integer(
