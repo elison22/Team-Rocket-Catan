@@ -28,6 +28,10 @@ public class CreateGameHandler extends NonMoveHandler {
 		// If the given username isn't registered, return a 400
 		String[] cookie = decodeCookie(exchange);
 		if(!userFacade.hasUser(cookie[0])) {
+			Headers head = exchange.getResponseHeaders();
+			head.set("Content-Type", "text/html");
+			String encode = "catan.game=" + "-1" + ";Path=/;";
+			head.add("Set-cookie", encode);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			sendResponseBody(exchange, "User is not registered");
 			exchange.close();
