@@ -35,7 +35,7 @@ public class LoadGameHandler extends NonMoveHandler {
 				sendResponseBody(exchange, "Success");
 			} else {
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				sendResponseBody(exchange, "Could not save game");
+				sendResponseBody(exchange, "Could not load game");
 			}
 			
 		} else {
