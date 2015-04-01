@@ -47,5 +47,4 @@ public class SendChatTest {
         assertTrue(game.getChat().get(2).getMessage() == "testing chat");
         assertTrue(game.getChat().get(3).getOwner() == "test2");
 	}
-
 }

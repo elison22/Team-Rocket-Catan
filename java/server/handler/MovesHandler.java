@@ -58,9 +58,9 @@ public class MovesHandler implements HttpHandler {
 		String path = exchange.getRequestURI().getPath();
 		path = path.substring(7);
 
-		// If cookies are valid and the username is registered and it's 
-		// actually the given player's turn
+		// If cookies are valid and the username is registered
 		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1])) {
+			
 			// Verify that the user sending the move request is the user who
 			// can legally make the move (i.e. prevent another player from 
 			// ending the current player's turn, etc)
@@ -229,7 +229,7 @@ public class MovesHandler implements HttpHandler {
 		System.out.println("values size: " + values.length + " ---- idGame size: " + idGame.length);
 		
 		// Make sure cookies are valid before attempting to retrieve them
-		if (values.length == 4 && idGame.length == 2) {
+		if (values.length >= 4 && idGame.length >= 2) {
 			cookieItems[0] = values[1].substring(8, values[1].length() - 1);
 			cookieItems[1] = values[2].substring(12, values[2].length() - 1);
 			cookieItems[2] = idGame[0].substring(11, idGame[0].length() - 1);
