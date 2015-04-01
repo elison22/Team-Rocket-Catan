@@ -89,9 +89,5 @@ public class FinishTurnTest {
         // After turn ends, the game state should be Rolling
         assertTrue(modelFacade.getGame(0).getTurnState() == ServerTurnState.Rolling);
         
-        // Check that another player can't finish the current player's turn
-        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 6)));
-        assertFalse(modelFacade.verifyTurn(0, 1));
-        assertTrue(modelFacade.verifyTurn(0,  0));
     }
 }

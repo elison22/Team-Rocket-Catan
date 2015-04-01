@@ -1188,16 +1188,16 @@ public class ServerGame {
 	 * @param playerId The id of the player whose turn is to be checked
 	 * @return True if it's their turn, false if otherwise
 	 */
-	public boolean verifyTurn(int playerId) {
-		int playerIndex = -1;
+	public boolean verifyTurn(int playerId, int playerIndex) {
+		boolean match = false;
 		
 		for (ServerPlayer player : playerList) {
-			if (player.getPlayerID() == playerId) {
-				playerIndex = player.getPlayerIdx();
+			if (player.getPlayerID() == playerId && player.getPlayerIdx() == playerIndex) {
+				match = true;
 				break;
 			}
 		}
 		
-		return ( turnTracker.getCurrentPlayerIndex() == playerIndex );
+		return match;
 	}
 }

@@ -59,12 +59,12 @@ public class MovesHandler implements HttpHandler {
 		path = path.substring(7);
 
 		// If cookies are valid and the username is registered
-		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[1])) {
+		if (verifyCookies(cookieItems) && userFacade.hasUser(cookieItems[0])) {
 			
-			// Verify that the user sending the move request is the user who
-			// can legally make the move (i.e. prevent another player from 
-			// ending the current player's turn, etc)
-			if (modelFacade.verifyTurn(new Integer(cookieItems[3]), new Integer(cookieItems[2]))) {
+			// Verify that the playerIndex in the params matches the playerId 
+			// in the cookie to prevent making moves for other players
+			PlayerIndex playerIndex = gson.fromJson(stringBuild.toString(), PlayerIndex.class);
+			if (modelFacade.verifyTurn(new Integer(cookieItems[3]), new Integer(cookieItems[2]), playerIndex.getPlayerIndex())) {
 				switch (path) {
 					case "sendChat":
 						SendChat_Params chatParams = gson.fromJson(
@@ -170,23 +170,6 @@ public class MovesHandler implements HttpHandler {
 								cookieItems[3]), discardParams);
 						break;
 				}
-			} 
-			// The following moves are legal even if it's not the player's turn
-			else if (path.equals("sendChat")) {
-				SendChat_Params chatParams = gson.fromJson(
-						stringBuild.toString(), SendChat_Params.class);
-				jsonString = modelFacade.sendChat(new Integer(
-						cookieItems[3]), chatParams);
-			} else if (path.equals("acceptTrade")) {
-				AcceptTrade_Params acceptParams = gson.fromJson(
-						stringBuild.toString(), AcceptTrade_Params.class);
-				jsonString = modelFacade.acceptTrade(new Integer(
-						cookieItems[3]), acceptParams);
-			} else if (path.equals("discardCards")) {
-				DiscardCards_Params discardParams = gson.fromJson(
-						stringBuild.toString(), DiscardCards_Params.class);
-				jsonString = modelFacade.discardCards(new Integer(
-						cookieItems[3]), discardParams);
 			}
 		} 
 		// If cookies are invalid or username failed, return 400 response code
@@ -278,5 +261,13 @@ public class MovesHandler implements HttpHandler {
 				return false;
 		}
 		return true;
+	}
+	
+	private class PlayerIndex {
+		int playerIndex;
+
+		public int getPlayerIndex() {
+			return playerIndex;
+		}
 	}
 }

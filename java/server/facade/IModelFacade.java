@@ -65,7 +65,7 @@ public interface IModelFacade {
 	
 	public int getVersionId(int gameId);
 	
-	public boolean verifyTurn(int gameId, int playerId);
+	public boolean verifyTurn(int gameId, int playerId, int playerIndex);
 
 	public ServerGame getGame(int gameId);
 }
