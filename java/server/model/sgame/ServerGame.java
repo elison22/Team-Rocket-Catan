@@ -509,7 +509,9 @@ public class ServerGame {
             e.printStackTrace();
             return false;
         }
-        
+
+        calculateLongestRoad(playerIndex);
+
         // Update game history
         String name = playerList.get(playerIndex).getName();
         gameHistory.sendChat(name, name + " played a road building card");
@@ -1169,7 +1171,6 @@ public class ServerGame {
         // nobody has the largest army yet
         if(turnTracker.getLargestArmyPlayerIndex() < 0) {
             turnTracker.setLargestArmyPlayerIndex(playerIndex);
-            playerList.get(playerIndex).addPoints(2);
             if (playerList.get(playerIndex).addPoints(2) >= 10)
 				winner = playerIndex;
         }
