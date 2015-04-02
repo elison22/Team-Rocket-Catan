@@ -13,25 +13,25 @@ public class MockUserFacade implements IUserFacade {
 	@Override
 	public boolean login(Login_Params params) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean register(Login_Params params) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public String getUserID(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		return "1";
 	}
 
 	@Override
 	public boolean hasUser(String username) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

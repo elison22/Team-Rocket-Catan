@@ -119,7 +119,7 @@ public class GameManager {
 	 */
 	public void createGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title, int seed) throws ServerBoardException
 	{
-		games.add(new ServerGame(randNumbers, randTiles, randPorts, title, seed));
+		games.add(new ServerGame(randNumbers, randTiles, randPorts, title, seed, games.size()));
 		games.get(games.size() - 1).setGameId(games.size() - 1);
 		commandsList.add(new ArrayList<ICommandObject>());
 	}

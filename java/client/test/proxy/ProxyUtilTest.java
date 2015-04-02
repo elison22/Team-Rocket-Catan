@@ -16,11 +16,11 @@ public class ProxyUtilTest {
 		facade = new ProxyFacade("localhost", "8081");
 	}
 
-	@Test
+	/*@Test
 	public void testChangeLogLevel() throws ServerException {
 		assertTrue(facade.changeLogLevel(new ChangeLogLevel_Params("FINEST")));
 		
-	}
+	}*/
 	
 	@Test(expected = Exception.class)
 	public void testServerExceptionOnBadInput() throws ServerException {

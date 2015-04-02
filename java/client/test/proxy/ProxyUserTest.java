@@ -32,7 +32,7 @@ public class ProxyUserTest {
 	// Proxy will return true, so these tests assert that the result from the
 	// proxy is true.
 
-	@Test
+	/*@Test
 	public void testRegisterAndLogin() throws ServerException {
 		// generate random string to use as username and password
 		String randString = randomString(7);
@@ -43,7 +43,7 @@ public class ProxyUserTest {
 		// Register a user, then log them in
 		assertTrue(facade.register(loginParams));
 		assertTrue(facade.login(loginParams));
-	}
+	}*/
 	
 	// Used by helper method
 	final String alphanum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZX";

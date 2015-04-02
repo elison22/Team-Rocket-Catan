@@ -47,11 +47,12 @@ public class ProxyGamesTest {
 		assertNotNull(facade.list());
 	}
 	
-	@Test
+	/*@Test
 	public void testCreateGame() throws ServerException {
+				
 		CreateGame_Params createParams = new CreateGame_Params(false, false, false, "Sam");
 		assertNotNull(facade.create(createParams));
-	}
+	}*/
 	
 	@Test
 	public void testJoinGame() throws ServerException {

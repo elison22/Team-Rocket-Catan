@@ -36,7 +36,7 @@ public class ServerGame {
     private ArrayList<String> aiList;
     private int winner;
     private ServerTradeOffer tradeOffer;
-    private int gameId;
+    private int id;
     private ServerBoard originalBoard;
 
     //**********************************************************
@@ -48,10 +48,11 @@ public class ServerGame {
     	aiList.add("LARGEST_ARMY");
     	originalBoard = map;
         versionNumber = 0;
+        id = 0;
     	winner = -1;
     }
 
-    public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title, int seed) throws ServerBoardException {
+    public ServerGame(boolean randNumbers, boolean randTiles, boolean randPorts, String title, int seed, int gameID) throws ServerBoardException {
     	this.gameName = title;
     	versionNumber = 0;
     	playerList = new ArrayList<ServerPlayer>();
@@ -62,6 +63,7 @@ public class ServerGame {
     	chat = new ServerChat();
     	gameHistory = new ServerChat();
     	winner = -1;
+    	this.id = gameID;
     }
 
     //**********************************************************
@@ -235,11 +237,11 @@ public class ServerGame {
     }
 
     public int getGameId() {
-        return gameId;
+        return id;
     }
 
     public void setGameId(int gameId) {
-        this.gameId = gameId;
+        this.id = gameId;
     }
 
     //**********************************************************

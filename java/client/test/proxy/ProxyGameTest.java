@@ -53,17 +53,17 @@ public class ProxyGameTest {
 		assertNotNull(facade.model(-1));
 	}
 	
-	@Test
+	/*@Test
 	public void testReset() throws ServerException {
 		assertNotNull(facade.reset());
-	}
+	}*/
 	
 	@Test
 	public void testGetCommands() throws ServerException {
 		assertNull(facade.commandsGET());
 	}
 	
-	@Test
+	/*@Test
 	public void testAddAI() throws ServerException {
 		assertTrue(facade.addAI(new AddAI_Params("LARGEST_ARMY")));
 	}
@@ -71,7 +71,7 @@ public class ProxyGameTest {
 	@Test
 	public void testListAI() throws ServerException {
 		assertNotNull(facade.listAI());
-	}
+	}*/
 }
 
 

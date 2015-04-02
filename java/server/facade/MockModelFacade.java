@@ -1,7 +1,11 @@
 package facade;
 
-import command.ICommandObject;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
+import command.ICommandObject;
+import model.sboard.ServerBoardException;
 import model.sgame.ServerGame;
 import shared.dto.*;
 
@@ -26,7 +30,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String listGames() {
 		// TODO Auto-generated method stub
-		return null;
+		return "So many games";
 	}
 
 	/**
@@ -36,7 +40,19 @@ public class MockModelFacade implements IModelFacade
 	 */
 	@Override
 	public String createGame(CreateGame_Params params) {
-		// TODO Auto-generated method stub
+		File file = new File(System.getProperty("user.dir") + "/java/client/test/JunitJsonFiles/Json.json");
+        Scanner stream;
+		try {
+			stream = new Scanner(file);
+	        StringBuilder builder = new StringBuilder();
+	        while(stream.hasNext()) builder.append(stream.next());
+	        String json = builder.toString();
+	        stream.close();
+	        return json;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -49,7 +65,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public boolean joinGame(JoinGame_Params params, String user, int userId) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/**
@@ -61,7 +77,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public boolean saveGame(int gameID, String fileName) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/**
@@ -72,7 +88,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public boolean loadGame(String fileName) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/**
@@ -83,7 +99,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String getGameModel(int gameID) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -94,7 +110,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String resetGame(int gameID) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -105,7 +121,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String getGameCommands(int gameID) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -117,7 +133,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String executeGameCommands(ICommandObject[] commandsList) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -129,7 +145,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String sendChat(int gameID, SendChat_Params chatParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -141,7 +157,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String rollNumber(int gameID, RollNumber_Params rollNum) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -153,7 +169,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String robPlayer(int gameID, RobPlayer_Params robParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -165,7 +181,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String finishTurn(int gameID, FinishTurn_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -177,7 +193,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String buyDevCard(int gameID, BuyDevCard_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -189,7 +205,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String doYearOfPlenty(int gameID, YearOfPlenty_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -201,7 +217,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String doRoadBuilding(int gameID, RoadBuilding_Params roadParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -213,7 +229,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String doSoldier(int gameID, Soldier_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -225,7 +241,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String doMonopoly(int gameID, Monopoly_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -237,7 +253,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String doMonument(int gameID, Monument_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -249,7 +265,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String buildRoad(int gameID, BuildRoad_Params roadParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -261,7 +277,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String buildSettlement(int gameID, BuildSettlement_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -273,7 +289,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String buildCity(int gameID, BuildCity_Params params) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -285,7 +301,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String offerTrade(int gameID, OfferTrade_Params tradeParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -297,7 +313,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String acceptTrade(int gameID, AcceptTrade_Params acceptParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -309,7 +325,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String maritimeTrade(int gameID, MaritimeTrade_Params tradeParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	/**
@@ -322,7 +338,7 @@ public class MockModelFacade implements IModelFacade
 	@Override
 	public String discardCards(int gameID, DiscardCards_Params cardParams) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Great Game";
 	}
 
 	@Override
@@ -339,12 +355,18 @@ public class MockModelFacade implements IModelFacade
 	
 	@Override
 	public boolean verifyTurn(int gameId, int playerId, int playerIndex) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public ServerGame getGame(int gameId) {
 		// TODO Auto-generated method stub
+		try {
+			return new ServerGame();
+		} catch (ServerBoardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
