@@ -14,6 +14,7 @@ public class ServerUnitTests {
 		String[] testClasses = new String[] {
 				"test.command.BuildRoadTest",
 				"test.command.BuildSettlementTest",
+				"test.command.BuildCityTest",
 				"test.command.RegisterAndLoginTest",
 				"test.game.CreateGameTest",
 				"test.game.GetModelTest",
@@ -26,6 +27,7 @@ public class ServerUnitTests {
 				"test.command.OfferAndAcceptTradeTest",
 				"test.command.SendChatTest",
 				"test.command.LongestRoadTest",
+				"test.command.DevCardsTest",
 				"test.game.GetAndPostCommandsTest",
 				"test.game.ResetGameTest"
 		};
