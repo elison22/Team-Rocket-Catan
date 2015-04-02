@@ -17,6 +17,7 @@ import shared.dto.FinishTurn_Params;
 import shared.dto.JoinGame_Params;
 import shared.dto.Monopoly_Params;
 import shared.dto.Monument_Params;
+import shared.dto.RoadBuilding_Params;
 import shared.dto.RollNumber_Params;
 import shared.dto.Soldier_Params;
 import shared.dto.YearOfPlenty_Params;
@@ -184,6 +185,23 @@ public class DevCardsTest {
         
 	}
         
+	
+	@Test
+	public void testRoadBuilding(){
+		// Roll dice to set turn state
+		assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(0, 9)));
+        assertNotNull(modelFacade.finishTurn(0, new FinishTurn_Params(0)));
+        assertNotNull(modelFacade.rollNumber(0, new RollNumber_Params(1, 8)));
+        
+        
+        // Play year of plenty card
+        game.getPlayerList().get(1).getBank().getDevCards().add(new ServerDevCard(DevCardType.ROAD_BUILD));
+        game.getPlayerList().get(1).getBank().getOldDevCards().add(new ServerDevCard(DevCardType.ROAD_BUILD));
+        assertNotNull(modelFacade.doRoadBuilding(0, new RoadBuilding_Params(1, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.South), new EdgeLocation(new HexLocation(2, -2), EdgeDirection.SouthEast))));
+        
+        // Check that resources were received
+        assertTrue(game.getPlayerList().get(1).getRemainingRoads() == 11);
+	}
         
 	@Test
 	public void testMonument() {    
