@@ -15,6 +15,19 @@ public class PluginManager {
     private String configPath;
 
     /**
+     * The type of persistence the user requested when the server was started
+     */
+    private String desiredPersistence;
+
+    /**
+     * parses the config file and if the type of requested persistence isn't
+     * found in the config file, it calls addPluginInfo()
+     */
+    public void determinePersistenceType(){
+
+    }
+
+    /**
      * parses the json config file and returns the class path to the derived
      * PersistenceManager class that the plugin uses.
      * @return The class path to the PersistenceManager
