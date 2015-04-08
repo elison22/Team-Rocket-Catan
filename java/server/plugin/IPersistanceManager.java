@@ -18,4 +18,14 @@ public interface IPersistanceManager {
 	 * @return Abstract user data access object (works for multiple types of databases)
 	 */
 	public IUserDAO getUserDAO();
+	
+	/**
+	 * Allows the DAO objects to connect to and start a transaction with the database
+	 */
+	public void startTransaction();
+	
+	/**
+	 * Allows the DAO objects to end a transaction with the database
+	 */
+	public void endTransaction();
 }
