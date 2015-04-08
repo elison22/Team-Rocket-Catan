@@ -19,11 +19,13 @@ public interface IUserDAO {
 	public boolean addUser(String userName, String password);
 	
 	/**
-	 * Updates user information in the current database
-	 * @param password
+	 * Sets a new password for the user if the oldPassword matches the password in the database for the given userName
+	 * @param oldPassword
+	 * @param userName
+	 * @param newPassword
 	 * @return true if the operations succeeds, otherwise false
 	 */
-	public boolean updateUser(String password);
+	public boolean updateUserPassword(String userName, String oldPassword, String newPassword);
 	
 	/**
 	 * Authenticates user login information
