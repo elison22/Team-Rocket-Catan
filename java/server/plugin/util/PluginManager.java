@@ -44,14 +44,4 @@ public class PluginManager {
 
     }
 
-    /**
-     * adds json information to the config file so new plugins can be added
-     * without recompiling the code.
-     * @param pluginConfig A string in json format that includes the type, the
-     * path to the jar file, and the PersistenceManager.
-     */
-    public void addPluginInfo(String pluginConfig){
-
-    }
-
 }
